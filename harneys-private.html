@@ -33,7 +33,6 @@
             line-height: 1.7;
         }
         
-        /* Password Screen */
         .password-screen {
             position: fixed;
             top: 0;
@@ -114,7 +113,6 @@
             display: none;
         }
         
-        /* Main Content */
         .content {
             display: none;
         }
@@ -123,7 +121,6 @@
             display: block;
         }
         
-        /* Header */
         header {
             background: var(--brand-green);
             color: var(--white);
@@ -171,7 +168,6 @@
             background: rgba(255,255,255,0.25);
         }
         
-        /* Cover */
         .cover {
             background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-green-light) 100%);
             color: var(--white);
@@ -207,7 +203,6 @@
             letter-spacing: 1px;
         }
         
-        /* Progress Bar */
         .progress-bar {
             position: fixed;
             top: 0;
@@ -218,7 +213,6 @@
             transition: width 0.1s ease-out;
         }
         
-        /* Table of Contents */
         .toc {
             background: var(--light-gray);
             border-radius: 12px;
@@ -260,7 +254,6 @@
             border-bottom-color: var(--brand-green);
         }
         
-        /* Mobile Floating Actions */
         .mobile-actions {
             display: none;
             position: fixed;
@@ -291,7 +284,6 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         
-        /* Main */
         main {
             max-width: 900px;
             margin: 0 auto;
@@ -336,7 +328,6 @@
             margin-bottom: 0.6rem;
         }
         
-        /* Tables */
         .table-wrapper {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -368,7 +359,6 @@
             background: #fafafa;
         }
         
-        /* Entity Structure Diagram */
         .entity-diagram {
             margin: 2rem 0;
         }
@@ -424,7 +414,6 @@
             gap: 1.5rem;
         }
         
-        /* Arrow connectors */
         .connector-split {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -469,7 +458,6 @@
             margin-top: 0.25rem;
         }
         
-        /* Info Box */
         .info-box {
             background: #e8f4f0;
             border: 1px solid #b8d4c8;
@@ -489,7 +477,6 @@
             font-size: 0.95rem;
         }
         
-        /* Contact */
         .contact-section {
             background: var(--light-gray);
             padding: 2rem;
@@ -507,7 +494,6 @@
             margin-bottom: 0.5rem;
         }
         
-        /* Disclaimer */
         .disclaimer {
             margin-top: 3rem;
             padding: 1.5rem;
@@ -519,265 +505,52 @@
             font-style: italic;
         }
         
-        /* Print Styles */
         @media print {
-            .password-screen {
-                display: none !important;
-            }
-            
-            .content {
-                display: block !important;
-            }
-            
-            .progress-bar {
-                display: none !important;
-            }
-            
-            .mobile-actions {
-                display: none !important;
-            }
-            
-            .toc {
-                display: none !important;
-            }
-            
-            header {
-                position: relative;
-                background: var(--brand-green) !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            
-            .header-actions {
-                display: none;
-            }
-            
-            .cover {
-                background: var(--brand-green) !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            
-            section {
-                page-break-inside: avoid;
-            }
-            
-            table {
-                page-break-inside: avoid;
-            }
-            
-            h2, h3, h4 {
-                page-break-after: avoid;
-            }
-            
-            .entity-box.foundation {
-                background: var(--brand-green) !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
+            .password-screen { display: none !important; }
+            .content { display: block !important; }
+            .progress-bar { display: none !important; }
+            .mobile-actions { display: none !important; }
+            .toc { display: none !important; }
+            header { position: relative; background: var(--brand-green) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .header-actions { display: none; }
+            .cover { background: var(--brand-green) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            section { page-break-inside: avoid; }
+            table { page-break-inside: avoid; }
+            h2, h3, h4 { page-break-after: avoid; }
+            .entity-box.foundation { background: var(--brand-green) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         }
         
         @media (max-width: 768px) {
-            html, body {
-                overflow-x: hidden;
-            }
-            
-            .cover h1 {
-                font-size: 1.75rem;
-            }
-            
-            .cover .subtitle {
-                font-size: 1.2rem;
-            }
-            
-            main {
-                padding: 1rem;
-            }
-            
-            table {
-                font-size: 0.85rem;
-                min-width: 100%;
-            }
-            
-            th, td {
-                padding: 0.75rem;
-            }
-            
-            .header-actions {
-                display: none;
-            }
-            
-            /* Show mobile floating actions */
-            .mobile-actions {
-                display: flex;
-            }
-            
-            /* TOC single column on mobile */
-            .toc-list {
-                grid-template-columns: 1fr;
-            }
-            
-            /* Mobile Entity Diagram */
-            .entity-diagram {
-                margin: 1.5rem 0;
-            }
-            
-            .connector-split {
-                padding: 1rem 0;
-            }
-            
-            .connector-split .connector-branch .arrow {
-                font-size: 1.25rem;
-            }
-            
-            .connector-split .connector-branch .label {
-                font-size: 0.7rem;
-            }
-            
-            .connector-single {
-                padding: 1rem 0;
-            }
-            
-            .entity-row {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 0.5rem;
-                position: relative;
-            }
-            
-            .entity-box {
-                padding: 1rem;
-                cursor: pointer;
-                position: relative;
-            }
-            
-            .entity-box h4 {
-                font-size: 0.6rem;
-                margin-bottom: 0.15rem;
-            }
-            
-            .entity-box h3 {
-                font-size: 0.85rem;
-                margin-bottom: 0;
-                padding-right: 1.25rem;
-            }
-            
-            .entity-box ul {
-                display: none;
-            }
-            
-            .entity-box::after {
-                content: '+';
-                position: absolute;
-                right: 0.75rem;
-                top: 0.75rem;
-                font-size: 1.25rem;
-                color: var(--brand-green);
-                font-weight: 300;
-                line-height: 1;
-            }
-            
-            .entity-box.foundation::after {
-                color: rgba(255,255,255,0.7);
-            }
-            
-            .entity-box.expanded::after {
-                content: '−';
-            }
-            
-            .entity-box li {
-                font-size: 0.8rem;
-                margin-bottom: 0.3rem;
-            }
-            
-            /* Expanded state - full width overlay */
-            .entity-row .entity-box.expanded {
-                position: absolute;
-                left: 0;
-                right: 0;
-                top: 0;
-                z-index: 10;
-                background: var(--white);
-                border-radius: 12px;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            }
-            
-            .entity-row .entity-box.expanded h3 {
-                font-size: 1rem;
-            }
-            
-            .entity-row .entity-box.expanded ul {
-                display: block;
-                margin-top: 0.75rem;
-            }
-            
-            /* Blur overlay when expanded */
-            .entity-diagram.has-expanded::before {
-                content: '';
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(255, 255, 255, 0.7);
-                backdrop-filter: blur(3px);
-                -webkit-backdrop-filter: blur(3px);
-                z-index: 5;
-                pointer-events: none;
-            }
-            
-            .entity-diagram.has-expanded .entity-box.expanded {
-                z-index: 15;
-            }
-            
-            /* Keep row height when one is expanded */
-            .entity-row {
-                min-height: 80px;
-            }
-            
-            /* Foundation box (not in row) */
-            .entity-diagram > .entity-box.foundation {
-                position: relative;
-            }
-            
-            .entity-diagram > .entity-box.foundation.expanded ul {
-                display: block;
-                margin-top: 0.75rem;
-            }
-            
-            /* Bottom SPV box (not in row) */
-            .entity-diagram > .entity-box:last-child {
-                position: relative;
-            }
-            
-            .entity-diagram > .entity-box:last-child.expanded ul {
-                display: block;
-                margin-top: 0.75rem;
-            }
+            html, body { overflow-x: hidden; }
+            .cover h1 { font-size: 1.75rem; }
+            .cover .subtitle { font-size: 1.2rem; }
+            main { padding: 1rem; }
+            table { font-size: 0.85rem; min-width: 100%; }
+            th, td { padding: 0.75rem; }
+            .header-actions { display: none; }
+            .mobile-actions { display: flex; }
+            .toc-list { grid-template-columns: 1fr; }
+            .entity-row { grid-template-columns: 1fr; gap: 1rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Password Screen -->
     <div class="password-screen" id="passwordScreen">
         <div class="password-box">
             <img src="assets/logo-mark.png" alt="ReDewable">
             <h2>Confidential Document</h2>
             <p>Enter the access code to view this document</p>
             <input type="password" id="passwordInput" placeholder="Access Code" autocomplete="off">
-            <button onclick="checkPassword()">Access Document</button>
+            <button type="button" id="accessBtn">Access Document</button>
             <p class="password-error" id="passwordError">Incorrect access code</p>
         </div>
     </div>
     
-    <!-- Main Content -->
     <div class="content" id="mainContent">
-        <!-- Progress Bar -->
         <div class="progress-bar" id="progressBar"></div>
         
-        <!-- Mobile Floating Actions -->
         <div class="mobile-actions" id="mobileActions">
-            <button onclick="window.print()" title="Print">🖨️</button>
+            <button type="button" id="printBtn" title="Print">🖨️</button>
         </div>
         
         <header>
@@ -786,12 +559,10 @@
                 <span>ReDewable Energy</span>
             </div>
             <div class="header-actions">
-                <button onclick="window.print()">🖨️ Print</button>
-                <button onclick="saveAsPDF()">💾 Save PDF</button>
+                <button type="button" id="headerPrintBtn">🖨️ Print</button>
             </div>
         </header>
         
-        <!-- Cover -->
         <div class="cover">
             <h1>REDEWABLE ENERGY</h1>
             <div class="subtitle">Project & Structure Overview</div>
@@ -803,7 +574,6 @@
         </div>
         
         <main>
-            <!-- Table of Contents -->
             <nav class="toc">
                 <h3>Contents</h3>
                 <ul class="toc-list">
@@ -818,7 +588,6 @@
                 </ul>
             </nav>
             
-            <!-- Vision -->
             <section id="vision">
                 <h2>Vision</h2>
                 <p>Disrupt the energy industry through on-chain infrastructure, build a massive project pipeline, and exit with the best of them — glorifying God in all that we do.</p>
@@ -826,7 +595,6 @@
                 <p>The immediate objective is developing ReDew Anson — a 400MW battery energy storage system in ERCOT, Texas — to NTP (Notice to Proceed) status for sale to an institutional buyer.</p>
             </section>
             
-            <!-- The Asset -->
             <section id="the-asset">
                 <h2>The Asset</h2>
                 <h3>ReDew Anson — Jones County, Texas</h3>
@@ -911,7 +679,6 @@
                 </table>
             </section>
             
-            <!-- Legal Structure -->
             <section id="legal-structure">
                 <h2>Legal & Entity Structure</h2>
                 <p>We are implementing an industry-standard structure used by successful DePIN projects including Helium, Grass, Filecoin, and ENS. This structure provides regulatory clarity, investor protection, and institutional credibility.</p>
@@ -919,7 +686,6 @@
                 <h3>Entity Architecture</h3>
                 
                 <div class="entity-diagram">
-                    <!-- Foundation -->
                     <div class="entity-box foundation">
                         <h4>Cayman Islands</h4>
                         <h3>ReDewable Foundation Ltd.</h3>
@@ -931,7 +697,6 @@
                         </ul>
                     </div>
                     
-                    <!-- Split connectors -->
                     <div class="connector-split">
                         <div class="connector-branch">
                             <span class="arrow">↓</span>
@@ -943,7 +708,6 @@
                         </div>
                     </div>
                     
-                    <!-- Middle Row -->
                     <div class="entity-row">
                         <div class="entity-box">
                             <h4>British Virgin Islands</h4>
@@ -965,13 +729,11 @@
                         </div>
                     </div>
                     
-                    <!-- Single connector -->
                     <div class="connector-single">
                         <span class="arrow">↓</span>
                         <span class="label">Manager</span>
                     </div>
                     
-                    <!-- SPV -->
                     <div class="entity-box">
                         <h4>Texas SPV</h4>
                         <h3>ReDew Anson, LLC</h3>
@@ -1023,7 +785,6 @@
                 </table>
             </section>
             
-            <!-- Regulatory Compliance -->
             <section id="regulatory">
                 <h2>Regulatory Compliance</h2>
                 
@@ -1079,7 +840,6 @@
                 </ul>
             </section>
             
-            <!-- Token Economics -->
             <section id="token-economics">
                 <h2>Token Economics</h2>
                 
@@ -1174,7 +934,6 @@
                 </ul>
             </section>
             
-            <!-- NFT Tiers -->
             <section id="nft-tiers">
                 <h2>Validator License NFTs</h2>
                 <p>Validator License NFTs grant access to the ReDewable protocol. Three tiers with different pricing and reward multipliers — designed to reward early believers while giving whales maximum absolute returns.</p>
@@ -1263,7 +1022,6 @@
                 </ul>
             </section>
             
-            <!-- Timeline -->
             <section id="timeline">
                 <h2>Timeline</h2>
                 
@@ -1295,21 +1053,19 @@
                 </table>
             </section>
             
-            <!-- Contact -->
             <section id="contact">
                 <div class="contact-section">
                     <h3>Contact</h3>
                     <p style="margin-top: 1rem;"><strong>Talor Byington</strong></p>
                     <p>Founder & CEO, ReDewable Energy Company, LLC</p>
                     <p style="margin-top: 1rem;">
-                        Email: <a href="mailto:tb@redewable.com" style="color: var(--brand-green);">tb@redewable.com</a><br>
+                        Email: tb@redewable.com<br>
                         Website: <a href="https://redewable.com" target="_blank" style="color: var(--brand-green);">redewable.com</a><br>
                         Protocol: <a href="https://redewables.com" target="_blank" style="color: var(--brand-green);">redewables.com</a>
                     </p>
                 </div>
             </section>
             
-            <!-- Disclaimer -->
             <div class="disclaimer">
                 <strong>CONFIDENTIAL:</strong> This document is provided for informational purposes only and is intended solely for the recipient. The information contained herein is subject to change and should not be relied upon without independent verification.
             </div>
@@ -1317,100 +1073,73 @@
     </div>
     
     <script>
-        // Password check
-        const correctPassword = 'bvi';
-        
-        function checkPassword() {
-            const input = document.getElementById('passwordInput').value.trim().toLowerCase();
-            const error = document.getElementById('passwordError');
+        (function() {
+            var correctPassword = 'bvi';
+            var passwordInput = document.getElementById('passwordInput');
+            var passwordError = document.getElementById('passwordError');
+            var passwordScreen = document.getElementById('passwordScreen');
+            var mainContent = document.getElementById('mainContent');
+            var accessBtn = document.getElementById('accessBtn');
+            var printBtn = document.getElementById('printBtn');
+            var headerPrintBtn = document.getElementById('headerPrintBtn');
             
-            if (input === correctPassword) {
-                document.getElementById('passwordScreen').style.display = 'none';
-                document.getElementById('mainContent').classList.add('visible');
-                sessionStorage.setItem('harneys_authenticated', 'true');
-            } else {
-                error.style.display = 'block';
-                document.getElementById('passwordInput').value = '';
-                document.getElementById('passwordInput').focus();
+            function checkPassword() {
+                var input = passwordInput.value.trim().toLowerCase();
+                
+                if (input === correctPassword) {
+                    passwordScreen.style.display = 'none';
+                    mainContent.classList.add('visible');
+                    sessionStorage.setItem('harneys_authenticated', 'true');
+                } else {
+                    passwordError.style.display = 'block';
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                }
             }
-        }
-        
-        // Check if already authenticated this session
-        if (sessionStorage.getItem('harneys_authenticated') === 'true') {
-            document.getElementById('passwordScreen').style.display = 'none';
-            document.getElementById('mainContent').classList.add('visible');
-        }
-        
-        // Enter key to submit
-        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                checkPassword();
+            
+            if (sessionStorage.getItem('harneys_authenticated') === 'true') {
+                passwordScreen.style.display = 'none';
+                mainContent.classList.add('visible');
             }
-        });
-        
-        // Focus on password input on load
-        window.addEventListener('load', function() {
-            document.getElementById('passwordInput').focus();
             
-            // Mobile accordion for entity boxes
-            const entityBoxes = document.querySelectorAll('.entity-box');
-            const entityDiagram = document.querySelector('.entity-diagram');
+            accessBtn.addEventListener('click', checkPassword);
             
-            entityBoxes.forEach(box => {
-                box.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    if (window.innerWidth <= 768) {
-                        const parent = this.parentElement;
-                        const isInRow = parent.classList.contains('entity-row');
-                        
-                        if (isInRow) {
-                            const siblings = parent.querySelectorAll('.entity-box');
-                            siblings.forEach(sib => {
-                                if (sib !== this) {
-                                    sib.classList.remove('expanded');
-                                }
-                            });
-                        }
-                        
-                        this.classList.toggle('expanded');
-                        
-                        const anyExpanded = document.querySelector('.entity-box.expanded');
-                        if (anyExpanded) {
-                            entityDiagram.classList.add('has-expanded');
-                        } else {
-                            entityDiagram.classList.remove('has-expanded');
-                        }
-                    }
-                });
-            });
-            
-            document.addEventListener('click', function(e) {
-                if (window.innerWidth <= 768 && entityDiagram) {
-                    if (!e.target.closest('.entity-box')) {
-                        entityBoxes.forEach(box => box.classList.remove('expanded'));
-                        entityDiagram.classList.remove('has-expanded');
-                    }
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkPassword();
                 }
             });
-        });
-        
-        // Save as PDF
-        function saveAsPDF() {
-            window.print();
-        }
-        
-        // Progress bar
-        function updateProgressBar() {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById('progressBar').style.width = scrolled + '%';
-        }
-        
-        window.addEventListener('scroll', updateProgressBar);
-        
-        // Smooth scroll for TOC links
-        document.querySelectorAll('.toc-list a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = doc
+            
+            printBtn.addEventListener('click', function() {
+                window.print();
+            });
+            
+            headerPrintBtn.addEventListener('click', function() {
+                window.print();
+            });
+            
+            passwordInput.focus();
+            
+            function updateProgressBar() {
+                var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                var scrolled = (winScroll / height) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+            }
+            
+            window.addEventListener('scroll', updateProgressBar);
+            
+            var tocLinks = document.querySelectorAll('.toc-list a');
+            for (var i = 0; i < tocLinks.length; i++) {
+                tocLinks[i].addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
