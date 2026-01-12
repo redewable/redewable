@@ -48,6 +48,33 @@
             min-height: 100vh;
         }
 
+        /* SVG Icon System */
+        .icon-svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .icon-svg path,
+        .icon-svg circle,
+        .icon-svg rect,
+        .icon-svg line,
+        .icon-svg polyline,
+        .icon-svg polygon {
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .icon-svg.filled path,
+        .icon-svg.filled circle,
+        .icon-svg.filled rect {
+            fill: currentColor;
+            stroke: none;
+        }
+
         /* Password Screen */
         .password-screen {
             position: fixed;
@@ -101,6 +128,12 @@
             margin: 0 auto 1.5rem;
             font-size: 1.5rem;
             font-weight: 700;
+            color: var(--bg-primary);
+        }
+
+        .password-logo svg {
+            width: 32px;
+            height: 32px;
             color: var(--bg-primary);
         }
 
@@ -226,6 +259,12 @@
             font-size: 1rem;
         }
 
+        .sidebar-logo svg {
+            width: 22px;
+            height: 22px;
+            color: var(--bg-primary);
+        }
+
         .sidebar-brand {
             flex: 1;
         }
@@ -287,10 +326,12 @@
             border-left-color: var(--brand-green);
         }
 
-        .nav-item .icon {
+        .nav-item .nav-icon {
             width: 20px;
-            text-align: center;
-            font-size: 1rem;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .nav-item .status {
@@ -327,7 +368,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.85rem;
+        }
+
+        .sidebar-footer .avatar svg {
+            width: 18px;
+            height: 18px;
+            color: var(--text-muted);
         }
 
         .logout-btn {
@@ -379,9 +425,13 @@
             background: none;
             border: none;
             color: var(--text-primary);
-            font-size: 1.5rem;
             cursor: pointer;
             padding: 0.5rem;
+        }
+
+        .mobile-menu-btn svg {
+            width: 24px;
+            height: 24px;
         }
 
         .breadcrumb {
@@ -419,6 +469,11 @@
             align-items: center;
             gap: 0.5rem;
             transition: all 0.15s;
+        }
+
+        .header-btn svg {
+            width: 16px;
+            height: 16px;
         }
 
         .header-btn:hover {
@@ -540,6 +595,12 @@
             gap: 0.5rem;
         }
 
+        .progress-section h3 svg {
+            width: 20px;
+            height: 20px;
+            color: var(--brand-green);
+        }
+
         .progress-bars {
             display: flex;
             flex-direction: column;
@@ -614,6 +675,12 @@
             gap: 0.5rem;
         }
 
+        .doc-category-header h4 svg {
+            width: 18px;
+            height: 18px;
+            color: var(--brand-green);
+        }
+
         .doc-category-header .count {
             font-size: 0.75rem;
             background: var(--bg-secondary);
@@ -648,8 +715,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
         }
+
+        .doc-icon svg {
+            width: 18px;
+            height: 18px;
+            color: var(--text-muted);
+        }
+
+        .doc-icon.pdf svg { color: #ef4444; }
+        .doc-icon.xlsx svg { color: #22c55e; }
+        .doc-icon.doc svg { color: #3b82f6; }
+        .doc-icon.img svg { color: #a855f7; }
 
         .doc-info {
             flex: 1;
@@ -681,19 +758,6 @@
         .doc-status.pending { background: var(--status-yellow); }
         .doc-status.missing { background: var(--status-red); }
 
-        .doc-empty {
-            padding: 2rem;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .doc-empty .icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            opacity: 0.5;
-        }
-
         /* Section Pages */
         .section-header {
             margin-bottom: 2rem;
@@ -708,6 +772,12 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
+        }
+
+        .section-header h1 svg {
+            width: 28px;
+            height: 28px;
+            color: var(--brand-green);
         }
 
         .section-header h1 .status-badge {
@@ -791,8 +861,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
         }
+
+        .doc-table .file-icon svg {
+            width: 16px;
+            height: 16px;
+            color: var(--text-muted);
+        }
+
+        .doc-table .file-icon.pdf svg { color: #ef4444; }
+        .doc-table .file-icon.xlsx svg { color: #22c55e; }
+        .doc-table .file-icon.audio svg { color: #f97316; }
+        .doc-table .file-icon.dwg svg { color: #06b6d4; }
+        .doc-table .file-icon.img svg { color: #a855f7; }
 
         .status-pill {
             display: inline-flex;
@@ -835,6 +916,14 @@
             font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .action-btn svg {
+            width: 14px;
+            height: 14px;
         }
 
         .action-btn:hover {
@@ -890,6 +979,15 @@
             font-size: 1rem;
             font-weight: 600;
             margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chart-container h3 svg {
+            width: 20px;
+            height: 20px;
+            color: var(--brand-green);
         }
 
         .chart-placeholder {
@@ -897,79 +995,20 @@
             background: var(--bg-tertiary);
             border-radius: 8px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             color: var(--text-muted);
+            gap: 0.5rem;
         }
 
-        /* Timeline */
-        .timeline {
-            position: relative;
-            padding-left: 2rem;
+        .chart-placeholder svg {
+            width: 48px;
+            height: 48px;
+            opacity: 0.3;
         }
 
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 7px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: var(--border);
-        }
-
-        .timeline-item {
-            position: relative;
-            padding-bottom: 2rem;
-        }
-
-        .timeline-item:last-child {
-            padding-bottom: 0;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -2rem;
-            top: 4px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--bg-card);
-            border: 2px solid var(--border);
-        }
-
-        .timeline-item.complete::before {
-            background: var(--status-green);
-            border-color: var(--status-green);
-        }
-
-        .timeline-item.active::before {
-            background: var(--brand-green);
-            border-color: var(--brand-green);
-            box-shadow: 0 0 0 4px var(--brand-green-glow);
-        }
-
-        .timeline-item .date {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-family: 'JetBrains Mono', monospace;
-            margin-bottom: 0.25rem;
-        }
-
-        .timeline-item h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.25rem;
-        }
-
-        .timeline-item p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        /* Notes/Comments Section */
+        /* Notes Section */
         .notes-section {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -981,6 +1020,15 @@
             font-size: 1rem;
             font-weight: 600;
             margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .notes-section h3 svg {
+            width: 20px;
+            height: 20px;
+            color: var(--brand-green);
         }
 
         .note-item {
@@ -1031,9 +1079,11 @@
             background: var(--brand-green-glow);
         }
 
-        .upload-zone .icon {
-            font-size: 3rem;
+        .upload-zone svg {
+            width: 48px;
+            height: 48px;
             margin-bottom: 1rem;
+            color: var(--text-muted);
             opacity: 0.5;
         }
 
@@ -1135,10 +1185,256 @@
     </style>
 </head>
 <body>
+    <!-- SVG Icon Definitions -->
+    <svg style="display: none;">
+        <defs>
+            <!-- Battery/Energy -->
+            <symbol id="icon-battery" viewBox="0 0 24 24">
+                <rect x="1" y="6" width="18" height="12" rx="2" ry="2"></rect>
+                <line x1="23" y1="13" x2="23" y2="11"></line>
+                <line x1="6" y1="10" x2="6" y2="14"></line>
+                <line x1="10" y1="10" x2="10" y2="14"></line>
+            </symbol>
+            
+            <!-- Dashboard/Grid -->
+            <symbol id="icon-dashboard" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="7" height="9"></rect>
+                <rect x="14" y="3" width="7" height="5"></rect>
+                <rect x="14" y="12" width="7" height="9"></rect>
+                <rect x="3" y="16" width="7" height="5"></rect>
+            </symbol>
+            
+            <!-- Document/File -->
+            <symbol id="icon-file" viewBox="0 0 24 24">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+            </symbol>
+            
+            <!-- File Text -->
+            <symbol id="icon-file-text" viewBox="0 0 24 24">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+            </symbol>
+            
+            <!-- Spreadsheet -->
+            <symbol id="icon-spreadsheet" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="3" y1="9" x2="21" y2="9"></line>
+                <line x1="3" y1="15" x2="21" y2="15"></line>
+                <line x1="9" y1="3" x2="9" y2="21"></line>
+                <line x1="15" y1="3" x2="15" y2="21"></line>
+            </symbol>
+            
+            <!-- Map/Location -->
+            <symbol id="icon-map" viewBox="0 0 24 24">
+                <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+                <line x1="8" y1="2" x2="8" y2="18"></line>
+                <line x1="16" y1="6" x2="16" y2="22"></line>
+            </symbol>
+            
+            <!-- Map Pin -->
+            <symbol id="icon-map-pin" viewBox="0 0 24 24">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+            </symbol>
+            
+            <!-- Zap/Electricity -->
+            <symbol id="icon-zap" viewBox="0 0 24 24">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </symbol>
+            
+            <!-- Clipboard -->
+            <symbol id="icon-clipboard" viewBox="0 0 24 24">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+            </symbol>
+            
+            <!-- Wrench/Settings -->
+            <symbol id="icon-wrench" viewBox="0 0 24 24">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+            </symbol>
+            
+            <!-- Hard Hat/Construction -->
+            <symbol id="icon-hard-hat" viewBox="0 0 24 24">
+                <path d="M2 18a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v2z"></path>
+                <path d="M10 10V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5"></path>
+                <path d="M4 15v-3a6 6 0 0 1 6-6h0"></path>
+                <path d="M14 6h0a6 6 0 0 1 6 6v3"></path>
+            </symbol>
+            
+            <!-- Trending Up/Chart -->
+            <symbol id="icon-trending-up" viewBox="0 0 24 24">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                <polyline points="17 6 23 6 23 12"></polyline>
+            </symbol>
+            
+            <!-- Bar Chart -->
+            <symbol id="icon-bar-chart" viewBox="0 0 24 24">
+                <line x1="12" y1="20" x2="12" y2="10"></line>
+                <line x1="18" y1="20" x2="18" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="16"></line>
+            </symbol>
+            
+            <!-- Dollar Sign -->
+            <symbol id="icon-dollar" viewBox="0 0 24 24">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </symbol>
+            
+            <!-- Alert Triangle -->
+            <symbol id="icon-alert" viewBox="0 0 24 24">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </symbol>
+            
+            <!-- Building -->
+            <symbol id="icon-building" viewBox="0 0 24 24">
+                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                <line x1="9" y1="22" x2="9" y2="2"></line>
+                <line x1="15" y1="22" x2="15" y2="2"></line>
+                <line x1="4" y1="12" x2="20" y2="12"></line>
+            </symbol>
+            
+            <!-- Users -->
+            <symbol id="icon-users" viewBox="0 0 24 24">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </symbol>
+            
+            <!-- User -->
+            <symbol id="icon-user" viewBox="0 0 24 24">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </symbol>
+            
+            <!-- Folder -->
+            <symbol id="icon-folder" viewBox="0 0 24 24">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+            </symbol>
+            
+            <!-- Clock -->
+            <symbol id="icon-clock" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+            </symbol>
+            
+            <!-- Upload -->
+            <symbol id="icon-upload" viewBox="0 0 24 24">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+            </symbol>
+            
+            <!-- Download -->
+            <symbol id="icon-download" viewBox="0 0 24 24">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+            </symbol>
+            
+            <!-- Eye/View -->
+            <symbol id="icon-eye" viewBox="0 0 24 24">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+            </symbol>
+            
+            <!-- Printer -->
+            <symbol id="icon-printer" viewBox="0 0 24 24">
+                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <rect x="6" y="14" width="12" height="8"></rect>
+            </symbol>
+            
+            <!-- Menu -->
+            <symbol id="icon-menu" viewBox="0 0 24 24">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </symbol>
+            
+            <!-- Edit/Pencil -->
+            <symbol id="icon-edit" viewBox="0 0 24 24">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </symbol>
+            
+            <!-- Link -->
+            <symbol id="icon-link" viewBox="0 0 24 24">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </symbol>
+            
+            <!-- External Link -->
+            <symbol id="icon-external-link" viewBox="0 0 24 24">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+            </symbol>
+            
+            <!-- Microphone/Audio -->
+            <symbol id="icon-mic" viewBox="0 0 24 24">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="23"></line>
+                <line x1="8" y1="23" x2="16" y2="23"></line>
+            </symbol>
+            
+            <!-- Check Circle -->
+            <symbol id="icon-check-circle" viewBox="0 0 24 24">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </symbol>
+            
+            <!-- X Circle -->
+            <symbol id="icon-x-circle" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="15" y1="9" x2="9" y2="15"></line>
+                <line x1="9" y1="9" x2="15" y2="15"></line>
+            </symbol>
+            
+            <!-- Log Out -->
+            <symbol id="icon-log-out" viewBox="0 0 24 24">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+            </symbol>
+            
+            <!-- Wifi/Network -->
+            <symbol id="icon-wifi" viewBox="0 0 24 24">
+                <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                <line x1="12" y1="20" x2="12.01" y2="20"></line>
+            </symbol>
+            
+            <!-- Server/Database -->
+            <symbol id="icon-server" viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+            </symbol>
+            
+            <!-- Lock -->
+            <symbol id="icon-lock" viewBox="0 0 24 24">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </symbol>
+        </defs>
+    </svg>
+
     <!-- Password Screen -->
     <div class="password-screen" id="passwordScreen">
         <div class="password-box">
-            <div class="password-logo">RD</div>
+            <div class="password-logo">
+                <svg><use href="#icon-battery"/></svg>
+            </div>
             <h2>ReDew Anson Data Room</h2>
             <p class="subtitle">Enter access code to view confidential project documents</p>
             <div class="password-input-wrapper">
@@ -1160,7 +1456,9 @@
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <div class="sidebar-logo">RD</div>
+                <div class="sidebar-logo">
+                    <svg><use href="#icon-battery"/></svg>
+                </div>
                 <div class="sidebar-brand">
                     <h1>ReDew Anson</h1>
                     <span>Data Room</span>
@@ -1171,7 +1469,7 @@
                 <div class="nav-section">
                     <div class="nav-section-title">Overview</div>
                     <a class="nav-item active" data-section="dashboard" onclick="showSection('dashboard')">
-                        <span class="icon">📊</span>
+                        <span class="nav-icon"><svg class="icon-svg"><use href="#icon-dashboard"/></svg></span>
                         Dashboard
                     </a>
                 </div>
@@ -1179,32 +1477,32 @@
                 <div class="nav-section">
                     <div class="nav-section-title">Due Diligence</div>
                     <a class="nav-item" data-section="executive" onclick="showSection('executive')">
-                        <span class="icon">📋</span>
+                        <span class="nav-icon"><svg class="icon-svg"><use href="#icon-clipboard"/></svg></span>
                         Executive Summary
                         <span class="status partial"></span>
                     </a>
                     <a class="nav-item" data-section="land" onclick="showSection('land')">
-                        <span class="icon">🗺️</span>
+                        <span class="nav-icon"><svg class="icon-svg"><use href="#icon-map"/></svg></span>
                         Land & Site Control
                         <span class="status complete"></span>
                     </a>
                     <a class="nav-item" data-section="interconnection" onclick="showSection('interconnection')">
-                        <span class="icon">⚡</span>
+                        <span class="nav-icon"><svg class="icon-svg"><use href="#icon-zap"/></svg></span>
                         Interconnection
                         <span class="status complete"></span>
                     </a>
                     <a class="nav-item" data-section="permitting" onclick="showSection('permitting')">
-                        <span class="icon">📑</span>
+                        <span class="nav-icon"><svg class="icon-svg"><use href="#icon-file-text"/></svg></span>
                         Permitting
                         <span class="status pending"></span>
                     </a>
                     <a class="nav-item" data-section="technical" onclick="showSection('technical')">
-                        <span class="icon">🔧</span>
+                        <span class="nav-icon"><svg class="icon-svg"><use href="#icon-wrench"/></svg></span>
                         Technical & Engineering
                         <span class="status pending"></span>
                     </a>
                     <a class="nav-item" data-section="epc" onclick="showSection('epc')">
-                        <span class="icon">🏗️</span>
+                        <span class="nav-icon"><svg class="icon-svg"><use href="#icon-hard-hat"/></svg></span>
                         EPC & Construction
                         <span class="status new"></span>
                     </a>
@@ -1213,17 +1511,17 @@
                 <div class="nav-section">
                     <div class="nav-section-title">Analysis</div>
                     <a class="nav-item" data-section="market" onclick="showSection('market')">
-                        <span class="icon">📈</span>
+                        <span class="nav-icon"><svg class="icon-svg"><use href="#icon-trending-up"/></svg></span>
                         Market Analysis
                         <span class="status complete"></span>
                     </a>
                     <a class="nav-item" data-section="financial" onclick="showSection('financial')">
-                        <span class="icon">💰</span>
+                        <span class="nav-icon"><svg class="icon-svg"><use href="#icon-dollar"/></svg></span>
                         Financial Model
                         <span class="status partial"></span>
                     </a>
                     <a class="nav-item" data-section="risk" onclick="showSection('risk')">
-                        <span class="icon">⚠️</span>
+                        <span class="nav-icon"><svg class="icon-svg"><use href="#icon-alert"/></svg></span>
                         Risk Assessment
                         <span class="status partial"></span>
                     </a>
@@ -1232,12 +1530,12 @@
                 <div class="nav-section">
                     <div class="nav-section-title">Corporate</div>
                     <a class="nav-item" data-section="entity" onclick="showSection('entity')">
-                        <span class="icon">🏢</span>
+                        <span class="nav-icon"><svg class="icon-svg"><use href="#icon-building"/></svg></span>
                         Entity Structure
                         <span class="status complete"></span>
                     </a>
                     <a class="nav-item" data-section="team" onclick="showSection('team')">
-                        <span class="icon">👥</span>
+                        <span class="nav-icon"><svg class="icon-svg"><use href="#icon-users"/></svg></span>
                         Team & Partners
                         <span class="status partial"></span>
                     </a>
@@ -1246,7 +1544,9 @@
 
             <div class="sidebar-footer">
                 <div class="user">
-                    <div class="avatar">👤</div>
+                    <div class="avatar">
+                        <svg><use href="#icon-user"/></svg>
+                    </div>
                     <div>
                         <div style="color: var(--text-primary); font-weight: 500;">Investor View</div>
                         <div>Session Active</div>
@@ -1260,7 +1560,9 @@
         <main class="main">
             <header class="header">
                 <div class="header-left">
-                    <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                        <svg><use href="#icon-menu"/></svg>
+                    </button>
                     <div class="breadcrumb">
                         <span>ReDew Anson</span>
                         <span>/</span>
@@ -1269,10 +1571,12 @@
                 </div>
                 <div class="header-actions">
                     <button class="header-btn" onclick="window.print()">
-                        <span>🖨️</span> Print
+                        <svg><use href="#icon-printer"/></svg>
+                        Print
                     </button>
                     <button class="header-btn primary">
-                        <span>📥</span> Download All
+                        <svg><use href="#icon-download"/></svg>
+                        Download All
                     </button>
                 </div>
             </header>
@@ -1309,7 +1613,10 @@
                     </div>
 
                     <div class="progress-section">
-                        <h3>📊 Development Progress</h3>
+                        <h3>
+                            <svg><use href="#icon-bar-chart"/></svg>
+                            Development Progress
+                        </h3>
                         <div class="progress-bars">
                             <div class="progress-item">
                                 <div class="label">Land & Site Control</div>
@@ -1359,12 +1666,17 @@
                     <div class="documents-grid">
                         <div class="doc-category">
                             <div class="doc-category-header">
-                                <h4>📁 Recently Updated</h4>
+                                <h4>
+                                    <svg><use href="#icon-folder"/></svg>
+                                    Recently Updated
+                                </h4>
                                 <span class="count">5 files</span>
                             </div>
                             <div class="doc-list">
                                 <div class="doc-item">
-                                    <div class="doc-icon">📄</div>
+                                    <div class="doc-icon pdf">
+                                        <svg><use href="#icon-file-text"/></svg>
+                                    </div>
                                     <div class="doc-info">
                                         <div class="name">Injection Study - 300MW</div>
                                         <div class="meta">PDF • Jan 10, 2026</div>
@@ -1372,7 +1684,9 @@
                                     <div class="doc-status uploaded"></div>
                                 </div>
                                 <div class="doc-item">
-                                    <div class="doc-icon">📄</div>
+                                    <div class="doc-icon pdf">
+                                        <svg><use href="#icon-file-text"/></svg>
+                                    </div>
                                     <div class="doc-info">
                                         <div class="name">Land Control Agreement</div>
                                         <div class="meta">PDF • Jan 8, 2026</div>
@@ -1380,7 +1694,9 @@
                                     <div class="doc-status uploaded"></div>
                                 </div>
                                 <div class="doc-item">
-                                    <div class="doc-icon">📊</div>
+                                    <div class="doc-icon xlsx">
+                                        <svg><use href="#icon-spreadsheet"/></svg>
+                                    </div>
                                     <div class="doc-info">
                                         <div class="name">ERCOT Market Analysis</div>
                                         <div class="meta">XLSX • Jan 6, 2026</div>
@@ -1388,7 +1704,9 @@
                                     <div class="doc-status uploaded"></div>
                                 </div>
                                 <div class="doc-item">
-                                    <div class="doc-icon">📄</div>
+                                    <div class="doc-icon pdf">
+                                        <svg><use href="#icon-file-text"/></svg>
+                                    </div>
                                     <div class="doc-info">
                                         <div class="name">Purchase Option Agreement</div>
                                         <div class="meta">PDF • Dec 15, 2025</div>
@@ -1400,12 +1718,17 @@
 
                         <div class="doc-category">
                             <div class="doc-category-header">
-                                <h4>⏳ Pending Items</h4>
+                                <h4>
+                                    <svg><use href="#icon-clock"/></svg>
+                                    Pending Items
+                                </h4>
                                 <span class="count">6 items</span>
                             </div>
                             <div class="doc-list">
                                 <div class="doc-item">
-                                    <div class="doc-icon">📄</div>
+                                    <div class="doc-icon">
+                                        <svg><use href="#icon-file"/></svg>
+                                    </div>
                                     <div class="doc-info">
                                         <div class="name">Phase I ESA</div>
                                         <div class="meta">Required • Environmental</div>
@@ -1413,7 +1736,9 @@
                                     <div class="doc-status pending"></div>
                                 </div>
                                 <div class="doc-item">
-                                    <div class="doc-icon">📄</div>
+                                    <div class="doc-icon">
+                                        <svg><use href="#icon-file"/></svg>
+                                    </div>
                                     <div class="doc-info">
                                         <div class="name">County Zoning Confirmation</div>
                                         <div class="meta">Required • Permitting</div>
@@ -1421,7 +1746,9 @@
                                     <div class="doc-status missing"></div>
                                 </div>
                                 <div class="doc-item">
-                                    <div class="doc-icon">📊</div>
+                                    <div class="doc-icon xlsx">
+                                        <svg><use href="#icon-spreadsheet"/></svg>
+                                    </div>
                                     <div class="doc-info">
                                         <div class="name">EPC Indicative Pricing</div>
                                         <div class="meta">In Progress • Optimum</div>
@@ -1429,7 +1756,9 @@
                                     <div class="doc-status pending"></div>
                                 </div>
                                 <div class="doc-item">
-                                    <div class="doc-icon">📐</div>
+                                    <div class="doc-icon">
+                                        <svg><use href="#icon-file"/></svg>
+                                    </div>
                                     <div class="doc-info">
                                         <div class="name">Site Layout Drawing</div>
                                         <div class="meta">Required • Engineering</div>
@@ -1445,7 +1774,8 @@
                 <section class="page-section" id="section-land">
                     <div class="section-header">
                         <h1>
-                            🗺️ Land & Site Control
+                            <svg><use href="#icon-map"/></svg>
+                            Land & Site Control
                             <span class="status-badge complete">90% Complete</span>
                         </h1>
                         <p>Documentation for land rights, site control agreements, and environmental due diligence for the 45-acre project site in Jones County, Texas.</p>
@@ -1484,93 +1814,110 @@
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon pdf">
+                                                <svg><use href="#icon-file-text"/></svg>
+                                            </div>
                                             <span>Purchase Option Agreement</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>Dec 15, 2025</td>
                                     <td><span class="status-pill uploaded"><span class="dot"></span>Uploaded</span></td>
-                                    <td><button class="action-btn">View</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-eye"/></svg> View</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon pdf">
+                                                <svg><use href="#icon-file-text"/></svg>
+                                            </div>
                                             <span>Land Control Agreement</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>Jan 8, 2026</td>
                                     <td><span class="status-pill uploaded"><span class="dot"></span>Uploaded</span></td>
-                                    <td><button class="action-btn">View</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-eye"/></svg> View</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">🎤</div>
+                                            <div class="file-icon audio">
+                                                <svg><use href="#icon-mic"/></svg>
+                                            </div>
                                             <span>Environmental Assessment Notes</span>
                                         </div>
                                     </td>
                                     <td>Audio/Notes</td>
                                     <td>Jan 5, 2026</td>
                                     <td><span class="status-pill uploaded"><span class="dot"></span>Uploaded</span></td>
-                                    <td><button class="action-btn">View</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-eye"/></svg> View</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon pdf">
+                                                <svg><use href="#icon-file-text"/></svg>
+                                            </div>
                                             <span>Geotechnical Scope Contract</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>Jan 3, 2026</td>
                                     <td><span class="status-pill uploaded"><span class="dot"></span>Uploaded</span></td>
-                                    <td><button class="action-btn">View</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-eye"/></svg> View</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon">
+                                                <svg><use href="#icon-file"/></svg>
+                                            </div>
                                             <span>Phase I Environmental Site Assessment</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill pending"><span class="dot"></span>Pending</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon">
+                                                <svg><use href="#icon-file"/></svg>
+                                            </div>
                                             <span>Title Report / Commitment</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Required</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">🗺️</div>
+                                            <div class="file-icon dwg">
+                                                <svg><use href="#icon-map"/></svg>
+                                            </div>
                                             <span>Survey / Boundary / Plat</span>
                                         </div>
                                     </td>
                                     <td>PDF/DWG</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Required</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <div class="notes-section">
-                        <h3>📝 Notes & Updates</h3>
+                        <h3>
+                            <svg><use href="#icon-edit"/></svg>
+                            Notes & Updates
+                        </h3>
                         <div class="note-item">
                             <div class="note-header">
                                 <span class="author">Engineering Team</span>
@@ -1592,7 +1939,8 @@
                 <section class="page-section" id="section-interconnection">
                     <div class="section-header">
                         <h1>
-                            ⚡ Interconnection
+                            <svg><use href="#icon-zap"/></svg>
+                            Interconnection
                             <span class="status-badge complete">75% Complete</span>
                         </h1>
                         <p>ERCOT interconnection studies, queue position, and transmission analysis for 300-400 MW injection at Phantom Hill 345 kV substation.</p>
@@ -1631,57 +1979,68 @@
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon pdf">
+                                                <svg><use href="#icon-file-text"/></svg>
+                                            </div>
                                             <span>Injection Study - 300 MW</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>Jan 10, 2026</td>
                                     <td><span class="status-pill uploaded"><span class="dot"></span>Uploaded</span></td>
-                                    <td><button class="action-btn">View</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-eye"/></svg> View</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📊</div>
+                                            <div class="file-icon xlsx">
+                                                <svg><use href="#icon-spreadsheet"/></svg>
+                                            </div>
                                             <span>Transmission Upgrade Analysis</span>
                                         </div>
                                     </td>
                                     <td>PDF/XLSX</td>
                                     <td>Jan 10, 2026</td>
                                     <td><span class="status-pill uploaded"><span class="dot"></span>Uploaded</span></td>
-                                    <td><button class="action-btn">View</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-eye"/></svg> View</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon">
+                                                <svg><use href="#icon-file"/></svg>
+                                            </div>
                                             <span>Queue Position Documentation</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill pending"><span class="dot"></span>In Progress</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon">
+                                                <svg><use href="#icon-file"/></svg>
+                                            </div>
                                             <span>FIS Timeline & Application</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill pending"><span class="dot"></span>Pending</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <div class="notes-section">
-                        <h3>📝 Key Findings</h3>
+                        <h3>
+                            <svg><use href="#icon-edit"/></svg>
+                            Key Findings
+                        </h3>
                         <div class="note-item">
                             <div class="note-header">
                                 <span class="author">Enerzinx (Interconnection)</span>
@@ -1703,7 +2062,8 @@
                 <section class="page-section" id="section-permitting">
                     <div class="section-header">
                         <h1>
-                            📑 Permitting
+                            <svg><use href="#icon-file-text"/></svg>
+                            Permitting
                             <span class="status-badge pending">15% Complete</span>
                         </h1>
                         <p>County, state, and federal permitting requirements for Jones County, Texas. Texas generally has a streamlined permitting environment for energy projects.</p>
@@ -1728,7 +2088,7 @@
                     </div>
 
                     <div class="upload-zone">
-                        <div class="icon">📤</div>
+                        <svg><use href="#icon-upload"/></svg>
                         <h4>Upload Permitting Documents</h4>
                         <p>Drag and drop files here, or click to browse</p>
                     </div>
@@ -1748,69 +2108,82 @@
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon">
+                                                <svg><use href="#icon-file"/></svg>
+                                            </div>
                                             <span>County Zoning Confirmation Letter</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Required</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon">
+                                                <svg><use href="#icon-file"/></svg>
+                                            </div>
                                             <span>AHJ Contact Log / Correspondence</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Required</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon">
+                                                <svg><use href="#icon-file"/></svg>
+                                            </div>
                                             <span>Stormwater / SWPPP Plan</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Required</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon">
+                                                <svg><use href="#icon-file"/></svg>
+                                            </div>
                                             <span>Fire Safety / Emergency Response Plan</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Required</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon">
+                                                <svg><use href="#icon-file"/></svg>
+                                            </div>
                                             <span>Building Permit Application</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Future</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <div class="notes-section">
-                        <h3>📝 Action Items</h3>
+                        <h3>
+                            <svg><use href="#icon-edit"/></svg>
+                            Action Items
+                        </h3>
                         <div class="note-item">
                             <div class="note-header">
                                 <span class="author">Priority Task</span>
@@ -1825,7 +2198,8 @@
                 <section class="page-section" id="section-technical">
                     <div class="section-header">
                         <h1>
-                            🔧 Technical & Engineering
+                            <svg><use href="#icon-wrench"/></svg>
+                            Technical & Engineering
                             <span class="status-badge pending">35% Complete</span>
                         </h1>
                         <p>Engineering documentation, site design, single-line diagrams, and OEM specifications for the 400 MW / 1,600 MWh Tesla Megapack system.</p>
@@ -1850,7 +2224,7 @@
                     </div>
 
                     <div class="upload-zone">
-                        <div class="icon">📐</div>
+                        <svg><use href="#icon-upload"/></svg>
                         <h4>Upload Engineering Documents</h4>
                         <p>Site layouts, SLDs, specifications, and technical drawings</p>
                     </div>
@@ -1870,62 +2244,72 @@
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📐</div>
+                                            <div class="file-icon dwg">
+                                                <svg><use href="#icon-map"/></svg>
+                                            </div>
                                             <span>Preliminary Site Layout</span>
                                         </div>
                                     </td>
                                     <td>PDF/DWG</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Required</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">⚡</div>
+                                            <div class="file-icon dwg">
+                                                <svg><use href="#icon-zap"/></svg>
+                                            </div>
                                             <span>Single-Line Diagram</span>
                                         </div>
                                     </td>
                                     <td>PDF/DWG</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Required</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">🔋</div>
+                                            <div class="file-icon pdf">
+                                                <svg><use href="#icon-battery"/></svg>
+                                            </div>
                                             <span>OEM Specifications - Tesla Megapack</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill pending"><span class="dot"></span>Pending</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📊</div>
+                                            <div class="file-icon xlsx">
+                                                <svg><use href="#icon-spreadsheet"/></svg>
+                                            </div>
                                             <span>OEM Comparison Analysis</span>
                                         </div>
                                     </td>
                                     <td>XLSX</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Required</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon pdf">
+                                                <svg><use href="#icon-file-text"/></svg>
+                                            </div>
                                             <span>Degradation & Warranty Analysis</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Required</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1936,7 +2320,8 @@
                 <section class="page-section" id="section-epc">
                     <div class="section-header">
                         <h1>
-                            🏗️ EPC & Construction
+                            <svg><use href="#icon-hard-hat"/></svg>
+                            EPC & Construction
                             <span class="status-badge new" style="background: rgba(59, 130, 246, 0.15); color: var(--status-blue);">In Progress</span>
                         </h1>
                         <p>Engineering, Procurement, and Construction pricing and contractor selection. Currently engaged with Optimum EPC for indicative pricing.</p>
@@ -1975,57 +2360,68 @@
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📊</div>
+                                            <div class="file-icon xlsx">
+                                                <svg><use href="#icon-spreadsheet"/></svg>
+                                            </div>
                                             <span>EPC Indicative Pricing</span>
                                         </div>
                                     </td>
                                     <td>XLSX/PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill pending"><span class="dot"></span>In Progress</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon pdf">
+                                                <svg><use href="#icon-file-text"/></svg>
+                                            </div>
                                             <span>Construction Schedule</span>
                                         </div>
                                     </td>
                                     <td>PDF/MPP</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Required</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon pdf">
+                                                <svg><use href="#icon-file-text"/></svg>
+                                            </div>
                                             <span>Phasing Plan (150/300/400 MW)</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Required</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon pdf">
+                                                <svg><use href="#icon-file-text"/></svg>
+                                            </div>
                                             <span>MPT Lead Time Analysis</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Required</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <div class="notes-section">
-                        <h3>📝 Optimum EPC Notes</h3>
+                        <h3>
+                            <svg><use href="#icon-edit"/></svg>
+                            Optimum EPC Notes
+                        </h3>
                         <div class="note-item">
                             <div class="note-header">
                                 <span class="author">Call Summary</span>
@@ -2047,7 +2443,8 @@
                 <section class="page-section" id="section-market">
                     <div class="section-header">
                         <h1>
-                            📈 Market Analysis
+                            <svg><use href="#icon-trending-up"/></svg>
+                            Market Analysis
                             <span class="status-badge complete">Complete</span>
                         </h1>
                         <p>ERCOT battery storage market analysis, revenue projections, competitive landscape, and pricing dynamics for West Texas region.</p>
@@ -2086,59 +2483,71 @@
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📊</div>
+                                            <div class="file-icon xlsx">
+                                                <svg><use href="#icon-spreadsheet"/></svg>
+                                            </div>
                                             <span>ERCOT BESS Market Analysis</span>
                                         </div>
                                     </td>
                                     <td>PDF/XLSX</td>
                                     <td>Jan 6, 2026</td>
                                     <td><span class="status-pill uploaded"><span class="dot"></span>Uploaded</span></td>
-                                    <td><button class="action-btn">View</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-eye"/></svg> View</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📊</div>
+                                            <div class="file-icon xlsx">
+                                                <svg><use href="#icon-spreadsheet"/></svg>
+                                            </div>
                                             <span>Revenue Stack Analysis</span>
                                         </div>
                                     </td>
                                     <td>XLSX</td>
                                     <td>Jan 6, 2026</td>
                                     <td><span class="status-pill uploaded"><span class="dot"></span>Uploaded</span></td>
-                                    <td><button class="action-btn">View</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-eye"/></svg> View</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📊</div>
+                                            <div class="file-icon xlsx">
+                                                <svg><use href="#icon-spreadsheet"/></svg>
+                                            </div>
                                             <span>Competitive Queue Analysis</span>
                                         </div>
                                     </td>
                                     <td>XLSX</td>
                                     <td>Jan 6, 2026</td>
                                     <td><span class="status-pill uploaded"><span class="dot"></span>Uploaded</span></td>
-                                    <td><button class="action-btn">View</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-eye"/></svg> View</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon">
+                                                <svg><use href="#icon-file"/></svg>
+                                            </div>
                                             <span>Congestion / Nodal Analysis</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill pending"><span class="dot"></span>Pending</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <div class="chart-container">
-                        <h3>ERCOT BESS Revenue Trends (2023-2025)</h3>
+                        <h3>
+                            <svg><use href="#icon-bar-chart"/></svg>
+                            ERCOT BESS Revenue Trends (2023-2025)
+                        </h3>
                         <div class="chart-placeholder">
-                            📉 Revenue chart visualization will render here
+                            <svg><use href="#icon-trending-up"/></svg>
+                            <span>Revenue chart visualization will render here</span>
                         </div>
                     </div>
                 </section>
@@ -2147,7 +2556,8 @@
                 <section class="page-section" id="section-financial">
                     <div class="section-header">
                         <h1>
-                            💰 Financial Model
+                            <svg><use href="#icon-dollar"/></svg>
+                            Financial Model
                             <span class="status-badge partial">60% Complete</span>
                         </h1>
                         <p>Pro forma financial projections, capital cost breakdown, revenue assumptions, and sensitivity analysis for ReDew Anson.</p>
@@ -2186,57 +2596,68 @@
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📊</div>
+                                            <div class="file-icon xlsx">
+                                                <svg><use href="#icon-spreadsheet"/></svg>
+                                            </div>
                                             <span>Pro Forma Financial Model</span>
                                         </div>
                                     </td>
                                     <td>XLSX</td>
                                     <td>Dec 2025</td>
                                     <td><span class="status-pill pending"><span class="dot"></span>Needs Update</span></td>
-                                    <td><button class="action-btn">View</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-eye"/></svg> View</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon pdf">
+                                                <svg><use href="#icon-file-text"/></svg>
+                                            </div>
                                             <span>Private Placement Memorandum</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>Dec 2025</td>
                                     <td><span class="status-pill uploaded"><span class="dot"></span>Uploaded</span></td>
-                                    <td><button class="action-btn">View</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-eye"/></svg> View</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📊</div>
+                                            <div class="file-icon xlsx">
+                                                <svg><use href="#icon-spreadsheet"/></svg>
+                                            </div>
                                             <span>Sensitivity Analysis</span>
                                         </div>
                                     </td>
                                     <td>XLSX</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Required</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📊</div>
+                                            <div class="file-icon xlsx">
+                                                <svg><use href="#icon-spreadsheet"/></svg>
+                                            </div>
                                             <span>Capital Cost Breakdown</span>
                                         </div>
                                     </td>
                                     <td>XLSX</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Required</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <div class="notes-section">
-                        <h3>📝 Model Notes</h3>
+                        <h3>
+                            <svg><use href="#icon-edit"/></svg>
+                            Model Notes
+                        </h3>
                         <div class="note-item">
                             <div class="note-header">
                                 <span class="author">Action Required</span>
@@ -2251,7 +2672,8 @@
                 <section class="page-section" id="section-risk">
                     <div class="section-header">
                         <h1>
-                            ⚠️ Risk Assessment
+                            <svg><use href="#icon-alert"/></svg>
+                            Risk Assessment
                             <span class="status-badge partial">In Progress</span>
                         </h1>
                         <p>Comprehensive risk register identifying key project risks, likelihood, impact, and mitigation strategies.</p>
@@ -2320,7 +2742,8 @@
                 <section class="page-section" id="section-entity">
                     <div class="section-header">
                         <h1>
-                            🏢 Entity Structure
+                            <svg><use href="#icon-building"/></svg>
+                            Entity Structure
                             <span class="status-badge complete">Complete</span>
                         </h1>
                         <p>Legal entity architecture, SPV structure, and ownership documentation for ReDew Anson project.</p>
@@ -2341,38 +2764,44 @@
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon pdf">
+                                                <svg><use href="#icon-file-text"/></svg>
+                                            </div>
                                             <span>Entity Structure Overview</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>Jan 2026</td>
                                     <td><span class="status-pill uploaded"><span class="dot"></span>Uploaded</span></td>
-                                    <td><button class="action-btn">View</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-eye"/></svg> View</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon">
+                                                <svg><use href="#icon-file"/></svg>
+                                            </div>
                                             <span>ReDew Anson LLC - Formation Docs</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill pending"><span class="dot"></span>Pending</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon">
+                                                <svg><use href="#icon-file"/></svg>
+                                            </div>
                                             <span>Operating Agreement</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill pending"><span class="dot"></span>Pending</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -2383,7 +2812,8 @@
                 <section class="page-section" id="section-team">
                     <div class="section-header">
                         <h1>
-                            👥 Team & Partners
+                            <svg><use href="#icon-users"/></svg>
+                            Team & Partners
                             <span class="status-badge partial">In Progress</span>
                         </h1>
                         <p>Development team, key partners, and advisor network for ReDew Anson project.</p>
@@ -2437,6 +2867,12 @@
                                     <td><span class="status-pill uploaded"><span class="dot"></span>Engaged</span></td>
                                 </tr>
                                 <tr>
+                                    <td><strong>Fiber / Connectivity</strong></td>
+                                    <td>FiberLight</td>
+                                    <td>Fiber optic infrastructure to site</td>
+                                    <td><span class="status-pill uploaded"><span class="dot"></span>Engaged</span></td>
+                                </tr>
+                                <tr>
                                     <td><strong>Landowner</strong></td>
                                     <td>Clearleaf Hills, LTD</td>
                                     <td>Site control</td>
@@ -2451,14 +2887,15 @@
                 <section class="page-section" id="section-executive">
                     <div class="section-header">
                         <h1>
-                            📋 Executive Summary
+                            <svg><use href="#icon-clipboard"/></svg>
+                            Executive Summary
                             <span class="status-badge partial">In Progress</span>
                         </h1>
                         <p>High-level project overview, investment thesis, and key highlights for ReDew Anson.</p>
                     </div>
 
                     <div class="upload-zone">
-                        <div class="icon">📋</div>
+                        <svg><use href="#icon-upload"/></svg>
                         <h4>Upload Executive Summary Documents</h4>
                         <p>One-pager, teaser, investment highlights</p>
                     </div>
@@ -2478,50 +2915,58 @@
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon">
+                                                <svg><use href="#icon-file"/></svg>
+                                            </div>
                                             <span>Project One-Pager</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Required</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📄</div>
+                                            <div class="file-icon">
+                                                <svg><use href="#icon-file"/></svg>
+                                            </div>
                                             <span>Investment Teaser</span>
                                         </div>
                                     </td>
                                     <td>PDF</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Required</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">🗺️</div>
+                                            <div class="file-icon img">
+                                                <svg><use href="#icon-map-pin"/></svg>
+                                            </div>
                                             <span>Site Location Maps</span>
                                         </div>
                                     </td>
                                     <td>PDF/PNG</td>
                                     <td>—</td>
                                     <td><span class="status-pill missing"><span class="dot"></span>Required</span></td>
-                                    <td><button class="action-btn">Upload</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-upload"/></svg> Upload</button></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="doc-name">
-                                            <div class="file-icon">📊</div>
+                                            <div class="file-icon pdf">
+                                                <svg><use href="#icon-file-text"/></svg>
+                                            </div>
                                             <span>Project Overview Presentation</span>
                                         </div>
                                     </td>
                                     <td>PDF/PPTX</td>
                                     <td>Jan 2026</td>
                                     <td><span class="status-pill uploaded"><span class="dot"></span>Uploaded</span></td>
-                                    <td><button class="action-btn">View</button></td>
+                                    <td><button class="action-btn"><svg><use href="#icon-eye"/></svg> View</button></td>
                                 </tr>
                             </tbody>
                         </table>
