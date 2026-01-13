@@ -30,13 +30,7 @@
             --status-blue: #3b82f6;
             --status-purple: #a855f7;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Play', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-primary);
@@ -44,25 +38,12 @@
             line-height: 1.6;
             min-height: 100vh;
         }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--brand-green-dim); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--brand-green); }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-primary);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--brand-green-dim);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--brand-green);
-        }
-
-        /* Setup Screen */
-        .setup-screen {
+        .screen {
             position: fixed;
             inset: 0;
             background: var(--bg-primary);
@@ -72,12 +53,8 @@
             z-index: 2000;
             padding: 2rem;
         }
-
-        .setup-screen.hidden {
-            display: none;
-        }
-
-        .setup-box {
+        .screen.hidden { display: none; }
+        .box {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 16px;
@@ -85,29 +62,10 @@
             max-width: 600px;
             width: 100%;
         }
-
-        .setup-box h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--brand-green);
-        }
-
-        .setup-box p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-        }
-
-        .setup-box label {
-            display: block;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .setup-box input {
+        .box h2 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--brand-green); }
+        .box p { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .box label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
+        .box input {
             width: 100%;
             padding: 0.875rem 1rem;
             background: var(--bg-secondary);
@@ -118,13 +76,8 @@
             font-size: 0.9rem;
             margin-bottom: 1rem;
         }
-
-        .setup-box input:focus {
-            outline: none;
-            border-color: var(--brand-green);
-        }
-
-        .setup-box button {
+        .box input:focus { outline: none; border-color: var(--brand-green); }
+        .box button {
             width: 100%;
             padding: 1rem;
             background: var(--brand-green);
@@ -137,12 +90,10 @@
             cursor: pointer;
             margin-top: 0.5rem;
         }
-
-        .setup-box button:hover {
-            background: var(--brand-green-bright);
-        }
-
-        .setup-error {
+        .box button:hover { background: var(--brand-green-bright); }
+        .box button.secondary { background: var(--bg-tertiary); border: 1px solid var(--border); color: var(--text-secondary); }
+        .box button.danger { background: rgba(239, 68, 68, 0.15); border: 1px solid var(--status-red); color: var(--status-red); }
+        .error-msg {
             background: rgba(239, 68, 68, 0.15);
             border: 1px solid var(--status-red);
             color: var(--status-red);
@@ -152,8 +103,7 @@
             font-size: 0.9rem;
             display: none;
         }
-
-        .setup-instructions {
+        .instructions {
             background: var(--bg-tertiary);
             border-radius: 8px;
             padding: 1rem;
@@ -161,26 +111,25 @@
             font-size: 0.85rem;
             color: var(--text-secondary);
         }
-
-        .setup-instructions code {
+        .instructions code {
             background: var(--bg-primary);
             padding: 0.125rem 0.375rem;
             border-radius: 4px;
             font-family: 'JetBrains Mono', monospace;
             color: var(--brand-green);
         }
-
-        /* Main App */
-        .app {
-            display: none;
-            min-height: 100vh;
+        .button-row {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
         }
+        .button-row button { flex: 1; margin-top: 0; }
 
-        .app.visible {
-            display: block;
-        }
+        .app { display: none; min-height: 100vh; }
+        .app.visible { display: block; }
 
-        /* Header */
         .header {
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border);
@@ -189,7 +138,6 @@
             top: 0;
             z-index: 100;
         }
-
         .header-inner {
             max-width: 1600px;
             margin: 0 auto;
@@ -198,71 +146,17 @@
             justify-content: space-between;
             gap: 1.5rem;
         }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .header-title h1 {
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .header-title span {
-            font-size: 0.75rem;
-            color: var(--brand-green);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
-
-        .header-stats {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .header-stat {
-            text-align: center;
-        }
-
-        .header-stat .value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--text-primary);
-        }
-
-        .header-stat .label {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
+        .header-left { display: flex; align-items: center; gap: 1rem; }
+        .header-title h1 { font-size: 1.125rem; font-weight: 700; color: var(--text-primary); }
+        .header-title span { font-size: 0.75rem; color: var(--brand-green); text-transform: uppercase; letter-spacing: 1.5px; }
+        .header-stats { display: flex; gap: 2rem; }
+        .header-stat { text-align: center; }
+        .header-stat .value { font-size: 1.5rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--text-primary); }
+        .header-stat .label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
         .header-stat.green .value { color: var(--status-green); }
         .header-stat.yellow .value { color: var(--status-yellow); }
         .header-stat.blue .value { color: var(--status-blue); }
-
-        .header-actions {
-            display: flex;
-            gap: 0.75rem;
-        }
+        .header-actions { display: flex; gap: 0.75rem; }
 
         .btn {
             padding: 0.625rem 1.25rem;
@@ -277,28 +171,11 @@
             transition: all 0.15s;
             border: 1px solid transparent;
         }
+        .btn-secondary { background: var(--bg-tertiary); border-color: var(--border); color: var(--text-secondary); }
+        .btn-secondary:hover { background: var(--bg-card); color: var(--text-primary); }
+        .btn-primary { background: var(--brand-green); color: var(--bg-primary); }
+        .btn-primary:hover { background: var(--brand-green-bright); }
 
-        .btn-secondary {
-            background: var(--bg-tertiary);
-            border-color: var(--border);
-            color: var(--text-secondary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--bg-card);
-            color: var(--text-primary);
-        }
-
-        .btn-primary {
-            background: var(--brand-green);
-            color: var(--bg-primary);
-        }
-
-        .btn-primary:hover {
-            background: var(--brand-green-bright);
-        }
-
-        /* Save Indicator */
         .save-indicator {
             position: fixed;
             bottom: 2rem;
@@ -307,102 +184,52 @@
             border: 1px solid var(--border);
             border-radius: 8px;
             padding: 0.75rem 1.25rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
             font-size: 0.85rem;
             z-index: 1000;
             opacity: 0;
             transform: translateY(10px);
             transition: all 0.3s;
         }
+        .save-indicator.visible { opacity: 1; transform: translateY(0); }
+        .save-indicator.saving { border-color: var(--status-yellow); color: var(--status-yellow); }
+        .save-indicator.saved { border-color: var(--status-green); color: var(--status-green); }
+        .save-indicator.error { border-color: var(--status-red); color: var(--status-red); }
 
-        .save-indicator.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .main { max-width: 1600px; margin: 0 auto; padding: 2rem; }
 
-        .save-indicator.saving {
-            border-color: var(--status-yellow);
-            color: var(--status-yellow);
-        }
-
-        .save-indicator.saved {
-            border-color: var(--status-green);
-            color: var(--status-green);
-        }
-
-        .save-indicator.error {
-            border-color: var(--status-red);
-            color: var(--status-red);
-        }
-
-        /* Main Content */
-        .main {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Filter Bar */
-        .filter-bar {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-group {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .filter-group label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .filter-select {
-            padding: 0.5rem 1rem;
-            background: var(--bg-secondary);
+        .totals-bar {
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text-primary);
-            font-family: 'Play', sans-serif;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-
-        .filter-select:focus {
-            outline: none;
-            border-color: var(--brand-green);
-        }
-
-        .search-input {
-            flex: 1;
-            min-width: 200px;
-            padding: 0.5rem 1rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text-primary);
-            font-family: 'Play', sans-serif;
-            font-size: 0.9rem;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--brand-green);
-        }
-
-        /* Category Section */
-        .category-section {
+            border-radius: 12px;
+            padding: 1.5rem;
             margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
         }
+        .total-item { text-align: center; }
+        .total-item .label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.375rem; }
+        .total-item .value { font-size: 1.75rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--text-primary); }
+        .total-item .value.green { color: var(--status-green); }
+        .total-item .value.yellow { color: var(--status-yellow); }
+        .total-item .value.brand { color: var(--brand-green); }
 
+        .filter-bar { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .filter-group { display: flex; align-items: center; gap: 0.5rem; }
+        .filter-group label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .filter-select, .search-input {
+            padding: 0.5rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'Play', sans-serif;
+            font-size: 0.9rem;
+        }
+        .filter-select:focus, .search-input:focus { outline: none; border-color: var(--brand-green); }
+        .search-input { flex: 1; min-width: 200px; }
+
+        .category-section { margin-bottom: 2rem; }
         .category-header {
             display: flex;
             align-items: center;
@@ -412,73 +239,17 @@
             border: 1px solid var(--border);
             border-radius: 12px 12px 0 0;
             cursor: pointer;
-            user-select: none;
         }
-
-        .category-header:hover {
-            background: var(--bg-card);
-        }
-
-        .category-header h2 {
-            font-size: 1rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .category-header h2 .number {
-            background: var(--brand-green-glow);
-            color: var(--brand-green);
-            padding: 0.25rem 0.625rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .category-progress {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .category-progress .bar {
-            width: 120px;
-            height: 8px;
-            background: var(--bg-primary);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .category-progress .bar .fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--brand-green-dim), var(--brand-green), var(--brand-green-bright));
-            border-radius: 4px;
-            transition: width 0.3s;
-        }
-
-        .category-progress .percent {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            color: var(--brand-green);
-            min-width: 45px;
-        }
-
-        .chevron {
-            width: 20px;
-            height: 20px;
-            color: var(--text-muted);
-            transition: transform 0.2s;
-        }
-
-        .category-section.collapsed .chevron {
-            transform: rotate(-90deg);
-        }
-
-        .category-section.collapsed .category-body {
-            display: none;
-        }
-
+        .category-header:hover { background: var(--bg-card); }
+        .category-header h2 { font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 0.75rem; }
+        .category-header h2 .number { background: var(--brand-green-glow); color: var(--brand-green); padding: 0.25rem 0.625rem; border-radius: 4px; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; }
+        .category-progress { display: flex; align-items: center; gap: 1rem; }
+        .category-progress .bar { width: 120px; height: 8px; background: var(--bg-primary); border-radius: 4px; overflow: hidden; }
+        .category-progress .bar .fill { height: 100%; background: linear-gradient(90deg, var(--brand-green-dim), var(--brand-green), var(--brand-green-bright)); border-radius: 4px; transition: width 0.3s; }
+        .category-progress .percent { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--brand-green); min-width: 45px; }
+        .chevron { width: 20px; height: 20px; color: var(--text-muted); transition: transform 0.2s; }
+        .category-section.collapsed .chevron { transform: rotate(-90deg); }
+        .category-section.collapsed .category-body { display: none; }
         .category-body {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -487,12 +258,7 @@
             overflow: hidden;
         }
 
-        /* Task Table */
-        .task-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
+        .task-table { width: 100%; border-collapse: collapse; }
         .task-table th {
             text-align: left;
             padding: 0.875rem 1rem;
@@ -503,10 +269,7 @@
             color: var(--text-muted);
             font-weight: 700;
             border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 70px;
         }
-
         .task-table th.col-status { width: 130px; }
         .task-table th.col-task { min-width: 250px; }
         .task-table th.col-vendor { width: 160px; }
@@ -514,30 +277,12 @@
         .task-table th.col-time { width: 130px; }
         .task-table th.col-notes { width: 200px; }
         .task-table th.col-actions { width: 60px; }
+        .task-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+        .task-table tr:last-child td { border-bottom: none; }
+        .task-table tr:hover td { background: var(--bg-tertiary); }
+        .task-table tr.completed td { opacity: 0.6; }
+        .task-table tr.completed .task-name { text-decoration: line-through; }
 
-        .task-table td {
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid var(--border);
-            vertical-align: top;
-        }
-
-        .task-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .task-table tr:hover td {
-            background: var(--bg-tertiary);
-        }
-
-        .task-table tr.completed td {
-            opacity: 0.6;
-        }
-
-        .task-table tr.completed .task-name {
-            text-decoration: line-through;
-        }
-
-        /* Editable Fields */
         .editable {
             background: transparent;
             border: 1px solid transparent;
@@ -549,72 +294,19 @@
             width: 100%;
             transition: all 0.15s;
         }
+        .editable:hover { border-color: var(--border); background: var(--bg-secondary); }
+        .editable:focus { outline: none; border-color: var(--brand-green); background: var(--bg-secondary); }
+        .editable.task-name { font-weight: 500; }
+        .editable.cost-input, .editable.time-input { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+        .editable.notes-input { font-size: 0.85rem; color: var(--text-secondary); }
 
-        .editable:hover {
-            border-color: var(--border);
-            background: var(--bg-secondary);
-        }
+        .status-select { padding: 0.375rem 0.625rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700; border: none; cursor: pointer; font-family: 'Play', sans-serif; }
+        .status-select.not_started { background: rgba(90, 107, 100, 0.2); color: var(--text-muted); }
+        .status-select.in_progress { background: rgba(234, 179, 8, 0.15); color: var(--status-yellow); }
+        .status-select.completed { background: rgba(34, 197, 94, 0.15); color: var(--status-green); }
+        .status-select.blocked { background: rgba(239, 68, 68, 0.15); color: var(--status-red); }
+        .status-select.waiting { background: rgba(168, 85, 247, 0.15); color: var(--status-purple); }
 
-        .editable:focus {
-            outline: none;
-            border-color: var(--brand-green);
-            background: var(--bg-secondary);
-        }
-
-        .editable.task-name {
-            font-weight: 500;
-        }
-
-        .editable.cost-input,
-        .editable.time-input {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-        }
-
-        .editable.notes-input {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            resize: none;
-            min-height: 32px;
-        }
-
-        /* Status Select */
-        .status-select {
-            padding: 0.375rem 0.625rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            font-family: 'Play', sans-serif;
-        }
-
-        .status-select.not_started {
-            background: rgba(90, 107, 100, 0.2);
-            color: var(--text-muted);
-        }
-
-        .status-select.in_progress {
-            background: rgba(234, 179, 8, 0.15);
-            color: var(--status-yellow);
-        }
-
-        .status-select.completed {
-            background: rgba(34, 197, 94, 0.15);
-            color: var(--status-green);
-        }
-
-        .status-select.blocked {
-            background: rgba(239, 68, 68, 0.15);
-            color: var(--status-red);
-        }
-
-        .status-select.waiting {
-            background: rgba(168, 85, 247, 0.15);
-            color: var(--status-purple);
-        }
-
-        /* Vendor Select */
         .vendor-select {
             padding: 0.375rem 0.5rem;
             background: var(--bg-secondary);
@@ -626,17 +318,9 @@
             cursor: pointer;
             width: 100%;
         }
+        .vendor-select:hover { border-color: var(--border); }
+        .vendor-select:focus { outline: none; border-color: var(--brand-green); }
 
-        .vendor-select:hover {
-            border-color: var(--border);
-        }
-
-        .vendor-select:focus {
-            outline: none;
-            border-color: var(--brand-green);
-        }
-
-        /* Delete Button */
         .delete-btn {
             background: transparent;
             border: none;
@@ -647,17 +331,9 @@
             opacity: 0;
             transition: all 0.15s;
         }
+        .task-table tr:hover .delete-btn { opacity: 1; }
+        .delete-btn:hover { background: rgba(239, 68, 68, 0.15); color: var(--status-red); }
 
-        .task-table tr:hover .delete-btn {
-            opacity: 1;
-        }
-
-        .delete-btn:hover {
-            background: rgba(239, 68, 68, 0.15);
-            color: var(--status-red);
-        }
-
-        /* Add Task Row */
         .add-task-row {
             display: flex;
             align-items: center;
@@ -666,7 +342,6 @@
             border-top: 1px solid var(--border);
             background: var(--bg-secondary);
         }
-
         .add-task-input {
             flex: 1;
             padding: 0.5rem 0.75rem;
@@ -677,12 +352,7 @@
             font-family: 'Play', sans-serif;
             font-size: 0.9rem;
         }
-
-        .add-task-input:focus {
-            outline: none;
-            border-color: var(--brand-green);
-        }
-
+        .add-task-input:focus { outline: none; border-color: var(--brand-green); }
         .add-task-btn {
             padding: 0.5rem 1rem;
             background: var(--brand-green-glow);
@@ -694,48 +364,8 @@
             font-weight: 700;
             cursor: pointer;
         }
+        .add-task-btn:hover { background: var(--brand-green); color: var(--bg-primary); }
 
-        .add-task-btn:hover {
-            background: var(--brand-green);
-            color: var(--bg-primary);
-        }
-
-        /* Totals Bar */
-        .totals-bar {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .total-item {
-            text-align: center;
-        }
-
-        .total-item .label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 0.375rem;
-        }
-
-        .total-item .value {
-            font-size: 1.75rem;
-            font-weight: 700;
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--text-primary);
-        }
-
-        .total-item .value.green { color: var(--status-green); }
-        .total-item .value.yellow { color: var(--status-yellow); }
-        .total-item .value.brand { color: var(--brand-green); }
-
-        /* Export Modal */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -746,11 +376,7 @@
             z-index: 2000;
             padding: 2rem;
         }
-
-        .modal-overlay.visible {
-            display: flex;
-        }
-
+        .modal-overlay.visible { display: flex; }
         .modal {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -759,127 +385,70 @@
             max-width: 500px;
             width: 100%;
         }
+        .modal h3 { font-size: 1.25rem; margin-bottom: 1rem; }
+        .modal p { color: var(--text-secondary); margin-bottom: 1.5rem; }
+        .modal-actions { display: flex; gap: 0.75rem; justify-content: flex-end; }
 
-        .modal h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-        }
-
-        .modal p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 0.75rem;
-            justify-content: flex-end;
-        }
-
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .header-stats {
-                display: none;
-            }
-        }
-
+        @media (max-width: 1200px) { .header-stats { display: none; } }
         @media (max-width: 768px) {
-            .header {
-                padding: 1rem;
-            }
-
-            .header-actions {
-                display: none;
-            }
-
-            .main {
-                padding: 1rem;
-            }
-
-            .filter-bar {
-                flex-direction: column;
-            }
-
-            .task-table {
-                display: block;
-                overflow-x: auto;
-            }
-
-            .totals-bar {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .header { padding: 1rem; }
+            .header-actions { display: none; }
+            .main { padding: 1rem; }
+            .filter-bar { flex-direction: column; }
+            .task-table { display: block; overflow-x: auto; }
+            .totals-bar { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
-    <!-- Setup Screen -->
-    <div class="setup-screen" id="setupScreen">
-        <div class="setup-box">
+    <div class="screen" id="setupScreen">
+        <div class="box">
             <h2>🔐 Database Setup</h2>
-            <p>Connect to Supabase for persistent storage. Your data will sync across devices and sessions.</p>
-            
-            <div class="setup-instructions">
+            <p>Connect to Supabase for persistent storage.</p>
+            <div class="instructions">
                 <strong>Quick Setup:</strong><br>
-                1. Go to <code>supabase.com</code> and create a free account<br>
-                2. Create a new project<br>
-                3. Go to Settings → API<br>
-                4. Copy your Project URL and anon/public key below
+                1. Go to <code>supabase.com</code> → Create account → New project<br>
+                2. SQL Editor → Run the table creation query<br>
+                3. Settings → API → Copy URL and anon key
             </div>
-
-            <div class="setup-error" id="setupError"></div>
-
+            <div class="error-msg" id="setupError"></div>
             <label>Supabase Project URL</label>
             <input type="text" id="supabaseUrl" placeholder="https://xxxxx.supabase.co">
-
             <label>Supabase Anon Key</label>
             <input type="text" id="supabaseKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
-
-            <label>Admin Password (for this dashboard)</label>
+            <label>Admin Password</label>
             <input type="password" id="adminPassword" placeholder="Create a password">
-
-            <button onclick="setupSupabase()">Connect & Initialize</button>
-
-            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
-                <p style="margin-bottom: 0.75rem; font-size: 0.85rem;">Already configured?</p>
-                <button onclick="showLogin()" style="background: var(--bg-tertiary); border: 1px solid var(--border); color: var(--text-secondary);">Go to Login</button>
+            <button onclick="doSetup()">Connect & Initialize</button>
+            <div class="button-row">
+                <button class="secondary" onclick="goToLogin()">Already configured? Login</button>
             </div>
         </div>
     </div>
 
-    <!-- Login Screen -->
-    <div class="setup-screen hidden" id="loginScreen">
-        <div class="setup-box">
+    <div class="screen hidden" id="loginScreen">
+        <div class="box">
             <h2>🔒 Admin Login</h2>
-            <p>Enter your credentials to access the NTP tracker.</p>
-
-            <div class="setup-error" id="loginError"></div>
-
+            <p>Enter your password to access the NTP tracker.</p>
+            <div class="error-msg" id="loginError"></div>
             <label>Admin Password</label>
             <input type="password" id="loginPassword" placeholder="Enter password">
-
-            <button onclick="login()">Access Dashboard</button>
-
-            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
-                <button onclick="showSetup()" style="background: var(--bg-tertiary); border: 1px solid var(--border); color: var(--text-secondary);">Reconfigure Database</button>
+            <button onclick="doLogin()">Access Dashboard</button>
+            <div class="button-row">
+                <button class="secondary" onclick="goToSetup()">Reconfigure</button>
+                <button class="danger" onclick="resetAll()">Reset All</button>
             </div>
         </div>
     </div>
 
-    <!-- Main App -->
     <div class="app" id="app">
-        <!-- Header -->
         <header class="header">
             <div class="header-inner">
                 <div class="header-left">
-                    <div class="logo">
-                        <img src="assets/logo-mark.png" alt="ReDew" onerror="this.parentElement.innerHTML='RD';">
-                    </div>
                     <div class="header-title">
                         <h1>ReDew Anson</h1>
                         <span>NTP Tracker — Admin</span>
                     </div>
                 </div>
-
                 <div class="header-stats">
                     <div class="header-stat green">
                         <div class="value" id="statCompleted">0</div>
@@ -894,31 +463,14 @@
                         <div class="label">Total Tasks</div>
                     </div>
                 </div>
-
                 <div class="header-actions">
-                    <button class="btn btn-secondary" onclick="exportData()">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                            <polyline points="7 10 12 15 17 10"/>
-                            <line x1="12" y1="15" x2="12" y2="3"/>
-                        </svg>
-                        Export
-                    </button>
-                    <button class="btn btn-secondary" onclick="logout()">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                            <polyline points="16 17 21 12 16 7"/>
-                            <line x1="21" y1="12" x2="9" y2="12"/>
-                        </svg>
-                        Logout
-                    </button>
+                    <button class="btn btn-secondary" onclick="exportData()">Export</button>
+                    <button class="btn btn-secondary" onclick="doLogout()">Logout</button>
                 </div>
             </div>
         </header>
 
-        <!-- Main Content -->
         <main class="main">
-            <!-- Totals Bar -->
             <div class="totals-bar">
                 <div class="total-item">
                     <div class="label">Total Est. Cost</div>
@@ -938,7 +490,6 @@
                 </div>
             </div>
 
-            <!-- Filter Bar -->
             <div class="filter-bar">
                 <div class="filter-group">
                     <label>Status:</label>
@@ -953,34 +504,27 @@
                 </div>
                 <div class="filter-group">
                     <label>Vendor:</label>
-                    <select class="filter-select" id="filterVendor" onchange="renderTasks()">
-                        <option value="all">All</option>
-                    </select>
+                    <select class="filter-select" id="filterVendor" onchange="renderTasks()"></select>
                 </div>
                 <div class="filter-group">
                     <label>Category:</label>
-                    <select class="filter-select" id="filterCategory" onchange="renderTasks()">
-                        <option value="all">All</option>
-                    </select>
+                    <select class="filter-select" id="filterCategory" onchange="renderTasks()"></select>
                 </div>
                 <input type="text" class="search-input" id="searchInput" placeholder="Search tasks..." oninput="renderTasks()">
             </div>
 
-            <!-- Tasks Container -->
             <div id="tasksContainer"></div>
         </main>
 
-        <!-- Save Indicator -->
         <div class="save-indicator" id="saveIndicator">
             <span id="saveText">Saving...</span>
         </div>
     </div>
 
-    <!-- Export Modal -->
     <div class="modal-overlay" id="exportModal">
         <div class="modal">
             <h3>Export Data</h3>
-            <p>Download your NTP tracker data in your preferred format.</p>
+            <p>Download your NTP tracker data.</p>
             <div class="modal-actions">
                 <button class="btn btn-secondary" onclick="closeExportModal()">Cancel</button>
                 <button class="btn btn-secondary" onclick="exportCSV()">CSV</button>
@@ -990,33 +534,17 @@
     </div>
 
     <script>
-        // ============================================
-        // CONFIGURATION & STATE
-        // ============================================
-        let supabase = null;
-        let tasks = [];
-        let vendors = [
-            'ReDewable Energy',
-            'ANS Engineering',
-            'Enerzinx',
-            'Optimum EPC',
-            'PACE Houston',
-            'FiberLight',
-            'Clearleaf Hills LTD',
-            'Grid Power Solutions',
-            'Tesla',
-            'ERCOT',
-            'Jones County',
-            'Title Company',
-            'Legal Counsel',
-            'Insurance Broker',
-            'Tax Advisor',
-            'Lender',
-            'Investor',
-            'Other'
+        var db = null;
+        var tasks = [];
+        
+        var vendors = [
+            'ReDewable Energy', 'ANS Engineering', 'Enerzinx', 'Optimum EPC',
+            'PACE Houston', 'FiberLight', 'Clearleaf Hills LTD', 'Grid Power Solutions',
+            'Tesla', 'ERCOT', 'Jones County', 'Title Company', 'Legal Counsel',
+            'Insurance Broker', 'Tax Advisor', 'Lender', 'Investor', 'Other'
         ];
 
-        const categories = [
+        var categories = [
             { id: 'land', name: 'Land & Site Control', icon: '🗺️' },
             { id: 'interconnection', name: 'Interconnection', icon: '⚡' },
             { id: 'permitting', name: 'Permitting', icon: '📋' },
@@ -1033,9 +561,9 @@
             { id: 'ntp', name: 'NTP Deliverables', icon: '🎯' }
         ];
 
-        // Default tasks (will be loaded from DB if exists)
-        const defaultTasks = [
-            // Land & Site Control
+        // FULL 120+ TASK LIST RESTORED
+        var defaultTasks = [
+            // Land & Site Control (8 tasks)
             { category: 'land', task: 'Execute land purchase or long-term lease', status: 'not_started', vendor: 'Clearleaf Hills LTD', cost: '', time: '', notes: '' },
             { category: 'land', task: 'Title search and commitment', status: 'not_started', vendor: 'Title Company', cost: '$2,000', time: '2 weeks', notes: '' },
             { category: 'land', task: 'ALTA survey', status: 'not_started', vendor: 'Other', cost: '$5,000', time: '3 weeks', notes: '' },
@@ -1045,7 +573,7 @@
             { category: 'land', task: 'Mineral rights assessment / waiver', status: 'not_started', vendor: 'Legal Counsel', cost: '$1,500', time: '2 weeks', notes: 'Texas specific' },
             { category: 'land', task: 'Record deed / lease at county', status: 'not_started', vendor: 'Title Company', cost: '$500', time: '1 week', notes: '' },
 
-            // Interconnection
+            // Interconnection (10 tasks)
             { category: 'interconnection', task: 'Submit Full Interconnection Study (FIS) application', status: 'not_started', vendor: 'Enerzinx', cost: '$50,000', time: '1 week', notes: '' },
             { category: 'interconnection', task: 'Pay FIS application fee', status: 'not_started', vendor: 'ReDewable Energy', cost: '$50,000', time: '', notes: '' },
             { category: 'interconnection', task: 'Complete FIS process', status: 'not_started', vendor: 'ERCOT', cost: '', time: '6-9 months', notes: 'CRITICAL PATH' },
@@ -1057,7 +585,7 @@
             { category: 'interconnection', task: 'Metering plan approval', status: 'not_started', vendor: 'ANS Engineering', cost: '', time: '2 weeks', notes: '' },
             { category: 'interconnection', task: 'SCADA/communication requirements defined', status: 'not_started', vendor: 'ANS Engineering', cost: '', time: '2 weeks', notes: '' },
 
-            // Permitting
+            // Permitting (11 tasks)
             { category: 'permitting', task: 'County zoning confirmation letter', status: 'not_started', vendor: 'Jones County', cost: '$0', time: '2 weeks', notes: '' },
             { category: 'permitting', task: 'Conditional Use Permit (CUP) - if required', status: 'not_started', vendor: 'Jones County', cost: '$2,500', time: '6 weeks', notes: '' },
             { category: 'permitting', task: 'Building permit application', status: 'not_started', vendor: 'Jones County', cost: '$5,000', time: '4 weeks', notes: '' },
@@ -1070,7 +598,7 @@
             { category: 'permitting', task: 'Road use agreement', status: 'not_started', vendor: 'Jones County', cost: '$1,000', time: '2 weeks', notes: '' },
             { category: 'permitting', task: 'Driveway / access permit', status: 'not_started', vendor: 'Jones County', cost: '$500', time: '1 week', notes: '' },
 
-            // Environmental
+            // Environmental (8 tasks)
             { category: 'environmental', task: 'Phase I Environmental Site Assessment (ESA)', status: 'waiting', vendor: 'ANS Engineering', cost: '$3,500', time: '3 weeks', notes: 'Requested from ANS' },
             { category: 'environmental', task: 'Phase II ESA (if Phase I identifies RECs)', status: 'not_started', vendor: 'Other', cost: '$15,000', time: '4 weeks', notes: 'If required' },
             { category: 'environmental', task: 'Wetlands delineation / USACE determination', status: 'not_started', vendor: 'Other', cost: '$5,000', time: '4 weeks', notes: '' },
@@ -1080,7 +608,7 @@
             { category: 'environmental', task: 'Flood zone determination / FEMA review', status: 'not_started', vendor: 'ANS Engineering', cost: '$1,000', time: '1 week', notes: '' },
             { category: 'environmental', task: 'Drainage study', status: 'not_started', vendor: 'ANS Engineering', cost: '$5,000', time: '3 weeks', notes: '' },
 
-            // Engineering & Design
+            // Engineering & Design (14 tasks)
             { category: 'engineering', task: 'Preliminary site layout', status: 'waiting', vendor: 'ANS Engineering', cost: '$10,000', time: '2 weeks', notes: 'Requested from ANS' },
             { category: 'engineering', task: 'Single-line diagram (SLD)', status: 'waiting', vendor: 'ANS Engineering', cost: '$8,000', time: '2 weeks', notes: 'Requested from ANS' },
             { category: 'engineering', task: 'Electrical design (30%)', status: 'not_started', vendor: 'ANS Engineering', cost: '$25,000', time: '4 weeks', notes: '' },
@@ -1096,7 +624,7 @@
             { category: 'engineering', task: 'Arc flash study', status: 'not_started', vendor: 'ANS Engineering', cost: '$5,000', time: '2 weeks', notes: '' },
             { category: 'engineering', task: 'Protection coordination study', status: 'not_started', vendor: 'ANS Engineering', cost: '$8,000', time: '3 weeks', notes: '' },
 
-            // Technology & Procurement
+            // Technology & Procurement (10 tasks)
             { category: 'procurement', task: 'OEM selection finalized', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '2 weeks', notes: 'Tesla vs CATL vs others' },
             { category: 'procurement', task: 'Battery supply agreement (BSA) negotiated', status: 'not_started', vendor: 'Tesla', cost: '', time: '4 weeks', notes: '' },
             { category: 'procurement', task: 'Battery supply agreement executed', status: 'not_started', vendor: 'Tesla', cost: '', time: '', notes: '' },
@@ -1108,7 +636,7 @@
             { category: 'procurement', task: 'Equipment delivery schedule aligned', status: 'not_started', vendor: 'Optimum EPC', cost: '', time: '', notes: '' },
             { category: 'procurement', task: 'Warranties documented', status: 'not_started', vendor: 'Legal Counsel', cost: '$5,000', time: '2 weeks', notes: '' },
 
-            // EPC & Construction
+            // EPC & Construction (11 tasks)
             { category: 'epc', task: 'Receive indicative EPC pricing', status: 'in_progress', vendor: 'Optimum EPC', cost: '', time: '2 weeks', notes: '' },
             { category: 'epc', task: 'EPC RFP issued (if competitive bid)', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '2 weeks', notes: '' },
             { category: 'epc', task: 'EPC bid evaluation', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '2 weeks', notes: '' },
@@ -1121,7 +649,7 @@
             { category: 'epc', task: 'Phasing plan finalized (150→300→400 MW)', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '1 week', notes: '' },
             { category: 'epc', task: 'Commissioning plan', status: 'not_started', vendor: 'Optimum EPC', cost: '', time: '2 weeks', notes: '' },
 
-            // Financial / Capital
+            // Financial / Capital (12 tasks)
             { category: 'financial', task: 'Update financial model with current assumptions', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '1 week', notes: '' },
             { category: 'financial', task: 'Update financial model with EPC pricing', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '1 week', notes: '' },
             { category: 'financial', task: 'Development budget finalized', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '1 week', notes: '' },
@@ -1135,7 +663,7 @@
             { category: 'financial', task: 'Debt term sheet', status: 'not_started', vendor: 'Lender', cost: '', time: '2 weeks', notes: '' },
             { category: 'financial', task: 'Financial close checklist', status: 'not_started', vendor: 'Legal Counsel', cost: '', time: '2 weeks', notes: '' },
 
-            // Revenue / Off-take
+            // Revenue / Off-take (6 tasks)
             { category: 'revenue', task: 'Merchant revenue projections refined', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '1 week', notes: '' },
             { category: 'revenue', task: 'Third-party revenue forecast (optional)', status: 'not_started', vendor: 'Other', cost: '$25,000', time: '4 weeks', notes: '' },
             { category: 'revenue', task: 'Ancillary services revenue modeling', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '1 week', notes: 'ECRS, RRS, etc.' },
@@ -1143,7 +671,7 @@
             { category: 'revenue', task: 'PPA/off-take exploration (if applicable)', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '4 weeks', notes: '' },
             { category: 'revenue', task: 'QSE selection (if operating)', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '2 weeks', notes: '' },
 
-            // Legal / Corporate
+            // Legal / Corporate (11 tasks)
             { category: 'legal', task: 'ReDew Anson LLC (SPV) formation', status: 'not_started', vendor: 'Legal Counsel', cost: '$2,500', time: '1 week', notes: '' },
             { category: 'legal', task: 'Operating agreement for SPV', status: 'not_started', vendor: 'Legal Counsel', cost: '$5,000', time: '2 weeks', notes: '' },
             { category: 'legal', task: 'EIN obtained for SPV', status: 'not_started', vendor: 'ReDewable Energy', cost: '$0', time: '1 day', notes: '' },
@@ -1156,7 +684,7 @@
             { category: 'legal', task: 'Legal review - Battery Supply Agreement', status: 'not_started', vendor: 'Legal Counsel', cost: '$10,000', time: '2 weeks', notes: '' },
             { category: 'legal', task: 'Legal review - Financing documents', status: 'not_started', vendor: 'Legal Counsel', cost: '$20,000', time: '4 weeks', notes: '' },
 
-            // Insurance & Risk
+            // Insurance & Risk (8 tasks)
             { category: 'insurance', task: "Builder's risk insurance quote", status: 'not_started', vendor: 'Insurance Broker', cost: '$2,000', time: '2 weeks', notes: '' },
             { category: 'insurance', task: 'General liability insurance', status: 'not_started', vendor: 'Insurance Broker', cost: '', time: '1 week', notes: '' },
             { category: 'insurance', task: 'Professional liability (E&O)', status: 'not_started', vendor: 'Insurance Broker', cost: '', time: '1 week', notes: '' },
@@ -1166,7 +694,7 @@
             { category: 'insurance', task: 'Risk register formalized', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '1 week', notes: '' },
             { category: 'insurance', task: 'Insurance broker engaged', status: 'not_started', vendor: 'Insurance Broker', cost: '', time: '1 week', notes: '' },
 
-            // Fiber / Communications
+            // Fiber / Communications (6 tasks)
             { category: 'fiber', task: 'Fiber service agreement executed', status: 'not_started', vendor: 'FiberLight', cost: '', time: '2 weeks', notes: '' },
             { category: 'fiber', task: 'Fiber route design', status: 'not_started', vendor: 'FiberLight', cost: '', time: '3 weeks', notes: '' },
             { category: 'fiber', task: 'Fiber installation coordinated', status: 'not_started', vendor: 'FiberLight', cost: '', time: '', notes: '' },
@@ -1174,7 +702,7 @@
             { category: 'fiber', task: 'SCADA connectivity confirmed', status: 'not_started', vendor: 'ANS Engineering', cost: '', time: '1 week', notes: '' },
             { category: 'fiber', task: 'Cybersecurity requirements defined', status: 'not_started', vendor: 'ANS Engineering', cost: '$5,000', time: '2 weeks', notes: '' },
 
-            // Community / Stakeholder
+            // Community / Stakeholder (6 tasks)
             { category: 'community', task: 'Neighbor notification (if required)', status: 'not_started', vendor: 'ReDewable Energy', cost: '$500', time: '1 week', notes: '' },
             { category: 'community', task: 'Community meeting (if required)', status: 'not_started', vendor: 'ReDewable Energy', cost: '$1,000', time: '1 day', notes: '' },
             { category: 'community', task: 'Economic impact summary', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '1 week', notes: 'For county relations' },
@@ -1182,7 +710,7 @@
             { category: 'community', task: 'County commissioner relationship', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '', notes: '' },
             { category: 'community', task: 'Local emergency services briefing', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '1 day', notes: '' },
 
-            // NTP Deliverables
+            // NTP Deliverables (12 tasks)
             { category: 'ntp', task: 'Land rights secured (executed purchase/lease)', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '', notes: 'NTP REQUIREMENT' },
             { category: 'ntp', task: 'Interconnection Agreement executed', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '', notes: 'NTP REQUIREMENT' },
             { category: 'ntp', task: 'All major permits obtained', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '', notes: 'NTP REQUIREMENT' },
@@ -1197,32 +725,35 @@
             { category: 'ntp', task: '🎯 FULL NTP ISSUED', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '', notes: 'THE GOAL!' }
         ];
 
-        // ============================================
-        // SUPABASE SETUP
-        // ============================================
-        
-        function checkExistingConfig() {
-            const config = localStorage.getItem('redew_supabase_config');
-            if (config) {
-                showLogin();
-            }
-        }
-
-        function showSetup() {
+        function goToSetup() {
             document.getElementById('setupScreen').classList.remove('hidden');
             document.getElementById('loginScreen').classList.add('hidden');
         }
 
-        function showLogin() {
+        function goToLogin() {
             document.getElementById('setupScreen').classList.add('hidden');
             document.getElementById('loginScreen').classList.remove('hidden');
         }
 
-        async function setupSupabase() {
-            const url = document.getElementById('supabaseUrl').value.trim();
-            const key = document.getElementById('supabaseKey').value.trim();
-            const password = document.getElementById('adminPassword').value.trim();
-            const errorEl = document.getElementById('setupError');
+        function showApp() {
+            document.getElementById('setupScreen').classList.add('hidden');
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('app').classList.add('visible');
+        }
+
+        function resetAll() {
+            if (confirm('This will clear all saved configuration. Continue?')) {
+                localStorage.removeItem('redew_ntp_config');
+                location.reload();
+            }
+        }
+
+        async function doSetup() {
+            var url = document.getElementById('supabaseUrl').value.trim();
+            var key = document.getElementById('supabaseKey').value.trim();
+            var password = document.getElementById('adminPassword').value.trim();
+            var errorEl = document.getElementById('setupError');
+            errorEl.style.display = 'none';
 
             if (!url || !key || !password) {
                 errorEl.textContent = 'Please fill in all fields.';
@@ -1231,116 +762,40 @@
             }
 
             try {
-                // Test connection
-                supabase = window.supabase.createClient(url, key);
+                db = window.supabase.createClient(url, key);
+                var result = await db.from('ntp_tasks').select('id').limit(1);
                 
-                // Create table if not exists
-                const { error: tableError } = await supabase.rpc('create_tasks_table_if_not_exists').catch(() => ({}));
-                
-                // Try to create table directly via SQL
-                await createTasksTable();
+                if (result.error && result.error.code === '42P01') {
+                    errorEl.innerHTML = '<strong>Table not found!</strong> Run this SQL in Supabase SQL Editor:<br><br><code style="display:block;background:#000;padding:0.5rem;border-radius:4px;font-size:0.65rem;white-space:pre-wrap;">CREATE TABLE ntp_tasks (\n  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,\n  category TEXT NOT NULL,\n  task TEXT NOT NULL,\n  status TEXT DEFAULT \'not_started\',\n  vendor TEXT DEFAULT \'\',\n  cost TEXT DEFAULT \'\',\n  time TEXT DEFAULT \'\',\n  notes TEXT DEFAULT \'\',\n  created_at TIMESTAMPTZ DEFAULT NOW(),\n  updated_at TIMESTAMPTZ DEFAULT NOW()\n);\n\nALTER TABLE ntp_tasks ENABLE ROW LEVEL SECURITY;\nCREATE POLICY "Allow all" ON ntp_tasks FOR ALL USING (true);</code>';
+                    errorEl.style.display = 'block';
+                    return;
+                }
 
-                // Save config
-                const config = {
-                    url,
-                    key,
-                    passwordHash: await hashPassword(password)
-                };
-                localStorage.setItem('redew_supabase_config', JSON.stringify(config));
+                if (result.error) throw new Error(result.error.message);
 
-                // Load or initialize tasks
+                if (!result.data || result.data.length === 0) {
+                    var insertResult = await db.from('ntp_tasks').insert(defaultTasks);
+                    if (insertResult.error) throw new Error('Failed to init: ' + insertResult.error.message);
+                }
+
+                localStorage.setItem('redew_ntp_config', JSON.stringify({ url: url, key: key, password: password }));
                 await loadTasks();
-
-                // Show app
-                document.getElementById('setupScreen').classList.add('hidden');
-                document.getElementById('loginScreen').classList.add('hidden');
-                document.getElementById('app').classList.add('visible');
-
+                showApp();
                 renderTasks();
                 updateStats();
-
             } catch (err) {
-                errorEl.textContent = 'Connection failed: ' + err.message;
+                errorEl.textContent = 'Error: ' + err.message;
                 errorEl.style.display = 'block';
             }
         }
 
-        async function createTasksTable() {
-            // Check if table exists by trying to select
-            const { data, error } = await supabase
-                .from('ntp_tasks')
-                .select('id')
-                .limit(1);
+        async function doLogin() {
+            var password = document.getElementById('loginPassword').value.trim();
+            var errorEl = document.getElementById('loginError');
+            errorEl.style.display = 'none';
 
-            if (error && error.code === '42P01') {
-                // Table doesn't exist - show message
-                console.log('Table does not exist. Please create it in Supabase.');
-                showTableCreationInstructions();
-                return;
-            }
-
-            // If table exists but empty, initialize with defaults
-            if (!data || data.length === 0) {
-                await initializeDefaultTasks();
-            }
-        }
-
-        function showTableCreationInstructions() {
-            const setupError = document.getElementById('setupError');
-            setupError.innerHTML = `
-                <strong>Table Setup Required:</strong><br>
-                Go to your Supabase project → SQL Editor and run this query:<br><br>
-                <code style="display: block; background: #000; padding: 0.5rem; border-radius: 4px; font-size: 0.75rem; overflow-x: auto;">
-CREATE TABLE ntp_tasks (
-    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    category TEXT NOT NULL,
-    task TEXT NOT NULL,
-    status TEXT DEFAULT 'not_started',
-    vendor TEXT DEFAULT '',
-    cost TEXT DEFAULT '',
-    time TEXT DEFAULT '',
-    notes TEXT DEFAULT '',
-    created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-
-ALTER TABLE ntp_tasks ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "Allow all" ON ntp_tasks FOR ALL USING (true);
-                </code>
-            `;
-            setupError.style.display = 'block';
-        }
-
-        async function initializeDefaultTasks() {
-            showSaveIndicator('saving');
-            
-            const tasksToInsert = defaultTasks.map(t => ({
-                category: t.category,
-                task: t.task,
-                status: t.status,
-                vendor: t.vendor || '',
-                cost: t.cost || '',
-                time: t.time || '',
-                notes: t.notes || ''
-            }));
-
-            const { error } = await supabase
-                .from('ntp_tasks')
-                .insert(tasksToInsert);
-
-            if (error) {
-                console.error('Error initializing tasks:', error);
-                showSaveIndicator('error');
-            } else {
-                showSaveIndicator('saved');
-            }
-        }
-
-        async function login() {
-            const password = document.getElementById('loginPassword').value.trim();
-            const errorEl = document.getElementById('loginError');
-            const config = JSON.parse(localStorage.getItem('redew_supabase_config'));
+            var config = null;
+            try { config = JSON.parse(localStorage.getItem('redew_ntp_config')); } catch (e) {}
 
             if (!config) {
                 errorEl.textContent = 'No configuration found. Please set up first.';
@@ -1348,85 +803,53 @@ CREATE POLICY "Allow all" ON ntp_tasks FOR ALL USING (true);
                 return;
             }
 
-            const hash = await hashPassword(password);
-            if (hash !== config.passwordHash) {
+            if (password !== config.password) {
                 errorEl.textContent = 'Incorrect password.';
                 errorEl.style.display = 'block';
                 return;
             }
 
             try {
-                supabase = window.supabase.createClient(config.url, config.key);
+                db = window.supabase.createClient(config.url, config.key);
                 await loadTasks();
-
-                document.getElementById('loginScreen').classList.add('hidden');
-                document.getElementById('app').classList.add('visible');
-
+                showApp();
                 renderTasks();
                 updateStats();
-
             } catch (err) {
                 errorEl.textContent = 'Connection failed: ' + err.message;
                 errorEl.style.display = 'block';
             }
         }
 
-        async function hashPassword(password) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(password);
-            const hash = await crypto.subtle.digest('SHA-256', data);
-            return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
-        function logout() {
+        function doLogout() {
             document.getElementById('app').classList.remove('visible');
             document.getElementById('loginScreen').classList.remove('hidden');
             document.getElementById('loginPassword').value = '';
         }
 
-        // ============================================
-        // DATA OPERATIONS
-        // ============================================
-
         async function loadTasks() {
-            const { data, error } = await supabase
-                .from('ntp_tasks')
-                .select('*')
-                .order('created_at', { ascending: true });
-
-            if (error) {
-                console.error('Error loading tasks:', error);
-                tasks = [];
-            } else {
-                tasks = data || [];
-            }
-
-            // Update filter dropdowns
+            var result = await db.from('ntp_tasks').select('*').order('created_at', { ascending: true });
+            tasks = result.data || [];
             updateFilterDropdowns();
         }
 
         async function saveTask(taskId, field, value) {
             showSaveIndicator('saving');
+            var updateData = {};
+            updateData[field] = value;
+            updateData.updated_at = new Date().toISOString();
 
-            const updateData = {
-                [field]: value,
-                updated_at: new Date().toISOString()
-            };
+            var result = await db.from('ntp_tasks').update(updateData).eq('id', taskId);
 
-            const { error } = await supabase
-                .from('ntp_tasks')
-                .update(updateData)
-                .eq('id', taskId);
-
-            if (error) {
-                console.error('Error saving task:', error);
+            if (result.error) {
                 showSaveIndicator('error');
             } else {
-                // Update local state
-                const task = tasks.find(t => t.id === taskId);
-                if (task) {
-                    task[field] = value;
-                    task.updated_at = updateData.updated_at;
+                for (var i = 0; i < tasks.length; i++) {
+                    if (tasks[i].id === taskId) {
+                        tasks[i][field] = value;
+                        tasks[i].updated_at = updateData.updated_at;
+                        break;
+                    }
                 }
                 showSaveIndicator('saved');
                 updateStats();
@@ -1435,30 +858,15 @@ CREATE POLICY "Allow all" ON ntp_tasks FOR ALL USING (true);
 
         async function addTask(category, taskName) {
             if (!taskName.trim()) return;
-
             showSaveIndicator('saving');
 
-            const newTask = {
-                category,
-                task: taskName,
-                status: 'not_started',
-                vendor: '',
-                cost: '',
-                time: '',
-                notes: ''
-            };
+            var newTask = { category: category, task: taskName, status: 'not_started', vendor: '', cost: '', time: '', notes: '' };
+            var result = await db.from('ntp_tasks').insert([newTask]).select().single();
 
-            const { data, error } = await supabase
-                .from('ntp_tasks')
-                .insert([newTask])
-                .select()
-                .single();
-
-            if (error) {
-                console.error('Error adding task:', error);
+            if (result.error) {
                 showSaveIndicator('error');
             } else {
-                tasks.push(data);
+                tasks.push(result.data);
                 renderTasks();
                 updateStats();
                 showSaveIndicator('saved');
@@ -1466,335 +874,168 @@ CREATE POLICY "Allow all" ON ntp_tasks FOR ALL USING (true);
         }
 
         async function deleteTask(taskId) {
-            if (!confirm('Are you sure you want to delete this task?')) return;
-
+            if (!confirm('Delete this task?')) return;
             showSaveIndicator('saving');
 
-            const { error } = await supabase
-                .from('ntp_tasks')
-                .delete()
-                .eq('id', taskId);
+            var result = await db.from('ntp_tasks').delete().eq('id', taskId);
 
-            if (error) {
-                console.error('Error deleting task:', error);
+            if (result.error) {
                 showSaveIndicator('error');
             } else {
-                tasks = tasks.filter(t => t.id !== taskId);
+                tasks = tasks.filter(function(t) { return t.id !== taskId; });
                 renderTasks();
                 updateStats();
                 showSaveIndicator('saved');
             }
         }
 
-        // ============================================
-        // UI RENDERING
-        // ============================================
-
         function renderTasks() {
-            const container = document.getElementById('tasksContainer');
-            const statusFilter = document.getElementById('filterStatus').value;
-            const vendorFilter = document.getElementById('filterVendor').value;
-            const categoryFilter = document.getElementById('filterCategory').value;
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            var container = document.getElementById('tasksContainer');
+            var statusFilter = document.getElementById('filterStatus').value;
+            var vendorFilter = document.getElementById('filterVendor').value;
+            var categoryFilter = document.getElementById('filterCategory').value;
+            var searchTerm = document.getElementById('searchInput').value.toLowerCase();
 
-            let filteredTasks = tasks.filter(t => {
+            var filteredTasks = tasks.filter(function(t) {
                 if (statusFilter !== 'all' && t.status !== statusFilter) return false;
                 if (vendorFilter !== 'all' && t.vendor !== vendorFilter) return false;
                 if (categoryFilter !== 'all' && t.category !== categoryFilter) return false;
-                if (searchTerm && !t.task.toLowerCase().includes(searchTerm) && !t.notes?.toLowerCase().includes(searchTerm)) return false;
+                if (searchTerm && t.task.toLowerCase().indexOf(searchTerm) === -1) return false;
                 return true;
             });
 
-            let html = '';
+            var html = '';
 
-            categories.forEach(cat => {
-                const catTasks = filteredTasks.filter(t => t.category === cat.id);
-                if (catTasks.length === 0 && categoryFilter !== 'all') return;
+            for (var c = 0; c < categories.length; c++) {
+                var cat = categories[c];
+                var catTasks = filteredTasks.filter(function(t) { return t.category === cat.id; });
+                if (catTasks.length === 0 && categoryFilter !== 'all') continue;
 
-                const allCatTasks = tasks.filter(t => t.category === cat.id);
-                const completed = allCatTasks.filter(t => t.status === 'completed').length;
-                const total = allCatTasks.length;
-                const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+                var allCatTasks = tasks.filter(function(t) { return t.category === cat.id; });
+                var completed = allCatTasks.filter(function(t) { return t.status === 'completed'; }).length;
+                var total = allCatTasks.length;
+                var percent = total > 0 ? Math.round((completed / total) * 100) : 0;
 
-                html += `
-                    <div class="category-section" data-category="${cat.id}">
-                        <div class="category-header" onclick="toggleCategory('${cat.id}')">
-                            <h2>
-                                ${cat.icon} ${cat.name}
-                                <span class="number">${catTasks.length}</span>
-                            </h2>
-                            <div class="category-progress">
-                                <div class="bar">
-                                    <div class="fill" style="width: ${percent}%"></div>
-                                </div>
-                                <span class="percent">${percent}%</span>
-                                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="category-body">
-                            <table class="task-table">
-                                <thead>
-                                    <tr>
-                                        <th class="col-status">Status</th>
-                                        <th class="col-task">Task</th>
-                                        <th class="col-vendor">Vendor</th>
-                                        <th class="col-cost">Est. Cost</th>
-                                        <th class="col-time">Est. Time</th>
-                                        <th class="col-notes">Notes</th>
-                                        <th class="col-actions"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${catTasks.map(t => renderTaskRow(t)).join('')}
-                                </tbody>
-                            </table>
-                            <div class="add-task-row">
-                                <input type="text" class="add-task-input" id="newTask-${cat.id}" placeholder="Add new task..." onkeypress="handleAddTaskKeypress(event, '${cat.id}')">
-                                <button class="add-task-btn" onclick="handleAddTask('${cat.id}')">+ Add</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
+                html += '<div class="category-section" data-category="' + cat.id + '">';
+                html += '<div class="category-header" onclick="toggleCategory(\'' + cat.id + '\')">';
+                html += '<h2>' + cat.icon + ' ' + cat.name + ' <span class="number">' + catTasks.length + '</span></h2>';
+                html += '<div class="category-progress"><div class="bar"><div class="fill" style="width:' + percent + '%"></div></div>';
+                html += '<span class="percent">' + percent + '%</span>';
+                html += '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div></div>';
+                html += '<div class="category-body"><table class="task-table"><thead><tr>';
+                html += '<th class="col-status">Status</th><th class="col-task">Task</th><th class="col-vendor">Vendor</th>';
+                html += '<th class="col-cost">Cost</th><th class="col-time">Time</th><th class="col-notes">Notes</th><th class="col-actions"></th></tr></thead><tbody>';
+                
+                for (var i = 0; i < catTasks.length; i++) {
+                    html += renderTaskRow(catTasks[i]);
+                }
+                
+                html += '</tbody></table><div class="add-task-row">';
+                html += '<input type="text" class="add-task-input" id="newTask-' + cat.id + '" placeholder="Add new task..." onkeypress="handleAddKeypress(event, \'' + cat.id + '\')">';
+                html += '<button class="add-task-btn" onclick="handleAddTask(\'' + cat.id + '\')">+ Add</button></div></div></div>';
+            }
 
             container.innerHTML = html;
         }
 
-        function renderTaskRow(task) {
-            const statusClass = task.status || 'not_started';
-            const isCompleted = task.status === 'completed';
-
-            return `
-                <tr class="${isCompleted ? 'completed' : ''}" data-id="${task.id}">
-                    <td>
-                        <select class="status-select ${statusClass}" onchange="handleStatusChange('${task.id}', this.value)">
-                            <option value="not_started" ${task.status === 'not_started' ? 'selected' : ''}>Not Started</option>
-                            <option value="in_progress" ${task.status === 'in_progress' ? 'selected' : ''}>In Progress</option>
-                            <option value="completed" ${task.status === 'completed' ? 'selected' : ''}>Completed</option>
-                            <option value="blocked" ${task.status === 'blocked' ? 'selected' : ''}>Blocked</option>
-                            <option value="waiting" ${task.status === 'waiting' ? 'selected' : ''}>Waiting</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input type="text" class="editable task-name" value="${escapeHtml(task.task)}" onchange="handleFieldChange('${task.id}', 'task', this.value)">
-                    </td>
-                    <td>
-                        <select class="vendor-select" onchange="handleFieldChange('${task.id}', 'vendor', this.value)">
-                            <option value="">Select vendor...</option>
-                            ${vendors.map(v => `<option value="${v}" ${task.vendor === v ? 'selected' : ''}>${v}</option>`).join('')}
-                        </select>
-                    </td>
-                    <td>
-                        <input type="text" class="editable cost-input" value="${escapeHtml(task.cost || '')}" placeholder="$0" onchange="handleFieldChange('${task.id}', 'cost', this.value)">
-                    </td>
-                    <td>
-                        <input type="text" class="editable time-input" value="${escapeHtml(task.time || '')}" placeholder="—" onchange="handleFieldChange('${task.id}', 'time', this.value)">
-                    </td>
-                    <td>
-                        <input type="text" class="editable notes-input" value="${escapeHtml(task.notes || '')}" placeholder="Add notes..." onchange="handleFieldChange('${task.id}', 'notes', this.value)">
-                    </td>
-                    <td>
-                        <button class="delete-btn" onclick="deleteTask('${task.id}')" title="Delete task">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            </svg>
-                        </button>
-                    </td>
-                </tr>
-            `;
-        }
-
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        function toggleCategory(categoryId) {
-            const section = document.querySelector(`.category-section[data-category="${categoryId}"]`);
-            section.classList.toggle('collapsed');
-        }
-
-        // ============================================
-        // EVENT HANDLERS
-        // ============================================
-
-        function handleStatusChange(taskId, value) {
-            saveTask(taskId, 'status', value);
-            
-            // Update UI immediately
-            const row = document.querySelector(`tr[data-id="${taskId}"]`);
-            const select = row.querySelector('.status-select');
-            select.className = `status-select ${value}`;
-            
-            if (value === 'completed') {
-                row.classList.add('completed');
-            } else {
-                row.classList.remove('completed');
+        function renderTaskRow(t) {
+            var sc = t.status || 'not_started';
+            var html = '<tr class="' + (t.status === 'completed' ? 'completed' : '') + '">';
+            html += '<td><select class="status-select ' + sc + '" onchange="handleStatusChange(\'' + t.id + '\', this.value)">';
+            html += '<option value="not_started"' + (sc === 'not_started' ? ' selected' : '') + '>Not Started</option>';
+            html += '<option value="in_progress"' + (sc === 'in_progress' ? ' selected' : '') + '>In Progress</option>';
+            html += '<option value="completed"' + (sc === 'completed' ? ' selected' : '') + '>Completed</option>';
+            html += '<option value="blocked"' + (sc === 'blocked' ? ' selected' : '') + '>Blocked</option>';
+            html += '<option value="waiting"' + (sc === 'waiting' ? ' selected' : '') + '>Waiting</option></select></td>';
+            html += '<td><input type="text" class="editable task-name" value="' + esc(t.task) + '" onchange="handleFieldChange(\'' + t.id + '\', \'task\', this.value)"></td>';
+            html += '<td><select class="vendor-select" onchange="handleFieldChange(\'' + t.id + '\', \'vendor\', this.value)"><option value="">Select...</option>';
+            for (var v = 0; v < vendors.length; v++) {
+                html += '<option value="' + vendors[v] + '"' + (t.vendor === vendors[v] ? ' selected' : '') + '>' + vendors[v] + '</option>';
             }
-
-            // Update category progress
-            setTimeout(renderTasks, 100);
+            html += '</select></td>';
+            html += '<td><input type="text" class="editable cost-input" value="' + esc(t.cost) + '" placeholder="$0" onchange="handleFieldChange(\'' + t.id + '\', \'cost\', this.value)"></td>';
+            html += '<td><input type="text" class="editable time-input" value="' + esc(t.time) + '" placeholder="—" onchange="handleFieldChange(\'' + t.id + '\', \'time\', this.value)"></td>';
+            html += '<td><input type="text" class="editable notes-input" value="' + esc(t.notes) + '" placeholder="Notes..." onchange="handleFieldChange(\'' + t.id + '\', \'notes\', this.value)"></td>';
+            html += '<td><button class="delete-btn" onclick="deleteTask(\'' + t.id + '\')">🗑️</button></td></tr>';
+            return html;
         }
 
-        function handleFieldChange(taskId, field, value) {
-            saveTask(taskId, field, value);
-        }
-
-        function handleAddTask(categoryId) {
-            const input = document.getElementById(`newTask-${categoryId}`);
-            addTask(categoryId, input.value);
-            input.value = '';
-        }
-
-        function handleAddTaskKeypress(event, categoryId) {
-            if (event.key === 'Enter') {
-                handleAddTask(categoryId);
-            }
-        }
-
-        // ============================================
-        // STATS & UTILITIES
-        // ============================================
+        function esc(s) { return (s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+        function toggleCategory(id) { var el = document.querySelector('.category-section[data-category="' + id + '"]'); if (el) el.classList.toggle('collapsed'); }
+        function handleStatusChange(id, val) { saveTask(id, 'status', val); setTimeout(renderTasks, 100); }
+        function handleFieldChange(id, field, val) { saveTask(id, field, val); }
+        function handleAddTask(cat) { var inp = document.getElementById('newTask-' + cat); addTask(cat, inp.value); inp.value = ''; }
+        function handleAddKeypress(e, cat) { if (e.key === 'Enter') handleAddTask(cat); }
 
         function updateStats() {
-            const completed = tasks.filter(t => t.status === 'completed').length;
-            const inProgress = tasks.filter(t => t.status === 'in_progress' || t.status === 'waiting').length;
-            const blocked = tasks.filter(t => t.status === 'blocked').length;
-            const total = tasks.length;
-            const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+            var completed = 0, inProgress = 0, blocked = 0, totalCost = 0;
+            for (var i = 0; i < tasks.length; i++) {
+                if (tasks[i].status === 'completed') completed++;
+                if (tasks[i].status === 'in_progress' || tasks[i].status === 'waiting') inProgress++;
+                if (tasks[i].status === 'blocked') blocked++;
+                if (tasks[i].cost) {
+                    var n = parseFloat(tasks[i].cost.replace(/[$,]/g, ''));
+                    if (!isNaN(n)) totalCost += n;
+                }
+            }
+            var pct = tasks.length > 0 ? Math.round((completed / tasks.length) * 100) : 0;
 
             document.getElementById('statCompleted').textContent = completed;
             document.getElementById('statInProgress').textContent = inProgress;
-            document.getElementById('statTotal').textContent = total;
-            document.getElementById('totalPercent').textContent = percent + '%';
+            document.getElementById('statTotal').textContent = tasks.length;
+            document.getElementById('totalPercent').textContent = pct + '%';
             document.getElementById('totalBlocked').textContent = blocked;
-
-            // Calculate total cost
-            let totalCost = 0;
-            tasks.forEach(t => {
-                if (t.cost) {
-                    const num = parseFloat(t.cost.replace(/[$,]/g, ''));
-                    if (!isNaN(num)) totalCost += num;
-                }
-            });
             document.getElementById('totalCost').textContent = '$' + totalCost.toLocaleString();
-
-            // Last updated
-            const lastUpdate = tasks.reduce((latest, t) => {
-                if (t.updated_at && new Date(t.updated_at) > new Date(latest)) {
-                    return t.updated_at;
-                }
-                return latest;
-            }, '');
-
-            if (lastUpdate) {
-                const date = new Date(lastUpdate);
-                document.getElementById('lastUpdated').textContent = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            }
+            document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString();
         }
 
         function updateFilterDropdowns() {
-            // Vendors dropdown
-            const vendorSelect = document.getElementById('filterVendor');
-            const uniqueVendors = [...new Set(tasks.map(t => t.vendor).filter(v => v))];
-            vendorSelect.innerHTML = '<option value="all">All</option>' + 
-                uniqueVendors.map(v => `<option value="${v}">${v}</option>`).join('');
-
-            // Categories dropdown
-            const categorySelect = document.getElementById('filterCategory');
-            categorySelect.innerHTML = '<option value="all">All</option>' + 
-                categories.map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
+            var vs = {}, cs = '<option value="all">All</option>';
+            for (var i = 0; i < tasks.length; i++) { if (tasks[i].vendor) vs[tasks[i].vendor] = true; }
+            var vendorHtml = '<option value="all">All</option>';
+            for (var v in vs) vendorHtml += '<option value="' + v + '">' + v + '</option>';
+            document.getElementById('filterVendor').innerHTML = vendorHtml;
+            for (var j = 0; j < categories.length; j++) {
+                cs += '<option value="' + categories[j].id + '">' + categories[j].icon + ' ' + categories[j].name + '</option>';
+            }
+            document.getElementById('filterCategory').innerHTML = cs;
         }
 
         function showSaveIndicator(status) {
-            const indicator = document.getElementById('saveIndicator');
-            const text = document.getElementById('saveText');
-
-            indicator.className = 'save-indicator visible ' + status;
-
-            switch (status) {
-                case 'saving':
-                    text.textContent = 'Saving...';
-                    break;
-                case 'saved':
-                    text.textContent = '✓ Saved';
-                    setTimeout(() => {
-                        indicator.classList.remove('visible');
-                    }, 2000);
-                    break;
-                case 'error':
-                    text.textContent = '✗ Error saving';
-                    setTimeout(() => {
-                        indicator.classList.remove('visible');
-                    }, 3000);
-                    break;
-            }
+            var el = document.getElementById('saveIndicator');
+            var txt = document.getElementById('saveText');
+            el.className = 'save-indicator visible ' + status;
+            txt.textContent = status === 'saving' ? 'Saving...' : status === 'saved' ? '✓ Saved' : '✗ Error';
+            if (status !== 'saving') setTimeout(function() { el.classList.remove('visible'); }, 2000);
         }
 
-        // ============================================
-        // EXPORT
-        // ============================================
-
-        function exportData() {
-            document.getElementById('exportModal').classList.add('visible');
-        }
-
-        function closeExportModal() {
-            document.getElementById('exportModal').classList.remove('visible');
-        }
+        function exportData() { document.getElementById('exportModal').classList.add('visible'); }
+        function closeExportModal() { document.getElementById('exportModal').classList.remove('visible'); }
 
         function exportJSON() {
-            const dataStr = JSON.stringify(tasks, null, 2);
-            downloadFile(dataStr, 'redew-ntp-tasks.json', 'application/json');
+            var blob = new Blob([JSON.stringify(tasks, null, 2)], { type: 'application/json' });
+            var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'ntp-tasks.json'; a.click();
             closeExportModal();
         }
 
         function exportCSV() {
-            const headers = ['Category', 'Task', 'Status', 'Vendor', 'Est. Cost', 'Est. Time', 'Notes'];
-            const rows = tasks.map(t => [
-                categories.find(c => c.id === t.category)?.name || t.category,
-                t.task,
-                t.status,
-                t.vendor,
-                t.cost,
-                t.time,
-                t.notes
-            ]);
-
-            const csv = [headers, ...rows].map(row => 
-                row.map(cell => `"${(cell || '').replace(/"/g, '""')}"`).join(',')
-            ).join('\n');
-
-            downloadFile(csv, 'redew-ntp-tasks.csv', 'text/csv');
+            var rows = [['Category', 'Task', 'Status', 'Vendor', 'Cost', 'Time', 'Notes']];
+            for (var i = 0; i < tasks.length; i++) {
+                var t = tasks[i];
+                var catName = '';
+                for (var j = 0; j < categories.length; j++) { if (categories[j].id === t.category) { catName = categories[j].name; break; } }
+                rows.push([catName, t.task, t.status, t.vendor, t.cost, t.time, t.notes]);
+            }
+            var csv = rows.map(function(r) { return r.map(function(c) { return '"' + (c || '').replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+            var blob = new Blob([csv], { type: 'text/csv' });
+            var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'ntp-tasks.csv'; a.click();
             closeExportModal();
         }
 
-        function downloadFile(content, filename, type) {
-            const blob = new Blob([content], { type });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        // ============================================
-        // INITIALIZATION
-        // ============================================
-
-        document.addEventListener('DOMContentLoaded', () => {
-            checkExistingConfig();
-            
-            // Enter key on login
-            document.getElementById('loginPassword').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') login();
-            });
+        document.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('redew_ntp_config')) goToLogin();
+            document.getElementById('loginPassword').addEventListener('keypress', function(e) { if (e.key === 'Enter') doLogin(); });
+            document.getElementById('adminPassword').addEventListener('keypress', function(e) { if (e.key === 'Enter') doSetup(); });
         });
     </script>
 </body>
