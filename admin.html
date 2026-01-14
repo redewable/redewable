@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>ReDew Anson — Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0f0d;
+            --bg-secondary: #111916;
+            --bg-tertiary: #1a2420;
+            --bg-card: #141c19;
+            --brand-green: #2dd4a8;
+            --brand-green-dim: #1a8a6e;
+            --brand-green-glow: rgba(45, 212, 168, 0.15);
+            --brand-green-bright: #5eecc6;
+            --text-primary: #f0f4f2;
+            --text-secondary: #9ca8a3;
+            --text-muted: #5a6b64;
+            --border: #243029;
+            --border-light: #2d3d35;
+            --status-green: #22c55e;
+            --status-yellow: #eab308;
+            --status-red: #ef4444;
+            --status-blue: #3b82f6;
+            --status-purple: #a855f7;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Play', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--brand-green-dim); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--brand-green); }
+
+        /* Auth Screens */
+        .screen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 2rem;
+        }
+        .screen.hidden { display: none; }
+        .box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            max-width: 600px;
+            width: 100%;
+        }
+        .box h2 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--brand-green); }
+        .box p { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .box label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
+        .box input[type="text"], .box input[type="password"] {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .box input:focus { outline: none; border-color: var(--brand-green); }
+        .box button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--brand-green);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Play', sans-serif;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        .box button:hover { background: var(--brand-green-bright); }
+        .box button.secondary { background: var(--bg-tertiary); border: 1px solid var(--border); color: var(--text-secondary); }
+        .box button.danger { background: rgba(239, 68, 68, 0.15); border: 1px solid var(--status-red); color: var(--status-red); }
+        .error-msg {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid var(--status-red);
+            color: var(--status-red);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .instructions {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .instructions code {
+            background: var(--bg-primary);
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--brand-green);
+        }
+        .button-row {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+        .button-row button { flex: 1; margin-top: 0; }
+
+        /* App Container */
+        .app { display: none; min-height: 100vh; }
+        .app.visible { display: block; }
+
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-inner {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+        .header-left { display: flex; align-items: center; gap: 1.5rem; }
+        .header-title h1 { font-size: 1.125rem; font-weight: 700; color: var(--text-primary); }
+        .header-title span { font-size: 0.75rem; color: var(--brand-green); text-transform: uppercase; letter-spacing: 1.5px; }
+        
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--bg-tertiary);
+            padding: 0.375rem;
+            border-radius: 10px;
+        }
+        .tab-btn {
+            padding: 0.625rem 1.25rem;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-family: 'Play', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .tab-btn:hover { color: var(--text-primary); }
+        .tab-btn.active {
+            background: var(--brand-green);
+            color: var(--bg-primary);
+        }
+        .tab-btn .badge {
+            background: rgba(0,0,0,0.2);
+            padding: 0.125rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        .header-actions { display: flex; gap: 0.75rem; }
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            font-family: 'Play', sans-serif;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.15s;
+            border: 1px solid transparent;
+        }
+        .btn-secondary { background: var(--bg-tertiary); border-color: var(--border); color: var(--text-secondary); }
+        .btn-secondary:hover { background: var(--bg-card); color: var(--text-primary); }
+        .btn-primary { background: var(--brand-green); color: var(--bg-primary); }
+        .btn-primary:hover { background: var(--brand-green-bright); }
+        .btn-danger { background: rgba(239, 68, 68, 0.15); border-color: var(--status-red); color: var(--status-red); }
+        .btn-danger:hover { background: rgba(239, 68, 68, 0.25); }
+        .btn-small { padding: 0.4rem 0.875rem; font-size: 0.8rem; }
+
+        /* Main Content */
+        .main { max-width: 1600px; margin: 0 auto; padding: 2rem; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Save Indicator */
+        .save-indicator {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem 1.25rem;
+            font-size: 0.85rem;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s;
+        }
+        .save-indicator.visible { opacity: 1; transform: translateY(0); }
+        .save-indicator.saving { border-color: var(--status-yellow); color: var(--status-yellow); }
+        .save-indicator.saved { border-color: var(--status-green); color: var(--status-green); }
+        .save-indicator.error { border-color: var(--status-red); color: var(--status-red); }
+
+        /* ==================== NTP CHECKLIST STYLES ==================== */
+        .totals-bar {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+        }
+        .total-item { text-align: center; }
+        .total-item .label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.375rem; }
+        .total-item .value { font-size: 1.75rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--text-primary); }
+        .total-item .value.green { color: var(--status-green); }
+        .total-item .value.yellow { color: var(--status-yellow); }
+        .total-item .value.brand { color: var(--brand-green); }
+
+        .filter-bar { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .filter-group { display: flex; align-items: center; gap: 0.5rem; }
+        .filter-group label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .filter-select, .search-input {
+            padding: 0.5rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'Play', sans-serif;
+            font-size: 0.9rem;
+        }
+        .filter-select:focus, .search-input:focus { outline: none; border-color: var(--brand-green); }
+        .search-input { flex: 1; min-width: 200px; }
+
+        .category-section { margin-bottom: 2rem; }
+        .category-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.25rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 12px 12px 0 0;
+            cursor: pointer;
+        }
+        .category-header:hover { background: var(--bg-card); }
+        .category-header h2 { font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 0.75rem; }
+        .category-header h2 .number { background: var(--brand-green-glow); color: var(--brand-green); padding: 0.25rem 0.625rem; border-radius: 4px; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; }
+        .category-progress { display: flex; align-items: center; gap: 1rem; }
+        .category-progress .bar { width: 120px; height: 8px; background: var(--bg-primary); border-radius: 4px; overflow: hidden; }
+        .category-progress .bar .fill { height: 100%; background: linear-gradient(90deg, var(--brand-green-dim), var(--brand-green), var(--brand-green-bright)); border-radius: 4px; transition: width 0.3s; }
+        .category-progress .percent { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--brand-green); min-width: 45px; }
+        .chevron { width: 20px; height: 20px; color: var(--text-muted); transition: transform 0.2s; }
+        .category-section.collapsed .chevron { transform: rotate(-90deg); }
+        .category-section.collapsed .category-body { display: none; }
+        .category-body {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            overflow: hidden;
+        }
+
+        .task-table { width: 100%; border-collapse: collapse; }
+        .task-table th {
+            text-align: left;
+            padding: 0.875rem 1rem;
+            background: var(--bg-secondary);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            font-weight: 700;
+            border-bottom: 1px solid var(--border);
+        }
+        .task-table th.col-status { width: 130px; }
+        .task-table th.col-task { min-width: 250px; }
+        .task-table th.col-vendor { width: 160px; }
+        .task-table th.col-cost { width: 120px; }
+        .task-table th.col-time { width: 120px; }
+        .task-table th.col-notes { width: 180px; }
+        .task-table th.col-actions { width: 50px; }
+        .task-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+        .task-table tr:last-child td { border-bottom: none; }
+        .task-table tr:hover td { background: var(--bg-tertiary); }
+        .task-table tr.completed td { opacity: 0.6; }
+        .task-table tr.completed .task-name { text-decoration: line-through; }
+
+        .editable {
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            padding: 0.375rem 0.5rem;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9rem;
+            width: 100%;
+            transition: all 0.15s;
+        }
+        .editable:hover { border-color: var(--border); background: var(--bg-secondary); }
+        .editable:focus { outline: none; border-color: var(--brand-green); background: var(--bg-secondary); }
+        .editable.task-name { font-weight: 500; }
+        .editable.cost-input, .editable.time-input { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+        .editable.notes-input { font-size: 0.85rem; color: var(--text-secondary); }
+
+        .status-select { padding: 0.375rem 0.625rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700; border: none; cursor: pointer; font-family: 'Play', sans-serif; }
+        .status-select.not_started { background: rgba(90, 107, 100, 0.2); color: var(--text-muted); }
+        .status-select.in_progress { background: rgba(234, 179, 8, 0.15); color: var(--status-yellow); }
+        .status-select.completed { background: rgba(34, 197, 94, 0.15); color: var(--status-green); }
+        .status-select.blocked { background: rgba(239, 68, 68, 0.15); color: var(--status-red); }
+        .status-select.waiting { background: rgba(168, 85, 247, 0.15); color: var(--status-purple); }
+
+        .vendor-select {
+            padding: 0.375rem 0.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid transparent;
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-family: 'Play', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            width: 100%;
+        }
+        .vendor-select:hover { border-color: var(--border); }
+        .vendor-select:focus { outline: none; border-color: var(--brand-green); }
+
+        .delete-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.375rem;
+            border-radius: 4px;
+            opacity: 0;
+            transition: all 0.15s;
+        }
+        .task-table tr:hover .delete-btn { opacity: 1; }
+        .delete-btn:hover { background: rgba(239, 68, 68, 0.15); color: var(--status-red); }
+
+        .add-task-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-top: 1px solid var(--border);
+            background: var(--bg-secondary);
+        }
+        .add-task-input {
+            flex: 1;
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'Play', sans-serif;
+            font-size: 0.9rem;
+        }
+        .add-task-input:focus { outline: none; border-color: var(--brand-green); }
+        .add-task-btn {
+            padding: 0.5rem 1rem;
+            background: var(--brand-green-glow);
+            border: 1px solid var(--brand-green-dim);
+            border-radius: 6px;
+            color: var(--brand-green);
+            font-family: 'Play', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .add-task-btn:hover { background: var(--brand-green); color: var(--bg-primary); }
+
+        /* ==================== DATA ROOM CONTROL STYLES ==================== */
+        .dr-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        .dr-section-header {
+            padding: 1rem 1.25rem;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .dr-section-header:hover { background: var(--bg-card); }
+        .dr-section-header h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .dr-section-header .doc-count {
+            font-size: 0.75rem;
+            background: var(--brand-green-glow);
+            color: var(--brand-green);
+            padding: 0.25rem 0.625rem;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .dr-section.collapsed .dr-section-body { display: none; }
+        .dr-section.collapsed .chevron { transform: rotate(-90deg); }
+        .dr-section-body { padding: 1rem; }
+
+        .dr-doc-table { width: 100%; border-collapse: collapse; }
+        .dr-doc-table th {
+            text-align: left;
+            padding: 0.75rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            font-weight: 700;
+            border-bottom: 1px solid var(--border);
+        }
+        .dr-doc-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+        .dr-doc-table tr:last-child td { border-bottom: none; }
+        .dr-doc-table tr:hover td { background: var(--bg-tertiary); }
+
+        .dr-input {
+            background: var(--bg-secondary);
+            border: 1px solid transparent;
+            border-radius: 4px;
+            padding: 0.5rem 0.625rem;
+            color: var(--text-primary);
+            font-family: 'Play', sans-serif;
+            font-size: 0.875rem;
+            width: 100%;
+        }
+        .dr-input:hover { border-color: var(--border); }
+        .dr-input:focus { outline: none; border-color: var(--brand-green); }
+        .dr-input.url-input { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
+
+        .dr-status-select {
+            padding: 0.375rem 0.625rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            font-family: 'Play', sans-serif;
+        }
+        .dr-status-select.uploaded { background: rgba(34, 197, 94, 0.15); color: var(--status-green); }
+        .dr-status-select.pending { background: rgba(234, 179, 8, 0.15); color: var(--status-yellow); }
+        .dr-status-select.missing { background: rgba(239, 68, 68, 0.15); color: var(--status-red); }
+
+        .dr-type-select {
+            padding: 0.375rem 0.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid transparent;
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-family: 'Play', sans-serif;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .dr-add-row {
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            margin-top: 0.75rem;
+        }
+        .dr-add-row input { flex: 1; }
+
+        /* Notes Management */
+        .dr-notes-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        .dr-note-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            position: relative;
+        }
+        .dr-note-item.highlight { border-left: 3px solid var(--brand-green); }
+        .dr-note-header {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .dr-note-header input { flex: 1; min-width: 120px; }
+        .dr-note-header label {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        .dr-note-content { width: 100%; min-height: 60px; resize: vertical; }
+        .dr-note-delete {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 4px;
+            opacity: 0;
+            transition: all 0.15s;
+        }
+        .dr-note-item:hover .dr-note-delete { opacity: 1; }
+        .dr-note-delete:hover { background: rgba(239, 68, 68, 0.15); color: var(--status-red); }
+
+        /* Settings Panel */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .settings-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .settings-card h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .settings-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .settings-row:last-child { margin-bottom: 0; }
+        .settings-row label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .settings-row input, .settings-row select {
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'Play', sans-serif;
+            font-size: 0.9rem;
+        }
+        .settings-row input:focus, .settings-row select:focus {
+            outline: none;
+            border-color: var(--brand-green);
+        }
+
+        /* Progress Editor */
+        .progress-editor {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .progress-row {
+            display: grid;
+            grid-template-columns: 1fr 80px 60px;
+            gap: 1rem;
+            align-items: center;
+        }
+        .progress-row .label { font-size: 0.9rem; color: var(--text-secondary); }
+        .progress-row input[type="range"] {
+            width: 100%;
+            accent-color: var(--brand-green);
+        }
+        .progress-row .value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--brand-green);
+            text-align: right;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 2rem;
+        }
+        .modal-overlay.visible { display: flex; }
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+        }
+        .modal h3 { font-size: 1.25rem; margin-bottom: 1rem; }
+        .modal p { color: var(--text-secondary); margin-bottom: 1.5rem; }
+        .modal-actions { display: flex; gap: 0.75rem; justify-content: flex-end; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .tab-nav { flex-wrap: wrap; }
+        }
+        @media (max-width: 768px) {
+            .header { padding: 1rem; }
+            .header-inner { flex-direction: column; gap: 1rem; }
+            .header-actions { display: none; }
+            .main { padding: 1rem; }
+            .filter-bar { flex-direction: column; }
+            .task-table { display: block; overflow-x: auto; }
+            .totals-bar { grid-template-columns: repeat(2, 1fr); }
+            .progress-row { grid-template-columns: 1fr; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Setup Screen -->
+    <div class="screen" id="setupScreen">
+        <div class="box">
+            <h2>🔐 Database Setup</h2>
+            <p>Connect to Supabase for persistent storage.</p>
+            <div class="instructions">
+                <strong>Quick Setup:</strong><br>
+                1. Go to <code>supabase.com</code> → Create account → New project<br>
+                2. SQL Editor → Run the table creation query (see below)<br>
+                3. Settings → API → Copy URL and anon key
+            </div>
+            <div class="error-msg" id="setupError"></div>
+            <label>Supabase Project URL</label>
+            <input type="text" id="supabaseUrl" placeholder="https://xxxxx.supabase.co">
+            <label>Supabase Anon Key</label>
+            <input type="text" id="supabaseKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+            <label>Admin Password</label>
+            <input type="password" id="adminPassword" placeholder="Create a password">
+            <button onclick="doSetup()">Connect & Initialize</button>
+            <div class="button-row">
+                <button class="secondary" onclick="goToLogin()">Already configured? Login</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div class="screen hidden" id="loginScreen">
+        <div class="box">
+            <h2>🔒 Admin Login</h2>
+            <p>Enter your password to access the admin dashboard.</p>
+            <div class="error-msg" id="loginError"></div>
+            <label>Admin Password</label>
+            <input type="password" id="loginPassword" placeholder="Enter password">
+            <button onclick="doLogin()">Access Dashboard</button>
+            <div class="button-row">
+                <button class="secondary" onclick="goToSetup()">Reconfigure</button>
+                <button class="danger" onclick="resetAll()">Reset All</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app" id="app">
+        <header class="header">
+            <div class="header-inner">
+                <div class="header-left">
+                    <div class="header-title">
+                        <h1>ReDew Anson</h1>
+                        <span>Admin Dashboard</span>
+                    </div>
+                </div>
+                <nav class="tab-nav">
+                    <button class="tab-btn active" data-tab="ntp" onclick="switchTab('ntp')">
+                        📋 NTP Checklist
+                        <span class="badge" id="ntpCount">0</span>
+                    </button>
+                    <button class="tab-btn" data-tab="dataroom" onclick="switchTab('dataroom')">
+                        📁 Data Room
+                        <span class="badge" id="drCount">0</span>
+                    </button>
+                    <button class="tab-btn" data-tab="settings" onclick="switchTab('settings')">
+                        ⚙️ Settings
+                    </button>
+                </nav>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="exportData()">Export</button>
+                    <button class="btn btn-secondary" onclick="doLogout()">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main">
+            <!-- NTP CHECKLIST TAB -->
+            <div class="tab-content active" id="tab-ntp">
+                <div class="totals-bar">
+                    <div class="total-item">
+                        <div class="label">Total Est. Cost</div>
+                        <div class="value brand" id="totalCost">$0</div>
+                    </div>
+                    <div class="total-item">
+                        <div class="label">Completion</div>
+                        <div class="value green" id="totalPercent">0%</div>
+                    </div>
+                    <div class="total-item">
+                        <div class="label">Completed</div>
+                        <div class="value green" id="statCompleted">0</div>
+                    </div>
+                    <div class="total-item">
+                        <div class="label">In Progress</div>
+                        <div class="value yellow" id="statInProgress">0</div>
+                    </div>
+                    <div class="total-item">
+                        <div class="label">Blocked</div>
+                        <div class="value" style="color: var(--status-red);" id="totalBlocked">0</div>
+                    </div>
+                </div>
+
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <label>Status:</label>
+                        <select class="filter-select" id="filterStatus" onchange="renderTasks()">
+                            <option value="all">All</option>
+                            <option value="not_started">Not Started</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                            <option value="blocked">Blocked</option>
+                            <option value="waiting">Waiting</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Vendor:</label>
+                        <select class="filter-select" id="filterVendor" onchange="renderTasks()"></select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Category:</label>
+                        <select class="filter-select" id="filterCategory" onchange="renderTasks()"></select>
+                    </div>
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search tasks..." oninput="renderTasks()">
+                </div>
+
+                <div id="tasksContainer"></div>
+            </div>
+
+            <!-- DATA ROOM CONTROL TAB -->
+            <div class="tab-content" id="tab-dataroom">
+                <div class="totals-bar">
+                    <div class="total-item">
+                        <div class="label">Total Documents</div>
+                        <div class="value brand" id="drTotalDocs">0</div>
+                    </div>
+                    <div class="total-item">
+                        <div class="label">Uploaded</div>
+                        <div class="value green" id="drUploaded">0</div>
+                    </div>
+                    <div class="total-item">
+                        <div class="label">Pending</div>
+                        <div class="value yellow" id="drPending">0</div>
+                    </div>
+                    <div class="total-item">
+                        <div class="label">Missing</div>
+                        <div class="value" style="color: var(--status-red);" id="drMissing">0</div>
+                    </div>
+                </div>
+
+                <div id="dataroomContainer"></div>
+            </div>
+
+            <!-- SETTINGS TAB -->
+            <div class="tab-content" id="tab-settings">
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h4>🔐 Data Room Access</h4>
+                        <div class="settings-row">
+                            <label>Investor Access Password</label>
+                            <input type="text" id="settingDrPassword" placeholder="redew2026" onchange="saveSetting('dr_password', this.value)">
+                        </div>
+                        <div class="settings-row">
+                            <label>Data Room Status</label>
+                            <select id="settingDrStatus" onchange="saveSetting('dr_status', this.value)">
+                                <option value="active">Active - Accessible</option>
+                                <option value="maintenance">Maintenance Mode</option>
+                                <option value="disabled">Disabled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h4>📊 Progress Overrides</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                            Override the auto-calculated progress bars shown in the Data Room.
+                        </p>
+                        <div class="progress-editor" id="progressEditor"></div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h4>📋 Project Info</h4>
+                        <div class="settings-row">
+                            <label>Project Name</label>
+                            <input type="text" id="settingProjectName" value="ReDew Anson" onchange="saveSetting('project_name', this.value)">
+                        </div>
+                        <div class="settings-row">
+                            <label>Project Capacity</label>
+                            <input type="text" id="settingCapacity" value="300 MW" onchange="saveSetting('capacity', this.value)">
+                        </div>
+                        <div class="settings-row">
+                            <label>Target NTP Date</label>
+                            <input type="text" id="settingTargetNtp" value="Q1 2027" onchange="saveSetting('target_ntp', this.value)">
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h4>🗄️ Database</h4>
+                        <div class="settings-row">
+                            <label>Connected To</label>
+                            <input type="text" id="settingDbUrl" readonly style="opacity: 0.7;">
+                        </div>
+                        <button class="btn btn-secondary" style="width: 100%; margin-top: 0.5rem;" onclick="goToSetup()">Reconfigure Database</button>
+                        <button class="btn btn-danger" style="width: 100%; margin-top: 0.5rem;" onclick="resetAll()">Reset Everything</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="save-indicator" id="saveIndicator">
+            <span id="saveText">Saving...</span>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div class="modal-overlay" id="exportModal">
+        <div class="modal">
+            <h3>Export Data</h3>
+            <p>Download your data for backup or analysis.</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeExportModal()">Cancel</button>
+                <button class="btn btn-secondary" onclick="exportCSV()">CSV</button>
+                <button class="btn btn-primary" onclick="exportJSON()">JSON</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== GLOBAL STATE ====================
+        var db = null;
+        var tasks = [];
+        var documents = [];
+        var notes = [];
+        var settings = {};
+
+        var vendors = [
+            'ReDewable Energy', 'ANS Engineering', 'Enerzinx', 'Optimum EPC',
+            'PACE Houston', 'FiberLight', 'Clearleaf Hills LTD', 'Grid Power Solutions',
+            'Tesla', 'ERCOT', 'Jones County', 'Title Company', 'Legal Counsel',
+            'Insurance Broker', 'Tax Advisor', 'Lender', 'Investor', 'Other'
+        ];
+
+        var ntpCategories = [
+            { id: 'land', name: 'Land & Site Control', icon: '🗺️' },
+            { id: 'interconnection', name: 'Interconnection', icon: '⚡' },
+            { id: 'permitting', name: 'Permitting', icon: '📋' },
+            { id: 'environmental', name: 'Environmental', icon: '🌿' },
+            { id: 'engineering', name: 'Engineering & Design', icon: '🔧' },
+            { id: 'procurement', name: 'Technology & Procurement', icon: '📦' },
+            { id: 'epc', name: 'EPC & Construction', icon: '🏗️' },
+            { id: 'financial', name: 'Financial / Capital', icon: '💰' },
+            { id: 'revenue', name: 'Revenue / Off-take', icon: '📈' },
+            { id: 'legal', name: 'Legal / Corporate', icon: '⚖️' },
+            { id: 'insurance', name: 'Insurance & Risk', icon: '🛡️' },
+            { id: 'fiber', name: 'Fiber / Communications', icon: '📡' },
+            { id: 'community', name: 'Community / Stakeholder', icon: '🤝' },
+            { id: 'ntp', name: 'NTP Deliverables', icon: '🎯' }
+        ];
+
+        var drSections = [
+            { id: 'executive', name: 'Executive Summary', icon: '📋' },
+            { id: 'land', name: 'Land & Site Control', icon: '🗺️' },
+            { id: 'interconnection', name: 'Interconnection', icon: '⚡' },
+            { id: 'permitting', name: 'Permitting', icon: '📋' },
+            { id: 'technical', name: 'Technical & Engineering', icon: '🔧' },
+            { id: 'epc', name: 'EPC & Construction', icon: '🏗️' },
+            { id: 'market', name: 'Market Analysis', icon: '📈' },
+            { id: 'financial', name: 'Financial Model', icon: '💰' },
+            { id: 'risk', name: 'Risk Assessment', icon: '⚠️' },
+            { id: 'entity', name: 'Entity Structure', icon: '🏢' },
+            { id: 'team', name: 'Team & Partners', icon: '👥' }
+        ];
+
+        // Default NTP tasks (abbreviated for space - full list in production)
+        var defaultTasks = [
+            { category: 'land', task: 'Execute land purchase or long-term lease', status: 'not_started', vendor: 'Clearleaf Hills LTD', cost: '', time: '', notes: '' },
+            { category: 'land', task: 'Title search and commitment', status: 'not_started', vendor: 'Title Company', cost: '$2,000', time: '2 weeks', notes: '' },
+            { category: 'land', task: 'ALTA survey', status: 'not_started', vendor: 'Other', cost: '$5,000', time: '3 weeks', notes: '' },
+            { category: 'interconnection', task: 'Submit Full Interconnection Study (FIS) application', status: 'not_started', vendor: 'Enerzinx', cost: '$50,000', time: '1 week', notes: '' },
+            { category: 'interconnection', task: 'Complete FIS process', status: 'not_started', vendor: 'ERCOT', cost: '', time: '6-9 months', notes: 'CRITICAL PATH' },
+            { category: 'permitting', task: 'County zoning confirmation letter', status: 'not_started', vendor: 'Jones County', cost: '$0', time: '2 weeks', notes: '' },
+            { category: 'permitting', task: 'SWPPP (Stormwater Plan)', status: 'waiting', vendor: 'ANS Engineering', cost: '$3,000', time: '3 weeks', notes: 'Requested from ANS' },
+            { category: 'environmental', task: 'Phase I Environmental Site Assessment (ESA)', status: 'waiting', vendor: 'ANS Engineering', cost: '$3,500', time: '3 weeks', notes: 'Requested from ANS' },
+            { category: 'environmental', task: 'Geotechnical investigation report', status: 'in_progress', vendor: 'ANS Engineering', cost: '$8,000', time: '3 weeks', notes: 'Scope contracted' },
+            { category: 'engineering', task: 'Preliminary site layout', status: 'waiting', vendor: 'ANS Engineering', cost: '$10,000', time: '2 weeks', notes: 'Requested from ANS' },
+            { category: 'engineering', task: 'Single-line diagram (SLD)', status: 'waiting', vendor: 'ANS Engineering', cost: '$8,000', time: '2 weeks', notes: 'Requested from ANS' },
+            { category: 'epc', task: 'Receive indicative EPC pricing', status: 'in_progress', vendor: 'Optimum EPC', cost: '', time: '2 weeks', notes: '' },
+            { category: 'financial', task: 'Development capital raise (to NTP)', status: 'not_started', vendor: 'Investor', cost: '', time: '8 weeks', notes: 'Kola intro pending' },
+            { category: 'ntp', task: '🎯 FULL NTP ISSUED', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '', notes: 'THE GOAL!' }
+        ];
+
+        var defaultDocuments = [
+            { section: 'executive', name: 'Project One-Pager', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
+            { section: 'executive', name: 'Investment Teaser', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
+            { section: 'executive', name: 'Project Overview Presentation', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Jan 2026' },
+            { section: 'land', name: 'Purchase Option Agreement', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Dec 15, 2025' },
+            { section: 'land', name: 'Land Control Agreement', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Jan 8, 2026' },
+            { section: 'land', name: 'Phase I Environmental Site Assessment', file_type: 'pdf', url: '', status: 'pending', date_added: '' },
+            { section: 'interconnection', name: 'Injection Study - 300 MW', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Jan 10, 2026' },
+            { section: 'interconnection', name: 'Transmission Upgrade Analysis', file_type: 'xlsx', url: '', status: 'uploaded', date_added: 'Jan 10, 2026' },
+            { section: 'technical', name: 'Preliminary Site Layout', file_type: 'dwg', url: '', status: 'pending', date_added: '' },
+            { section: 'technical', name: 'Single-Line Diagram', file_type: 'dwg', url: '', status: 'pending', date_added: '' },
+            { section: 'epc', name: 'EPC Indicative Pricing', file_type: 'xlsx', url: '', status: 'pending', date_added: '' },
+            { section: 'market', name: 'ERCOT BESS Market Analysis', file_type: 'xlsx', url: '', status: 'uploaded', date_added: 'Jan 6, 2026' },
+            { section: 'financial', name: 'Pro Forma Financial Model', file_type: 'xlsx', url: '', status: 'pending', date_added: '' },
+            { section: 'financial', name: 'Private Placement Memorandum', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Dec 2025' }
+        ];
+
+        var defaultNotes = [
+            { section: 'land', author: 'ANS Engineering', date: 'Jan 12, 2026', content: 'Requested Phase I ESA, Preliminary Site Drawings, Single-Line Diagram, and SWPPP from ANS. Response: "Let me check with the team and report back."', is_highlight: true },
+            { section: 'interconnection', author: 'Enerzinx', date: 'Jan 10, 2026', content: 'Injection study completed at 300 MW. POI can accommodate up to 2,500 MW of batteries. Some downstream transmission upgrades required.', is_highlight: false },
+            { section: 'epc', author: 'Call Summary', date: 'Jan 12, 2026', content: 'Optimum EPC engaged for indicative pricing. They have experience with 200 MW BESS in Midland.', is_highlight: true }
+        ];
+
+        var defaultSettings = {
+            'dr_password': 'redew2026',
+            'dr_status': 'active',
+            'project_name': 'ReDew Anson',
+            'capacity': '300 MW',
+            'target_ntp': 'Q1 2027',
+            'progress_land': '90',
+            'progress_interconnection': '75',
+            'progress_permitting': '15',
+            'progress_engineering': '35',
+            'progress_financial': '60',
+            'progress_epc': '20'
+        };
+
+        // ==================== AUTH FUNCTIONS ====================
+        function goToSetup() {
+            document.getElementById('setupScreen').classList.remove('hidden');
+            document.getElementById('loginScreen').classList.add('hidden');
+        }
+
+        function goToLogin() {
+            document.getElementById('setupScreen').classList.add('hidden');
+            document.getElementById('loginScreen').classList.remove('hidden');
+        }
+
+        function showApp() {
+            document.getElementById('setupScreen').classList.add('hidden');
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('app').classList.add('visible');
+        }
+
+        function resetAll() {
+            if (confirm('This will clear all saved configuration. Continue?')) {
+                localStorage.removeItem('redew_admin_config');
+                location.reload();
+            }
+        }
+
+        async function doSetup() {
+            var url = document.getElementById('supabaseUrl').value.trim();
+            var key = document.getElementById('supabaseKey').value.trim();
+            var password = document.getElementById('adminPassword').value.trim();
+            var errorEl = document.getElementById('setupError');
+            errorEl.style.display = 'none';
+
+            if (!url || !key || !password) {
+                errorEl.textContent = 'Please fill in all fields.';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            try {
+                db = window.supabase.createClient(url, key);
+                
+                // Test connection and create tables if needed
+                var testResult = await db.from('ntp_tasks').select('id').limit(1);
+                
+                if (testResult.error && testResult.error.code === '42P01') {
+                    errorEl.innerHTML = '<strong>Tables not found!</strong> Run this SQL in Supabase SQL Editor:<br><br>' +
+                        '<code style="display:block;background:#000;padding:0.5rem;border-radius:4px;font-size:0.6rem;white-space:pre-wrap;max-height:200px;overflow:auto;">' +
+                        '-- NTP Tasks\n' +
+                        'CREATE TABLE ntp_tasks (\n' +
+                        '  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,\n' +
+                        '  category TEXT NOT NULL,\n' +
+                        '  task TEXT NOT NULL,\n' +
+                        '  status TEXT DEFAULT \'not_started\',\n' +
+                        '  vendor TEXT DEFAULT \'\',\n' +
+                        '  cost TEXT DEFAULT \'\',\n' +
+                        '  time TEXT DEFAULT \'\',\n' +
+                        '  notes TEXT DEFAULT \'\',\n' +
+                        '  created_at TIMESTAMPTZ DEFAULT NOW(),\n' +
+                        '  updated_at TIMESTAMPTZ DEFAULT NOW()\n' +
+                        ');\n\n' +
+                        '-- Data Room Documents\n' +
+                        'CREATE TABLE dataroom_documents (\n' +
+                        '  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,\n' +
+                        '  section TEXT NOT NULL,\n' +
+                        '  name TEXT NOT NULL,\n' +
+                        '  file_type TEXT DEFAULT \'pdf\',\n' +
+                        '  url TEXT DEFAULT \'\',\n' +
+                        '  status TEXT DEFAULT \'missing\',\n' +
+                        '  date_added TEXT DEFAULT \'\',\n' +
+                        '  sort_order INT DEFAULT 0,\n' +
+                        '  created_at TIMESTAMPTZ DEFAULT NOW()\n' +
+                        ');\n\n' +
+                        '-- Data Room Notes\n' +
+                        'CREATE TABLE dataroom_notes (\n' +
+                        '  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,\n' +
+                        '  section TEXT NOT NULL,\n' +
+                        '  author TEXT DEFAULT \'\',\n' +
+                        '  date TEXT DEFAULT \'\',\n' +
+                        '  content TEXT DEFAULT \'\',\n' +
+                        '  is_highlight BOOLEAN DEFAULT false,\n' +
+                        '  sort_order INT DEFAULT 0,\n' +
+                        '  created_at TIMESTAMPTZ DEFAULT NOW()\n' +
+                        ');\n\n' +
+                        '-- Settings\n' +
+                        'CREATE TABLE dataroom_settings (\n' +
+                        '  key TEXT PRIMARY KEY,\n' +
+                        '  value TEXT DEFAULT \'\'\n' +
+                        ');\n\n' +
+                        '-- Enable RLS\n' +
+                        'ALTER TABLE ntp_tasks ENABLE ROW LEVEL SECURITY;\n' +
+                        'ALTER TABLE dataroom_documents ENABLE ROW LEVEL SECURITY;\n' +
+                        'ALTER TABLE dataroom_notes ENABLE ROW LEVEL SECURITY;\n' +
+                        'ALTER TABLE dataroom_settings ENABLE ROW LEVEL SECURITY;\n\n' +
+                        'CREATE POLICY "Allow all" ON ntp_tasks FOR ALL USING (true);\n' +
+                        'CREATE POLICY "Allow all" ON dataroom_documents FOR ALL USING (true);\n' +
+                        'CREATE POLICY "Allow all" ON dataroom_notes FOR ALL USING (true);\n' +
+                        'CREATE POLICY "Allow all" ON dataroom_settings FOR ALL USING (true);</code>';
+                    errorEl.style.display = 'block';
+                    return;
+                }
+
+                if (testResult.error) throw new Error(testResult.error.message);
+
+                // Initialize with defaults if empty
+                if (!testResult.data || testResult.data.length === 0) {
+                    await db.from('ntp_tasks').insert(defaultTasks);
+                }
+
+                var docsResult = await db.from('dataroom_documents').select('id').limit(1);
+                if (!docsResult.data || docsResult.data.length === 0) {
+                    await db.from('dataroom_documents').insert(defaultDocuments);
+                }
+
+                var notesResult = await db.from('dataroom_notes').select('id').limit(1);
+                if (!notesResult.data || notesResult.data.length === 0) {
+                    await db.from('dataroom_notes').insert(defaultNotes);
+                }
+
+                var settingsResult = await db.from('dataroom_settings').select('key').limit(1);
+                if (!settingsResult.data || settingsResult.data.length === 0) {
+                    var settingsArray = Object.keys(defaultSettings).map(function(k) {
+                        return { key: k, value: defaultSettings[k] };
+                    });
+                    await db.from('dataroom_settings').insert(settingsArray);
+                }
+
+                localStorage.setItem('redew_admin_config', JSON.stringify({ url: url, key: key, password: password }));
+                
+                await loadAllData();
+                showApp();
+                renderAll();
+            } catch (err) {
+                errorEl.textContent = 'Error: ' + err.message;
+                errorEl.style.display = 'block';
+            }
+        }
+
+        async function doLogin() {
+            var password = document.getElementById('loginPassword').value.trim();
+            var errorEl = document.getElementById('loginError');
+            errorEl.style.display = 'none';
+
+            var config = null;
+            try { config = JSON.parse(localStorage.getItem('redew_admin_config')); } catch (e) {}
+
+            if (!config) {
+                errorEl.textContent = 'No configuration found. Please set up first.';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            if (password !== config.password) {
+                errorEl.textContent = 'Incorrect password.';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            try {
+                db = window.supabase.createClient(config.url, config.key);
+                await loadAllData();
+                showApp();
+                renderAll();
+                document.getElementById('settingDbUrl').value = config.url;
+            } catch (err) {
+                errorEl.textContent = 'Connection failed: ' + err.message;
+                errorEl.style.display = 'block';
+            }
+        }
+
+        function doLogout() {
+            document.getElementById('app').classList.remove('visible');
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('loginPassword').value = '';
+        }
+
+        // ==================== DATA LOADING ====================
+        async function loadAllData() {
+            await Promise.all([loadTasks(), loadDocuments(), loadNotes(), loadSettings()]);
+        }
+
+        async function loadTasks() {
+            var result = await db.from('ntp_tasks').select('*').order('created_at', { ascending: true });
+            tasks = result.data || [];
+        }
+
+        async function loadDocuments() {
+            var result = await db.from('dataroom_documents').select('*').order('sort_order', { ascending: true });
+            documents = result.data || [];
+        }
+
+        async function loadNotes() {
+            var result = await db.from('dataroom_notes').select('*').order('sort_order', { ascending: true });
+            notes = result.data || [];
+        }
+
+        async function loadSettings() {
+            var result = await db.from('dataroom_settings').select('*');
+            settings = {};
+            if (result.data) {
+                result.data.forEach(function(s) { settings[s.key] = s.value; });
+            }
+        }
+
+        // ==================== RENDERING ====================
+        function renderAll() {
+            renderTasks();
+            renderDataroom();
+            renderSettings();
+            updateStats();
+            updateFilterDropdowns();
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(function(btn) {
+                btn.classList.toggle('active', btn.dataset.tab === tabId);
+            });
+            document.querySelectorAll('.tab-content').forEach(function(content) {
+                content.classList.toggle('active', content.id === 'tab-' + tabId);
+            });
+        }
+
+        // ==================== NTP CHECKLIST ====================
+        function renderTasks() {
+            var container = document.getElementById('tasksContainer');
+            var statusFilter = document.getElementById('filterStatus').value;
+            var vendorFilter = document.getElementById('filterVendor').value;
+            var categoryFilter = document.getElementById('filterCategory').value;
+            var searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            var filteredTasks = tasks.filter(function(t) {
+                if (statusFilter !== 'all' && t.status !== statusFilter) return false;
+                if (vendorFilter !== 'all' && t.vendor !== vendorFilter) return false;
+                if (categoryFilter !== 'all' && t.category !== categoryFilter) return false;
+                if (searchTerm && t.task.toLowerCase().indexOf(searchTerm) === -1) return false;
+                return true;
+            });
+
+            var html = '';
+
+            ntpCategories.forEach(function(cat) {
+                var catTasks = filteredTasks.filter(function(t) { return t.category === cat.id; });
+                if (catTasks.length === 0 && categoryFilter !== 'all') return;
+
+                var allCatTasks = tasks.filter(function(t) { return t.category === cat.id; });
+                var completed = allCatTasks.filter(function(t) { return t.status === 'completed'; }).length;
+                var total = allCatTasks.length;
+                var percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+                html += '<div class="category-section" data-category="' + cat.id + '">';
+                html += '<div class="category-header" onclick="toggleCategory(\'' + cat.id + '\')">';
+                html += '<h2>' + cat.icon + ' ' + cat.name + ' <span class="number">' + catTasks.length + '</span></h2>';
+                html += '<div class="category-progress"><div class="bar"><div class="fill" style="width:' + percent + '%"></div></div>';
+                html += '<span class="percent">' + percent + '%</span>';
+                html += '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div></div>';
+                html += '<div class="category-body"><table class="task-table"><thead><tr>';
+                html += '<th class="col-status">Status</th><th class="col-task">Task</th><th class="col-vendor">Vendor</th>';
+                html += '<th class="col-cost">Cost</th><th class="col-time">Time</th><th class="col-notes">Notes</th><th class="col-actions"></th></tr></thead><tbody>';
+                
+                catTasks.forEach(function(t) {
+                    html += renderTaskRow(t);
+                });
+                
+                html += '</tbody></table><div class="add-task-row">';
+                html += '<input type="text" class="add-task-input" id="newTask-' + cat.id + '" placeholder="Add new task..." onkeypress="handleAddKeypress(event, \'' + cat.id + '\')">';
+                html += '<button class="add-task-btn" onclick="handleAddTask(\'' + cat.id + '\')">+ Add</button></div></div></div>';
+            });
+
+            container.innerHTML = html;
+            document.getElementById('ntpCount').textContent = tasks.length;
+        }
+
+        function renderTaskRow(t) {
+            var sc = t.status || 'not_started';
+            var html = '<tr class="' + (t.status === 'completed' ? 'completed' : '') + '">';
+            html += '<td><select class="status-select ' + sc + '" onchange="handleStatusChange(\'' + t.id + '\', this.value)">';
+            html += '<option value="not_started"' + (sc === 'not_started' ? ' selected' : '') + '>Not Started</option>';
+            html += '<option value="in_progress"' + (sc === 'in_progress' ? ' selected' : '') + '>In Progress</option>';
+            html += '<option value="completed"' + (sc === 'completed' ? ' selected' : '') + '>Completed</option>';
+            html += '<option value="blocked"' + (sc === 'blocked' ? ' selected' : '') + '>Blocked</option>';
+            html += '<option value="waiting"' + (sc === 'waiting' ? ' selected' : '') + '>Waiting</option></select></td>';
+            html += '<td><input type="text" class="editable task-name" value="' + esc(t.task) + '" onchange="handleFieldChange(\'' + t.id + '\', \'task\', this.value)"></td>';
+            html += '<td><select class="vendor-select" onchange="handleFieldChange(\'' + t.id + '\', \'vendor\', this.value)"><option value="">Select...</option>';
+            vendors.forEach(function(v) {
+                html += '<option value="' + v + '"' + (t.vendor === v ? ' selected' : '') + '>' + v + '</option>';
+            });
+            html += '</select></td>';
+            html += '<td><input type="text" class="editable cost-input" value="' + esc(t.cost) + '" placeholder="$0" onchange="handleFieldChange(\'' + t.id + '\', \'cost\', this.value)"></td>';
+            html += '<td><input type="text" class="editable time-input" value="' + esc(t.time) + '" placeholder="—" onchange="handleFieldChange(\'' + t.id + '\', \'time\', this.value)"></td>';
+            html += '<td><input type="text" class="editable notes-input" value="' + esc(t.notes) + '" placeholder="Notes..." onchange="handleFieldChange(\'' + t.id + '\', \'notes\', this.value)"></td>';
+            html += '<td><button class="delete-btn" onclick="deleteTask(\'' + t.id + '\')">🗑️</button></td></tr>';
+            return html;
+        }
+
+        function toggleCategory(id) {
+            var el = document.querySelector('.category-section[data-category="' + id + '"]');
+            if (el) el.classList.toggle('collapsed');
+        }
+
+        async function handleStatusChange(id, val) {
+            await saveTask(id, 'status', val);
+            renderTasks();
+            updateStats();
+        }
+
+        async function handleFieldChange(id, field, val) {
+            await saveTask(id, field, val);
+        }
+
+        async function saveTask(taskId, field, value) {
+            showSaveIndicator('saving');
+            var updateData = {};
+            updateData[field] = value;
+            updateData.updated_at = new Date().toISOString();
+
+            var result = await db.from('ntp_tasks').update(updateData).eq('id', taskId);
+
+            if (result.error) {
+                showSaveIndicator('error');
+            } else {
+                tasks = tasks.map(function(t) {
+                    if (t.id === taskId) {
+                        t[field] = value;
+                        t.updated_at = updateData.updated_at;
+                    }
+                    return t;
+                });
+                showSaveIndicator('saved');
+                updateStats();
+            }
+        }
+
+        function handleAddTask(cat) {
+            var inp = document.getElementById('newTask-' + cat);
+            addTask(cat, inp.value);
+            inp.value = '';
+        }
+
+        function handleAddKeypress(e, cat) {
+            if (e.key === 'Enter') handleAddTask(cat);
+        }
+
+        async function addTask(category, taskName) {
+            if (!taskName.trim()) return;
+            showSaveIndicator('saving');
+
+            var newTask = { category: category, task: taskName, status: 'not_started', vendor: '', cost: '', time: '', notes: '' };
+            var result = await db.from('ntp_tasks').insert([newTask]).select().single();
+
+            if (result.error) {
+                showSaveIndicator('error');
+            } else {
+                tasks.push(result.data);
+                renderTasks();
+                updateStats();
+                showSaveIndicator('saved');
+            }
+        }
+
+        async function deleteTask(taskId) {
+            if (!confirm('Delete this task?')) return;
+            showSaveIndicator('saving');
+
+            var result = await db.from('ntp_tasks').delete().eq('id', taskId);
+
+            if (result.error) {
+                showSaveIndicator('error');
+            } else {
+                tasks = tasks.filter(function(t) { return t.id !== taskId; });
+                renderTasks();
+                updateStats();
+                showSaveIndicator('saved');
+            }
+        }
+
+        // ==================== DATA ROOM CONTROL ====================
+        function renderDataroom() {
+            var container = document.getElementById('dataroomContainer');
+            var html = '';
+
+            drSections.forEach(function(section) {
+                var sectionDocs = documents.filter(function(d) { return d.section === section.id; });
+                var sectionNotes = notes.filter(function(n) { return n.section === section.id; });
+
+                html += '<div class="dr-section" data-section="' + section.id + '">';
+                html += '<div class="dr-section-header" onclick="toggleDrSection(\'' + section.id + '\')">';
+                html += '<h3>' + section.icon + ' ' + section.name + ' <span class="doc-count">' + sectionDocs.length + ' docs</span></h3>';
+                html += '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div>';
+                html += '<div class="dr-section-body">';
+
+                // Documents table
+                html += '<h4 style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:0.75rem;">Documents</h4>';
+                html += '<table class="dr-doc-table"><thead><tr>';
+                html += '<th style="width:30%">Name</th><th style="width:80px">Type</th><th style="width:100px">Status</th><th>URL</th><th style="width:100px">Date</th><th style="width:40px"></th>';
+                html += '</tr></thead><tbody>';
+
+                sectionDocs.forEach(function(doc) {
+                    html += renderDocRow(doc);
+                });
+
+                html += '</tbody></table>';
+                html += '<div class="dr-add-row">';
+                html += '<input type="text" class="dr-input" id="newDoc-' + section.id + '" placeholder="Document name...">';
+                html += '<button class="btn btn-small btn-primary" onclick="addDocument(\'' + section.id + '\')">+ Add Doc</button></div>';
+
+                // Notes section
+                html += '<h4 style="font-size:0.85rem;color:var(--text-secondary);margin:1.5rem 0 0.75rem;">Notes & Updates</h4>';
+                html += '<div class="dr-notes-list">';
+                
+                sectionNotes.forEach(function(note) {
+                    html += renderNoteItem(note);
+                });
+
+                html += '</div>';
+                html += '<button class="btn btn-small btn-secondary" style="margin-top:0.75rem;" onclick="addNote(\'' + section.id + '\')">+ Add Note</button>';
+
+                html += '</div></div>';
+            });
+
+            container.innerHTML = html;
+
+            // Update stats
+            var uploaded = documents.filter(function(d) { return d.status === 'uploaded'; }).length;
+            var pending = documents.filter(function(d) { return d.status === 'pending'; }).length;
+            var missing = documents.filter(function(d) { return d.status === 'missing'; }).length;
+
+            document.getElementById('drTotalDocs').textContent = documents.length;
+            document.getElementById('drUploaded').textContent = uploaded;
+            document.getElementById('drPending').textContent = pending;
+            document.getElementById('drMissing').textContent = missing;
+            document.getElementById('drCount').textContent = documents.length;
+        }
+
+        function renderDocRow(doc) {
+            var html = '<tr>';
+            html += '<td><input type="text" class="dr-input" value="' + esc(doc.name) + '" onchange="updateDocument(\'' + doc.id + '\', \'name\', this.value)"></td>';
+            html += '<td><select class="dr-type-select" onchange="updateDocument(\'' + doc.id + '\', \'file_type\', this.value)">';
+            ['pdf', 'xlsx', 'doc', 'dwg', 'img', 'audio', 'other'].forEach(function(type) {
+                html += '<option value="' + type + '"' + (doc.file_type === type ? ' selected' : '') + '>' + type.toUpperCase() + '</option>';
+            });
+            html += '</select></td>';
+            html += '<td><select class="dr-status-select ' + doc.status + '" onchange="updateDocument(\'' + doc.id + '\', \'status\', this.value); this.className=\'dr-status-select \'+this.value;">';
+            html += '<option value="uploaded"' + (doc.status === 'uploaded' ? ' selected' : '') + '>Uploaded</option>';
+            html += '<option value="pending"' + (doc.status === 'pending' ? ' selected' : '') + '>Pending</option>';
+            html += '<option value="missing"' + (doc.status === 'missing' ? ' selected' : '') + '>Missing</option></select></td>';
+            html += '<td><input type="text" class="dr-input url-input" value="' + esc(doc.url) + '" placeholder="https://drive.google.com/..." onchange="updateDocument(\'' + doc.id + '\', \'url\', this.value)"></td>';
+            html += '<td><input type="text" class="dr-input" value="' + esc(doc.date_added) + '" placeholder="Jan 2026" onchange="updateDocument(\'' + doc.id + '\', \'date_added\', this.value)" style="font-size:0.8rem;"></td>';
+            html += '<td><button class="delete-btn" style="opacity:1;" onclick="deleteDocument(\'' + doc.id + '\')">🗑️</button></td>';
+            html += '</tr>';
+            return html;
+        }
+
+        function renderNoteItem(note) {
+            var html = '<div class="dr-note-item' + (note.is_highlight ? ' highlight' : '') + '">';
+            html += '<button class="dr-note-delete" onclick="deleteNote(\'' + note.id + '\')">🗑️</button>';
+            html += '<div class="dr-note-header">';
+            html += '<input type="text" class="dr-input" value="' + esc(note.author) + '" placeholder="Author" onchange="updateNote(\'' + note.id + '\', \'author\', this.value)">';
+            html += '<input type="text" class="dr-input" value="' + esc(note.date) + '" placeholder="Date" onchange="updateNote(\'' + note.id + '\', \'date\', this.value)" style="max-width:120px;">';
+            html += '<label><input type="checkbox"' + (note.is_highlight ? ' checked' : '') + ' onchange="updateNote(\'' + note.id + '\', \'is_highlight\', this.checked)"> Highlight</label>';
+            html += '</div>';
+            html += '<textarea class="dr-input dr-note-content" placeholder="Note content..." onchange="updateNote(\'' + note.id + '\', \'content\', this.value)">' + esc(note.content) + '</textarea>';
+            html += '</div>';
+            return html;
+        }
+
+        function toggleDrSection(id) {
+            var el = document.querySelector('.dr-section[data-section="' + id + '"]');
+            if (el) el.classList.toggle('collapsed');
+        }
+
+        async function updateDocument(id, field, value) {
+            showSaveIndicator('saving');
+            var updateData = {};
+            updateData[field] = value;
+
+            var result = await db.from('dataroom_documents').update(updateData).eq('id', id);
+
+            if (result.error) {
+                showSaveIndicator('error');
+            } else {
+                documents = documents.map(function(d) {
+                    if (d.id === id) d[field] = value;
+                    return d;
+                });
+                showSaveIndicator('saved');
+                renderDataroom();
+            }
+        }
+
+        async function addDocument(section) {
+            var inp = document.getElementById('newDoc-' + section);
+            var name = inp.value.trim();
+            if (!name) return;
+
+            showSaveIndicator('saving');
+            var newDoc = { section: section, name: name, file_type: 'pdf', url: '', status: 'missing', date_added: '' };
+            var result = await db.from('dataroom_documents').insert([newDoc]).select().single();
+
+            if (result.error) {
+                showSaveIndicator('error');
+            } else {
+                documents.push(result.data);
+                inp.value = '';
+                renderDataroom();
+                showSaveIndicator('saved');
+            }
+        }
+
+        async function deleteDocument(id) {
+            if (!confirm('Delete this document?')) return;
+            showSaveIndicator('saving');
+
+            var result = await db.from('dataroom_documents').delete().eq('id', id);
+
+            if (result.error) {
+                showSaveIndicator('error');
+            } else {
+                documents = documents.filter(function(d) { return d.id !== id; });
+                renderDataroom();
+                showSaveIndicator('saved');
+            }
+        }
+
+        async function updateNote(id, field, value) {
+            showSaveIndicator('saving');
+            var updateData = {};
+            updateData[field] = value;
+
+            var result = await db.from('dataroom_notes').update(updateData).eq('id', id);
+
+            if (result.error) {
+                showSaveIndicator('error');
+            } else {
+                notes = notes.map(function(n) {
+                    if (n.id === id) n[field] = value;
+                    return n;
+                });
+                showSaveIndicator('saved');
+            }
+        }
+
+        async function addNote(section) {
+            showSaveIndicator('saving');
+            var newNote = { section: section, author: '', date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }), content: '', is_highlight: false };
+            var result = await db.from('dataroom_notes').insert([newNote]).select().single();
+
+            if (result.error) {
+                showSaveIndicator('error');
+            } else {
+                notes.push(result.data);
+                renderDataroom();
+                showSaveIndicator('saved');
+            }
+        }
+
+        async function deleteNote(id) {
+            if (!confirm('Delete this note?')) return;
+            showSaveIndicator('saving');
+
+            var result = await db.from('dataroom_notes').delete().eq('id', id);
+
+            if (result.error) {
+                showSaveIndicator('error');
+            } else {
+                notes = notes.filter(function(n) { return n.id !== id; });
+                renderDataroom();
+                showSaveIndicator('saved');
+            }
+        }
+
+        // ==================== SETTINGS ====================
+        function renderSettings() {
+            // Populate settings fields
+            document.getElementById('settingDrPassword').value = settings.dr_password || 'redew2026';
+            document.getElementById('settingDrStatus').value = settings.dr_status || 'active';
+            document.getElementById('settingProjectName').value = settings.project_name || 'ReDew Anson';
+            document.getElementById('settingCapacity').value = settings.capacity || '300 MW';
+            document.getElementById('settingTargetNtp').value = settings.target_ntp || 'Q1 2027';
+
+            // Progress editor
+            var progressItems = [
+                { key: 'progress_land', label: 'Land & Site Control' },
+                { key: 'progress_interconnection', label: 'Interconnection' },
+                { key: 'progress_permitting', label: 'Permitting' },
+                { key: 'progress_engineering', label: 'Engineering' },
+                { key: 'progress_financial', label: 'Financial Model' },
+                { key: 'progress_epc', label: 'EPC Selection' }
+            ];
+
+            var progressHtml = '';
+            progressItems.forEach(function(item) {
+                var val = settings[item.key] || '0';
+                progressHtml += '<div class="progress-row">';
+                progressHtml += '<span class="label">' + item.label + '</span>';
+                progressHtml += '<input type="range" min="0" max="100" value="' + val + '" oninput="updateProgressPreview(\'' + item.key + '\', this.value)" onchange="saveSetting(\'' + item.key + '\', this.value)">';
+                progressHtml += '<span class="value" id="preview-' + item.key + '">' + val + '%</span>';
+                progressHtml += '</div>';
+            });
+            document.getElementById('progressEditor').innerHTML = progressHtml;
+        }
+
+        function updateProgressPreview(key, value) {
+            document.getElementById('preview-' + key).textContent = value + '%';
+        }
+
+        async function saveSetting(key, value) {
+            showSaveIndicator('saving');
+            
+            var result = await db.from('dataroom_settings').upsert({ key: key, value: value });
+
+            if (result.error) {
+                showSaveIndicator('error');
+            } else {
+                settings[key] = value;
+                showSaveIndicator('saved');
+            }
+        }
+
+        // ==================== UTILITIES ====================
+        function esc(s) {
+            return (s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        function updateStats() {
+            var completed = 0, inProgress = 0, blocked = 0, totalCost = 0;
+            tasks.forEach(function(t) {
+                if (t.status === 'completed') completed++;
+                if (t.status === 'in_progress' || t.status === 'waiting') inProgress++;
+                if (t.status === 'blocked') blocked++;
+                if (t.cost) {
+                    var n = parseFloat(t.cost.replace(/[$,]/g, ''));
+                    if (!isNaN(n)) totalCost += n;
+                }
+            });
+            var pct = tasks.length > 0 ? Math.round((completed / tasks.length) * 100) : 0;
+
+            document.getElementById('statCompleted').textContent = completed;
+            document.getElementById('statInProgress').textContent = inProgress;
+            document.getElementById('totalPercent').textContent = pct + '%';
+            document.getElementById('totalBlocked').textContent = blocked;
+            document.getElementById('totalCost').textContent = '$' + totalCost.toLocaleString();
+        }
+
+        function updateFilterDropdowns() {
+            var vs = {};
+            tasks.forEach(function(t) { if (t.vendor) vs[t.vendor] = true; });
+            var vendorHtml = '<option value="all">All</option>';
+            Object.keys(vs).forEach(function(v) {
+                vendorHtml += '<option value="' + v + '">' + v + '</option>';
+            });
+            document.getElementById('filterVendor').innerHTML = vendorHtml;
+
+            var catHtml = '<option value="all">All</option>';
+            ntpCategories.forEach(function(c) {
+                catHtml += '<option value="' + c.id + '">' + c.icon + ' ' + c.name + '</option>';
+            });
+            document.getElementById('filterCategory').innerHTML = catHtml;
+        }
+
+        function showSaveIndicator(status) {
+            var el = document.getElementById('saveIndicator');
+            var txt = document.getElementById('saveText');
+            el.className = 'save-indicator visible ' + status;
+            txt.textContent = status === 'saving' ? 'Saving...' : status === 'saved' ? '✓ Saved' : '✗ Error';
+            if (status !== 'saving') setTimeout(function() { el.classList.remove('visible'); }, 2000);
+        }
+
+        function exportData() { document.getElementById('exportModal').classList.add('visible'); }
+        function closeExportModal() { document.getElementById('exportModal').classList.remove('visible'); }
+
+        function exportJSON() {
+            var data = { tasks: tasks, documents: documents, notes: notes, settings: settings };
+            var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'redew-admin-export.json'; a.click();
+            closeExportModal();
+        }
+
+        function exportCSV() {
+            var rows = [['Category', 'Task', 'Status', 'Vendor', 'Cost', 'Time', 'Notes']];
+            tasks.forEach(function(t) {
+                var catName = '';
+                ntpCategories.forEach(function(c) { if (c.id === t.category) catName = c.name; });
+                rows.push([catName, t.task, t.status, t.vendor, t.cost, t.time, t.notes]);
+            });
+            var csv = rows.map(function(r) { return r.map(function(c) { return '"' + (c || '').replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+            var blob = new Blob([csv], { type: 'text/csv' });
+            var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'redew-ntp-tasks.csv'; a.click();
+            closeExportModal();
+        }
+
+        // ==================== INIT ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('redew_admin_config')) {
+                goToLogin();
+            }
+            document.getElementById('loginPassword').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') doLogin();
+            });
+            document.getElementById('adminPassword').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') doSetup();
+            });
+        });
+    </script>
+</body>
+</html>
