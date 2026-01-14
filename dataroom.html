@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>ReDew Anson — Data Room</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0f0d;
+            --bg-secondary: #111916;
+            --bg-tertiary: #1a2420;
+            --bg-card: #141c19;
+            --brand-green: #2dd4a8;
+            --brand-green-dim: #1a8a6e;
+            --brand-green-glow: rgba(45, 212, 168, 0.15);
+            --brand-green-bright: #5eecc6;
+            --text-primary: #f0f4f2;
+            --text-secondary: #9ca8a3;
+            --text-muted: #5a6b64;
+            --border: #243029;
+            --border-light: #2d3d35;
+            --status-green: #22c55e;
+            --status-yellow: #eab308;
+            --status-red: #ef4444;
+            --status-blue: #3b82f6;
+            --sidebar-width: 280px;
+            --header-height: 64px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Play', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--brand-green-dim); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--brand-green); }
+
+        /* Loading State */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .loading-screen.hidden { display: none; }
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid var(--border);
+            border-top-color: var(--brand-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text { color: var(--text-secondary); font-size: 0.9rem; }
+
+        /* Error State */
+        .error-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            padding: 2rem;
+        }
+        .error-screen.visible { display: flex; }
+        .error-box {
+            background: var(--bg-card);
+            border: 1px solid var(--status-red);
+            border-radius: 16px;
+            padding: 2.5rem;
+            max-width: 500px;
+            text-align: center;
+        }
+        .error-box h2 { color: var(--status-red); margin-bottom: 1rem; }
+        .error-box p { color: var(--text-secondary); margin-bottom: 1.5rem; }
+        .error-box button {
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'Play', sans-serif;
+            cursor: pointer;
+        }
+
+        /* Password Screen */
+        .password-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        .password-screen.visible { display: flex; }
+        .password-screen::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 80% 50% at 50% -20%, var(--brand-green-glow), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(45, 212, 168, 0.08), transparent);
+            pointer-events: none;
+        }
+        .password-box {
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+        }
+        .password-box::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 17px;
+            background: linear-gradient(135deg, var(--brand-green-dim), transparent 50%);
+            z-index: -1;
+            opacity: 0.5;
+        }
+        .password-logo {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 1.5rem;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--brand-green), var(--brand-green-dim));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--bg-primary);
+        }
+        .password-box h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .password-box .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+        .password-box input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 3px;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .password-box input:focus {
+            outline: none;
+            border-color: var(--brand-green);
+            box-shadow: 0 0 0 3px var(--brand-green-glow);
+        }
+        .password-box input::placeholder {
+            letter-spacing: normal;
+            color: var(--text-muted);
+            font-family: 'Play', sans-serif;
+        }
+        .password-box button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--brand-green), var(--brand-green-dim));
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Play', sans-serif;
+            cursor: pointer;
+        }
+        .password-box button:hover {
+            box-shadow: 0 8px 24px rgba(45, 212, 168, 0.3);
+        }
+        .password-error {
+            color: var(--status-red);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            display: none;
+        }
+        .password-footer {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* App Container */
+        .app { display: none; min-height: 100vh; }
+        .app.visible { display: flex; }
+
+        /* Mobile Overlay */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 99;
+            backdrop-filter: blur(4px);
+        }
+        .sidebar-overlay.visible { display: block; }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+        .sidebar-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+        }
+        .sidebar-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--brand-green), var(--brand-green-dim));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--bg-primary);
+        }
+        .sidebar-brand h1 { font-size: 1.05rem; font-weight: 700; }
+        .sidebar-brand span {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .sidebar-nav { flex: 1; overflow-y: auto; padding: 1rem 0; }
+        .nav-section { margin-bottom: 1.25rem; }
+        .nav-section-title {
+            padding: 0.5rem 1.5rem;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.7rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: all 0.15s;
+        }
+        .nav-item:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+        .nav-item.active {
+            background: var(--brand-green-glow);
+            color: var(--brand-green);
+            border-left-color: var(--brand-green);
+        }
+        .nav-item .status {
+            margin-left: auto;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .nav-item .status.complete { background: var(--status-green); }
+        .nav-item .status.partial { background: var(--status-yellow); }
+        .nav-item .status.pending { background: var(--status-red); }
+        .nav-item .status.new { background: var(--status-blue); }
+
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .logout-btn {
+            width: 100%;
+            padding: 0.5rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-family: 'Play', sans-serif;
+            cursor: pointer;
+            margin-top: 0.75rem;
+        }
+        .logout-btn:hover { background: var(--bg-card); color: var(--text-primary); }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+        }
+        .header {
+            height: var(--header-height);
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .header-left { display: flex; align-items: center; gap: 1rem; }
+        .mobile-menu-btn {
+            display: none;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 0.5rem;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+        }
+        .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
+        .breadcrumb span { color: var(--text-muted); }
+        .breadcrumb strong { color: var(--text-primary); font-weight: 700; }
+        .header-actions { display: flex; gap: 0.75rem; }
+        .header-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 700;
+            font-family: 'Play', sans-serif;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .header-btn:hover { background: var(--bg-card); color: var(--text-primary); }
+        .header-btn.primary { background: var(--brand-green); border-color: var(--brand-green); color: var(--bg-primary); }
+
+        .content { padding: 2rem; max-width: 1400px; }
+
+        /* Page Sections */
+        .page-section { display: none; }
+        .page-section.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Dashboard */
+        .dashboard-header { margin-bottom: 2rem; }
+        .dashboard-header h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .dashboard-header p { color: var(--text-secondary); }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--brand-green-dim), var(--brand-green), var(--brand-green-bright));
+        }
+        .stat-card .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.5rem;
+        }
+        .stat-card .value {
+            font-size: 1.875rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .stat-card .sub { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.375rem; }
+
+        /* Progress Section */
+        .progress-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .progress-section h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+        }
+        .progress-bars { display: flex; flex-direction: column; gap: 1rem; }
+        .progress-item {
+            display: grid;
+            grid-template-columns: 180px 1fr 60px;
+            align-items: center;
+            gap: 1rem;
+        }
+        .progress-item .label { font-size: 0.9rem; color: var(--text-secondary); }
+        .progress-bar-bg {
+            height: 10px;
+            background: var(--bg-tertiary);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 5px;
+            background: linear-gradient(90deg, rgba(45, 212, 168, 0.4), var(--brand-green), var(--brand-green-bright));
+            box-shadow: 0 0 12px rgba(45, 212, 168, 0.4);
+            transition: width 0.6s ease;
+        }
+        .progress-item .percent {
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--brand-green);
+            text-align: right;
+        }
+
+        /* Document Grid */
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+        }
+        .doc-category {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .doc-category-header {
+            padding: 1rem 1.25rem;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+        }
+        .doc-category-header h4 { font-size: 0.9rem; font-weight: 700; }
+        .doc-category-header .count {
+            font-size: 0.7rem;
+            background: var(--bg-secondary);
+            padding: 0.25rem 0.625rem;
+            border-radius: 4px;
+            color: var(--text-muted);
+        }
+        .doc-list { padding: 0.5rem; }
+        .doc-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .doc-item:hover { background: var(--bg-tertiary); }
+        .doc-item.no-link { cursor: default; }
+        .doc-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+        .doc-icon.pdf { color: #ef4444; }
+        .doc-icon.xlsx { color: #22c55e; }
+        .doc-icon.doc { color: #3b82f6; }
+        .doc-icon.dwg { color: #06b6d4; }
+        .doc-icon.img { color: #a855f7; }
+        .doc-icon.audio { color: #f97316; }
+        .doc-info { flex: 1; min-width: 0; }
+        .doc-info .name {
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .doc-info .meta { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.125rem; }
+        .doc-status { width: 8px; height: 8px; border-radius: 50%; }
+        .doc-status.uploaded { background: var(--status-green); }
+        .doc-status.pending { background: var(--status-yellow); }
+        .doc-status.missing { background: var(--status-red); }
+
+        /* Section Header */
+        .section-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.625rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .section-header h1 .status-badge {
+            font-size: 0.7rem;
+            padding: 0.3rem 0.875rem;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+        .status-badge.complete { background: rgba(34, 197, 94, 0.15); color: var(--status-green); }
+        .status-badge.partial { background: rgba(234, 179, 8, 0.15); color: var(--status-yellow); }
+        .status-badge.pending { background: rgba(239, 68, 68, 0.15); color: var(--status-red); }
+        .section-header p { color: var(--text-secondary); max-width: 700px; line-height: 1.7; }
+
+        /* Info Cards */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .info-card h4 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        .info-card .value { font-size: 1.25rem; font-weight: 700; }
+        .info-card .sub { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem; }
+
+        /* Document Table */
+        .doc-table {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        .doc-table table { width: 100%; border-collapse: collapse; }
+        .doc-table th {
+            text-align: left;
+            padding: 1rem 1.25rem;
+            background: var(--bg-tertiary);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+        }
+        .doc-table td {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+        .doc-table tr:last-child td { border-bottom: none; }
+        .doc-table tr:hover td { background: var(--bg-tertiary); }
+        .doc-table .doc-name { display: flex; align-items: center; gap: 0.75rem; }
+        .doc-table .file-icon {
+            width: 34px;
+            height: 34px;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .status-pill.uploaded { background: rgba(34, 197, 94, 0.15); color: var(--status-green); }
+        .status-pill.pending { background: rgba(234, 179, 8, 0.15); color: var(--status-yellow); }
+        .status-pill.missing { background: rgba(239, 68, 68, 0.15); color: var(--status-red); }
+        .status-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+        .action-btn {
+            padding: 0.4rem 0.875rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            font-family: 'Play', sans-serif;
+            cursor: pointer;
+        }
+        .action-btn:hover { background: var(--bg-card); color: var(--text-primary); }
+        .action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Notes Section */
+        .notes-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        .notes-section h3 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; }
+        .note-item {
+            padding: 1rem 1.25rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            border-left: 3px solid var(--brand-green-dim);
+        }
+        .note-item:last-child { margin-bottom: 0; }
+        .note-item.highlight {
+            border-left-color: var(--brand-green);
+            background: linear-gradient(90deg, rgba(45, 212, 168, 0.08), var(--bg-secondary));
+        }
+        .note-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+        }
+        .note-header .author { font-weight: 700; }
+        .note-header .date { color: var(--text-muted); font-size: 0.8rem; }
+        .note-item p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+
+        /* Responsive */
+        @media (max-width: 1200px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .info-cards { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 900px) { .documents-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-overlay.visible { display: block; }
+            .main { margin-left: 0; }
+            .mobile-menu-btn { display: flex; }
+            .header { padding: 0 1rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .info-cards { grid-template-columns: 1fr; }
+            .progress-item { grid-template-columns: 1fr; gap: 0.5rem; }
+            .progress-item .percent { text-align: left; }
+            .content { padding: 1.25rem; }
+            .header-actions { display: none; }
+            .doc-table { overflow-x: auto; }
+            .doc-table table { min-width: 600px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading Data Room...</div>
+    </div>
+
+    <!-- Error Screen -->
+    <div class="error-screen" id="errorScreen">
+        <div class="error-box">
+            <h2>⚠️ Connection Error</h2>
+            <p id="errorMessage">Unable to connect to the data room. Please check your configuration.</p>
+            <button onclick="location.reload()">Try Again</button>
+        </div>
+    </div>
+
+    <!-- Password Screen -->
+    <div class="password-screen" id="passwordScreen">
+        <div class="password-box">
+            <div class="password-logo">RD</div>
+            <h2>ReDew Anson Data Room</h2>
+            <p class="subtitle">Enter access code to view confidential project documents</p>
+            <input type="password" id="passwordInput" placeholder="Access Code" autocomplete="off">
+            <button onclick="checkPassword()">Access Data Room</button>
+            <p class="password-error" id="passwordError">Incorrect access code. Please try again.</p>
+            <div class="password-footer">Confidential — ReDewable Energy Co. LLC</div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app" id="app">
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">RD</div>
+                <div class="sidebar-brand">
+                    <h1 id="projectName">ReDew Anson</h1>
+                    <span>Data Room</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav" id="sidebarNav">
+                <!-- Generated dynamically -->
+            </nav>
+
+            <div class="sidebar-footer">
+                <div>Investor View • Session Active</div>
+                <button class="logout-btn" onclick="logout()">Sign Out</button>
+            </div>
+        </aside>
+
+        <main class="main">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+                    <div class="breadcrumb">
+                        <span id="projectNameBreadcrumb">ReDew Anson</span>
+                        <span>/</span>
+                        <strong id="breadcrumbCurrent">Dashboard</strong>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn" onclick="window.print()">🖨️ Print</button>
+                </div>
+            </header>
+
+            <div class="content" id="contentContainer">
+                <!-- Generated dynamically -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // ==================== CONFIGURATION ====================
+        // IMPORTANT: Replace these with your Supabase credentials
+        var SUPABASE_URL = 'YOUR_SUPABASE_URL';
+        var SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+        // Try to load from localStorage (set by admin panel)
+        try {
+            var config = JSON.parse(localStorage.getItem('redew_admin_config'));
+            if (config && config.url && config.key) {
+                SUPABASE_URL = config.url;
+                SUPABASE_KEY = config.key;
+            }
+        } catch (e) {}
+
+        // ==================== GLOBAL STATE ====================
+        var db = null;
+        var documents = [];
+        var notes = [];
+        var settings = {};
+        var currentSection = 'dashboard';
+
+        var sections = [
+            { id: 'dashboard', name: 'Dashboard', icon: '📊' },
+            { id: 'executive', name: 'Executive Summary', icon: '📋' },
+            { id: 'land', name: 'Land & Site Control', icon: '🗺️' },
+            { id: 'interconnection', name: 'Interconnection', icon: '⚡' },
+            { id: 'permitting', name: 'Permitting', icon: '📋' },
+            { id: 'technical', name: 'Technical & Engineering', icon: '🔧' },
+            { id: 'epc', name: 'EPC & Construction', icon: '🏗️' },
+            { id: 'market', name: 'Market Analysis', icon: '📈' },
+            { id: 'financial', name: 'Financial Model', icon: '💰' },
+            { id: 'risk', name: 'Risk Assessment', icon: '⚠️' },
+            { id: 'entity', name: 'Entity Structure', icon: '🏢' },
+            { id: 'team', name: 'Team & Partners', icon: '👥' }
+        ];
+
+        // ==================== INITIALIZATION ====================
+        async function init() {
+            try {
+                if (SUPABASE_URL === 'YOUR_SUPABASE_URL') {
+                    throw new Error('Database not configured. Please set up the admin panel first.');
+                }
+
+                db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+                // Load all data
+                await Promise.all([loadDocuments(), loadNotes(), loadSettings()]);
+
+                // Hide loading, show password screen
+                document.getElementById('loadingScreen').classList.add('hidden');
+
+                // Check if data room is active
+                if (settings.dr_status === 'disabled') {
+                    showError('Data room is currently disabled.');
+                    return;
+                }
+
+                if (settings.dr_status === 'maintenance') {
+                    showError('Data room is under maintenance. Please check back later.');
+                    return;
+                }
+
+                // Check session
+                if (sessionStorage.getItem('redew_dataroom_auth') === 'true') {
+                    showApp();
+                } else {
+                    document.getElementById('passwordScreen').classList.add('visible');
+                    document.getElementById('passwordInput').focus();
+                }
+
+            } catch (err) {
+                showError(err.message);
+            }
+        }
+
+        function showError(message) {
+            document.getElementById('loadingScreen').classList.add('hidden');
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorScreen').classList.add('visible');
+        }
+
+        async function loadDocuments() {
+            var result = await db.from('dataroom_documents').select('*').order('sort_order', { ascending: true });
+            if (result.error) throw new Error('Failed to load documents');
+            documents = result.data || [];
+        }
+
+        async function loadNotes() {
+            var result = await db.from('dataroom_notes').select('*').order('sort_order', { ascending: true });
+            if (result.error) throw new Error('Failed to load notes');
+            notes = result.data || [];
+        }
+
+        async function loadSettings() {
+            var result = await db.from('dataroom_settings').select('*');
+            if (result.error) throw new Error('Failed to load settings');
+            settings = {};
+            if (result.data) {
+                result.data.forEach(function(s) { settings[s.key] = s.value; });
+            }
+        }
+
+        // ==================== AUTH ====================
+        function checkPassword() {
+            var input = document.getElementById('passwordInput').value.trim().toLowerCase();
+            var correctPassword = (settings.dr_password || 'redew2026').toLowerCase();
+            var errorEl = document.getElementById('passwordError');
+
+            if (input === correctPassword) {
+                sessionStorage.setItem('redew_dataroom_auth', 'true');
+                showApp();
+            } else {
+                errorEl.style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('redew_dataroom_auth');
+            document.getElementById('app').classList.remove('visible');
+            document.getElementById('passwordScreen').classList.add('visible');
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordInput').focus();
+        }
+
+        function showApp() {
+            document.getElementById('passwordScreen').classList.remove('visible');
+            document.getElementById('app').classList.add('visible');
+
+            // Set project name from settings
+            var projectName = settings.project_name || 'ReDew Anson';
+            document.getElementById('projectName').textContent = projectName;
+            document.getElementById('projectNameBreadcrumb').textContent = projectName;
+
+            renderSidebar();
+            showSection('dashboard');
+        }
+
+        // ==================== NAVIGATION ====================
+        function renderSidebar() {
+            var nav = document.getElementById('sidebarNav');
+            var html = '<div class="nav-section"><div class="nav-section-title">Overview</div>';
+            html += '<a class="nav-item active" data-section="dashboard" onclick="showSection(\'dashboard\')">📊 Dashboard</a></div>';
+            html += '<div class="nav-section"><div class="nav-section-title">Due Diligence</div>';
+
+            sections.slice(1).forEach(function(s) {
+                var sectionDocs = documents.filter(function(d) { return d.section === s.id; });
+                var uploaded = sectionDocs.filter(function(d) { return d.status === 'uploaded'; }).length;
+                var total = sectionDocs.length;
+                var statusClass = total === 0 ? '' : (uploaded === total ? 'complete' : (uploaded > 0 ? 'partial' : 'pending'));
+
+                html += '<a class="nav-item" data-section="' + s.id + '" onclick="showSection(\'' + s.id + '\')">';
+                html += s.icon + ' ' + s.name;
+                if (statusClass) html += '<span class="status ' + statusClass + '"></span>';
+                html += '</a>';
+            });
+
+            html += '</div>';
+            nav.innerHTML = html;
+        }
+
+        function showSection(sectionId) {
+            currentSection = sectionId;
+
+            // Update nav
+            document.querySelectorAll('.nav-item').forEach(function(el) {
+                el.classList.toggle('active', el.dataset.section === sectionId);
+            });
+
+            // Update breadcrumb
+            var sectionName = sections.find(function(s) { return s.id === sectionId; });
+            document.getElementById('breadcrumbCurrent').textContent = sectionName ? sectionName.name : sectionId;
+
+            // Render content
+            if (sectionId === 'dashboard') {
+                renderDashboard();
+            } else {
+                renderSectionPage(sectionId);
+            }
+
+            // Close mobile sidebar
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('sidebarOverlay').classList.remove('visible');
+            window.scrollTo(0, 0);
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('visible');
+        }
+
+        // ==================== DASHBOARD ====================
+        function renderDashboard() {
+            var container = document.getElementById('contentContainer');
+            var capacity = settings.capacity || '300 MW';
+            var targetNtp = settings.target_ntp || 'Q1 2027';
+
+            var uploaded = documents.filter(function(d) { return d.status === 'uploaded'; }).length;
+            var pending = documents.filter(function(d) { return d.status === 'pending'; }).length;
+
+            var html = '<div class="page-section active">';
+            html += '<div class="dashboard-header">';
+            html += '<h1>' + (settings.project_name || 'ReDew Anson') + ' — Project Dashboard</h1>';
+            html += '<p>' + capacity + ' / Battery Energy Storage System • Jones County, Texas • ERCOT West</p></div>';
+
+            // Stats
+            html += '<div class="stats-grid">';
+            html += '<div class="stat-card"><div class="label">Project Capacity</div><div class="value">' + capacity + '</div><div class="sub">Expandable to 400 MW</div></div>';
+            html += '<div class="stat-card"><div class="label">Target NTP</div><div class="value">' + targetNtp + '</div><div class="sub">Notice to Proceed</div></div>';
+            html += '<div class="stat-card"><div class="label">POI Distance</div><div class="value">0.5 mi</div><div class="sub">345 kV Phantom Hill Sub</div></div>';
+            html += '<div class="stat-card"><div class="label">Documents</div><div class="value">' + documents.length + '</div><div class="sub">' + uploaded + ' uploaded • ' + pending + ' pending</div></div>';
+            html += '</div>';
+
+            // Progress bars
+            html += '<div class="progress-section"><h3>📊 Development Progress</h3><div class="progress-bars">';
+            var progressItems = [
+                { key: 'progress_land', label: 'Land & Site Control' },
+                { key: 'progress_interconnection', label: 'Interconnection' },
+                { key: 'progress_permitting', label: 'Permitting' },
+                { key: 'progress_engineering', label: 'Engineering' },
+                { key: 'progress_financial', label: 'Financial Model' },
+                { key: 'progress_epc', label: 'EPC Selection' }
+            ];
+            progressItems.forEach(function(item) {
+                var val = settings[item.key] || '0';
+                html += '<div class="progress-item"><div class="label">' + item.label + '</div>';
+                html += '<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + val + '%"></div></div>';
+                html += '<div class="percent">' + val + '%</div></div>';
+            });
+            html += '</div></div>';
+
+            // Recent documents
+            var recentDocs = documents.filter(function(d) { return d.status === 'uploaded'; }).slice(0, 5);
+            var pendingDocs = documents.filter(function(d) { return d.status !== 'uploaded'; }).slice(0, 4);
+
+            html += '<div class="documents-grid">';
+            html += '<div class="doc-category"><div class="doc-category-header"><h4>📁 Recently Uploaded</h4><span class="count">' + recentDocs.length + ' files</span></div>';
+            html += '<div class="doc-list">';
+            recentDocs.forEach(function(doc) { html += renderDocItem(doc); });
+            if (recentDocs.length === 0) html += '<div style="padding:1rem;color:var(--text-muted);text-align:center;">No documents uploaded yet</div>';
+            html += '</div></div>';
+
+            html += '<div class="doc-category"><div class="doc-category-header"><h4>⏳ Pending Items</h4><span class="count">' + pendingDocs.length + ' items</span></div>';
+            html += '<div class="doc-list">';
+            pendingDocs.forEach(function(doc) { html += renderDocItem(doc); });
+            if (pendingDocs.length === 0) html += '<div style="padding:1rem;color:var(--text-muted);text-align:center;">All caught up!</div>';
+            html += '</div></div>';
+            html += '</div>';
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function renderDocItem(doc) {
+            var hasLink = doc.url && doc.url.trim() !== '';
+            var html = '<div class="doc-item' + (hasLink ? '' : ' no-link') + '"' + (hasLink ? ' onclick="openDoc(\'' + esc(doc.url) + '\')"' : '') + '>';
+            html += '<div class="doc-icon ' + doc.file_type + '">' + doc.file_type.toUpperCase() + '</div>';
+            html += '<div class="doc-info"><div class="name">' + esc(doc.name) + '</div>';
+            html += '<div class="meta">' + doc.file_type.toUpperCase() + (doc.date_added ? ' • ' + doc.date_added : '') + '</div></div>';
+            html += '<div class="doc-status ' + doc.status + '"></div></div>';
+            return html;
+        }
+
+        // ==================== SECTION PAGES ====================
+        function renderSectionPage(sectionId) {
+            var container = document.getElementById('contentContainer');
+            var section = sections.find(function(s) { return s.id === sectionId; });
+            if (!section) return;
+
+            var sectionDocs = documents.filter(function(d) { return d.section === sectionId; });
+            var sectionNotes = notes.filter(function(n) { return n.section === sectionId; });
+
+            var uploaded = sectionDocs.filter(function(d) { return d.status === 'uploaded'; }).length;
+            var total = sectionDocs.length;
+            var percent = total > 0 ? Math.round((uploaded / total) * 100) : 0;
+            var statusClass = total === 0 ? 'pending' : (percent === 100 ? 'complete' : (percent > 0 ? 'partial' : 'pending'));
+
+            var html = '<div class="page-section active">';
+            
+            // Header
+            html += '<div class="section-header">';
+            html += '<h1>' + section.icon + ' ' + section.name + ' <span class="status-badge ' + statusClass + '">' + percent + '% Complete</span></h1>';
+            html += '<p>Documentation and materials for ' + section.name.toLowerCase() + '.</p></div>';
+
+            // Documents table
+            if (sectionDocs.length > 0) {
+                html += '<div class="doc-table"><table><thead><tr>';
+                html += '<th>Document</th><th>Type</th><th>Date</th><th>Status</th><th>Action</th>';
+                html += '</tr></thead><tbody>';
+
+                sectionDocs.forEach(function(doc) {
+                    var hasLink = doc.url && doc.url.trim() !== '';
+                    html += '<tr>';
+                    html += '<td><div class="doc-name"><div class="file-icon ' + doc.file_type + '">' + doc.file_type.toUpperCase() + '</div><span>' + esc(doc.name) + '</span></div></td>';
+                    html += '<td>' + doc.file_type.toUpperCase() + '</td>';
+                    html += '<td>' + (doc.date_added || '—') + '</td>';
+                    html += '<td><span class="status-pill ' + doc.status + '"><span class="dot"></span>' + capitalize(doc.status) + '</span></td>';
+                    html += '<td>';
+                    if (doc.status === 'uploaded' && hasLink) {
+                        html += '<button class="action-btn" onclick="openDoc(\'' + esc(doc.url) + '\')">👁️ View</button>';
+                    } else {
+                        html += '<button class="action-btn" disabled>' + (doc.status === 'pending' ? 'Pending' : 'Required') + '</button>';
+                    }
+                    html += '</td></tr>';
+                });
+
+                html += '</tbody></table></div>';
+            } else {
+                html += '<div class="doc-table" style="padding:2rem;text-align:center;color:var(--text-muted);">No documents in this section yet.</div>';
+            }
+
+            // Notes
+            if (sectionNotes.length > 0) {
+                html += '<div class="notes-section"><h3>📝 Notes & Updates</h3>';
+                sectionNotes.forEach(function(note) {
+                    html += '<div class="note-item' + (note.is_highlight ? ' highlight' : '') + '">';
+                    html += '<div class="note-header"><span class="author">' + esc(note.author) + '</span><span class="date">' + esc(note.date) + '</span></div>';
+                    html += '<p>' + esc(note.content) + '</p></div>';
+                });
+                html += '</div>';
+            }
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        // ==================== UTILITIES ====================
+        function openDoc(url) {
+            if (url && url.trim() !== '' && url !== 'YOUR_FILE_ID') {
+                window.open(url, '_blank');
+            } else {
+                alert('Document link not yet configured.');
+            }
+        }
+
+        function esc(s) {
+            return (s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#39;');
+        }
+
+        function capitalize(s) {
+            return s ? s.charAt(0).toUpperCase() + s.slice(1).replace(/_/g, ' ') : '';
+        }
+
+        // ==================== EVENT LISTENERS ====================
+        document.addEventListener('DOMContentLoaded', init);
+
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') checkPassword();
+        });
+    </script>
+</body>
+</html>
