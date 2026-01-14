@@ -951,26 +951,69 @@
         ];
 
         var defaultDocuments = [
+            // Executive Summary
             { section: 'executive', name: 'Project One-Pager', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
             { section: 'executive', name: 'Investment Teaser', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
+            { section: 'executive', name: 'Site Location Maps', file_type: 'img', url: '', status: 'missing', date_added: '' },
             { section: 'executive', name: 'Project Overview Presentation', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Jan 2026' },
+            // Land & Site Control
             { section: 'land', name: 'Purchase Option Agreement', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Dec 15, 2025' },
             { section: 'land', name: 'Land Control Agreement', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Jan 8, 2026' },
+            { section: 'land', name: 'Environmental Assessment Notes', file_type: 'audio', url: '', status: 'uploaded', date_added: 'Jan 5, 2026' },
+            { section: 'land', name: 'Geotechnical Scope Contract', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Jan 3, 2026' },
             { section: 'land', name: 'Phase I Environmental Site Assessment', file_type: 'pdf', url: '', status: 'pending', date_added: '' },
+            { section: 'land', name: 'Title Report / Commitment', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
+            // Interconnection
             { section: 'interconnection', name: 'Injection Study - 300 MW', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Jan 10, 2026' },
             { section: 'interconnection', name: 'Transmission Upgrade Analysis', file_type: 'xlsx', url: '', status: 'uploaded', date_added: 'Jan 10, 2026' },
+            { section: 'interconnection', name: 'Queue Position Documentation', file_type: 'pdf', url: '', status: 'pending', date_added: '' },
+            { section: 'interconnection', name: 'FIS Timeline & Application', file_type: 'pdf', url: '', status: 'pending', date_added: '' },
+            // Permitting
+            { section: 'permitting', name: 'SWPPP (Stormwater Plan)', file_type: 'pdf', url: '', status: 'pending', date_added: '' },
+            { section: 'permitting', name: 'County Zoning Confirmation Letter', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
+            { section: 'permitting', name: 'AHJ Contact Log / Correspondence', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
+            { section: 'permitting', name: 'Fire Safety / Emergency Response Plan', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
+            // Technical & Engineering
             { section: 'technical', name: 'Preliminary Site Layout', file_type: 'dwg', url: '', status: 'pending', date_added: '' },
             { section: 'technical', name: 'Single-Line Diagram', file_type: 'dwg', url: '', status: 'pending', date_added: '' },
+            { section: 'technical', name: 'OEM Specifications - Tesla Megapack', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
+            { section: 'technical', name: 'OEM Comparison Analysis', file_type: 'xlsx', url: '', status: 'missing', date_added: '' },
+            // EPC & Construction
             { section: 'epc', name: 'EPC Indicative Pricing', file_type: 'xlsx', url: '', status: 'pending', date_added: '' },
+            { section: 'epc', name: 'Construction Schedule', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
+            { section: 'epc', name: 'Phasing Plan (150/300/400 MW)', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
+            // Market Analysis
             { section: 'market', name: 'ERCOT BESS Market Analysis', file_type: 'xlsx', url: '', status: 'uploaded', date_added: 'Jan 6, 2026' },
-            { section: 'financial', name: 'Pro Forma Financial Model', file_type: 'xlsx', url: '', status: 'pending', date_added: '' },
-            { section: 'financial', name: 'Private Placement Memorandum', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Dec 2025' }
+            { section: 'market', name: 'Revenue Stack Analysis', file_type: 'xlsx', url: '', status: 'uploaded', date_added: 'Jan 6, 2026' },
+            { section: 'market', name: 'Competitive Queue Analysis', file_type: 'xlsx', url: '', status: 'uploaded', date_added: 'Jan 6, 2026' },
+            // Financial Model
+            { section: 'financial', name: 'Pro Forma Financial Model', file_type: 'xlsx', url: '', status: 'pending', date_added: 'Dec 2025' },
+            { section: 'financial', name: 'Private Placement Memorandum', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Dec 2025' },
+            { section: 'financial', name: 'Sensitivity Analysis', file_type: 'xlsx', url: '', status: 'missing', date_added: '' },
+            // Entity Structure
+            { section: 'entity', name: 'Entity Structure Overview', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Jan 2026' },
+            { section: 'entity', name: 'ReDew Anson LLC - Formation Docs', file_type: 'pdf', url: '', status: 'pending', date_added: '' },
+            { section: 'entity', name: 'Operating Agreement', file_type: 'pdf', url: '', status: 'pending', date_added: '' }
         ];
 
         var defaultNotes = [
+            // Land & Site Control
             { section: 'land', author: 'ANS Engineering', date: 'Jan 12, 2026', content: 'Requested Phase I ESA, Preliminary Site Drawings, Single-Line Diagram, and SWPPP from ANS. Response: "Let me check with the team and report back."', is_highlight: true },
-            { section: 'interconnection', author: 'Enerzinx', date: 'Jan 10, 2026', content: 'Injection study completed at 300 MW. POI can accommodate up to 2,500 MW of batteries. Some downstream transmission upgrades required.', is_highlight: false },
-            { section: 'epc', author: 'Call Summary', date: 'Jan 12, 2026', content: 'Optimum EPC engaged for indicative pricing. They have experience with 200 MW BESS in Midland.', is_highlight: true }
+            { section: 'land', author: 'Engineering Team', date: 'Jan 5, 2026', content: 'Environmental assessment indicates clear pathway - no wetlands, endangered species, or cultural resources identified. Formal Phase I ESA recommended before closing.', is_highlight: false },
+            { section: 'land', author: 'Development', date: 'Dec 20, 2025', content: 'Land under control with Clearleaf Hills, LTD. Property is 0.5 miles from Phantom Hill 345 kV substation - excellent POI proximity.', is_highlight: false },
+            // Interconnection
+            { section: 'interconnection', author: 'Enerzinx (Interconnection)', date: 'Jan 10, 2026', content: 'Injection study completed at 300 MW. POI can accommodate up to 2,500 MW of batteries. Some downstream transmission upgrades required (5 constraint points identified). Phased approach recommended: 150 MW Phase 1 (no upgrades), 300 MW Phase 2 with upgrades.', is_highlight: false },
+            { section: 'interconnection', author: 'Development', date: 'Jan 8, 2026', content: 'Adjacent projects in queue: ~140 MW BESS 15 miles west, 200+ MW solar phases under construction by ENGIE. Studies conducted with these projects in consideration.', is_highlight: false },
+            // Permitting
+            { section: 'permitting', author: 'ANS Engineering', date: 'Jan 12, 2026', content: 'SWPPP requested from ANS Engineering along with Phase I ESA, Site Drawings, and SLD. Awaiting response.', is_highlight: true },
+            { section: 'permitting', author: 'Priority Task', date: 'Immediate', content: 'Contact Jones County Planning & Development to confirm zoning compatibility for utility-scale battery storage. Texas counties are generally permissive for energy infrastructure.', is_highlight: false },
+            // Technical
+            { section: 'technical', author: 'ANS Request Submitted', date: 'Jan 12, 2026', content: 'Requested from ANS Engineering: Phase I ESA, Preliminary Site Drawings, Single-Line Diagram, and SWPPP. Awaiting response from their team.', is_highlight: true },
+            // EPC
+            { section: 'epc', author: 'Call Summary', date: 'Jan 12, 2026', content: 'Optimum EPC engaged for indicative pricing. They have experience with 200 MW BESS in Midland and connections to Grid Power Solutions (Dallas) for OEMs including CATL. Main Power Transformer identified as longest lead item for Q1 2027 COD. Grid Power may have MPTs in stock.', is_highlight: true },
+            { section: 'epc', author: 'Capital Partner', date: 'Jan 12, 2026', content: 'Ethan to introduce to Kola - Houston-based family office investor with interest in Texas energy projects. They typically fund from development through NTP for shovel-ready sale.', is_highlight: false },
+            // Financial
+            { section: 'financial', author: 'Action Required', date: 'Jan 2026', content: 'Financial model needs updating to reflect current 2025 ERCOT revenue environment. Historical models may use outdated assumptions from 2023 peak period. EPC pricing from Optimum will inform CapEx assumptions.', is_highlight: false }
         ];
 
         var defaultSettings = {
