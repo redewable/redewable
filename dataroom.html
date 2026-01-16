@@ -337,8 +337,9 @@
       left: 50%;
       transform: translate(-50%, -50%);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
+      line-height: 1;
     }
 
     .progress-breakdown {
@@ -991,6 +992,7 @@
     }
 
     /* ==================== DESKTOP SIDEBAR (STATIC) ==================== */
+    
     @media (min-width: 1024px) {
       body { padding-left: 280px; }
       .side-menu {
@@ -1002,6 +1004,15 @@
       .menu-overlay { display: none !important; }
       #menuBtn { display: none; }
       .swipe-indicator { display: none; }
+      
+      /* ADD THESE: */
+      .header {
+        left: 280px;
+        width: calc(100% - 280px);
+      }
+      .site-footer {
+        margin-left: 0;
+      }
     }
 
     /* ==================== MENU USER (LOGGED IN) ==================== */
