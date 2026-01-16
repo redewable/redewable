@@ -1035,10 +1035,13 @@ async function logout() {
       pb.innerHTML = breakdownItems
         .map((item) => {
           const val = escapeHtml(settings[item.key] || '0');
+          // CHANGED: Using progress-track instead of just labels
           return `
           <div class="progress-item">
-            <span class="progress-dot" style="background: var(--accent);"></span>
             <span class="progress-item-label">${escapeHtml(item.label)}</span>
+            <div class="progress-track">
+                <div class="progress-fill" style="width: ${val}%"></div>
+            </div>
             <span class="progress-item-value">${val}%</span>
           </div>
         `;
