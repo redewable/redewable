@@ -960,6 +960,39 @@
   </style>
 </head>
 <body>
+
+  <!-- Status Blocker (Maintenance/Disabled) -->
+  <div class="visitor-modal-overlay" id="statusBlocker">
+    <div class="visitor-modal">
+      <div class="visitor-modal-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </div>
+      <h2 id="statusTitle">Maintenance Mode</h2>
+      <p id="statusBody">This data room is temporarily unavailable. Please check back soon.</p>
+    </div>
+  </div>
+
+  <!-- Access Password Modal -->
+  <div class="visitor-modal-overlay" id="accessModal">
+    <div class="visitor-modal">
+      <div class="visitor-modal-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <h2>Access Required</h2>
+      <p id="accessMessage">Enter the access password to continue.</p>
+      <input type="password" class="visitor-input" id="accessPassword" placeholder="Access password" autocomplete="current-password">
+      <button class="visitor-btn" id="accessSubmit">Unlock</button>
+      <div class="visitor-error" id="accessError">Incorrect password.</div>
+    </div>
+  </div>
+
   <!-- Visitor Login Modal -->
   <div class="visitor-modal-overlay" id="visitorModal">
     <div class="visitor-modal">
@@ -1066,7 +1099,7 @@
             </div>
             <div class="meta-item">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              <span id="targetNtp">Target NTP: Q4 2027</span>
+              <span id="targetNtp">Target NTP: Q1 2027</span>
             </div>
           </div>
         </div>
@@ -1311,6 +1344,10 @@
           if (!ok) return;
           if (currentView === 'dashboard') renderDashboard();
           else if (currentSection) safeRerenderCurrentSection();
+
+          // Start tracking + realtime only after access is granted
+          await startVisitorTracking();
+          setupRealtimeSync();
         } else {
           if (err) {
             err.textContent = 'Incorrect password.';
@@ -1365,7 +1402,7 @@
     }
 
     function setupRealtimeSync() {
-      if (!supabase) return;
+      if (!supabase || realtimeSubscription) return;
       try {
         realtimeSubscription = supabase
           .channel('dataroom-changes')
@@ -1401,12 +1438,12 @@
     // ==========================================
     function showLoading() {
       const el = document.getElementById('loadingOverlay');
-      if (el) el.style.display = 'flex';
+      if (el) el.classList.add('visible');
     }
 
     function hideLoading() {
       const el = document.getElementById('loadingOverlay');
-      if (el) el.style.display = 'none';
+      if (el) el.classList.remove('visible');
     }
 
     async function loadDocuments() {
@@ -1441,13 +1478,18 @@
       showLoading();
       if (!supabase) { hideLoading(); return; }
       try {
-        await Promise.all([loadDocuments(), loadNotes(), loadSettings()]);
+        // Prevent a "forever spinner" if the network hangs
+        const loadPromise = Promise.all([loadDocuments(), loadNotes(), loadSettings()]);
+        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 10000));
+        await Promise.race([loadPromise, timeoutPromise]);
       } catch (e) {
         console.error('Error loading data:', e);
         const ce = document.getElementById('connectionError');
         if (ce) {
           ce.classList.add('visible');
-          ce.textContent = 'Unable to connect to database. Showing cached UI.';
+          ce.textContent = (e && e.message === 'timeout')
+            ? 'Database connection timed out. Check your Supabase URL/key and network. (Showing UI without data.)'
+            : 'Unable to connect to database. Check your Supabase URL/key and network. (Showing UI without data.)';
         }
       } finally {
         hideLoading();
@@ -1522,7 +1564,9 @@
 
     async function startVisitorTracking() {
       if (!supabase || !visitorInfo) return;
-      sessionId = (crypto.randomUUID ? crypto.randomUUID() : 'session_' + Date.now());
+      if (sessionId) return;
+      const _hasUUID = (typeof window !== 'undefined' && window.crypto && typeof window.crypto.randomUUID === 'function');
+      sessionId = _hasUUID ? window.crypto.randomUUID() : ('session_' + Date.now() + '_' + Math.random().toString(16).slice(2));
       sessionStart = new Date().toISOString();
 
       try {
@@ -1688,6 +1732,12 @@
     }
 
     function openSection(sectionId) {
+      // If a password is configured, block navigation until unlocked
+      const pw = (settings.dr_password || '').trim();
+      if (pw && !isUnlocked()) {
+        showAccessModal('Enter the investor access password to continue.');
+        return;
+      }
       const section = SECTIONS.find(s => s.id === sectionId);
       if (!section) return;
 
@@ -1749,7 +1799,7 @@
       document.querySelectorAll('.doc-item.clickable').forEach(item => {
         item.addEventListener('click', () => {
           const docId = item.dataset.docId;
-          const doc = documents.find(d => d.id === docId);
+          const doc = documents.find(d => String(d.id) === String(docId));
           if (doc) openDocument(doc);
         });
       });
@@ -1773,6 +1823,12 @@
     }
 
     function openDocument(doc) {
+      // If a password is configured, block opening until unlocked
+      const pw = (settings.dr_password || '').trim();
+      if (pw && !isUnlocked()) {
+        showAccessModal('Enter the investor access password to continue.');
+        return;
+      }
       trackDocumentClick(doc);
       const url = (doc.url || '').trim();
       const status = (doc.status || '').toLowerCase();
@@ -1838,11 +1894,41 @@
     // EVENT LISTENERS
     // ==========================================
     function setupEventListeners() {
-      document.getElementById('menuBtn')?.addEventListener('click', openMenu);
-      document.getElementById('menuOverlay')?.addEventListener('click', closeMenu);
-      document.getElementById('backBtn')?.addEventListener('click', goBack);
-      document.getElementById('breadcrumbRoot')?.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
-      document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
+      const menuBtn = document.getElementById('menuBtn');
+      if (menuBtn && menuBtn.dataset.bound !== '1') {
+        menuBtn.dataset.bound = '1';
+        menuBtn.addEventListener('click', openMenu);
+      }
+
+      const menuOverlay = document.getElementById('menuOverlay');
+      if (menuOverlay && menuOverlay.dataset.bound !== '1') {
+        menuOverlay.dataset.bound = '1';
+        menuOverlay.addEventListener('click', closeMenu);
+      }
+
+      const backBtn = document.getElementById('backBtn');
+      if (backBtn && backBtn.dataset.bound !== '1') {
+        backBtn.dataset.bound = '1';
+        backBtn.addEventListener('click', goBack);
+      }
+
+      const breadcrumbRoot = document.getElementById('breadcrumbRoot');
+      if (breadcrumbRoot && breadcrumbRoot.dataset.bound !== '1') {
+        breadcrumbRoot.dataset.bound = '1';
+        breadcrumbRoot.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
+      }
+
+      const statusRefresh = document.getElementById('statusRefresh');
+      if (statusRefresh && statusRefresh.dataset.bound !== '1') {
+        statusRefresh.dataset.bound = '1';
+        statusRefresh.addEventListener('click', () => window.location.reload());
+      }
+
+      const themeToggle = document.getElementById('themeToggle');
+      if (themeToggle && themeToggle.dataset.bound !== '1') {
+        themeToggle.dataset.bound = '1';
+        themeToggle.addEventListener('click', toggleTheme);
+      }
     }
 
     // ==========================================
@@ -1850,13 +1936,17 @@
     // ==========================================
     async function startApp() {
       await loadData();
-      const allowed = await enforceAccessRules();
-      if (!allowed) return;
+
+      // Build the UI first so password/maintenance gating doesn't leave the page uninitialized
       renderMenu();
       renderDashboard();
       setupEventListeners();
-      startVisitorTracking();
-      setupRealtimeSync();
+
+      const allowed = await enforceAccessRules();
+      if (allowed) {
+        await startVisitorTracking();
+        setupRealtimeSync();
+      }
     }
 
     async function init() {
