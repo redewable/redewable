@@ -1111,14 +1111,14 @@
     // SUPABASE CONFIGURATION
     // ===========================================
     // Replace these with your actual Supabase credentials
-    const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+    const SUPABASE_URL = 'https://egebfglxeevvmtplvbun.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_J6AvCB8BDv4LjJWjX3sHPw_hhqnm4R4';
     
     let supabase = null;
     let useSupabase = false;
     
     // Try to initialize Supabase if credentials are provided
-    if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
+    if (SUPABASE_URL !== 'https://egebfglxeevvmtplvbun.supabase.co' && SUPABASE_ANON_KEY !== 'sb_publishable_J6AvCB8BDv4LjJWjX3sHPw_hhqnm4R4') {
       try {
         supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         useSupabase = true;
