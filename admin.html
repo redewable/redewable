@@ -373,6 +373,7 @@
             font-weight: 700;
             border-bottom: 1px solid var(--border);
         }
+        .task-table th.col-drag { width: 36px; }
         .task-table th.col-status { width: 130px; }
         .task-table th.col-task { min-width: 250px; }
         .task-table th.col-vendor { width: 160px; }
@@ -385,6 +386,26 @@
         .task-table tr:hover td { background: var(--bg-tertiary); }
         .task-table tr.completed td { opacity: 0.6; }
         .task-table tr.completed .task-name { text-decoration: line-through; }
+
+        /* Drag and Drop */
+        .drag-handle {
+            cursor: grab;
+            color: var(--text-muted);
+            padding: 0.25rem;
+            border-radius: 4px;
+            opacity: 0.4;
+            transition: all 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .task-table tr:hover .drag-handle { opacity: 1; }
+        .drag-handle:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+        .drag-handle:active { cursor: grabbing; }
+        .task-table tr.dragging { opacity: 0.4; }
+        .task-table tr.dragging td { background: var(--brand-green-glow) !important; }
+        .category-section.drag-over { outline: 2px dashed var(--brand-green); outline-offset: -2px; border-radius: 12px; }
+        .category-section.drag-over .category-header { background: var(--brand-green-glow); }
 
         .editable {
             background: transparent;
@@ -973,6 +994,10 @@
                 <line x1="16" y1="13" x2="8" y2="13"/>
                 <line x1="16" y1="17" x2="8" y2="17"/>
                 <polyline points="10 9 9 9 8 9"/>
+            </symbol>
+            <symbol id="icon-grip" viewBox="0 0 24 24">
+                <circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/>
+                <circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/>
             </symbol>
         </defs>
     </svg>
@@ -1576,7 +1601,7 @@
                 html += '<span class="percent">' + percent + '%</span>';
                 html += '<svg class="icon chevron-icon"><use href="#icon-chevron-down"/></svg></div></div>';
                 html += '<div class="category-body"><table class="task-table"><thead><tr>';
-                html += '<th class="col-status">Status</th><th class="col-task">Task</th><th class="col-vendor">Vendor</th>';
+                html += '<th class="col-drag"></th><th class="col-status">Status</th><th class="col-task">Task</th><th class="col-vendor">Vendor</th>';
                 html += '<th class="col-cost">Cost</th><th class="col-time">Time</th><th class="col-notes">Notes</th><th class="col-actions"></th></tr></thead><tbody>';
                 
                 catTasks.forEach(function(t) {
@@ -1594,7 +1619,8 @@
 
         function renderTaskRow(t, allVendors) {
             var sc = t.status || 'not_started';
-            var html = '<tr class="' + (t.status === 'completed' ? 'completed' : '') + '">';
+            var html = '<tr class="' + (t.status === 'completed' ? 'completed' : '') + '" draggable="true" data-task-id="' + t.id + '" ondragstart="handleDragStart(event)" ondragend="handleDragEnd(event)">';
+            html += '<td><div class="drag-handle"><svg class="icon icon-sm"><use href="#icon-grip"/></svg></div></td>';
             html += '<td><select class="status-select ' + sc + '" onchange="handleStatusChange(\'' + t.id + '\', this.value)">';
             html += '<option value="not_started"' + (sc === 'not_started' ? ' selected' : '') + '>Not Started</option>';
             html += '<option value="in_progress"' + (sc === 'in_progress' ? ' selected' : '') + '>In Progress</option>';
@@ -1627,6 +1653,67 @@
 
         async function handleFieldChange(id, field, val) {
             await saveTask(id, field, val);
+        }
+
+        // ==================== DRAG AND DROP ====================
+        var draggedTaskId = null;
+
+        function handleDragStart(e) {
+            draggedTaskId = e.target.closest('tr').dataset.taskId;
+            e.target.closest('tr').classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', draggedTaskId);
+            
+            // Add drag-over listeners to all category sections
+            setTimeout(function() {
+                document.querySelectorAll('.category-section').forEach(function(section) {
+                    section.addEventListener('dragover', handleDragOver);
+                    section.addEventListener('dragleave', handleDragLeave);
+                    section.addEventListener('drop', handleDrop);
+                });
+            }, 0);
+        }
+
+        function handleDragEnd(e) {
+            e.target.closest('tr').classList.remove('dragging');
+            document.querySelectorAll('.category-section').forEach(function(section) {
+                section.classList.remove('drag-over');
+                section.removeEventListener('dragover', handleDragOver);
+                section.removeEventListener('dragleave', handleDragLeave);
+                section.removeEventListener('drop', handleDrop);
+            });
+            draggedTaskId = null;
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            this.classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            // Only remove class if we're actually leaving the section
+            if (!this.contains(e.relatedTarget)) {
+                this.classList.remove('drag-over');
+            }
+        }
+
+        async function handleDrop(e) {
+            e.preventDefault();
+            this.classList.remove('drag-over');
+            
+            var targetCategory = this.dataset.category;
+            var taskId = e.dataTransfer.getData('text/plain');
+            
+            if (!taskId || !targetCategory) return;
+            
+            // Find current task category
+            var task = tasks.find(function(t) { return t.id === taskId; });
+            if (!task || task.category === targetCategory) return;
+            
+            // Update the category
+            await saveTask(taskId, 'category', targetCategory);
+            renderTasks();
         }
 
         async function saveTask(taskId, field, value) {
