@@ -1066,7 +1066,7 @@
             </div>
             <div class="meta-item">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              <span id="targetNtp">Target NTP: Q1 2027</span>
+              <span id="targetNtp">Target NTP: Q4 2027</span>
             </div>
           </div>
         </div>
@@ -1142,24 +1142,60 @@
   </main>
 
   <script>
-    // ===========================================
+    // ==========================================
     // SUPABASE CONFIGURATION
-    // ===========================================
-    // UPDATE THESE WITH YOUR ACTUAL CREDENTIALS
-    const SUPABASE_URL = 'https://egebfglxeevvmtplvbun.supabase.co';
-    const SUPABASE_ANON_KEY = 'sb_publishable_J6AvCB8BDv4LjJWjX3sHPw_hhqnm4R4';
-    
+    // ==========================================
+    // This page expects credentials via query params:
+    //   ?sbUrl=<SUPABASE_URL>&sbKey=<SUPABASE_ANON_KEY>
+    // Admin generates this link in Admin -> Settings -> Public Data Room Link.
+
+    const FALLBACK_SUPABASE_URL = '';
+    const FALLBACK_SUPABASE_ANON_KEY = '';
+
+    function getQueryParam(name) {
+      try { return new URLSearchParams(window.location.search).get(name); } catch (e) { return null; }
+    }
+
+    function getSupabaseConfig() {
+      const sbUrl = (getQueryParam('sbUrl') || '').trim();
+      const sbKey = (getQueryParam('sbKey') || '').trim();
+
+      // Persist provided config for future loads
+      try {
+        if (sbUrl && sbKey) {
+          localStorage.setItem('redew_dataroom_config', JSON.stringify({ url: sbUrl, key: sbKey }));
+        }
+      } catch (e) {}
+
+      let stored = null;
+      try { stored = JSON.parse(localStorage.getItem('redew_dataroom_config') || 'null'); } catch (e) {}
+
+      const url = sbUrl || (stored && stored.url) || FALLBACK_SUPABASE_URL;
+      const key = sbKey || (stored && stored.key) || FALLBACK_SUPABASE_ANON_KEY;
+      return { url, key };
+    }
+
     let supabase = null;
-    let sessionId = null;
-    let sessionStart = null;
-    let visitorInfo = null;
     let realtimeSubscription = null;
 
-    // ===========================================
-    // SECTION DEFINITIONS (matches admin panel)
-    // ===========================================
+    // ==========================================
+    // STATE
+    // ==========================================
+    let currentView = 'dashboard';
+    let currentSection = null;
+    let documents = [];
+    let notes = [];
+    let settings = {};
+
+    let visitorInfo = null;
+    let sessionId = null;
+    let sessionStart = null;
+
+    // ==========================================
+    // SECTION DEFINITIONS
+    // ==========================================
     const SECTIONS = [
-      { id: 'executive', name: 'Executive Summary', desc: 'Project overview and investment materials.', icon: 'file-text', progressKey: 'progress_land' },
+      { id: 'executive', name: 'Executive Summary', desc: 'Project overview and investment materials.', icon: 'file-text', progressKey: 'progress_executive' },
       { id: 'land', name: 'Land & Site Control', desc: 'Property agreements and site documentation.', icon: 'map-pin', progressKey: 'progress_land' },
       { id: 'interconnection', name: 'Interconnection', desc: 'ERCOT interconnection studies and grid analysis.', icon: 'zap', progressKey: 'progress_interconnection' },
       { id: 'permitting', name: 'Permitting', desc: 'Permits and regulatory filings.', icon: 'clipboard', progressKey: 'progress_permitting' },
@@ -1187,260 +1223,306 @@
       'dashboard': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>'
     };
 
-    // ===========================================
-    // STATE
-    // ===========================================
-    let currentView = 'dashboard';
-    let currentSection = null;
-    let documents = [];
-    let notes = [];
-    let settings = {};
-    let touchStartX = 0;
-    let touchEndX = 0;
+    // ==========================================
+    // ACCESS GATING
+    // ==========================================
+    function getUnlockKey() { return 'redew_dataroom_unlocked_v1'; }
+    function isUnlocked() { try { return localStorage.getItem(getUnlockKey()) === 'true'; } catch (e) { return false; } }
+    function setUnlocked(val) { try { localStorage.setItem(getUnlockKey(), val ? 'true' : 'false'); } catch (e) {} }
 
-    // ===========================================
-    // INITIALIZATION
-    // ===========================================
-    async function init() {
-      initTheme();
-      initSupabase();
-
-      // Check if visitor is already logged in
-      visitorInfo = getStoredVisitor();
-
-      if (visitorInfo) {
-        // Visitor already identified, proceed to app
-        await startApp();
+    function showStatusBlocker(kind) {
+      const blocker = document.getElementById('statusBlocker');
+      const title = document.getElementById('statusTitle');
+      const body = document.getElementById('statusBody');
+      if (!blocker) return;
+      blocker.classList.add('visible');
+      if (kind === 'disabled') {
+        if (title) title.textContent = 'Data Room Disabled';
+        if (body) body.textContent = 'This data room is currently unavailable.';
       } else {
-        // Show visitor login modal
-        showVisitorModal();
+        if (title) title.textContent = 'Maintenance Mode';
+        if (body) body.textContent = 'This data room is temporarily unavailable for maintenance. Please check back soon.';
       }
+      const main = document.getElementById('mainContent');
+      if (main) main.style.display = 'none';
     }
 
-    async function startApp() {
-      await loadData();
-      renderMenu();
-      renderDashboard();
-      setupEventListeners();
-      startVisitorTracking();
-      setupRealtimeSync();
+    function hideStatusBlocker() {
+      const blocker = document.getElementById('statusBlocker');
+      if (blocker) blocker.classList.remove('visible');
+      const main = document.getElementById('mainContent');
+      if (main) main.style.display = '';
     }
 
-    // ===========================================
-    // VISITOR IDENTIFICATION
-    // ===========================================
-    function getStoredVisitor() {
-      try {
-        const stored = localStorage.getItem('redew_visitor');
-        if (stored) {
-          return JSON.parse(stored);
+    function showAccessModal(message) {
+      const overlay = document.getElementById('accessModal');
+      const msg = document.getElementById('accessMessage');
+      const err = document.getElementById('accessError');
+      const inp = document.getElementById('accessPassword');
+      if (!overlay) return;
+      if (msg) msg.textContent = message || 'Enter the access password to continue.';
+      if (err) err.classList.remove('visible');
+      if (inp) inp.value = '';
+      overlay.classList.add('visible');
+      setTimeout(() => inp && inp.focus(), 50);
+    }
+
+    function hideAccessModal() {
+      const overlay = document.getElementById('accessModal');
+      if (overlay) overlay.classList.remove('visible');
+    }
+
+    async function enforceAccessRules() {
+      const status = (settings.dr_status || 'active').toLowerCase();
+      if (status === 'disabled' || status === 'maintenance') {
+        showStatusBlocker(status);
+        return false;
+      }
+      hideStatusBlocker();
+
+      const pw = (settings.dr_password || '').trim();
+      if (pw && !isUnlocked()) {
+        showAccessModal('Enter the investor access password to continue.');
+        return false;
+      }
+      return true;
+    }
+
+    function setupAccessModalHandlers() {
+      const btn = document.getElementById('accessSubmit');
+      const inp = document.getElementById('accessPassword');
+      if (!btn || !inp) return;
+      if (btn.dataset.bound === '1') return;
+      btn.dataset.bound = '1';
+
+      const submit = async () => {
+        const err = document.getElementById('accessError');
+        const pw = (settings.dr_password || '').trim();
+        const entered = (inp.value || '').trim();
+        if (!pw) {
+          setUnlocked(true);
+          hideAccessModal();
+          return;
         }
-      } catch (e) {
-        console.error('Error reading stored visitor:', e);
-      }
-      return null;
-    }
-
-    function storeVisitor(info) {
-      try {
-        localStorage.setItem('redew_visitor', JSON.stringify(info));
-      } catch (e) {
-        console.error('Error storing visitor:', e);
-      }
-    }
-
-    function showVisitorModal() {
-      document.getElementById('visitorModal').classList.add('visible');
-      document.getElementById('visitorName').focus();
-
-      // Setup form handlers
-      document.getElementById('visitorSubmit').addEventListener('click', handleVisitorSubmit);
-      document.getElementById('visitorEmail').addEventListener('keypress', e => {
-        if (e.key === 'Enter') handleVisitorSubmit();
-      });
-      document.getElementById('visitorCompany').addEventListener('keypress', e => {
-        if (e.key === 'Enter') handleVisitorSubmit();
-      });
-    }
-
-    async function handleVisitorSubmit() {
-      const name = document.getElementById('visitorName').value.trim();
-      const email = document.getElementById('visitorEmail').value.trim();
-      const company = document.getElementById('visitorCompany').value.trim();
-      const errorEl = document.getElementById('visitorError');
-
-      // Validate
-      if (!name || !email) {
-        errorEl.textContent = 'Please enter your name and email address.';
-        errorEl.classList.add('visible');
-        return;
-      }
-
-      // Basic email validation
-      if (!email.includes('@') || !email.includes('.')) {
-        errorEl.textContent = 'Please enter a valid email address.';
-        errorEl.classList.add('visible');
-        return;
-      }
-
-      errorEl.classList.remove('visible');
-
-      // Disable button while processing
-      const btn = document.getElementById('visitorSubmit');
-      btn.disabled = true;
-      btn.textContent = 'Loading...';
-
-      // Store visitor info
-      visitorInfo = {
-        name: name,
-        email: email,
-        company: company || null,
-        first_visit: new Date().toISOString()
+        if (entered === pw) {
+          setUnlocked(true);
+          hideAccessModal();
+          const ok = await enforceAccessRules();
+          if (!ok) return;
+          if (currentView === 'dashboard') renderDashboard();
+          else if (currentSection) safeRerenderCurrentSection();
+        } else {
+          if (err) {
+            err.textContent = 'Incorrect password.';
+            err.classList.add('visible');
+          }
+        }
       };
-      storeVisitor(visitorInfo);
 
-      // Hide modal
-      document.getElementById('visitorModal').classList.remove('visible');
-
-      // Start the app
-      await startApp();
+      btn.addEventListener('click', submit);
+      inp.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') submit();
+      });
     }
 
+    // ==========================================
+    // SUPABASE INIT + REALTIME
+    // ==========================================
     function initSupabase() {
       try {
-        // Only initialize if we have real credentials
-        if (SUPABASE_ANON_KEY && !SUPABASE_ANON_KEY.includes('REPLACE_WITH')) {
-          supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-          console.log('Supabase initialized');
+        const cfg = getSupabaseConfig();
+        if (cfg.url && cfg.key) {
+          supabase = window.supabase.createClient(cfg.url, cfg.key);
         } else {
-          console.warn('Supabase credentials not configured - using fallback data');
+          const ce = document.getElementById('connectionError');
+          if (ce) {
+            ce.classList.add('visible');
+            ce.textContent = 'Not connected: missing Supabase config. Open this page using the Admin-generated link (it includes sbUrl and sbKey).';
+          }
         }
       } catch (e) {
         console.error('Failed to initialize Supabase:', e);
       }
     }
 
-    // ===========================================
-    // REAL-TIME SYNC
-    // ===========================================
-    function setupRealtimeSync() {
-      if (!supabase) return;
-
-      try {
-        // Subscribe to all dataroom tables
-        realtimeSubscription = supabase
-          .channel('dataroom-changes')
-          .on('postgres_changes',
-            { event: '*', schema: 'public', table: 'dataroom_documents' },
-            handleDocumentsChange
-          )
-          .on('postgres_changes',
-            { event: '*', schema: 'public', table: 'dataroom_notes' },
-            handleNotesChange
-          )
-          .on('postgres_changes',
-            { event: '*', schema: 'public', table: 'dataroom_settings' },
-            handleSettingsChange
-          )
-          .subscribe((status) => {
-            console.log('Realtime subscription status:', status);
-          });
-
-        console.log('Real-time sync enabled');
-      } catch (e) {
-        console.error('Failed to setup real-time sync:', e);
-      }
-    }
-
     function showSyncIndicator() {
       const indicator = document.getElementById('syncIndicator');
+      if (!indicator) return;
       indicator.classList.add('visible');
-      setTimeout(() => {
-        indicator.classList.remove('visible');
-      }, 2000);
+      setTimeout(() => indicator.classList.remove('visible'), 2000);
     }
 
-    async function handleDocumentsChange(payload) {
-      console.log('Documents changed:', payload);
-      showSyncIndicator();
-
-      // Reload documents
+    function safeRerenderCurrentSection() {
       try {
-        const docsResult = await supabase
-          .from('dataroom_documents')
-          .select('*')
-          .eq('is_hidden', false)
-          .order('sort_order', { ascending: true });
-
-        if (docsResult.data) {
-          documents = docsResult.data;
-          // Re-render current view
-          if (currentView === 'dashboard') {
-            renderDashboard();
-          } else if (currentSection) {
-            renderCategory(currentSection);
-          }
+        if (currentSection && currentSection.id) {
+          renderDocuments(currentSection.id);
+          renderNotes(currentSection.id);
+          updateBreadcrumb(currentSection.name);
         }
       } catch (e) {
-        console.error('Error reloading documents:', e);
+        console.error('Rerender failed:', e);
       }
     }
 
-    async function handleNotesChange(payload) {
-      console.log('Notes changed:', payload);
-      showSyncIndicator();
-
-      // Reload notes
+    function setupRealtimeSync() {
+      if (!supabase) return;
       try {
-        const notesResult = await supabase
-          .from('dataroom_notes')
-          .select('*')
-          .order('sort_order', { ascending: true });
-
-        if (notesResult.data) {
-          notes = notesResult.data;
-          // Re-render if viewing a category
-          if (currentSection) {
-            renderCategory(currentSection);
-          }
-        }
+        realtimeSubscription = supabase
+          .channel('dataroom-changes')
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'dataroom_documents' }, async () => {
+            showSyncIndicator();
+            await loadDocuments();
+            if (currentView === 'dashboard') renderDashboard();
+            else safeRerenderCurrentSection();
+            await enforceAccessRules();
+          })
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'dataroom_notes' }, async () => {
+            showSyncIndicator();
+            await loadNotes();
+            if (currentSection) safeRerenderCurrentSection();
+            await enforceAccessRules();
+          })
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'dataroom_settings' }, async () => {
+            showSyncIndicator();
+            await loadSettings();
+            const ok = await enforceAccessRules();
+            if (!ok) return;
+            if (currentView === 'dashboard') renderDashboard();
+            else if (currentSection) safeRerenderCurrentSection();
+          })
+          .subscribe();
       } catch (e) {
-        console.error('Error reloading notes:', e);
+        console.error('Failed to setup realtime:', e);
       }
     }
 
-    async function handleSettingsChange(payload) {
-      console.log('Settings changed:', payload);
-      showSyncIndicator();
+    // ==========================================
+    // DATA LOADING
+    // ==========================================
+    function showLoading() {
+      const el = document.getElementById('loadingOverlay');
+      if (el) el.style.display = 'flex';
+    }
 
-      // Reload settings
+    function hideLoading() {
+      const el = document.getElementById('loadingOverlay');
+      if (el) el.style.display = 'none';
+    }
+
+    async function loadDocuments() {
+      if (!supabase) return;
+      const res = await supabase
+        .from('dataroom_documents')
+        .select('*')
+        .eq('is_hidden', false)
+        .order('sort_order', { ascending: true });
+      if (res.data) documents = res.data;
+    }
+
+    async function loadNotes() {
+      if (!supabase) return;
+      const res = await supabase
+        .from('dataroom_notes')
+        .select('*')
+        .order('sort_order', { ascending: true });
+      if (res.data) notes = res.data;
+    }
+
+    async function loadSettings() {
+      if (!supabase) return;
+      const res = await supabase.from('dataroom_settings').select('*');
+      if (res.data) {
+        settings = {};
+        res.data.forEach(s => { settings[s.key] = s.value; });
+      }
+    }
+
+    async function loadData() {
+      showLoading();
+      if (!supabase) { hideLoading(); return; }
       try {
-        const settingsResult = await supabase
-          .from('dataroom_settings')
-          .select('*');
+        await Promise.all([loadDocuments(), loadNotes(), loadSettings()]);
+      } catch (e) {
+        console.error('Error loading data:', e);
+        const ce = document.getElementById('connectionError');
+        if (ce) {
+          ce.classList.add('visible');
+          ce.textContent = 'Unable to connect to database. Showing cached UI.';
+        }
+      } finally {
+        hideLoading();
+      }
+    }
 
-        if (settingsResult.data) {
-          settings = {};
-          settingsResult.data.forEach(s => {
-            settings[s.key] = s.value;
+    // ==========================================
+    // VISITOR IDENTIFICATION + TRACKING
+    // ==========================================
+    function getStoredVisitor() {
+      try {
+        const stored = localStorage.getItem('redew_visitor');
+        return stored ? JSON.parse(stored) : null;
+      } catch (e) { return null; }
+    }
+
+    function storeVisitor(info) {
+      try { localStorage.setItem('redew_visitor', JSON.stringify(info)); } catch (e) {}
+    }
+
+    function showVisitorModal() {
+      const overlay = document.getElementById('visitorModal');
+      if (!overlay) return;
+      overlay.classList.add('visible');
+      document.getElementById('visitorName')?.focus();
+
+      const submitBtn = document.getElementById('visitorSubmit');
+      if (submitBtn && submitBtn.dataset.bound !== '1') {
+        submitBtn.dataset.bound = '1';
+        submitBtn.addEventListener('click', handleVisitorSubmit);
+      }
+
+      ['visitorEmail','visitorCompany'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.dataset.bound !== '1') {
+          el.dataset.bound = '1';
+          el.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleVisitorSubmit();
           });
-          // Re-render dashboard to show updated settings
-          if (currentView === 'dashboard') {
-            renderDashboard();
-          }
         }
-      } catch (e) {
-        console.error('Error reloading settings:', e);
-      }
+      });
     }
 
-    // ===========================================
-    // VISITOR TRACKING
-    // ===========================================
+    async function handleVisitorSubmit() {
+      const name = (document.getElementById('visitorName')?.value || '').trim();
+      const email = (document.getElementById('visitorEmail')?.value || '').trim();
+      const company = (document.getElementById('visitorCompany')?.value || '').trim();
+      const err = document.getElementById('visitorError');
+
+      if (!name || !email) {
+        if (err) { err.textContent = 'Please enter your name and email address.'; err.classList.add('visible'); }
+        return;
+      }
+      if (!email.includes('@') || !email.includes('.')) {
+        if (err) { err.textContent = 'Please enter a valid email address.'; err.classList.add('visible'); }
+        return;
+      }
+      if (err) err.classList.remove('visible');
+
+      const btn = document.getElementById('visitorSubmit');
+      if (btn) { btn.disabled = true; btn.textContent = 'Loading...'; }
+
+      visitorInfo = { name, email, company: company || null, first_visit: new Date().toISOString() };
+      storeVisitor(visitorInfo);
+
+      document.getElementById('visitorModal')?.classList.remove('visible');
+
+      await startApp();
+
+      if (btn) { btn.disabled = false; btn.textContent = 'Access Data Room'; }
+    }
+
     async function startVisitorTracking() {
       if (!supabase || !visitorInfo) return;
-
-      sessionId = crypto.randomUUID ? crypto.randomUUID() : 'session_' + Date.now();
+      sessionId = (crypto.randomUUID ? crypto.randomUUID() : 'session_' + Date.now());
       sessionStart = new Date().toISOString();
 
       try {
@@ -1456,31 +1538,25 @@
           screen_height: window.innerHeight
         });
       } catch (e) {
-        console.log('Visitor tracking not available - table may need updating');
+        // Non-blocking
       }
 
-      // Track page views
       window.addEventListener('beforeunload', endVisitorSession);
     }
 
     async function endVisitorSession() {
-      if (!supabase || !sessionId) return;
-
+      if (!supabase || !sessionId || !sessionStart) return;
       const duration = Math.round((Date.now() - new Date(sessionStart).getTime()) / 1000);
-
       try {
         await supabase.from('visitor_sessions').update({
           ended_at: new Date().toISOString(),
           duration_seconds: duration
         }).eq('session_id', sessionId);
-      } catch (e) {
-        // Silent fail
-      }
+      } catch (e) {}
     }
 
     async function trackDocumentClick(doc) {
       if (!supabase || !sessionId) return;
-
       try {
         await supabase.from('visitor_clicks').insert({
           session_id: sessionId,
@@ -1488,16 +1564,14 @@
           document_id: doc.id,
           document_name: doc.name,
           section: doc.section,
+          action: 'document_click',
           clicked_at: new Date().toISOString()
         });
-      } catch (e) {
-        // Silent fail
-      }
+      } catch (e) {}
     }
 
     async function trackSectionView(sectionId) {
       if (!supabase || !sessionId) return;
-
       try {
         await supabase.from('visitor_clicks').insert({
           session_id: sessionId,
@@ -1506,66 +1580,12 @@
           action: 'section_view',
           clicked_at: new Date().toISOString()
         });
-      } catch (e) {
-        // Silent fail
-      }
+      } catch (e) {}
     }
 
-    // ===========================================
-    // DATA LOADING
-    // ===========================================
-    async function loadData() {
-      showLoading();
-
-      if (!supabase) {
-        hideLoading();
-        return;
-      }
-
-      try {
-        // Load documents from admin's table
-        const docsResult = await supabase
-          .from('dataroom_documents')
-          .select('*')
-          .eq('is_hidden', false)
-          .order('sort_order', { ascending: true });
-
-        if (docsResult.data) {
-          documents = docsResult.data;
-        }
-
-        // Load notes from admin's table
-        const notesResult = await supabase
-          .from('dataroom_notes')
-          .select('*')
-          .order('sort_order', { ascending: true });
-
-        if (notesResult.data) {
-          notes = notesResult.data;
-        }
-
-        // Load settings from admin's table
-        const settingsResult = await supabase
-          .from('dataroom_settings')
-          .select('*');
-
-        if (settingsResult.data) {
-          settingsResult.data.forEach(s => {
-            settings[s.key] = s.value;
-          });
-        }
-
-        hideLoading();
-      } catch (e) {
-        console.error('Error loading data:', e);
-        document.getElementById('connectionError').classList.add('visible');
-        hideLoading();
-      }
-    }
-
-    // ===========================================
+    // ==========================================
     // RENDERING
-    // ===========================================
+    // ==========================================
     function renderMenu() {
       const menuHtml = `
         <a href="#" class="menu-item active" data-view="dashboard">
@@ -1581,9 +1601,8 @@
       `;
       document.getElementById('menuItems').innerHTML = menuHtml;
 
-      // Add click handlers
       document.querySelectorAll('.menu-item').forEach(item => {
-        item.addEventListener('click', e => {
+        item.addEventListener('click', (e) => {
           e.preventDefault();
           closeMenu();
           if (item.dataset.view === 'dashboard') {
@@ -1596,7 +1615,6 @@
     }
 
     function renderDashboard() {
-      // Update project info from settings
       if (settings.project_name) {
         document.getElementById('projectTitle').textContent = settings.project_name + ' — Project Dashboard';
       }
@@ -1608,51 +1626,46 @@
         document.getElementById('targetNtp').textContent = 'Target NTP: ' + settings.target_ntp;
       }
 
-      // Calculate overall progress
-      const progressKeys = ['progress_land', 'progress_interconnection', 'progress_permitting', 'progress_engineering', 'progress_financial', 'progress_epc'];
-      let totalProgress = 0;
-      let progressCount = 0;
-
-      progressKeys.forEach(key => {
-        const val = parseInt(settings[key] || '0');
-        totalProgress += val;
-        progressCount++;
+      const progressKeys = ['progress_executive','progress_land','progress_interconnection','progress_permitting','progress_engineering','progress_financial','progress_epc'];
+      let sum = 0;
+      let cnt = 0;
+      progressKeys.forEach(k => {
+        const v = parseInt(settings[k] || '0', 10);
+        if (!Number.isNaN(v)) { sum += v; cnt++; }
       });
+      const avgProgress = cnt ? Math.round(sum / cnt) : 0;
 
-      const avgProgress = progressCount > 0 ? Math.round(totalProgress / progressCount) : 0;
       const circumference = 201;
       const offset = circumference - (avgProgress / 100) * circumference;
-
       document.getElementById('totalProgress').textContent = avgProgress + '%';
       document.getElementById('progressRingText').textContent = avgProgress + '%';
       document.getElementById('progressRing').style.strokeDashoffset = offset;
 
-      // Render progress breakdown
-      const breakdownHtml = [
-        { label: 'Land Control', key: 'progress_land', color: '#22c55e' },
-        { label: 'Interconnection', key: 'progress_interconnection', color: '#3b82f6' },
-        { label: 'Permitting', key: 'progress_permitting', color: '#a855f7' },
-        { label: 'Engineering', key: 'progress_engineering', color: '#f59e0b' }
-      ].map(item => `
+      // Breakdown
+      const breakdownItems = [
+        { label: 'Executive', key: 'progress_executive' },
+        { label: 'Land Control', key: 'progress_land' },
+        { label: 'Interconnection', key: 'progress_interconnection' },
+        { label: 'Permitting', key: 'progress_permitting' },
+        { label: 'Engineering', key: 'progress_engineering' }
+      ];
+      document.getElementById('progressBreakdown').innerHTML = breakdownItems.map(item => `
         <div class="progress-item">
-          <span class="progress-dot" style="background: ${item.color}"></span>
           <span class="progress-item-label">${item.label}</span>
           <span class="progress-item-value">${settings[item.key] || '0'}%</span>
         </div>
       `).join('');
 
-      document.getElementById('progressBreakdown').innerHTML = breakdownHtml;
-
-      // Render category cards
       renderCategories();
     }
 
     function renderCategories() {
-      const html = SECTIONS.map(section => {
+      const grid = document.getElementById('categoryGrid');
+      grid.innerHTML = SECTIONS.map(section => {
         const sectionDocs = documents.filter(d => d.section === section.id);
-        const uploadedCount = sectionDocs.filter(d => d.status === 'uploaded').length;
+        const uploadedCount = sectionDocs.filter(d => (d.status || '').toLowerCase() === 'uploaded' && (d.url || '').trim()).length;
         const totalCount = sectionDocs.length;
-        const percent = totalCount > 0 ? Math.round((uploadedCount / totalCount) * 100) : 0;
+        const percent = totalCount ? Math.round((uploadedCount / totalCount) * 100) : 0;
 
         return `
           <div class="category-card" data-section="${section.id}">
@@ -1669,13 +1682,8 @@
         `;
       }).join('');
 
-      document.getElementById('categoryGrid').innerHTML = html;
-
-      // Add click handlers
       document.querySelectorAll('.category-card').forEach(card => {
-        card.addEventListener('click', () => {
-          openSection(card.dataset.section);
-        });
+        card.addEventListener('click', () => openSection(card.dataset.section));
       });
     }
 
@@ -1683,66 +1691,54 @@
       const section = SECTIONS.find(s => s.id === sectionId);
       if (!section) return;
 
-      currentSection = section;
       currentView = 'section';
+      currentSection = section;
 
-      // Track this view
-      trackSectionView(sectionId);
-
-      // Update breadcrumb
-      document.getElementById('breadcrumbCurrent').textContent = section.name;
-
-      // Update header
-      document.getElementById('categoryTitle').textContent = section.name;
-      document.getElementById('categoryDesc').textContent = section.desc;
-      document.getElementById('categoryIcon').innerHTML = ICONS[section.icon];
-
-      // Calculate completion
-      const sectionDocs = documents.filter(d => d.section === sectionId);
-      const uploadedCount = sectionDocs.filter(d => d.status === 'uploaded').length;
-      const totalCount = sectionDocs.length;
-      const percent = totalCount > 0 ? Math.round((uploadedCount / totalCount) * 100) : 0;
-      document.getElementById('categoryBadge').textContent = percent + '% Complete';
-
-      // Render documents
-      renderDocuments(sectionId);
-
-      // Render notes
-      renderNotes(sectionId);
-
-      // Show section view
       document.getElementById('dashboardView').classList.remove('active');
       document.getElementById('categoryView').classList.add('active');
       document.getElementById('backBtn').classList.add('visible');
 
-      // Update menu
-      updateMenuActive(sectionId);
+      document.getElementById('categoryIcon').innerHTML = ICONS[section.icon];
+      document.getElementById('categoryTitle').textContent = section.name;
+      document.getElementById('categoryDesc').textContent = section.desc;
 
-      window.scrollTo(0, 0);
+      const sectionDocs = documents.filter(d => d.section === sectionId);
+      const uploadedCount = sectionDocs.filter(d => (d.status || '').toLowerCase() === 'uploaded' && (d.url || '').trim()).length;
+      const totalCount = sectionDocs.length;
+      const percent = totalCount ? Math.round((uploadedCount / totalCount) * 100) : 0;
+      document.getElementById('categoryBadge').textContent = percent + '% Complete';
+
+      updateBreadcrumb(section.name);
+      updateMenuActive(section.id);
+
+      renderDocuments(section.id);
+      renderNotes(section.id);
+      trackSectionView(section.id);
     }
 
     function renderDocuments(sectionId) {
       const sectionDocs = documents.filter(d => d.section === sectionId);
-
-      if (sectionDocs.length === 0) {
-        document.getElementById('docList').innerHTML = '<p style="color: var(--text-muted); font-size: 14px;">No documents available yet.</p>';
+      const list = document.getElementById('docList');
+      if (!sectionDocs.length) {
+        list.innerHTML = '<p style="color: var(--text-muted); font-size: 14px;">No documents available yet.</p>';
         return;
       }
 
-      const html = sectionDocs.map(doc => {
-        const fileType = doc.file_type || 'pdf';
-        const statusClass = doc.status || 'missing';
-        const statusText = statusClass === 'uploaded' ? 'Uploaded' : statusClass === 'pending' ? 'Pending' : 'Missing';
-        const hasUrl = doc.url && doc.url.trim() !== '';
+      list.innerHTML = sectionDocs.map(doc => {
+        const fileType = (doc.file_type || 'pdf').toUpperCase();
+        const status = (doc.status || 'missing').toLowerCase();
+        const statusText = status === 'uploaded' ? 'Uploaded' : status === 'pending' ? 'Pending' : 'Missing';
+        const hasUrl = (doc.url || '').trim().length > 0;
+        const isInteractive = status === 'uploaded' && hasUrl;
 
         return `
-          <div class="doc-item ${hasUrl ? 'clickable' : ''}" data-doc-id="${doc.id}">
-            <div class="doc-type-icon ${fileType}">${fileType.toUpperCase()}</div>
+          <div class="doc-item ${isInteractive ? 'clickable' : 'disabled'}" data-doc-id="${doc.id}" ${isInteractive ? '' : 'aria-disabled="true"'}>
+            <div class="doc-type-icon ${(doc.file_type || 'pdf').toLowerCase()}">${fileType}</div>
             <div class="doc-info">
               <div class="doc-name">${doc.name}</div>
-              <div class="doc-meta">${fileType.toUpperCase()}${doc.date_added ? ' • ' + doc.date_added : ''}</div>
+              <div class="doc-meta">${fileType}${doc.date_added ? ' • ' + doc.date_added : ''}</div>
             </div>
-            <div class="doc-status ${statusClass}">
+            <div class="doc-status ${status}">
               <span class="doc-status-dot"></span>
               ${statusText}
             </div>
@@ -1750,10 +1746,7 @@
         `;
       }).join('');
 
-      document.getElementById('docList').innerHTML = html;
-
-      // Add click handlers
-      document.querySelectorAll('.doc-item').forEach(item => {
+      document.querySelectorAll('.doc-item.clickable').forEach(item => {
         item.addEventListener('click', () => {
           const docId = item.dataset.docId;
           const doc = documents.find(d => d.id === docId);
@@ -1764,76 +1757,36 @@
 
     function renderNotes(sectionId) {
       const sectionNotes = notes.filter(n => n.section === sectionId);
-
-      if (sectionNotes.length === 0) {
-        document.getElementById('notesSection').style.display = 'none';
+      const sec = document.getElementById('notesSection');
+      if (!sectionNotes.length) {
+        sec.style.display = 'none';
         return;
       }
 
-      const html = sectionNotes.map(note => `
+      document.getElementById('notesList').innerHTML = sectionNotes.map(note => `
         <div class="note-item ${note.is_highlight ? 'highlight' : ''}">
           <div class="note-source">${note.author || 'Note'}<span class="note-date">${note.date || ''}</span></div>
-          <div class="note-text">${note.content}</div>
+          <div class="note-text">${note.content || ''}</div>
         </div>
       `).join('');
-
-      document.getElementById('notesList').innerHTML = html;
-      document.getElementById('notesSection').style.display = 'block';
+      sec.style.display = 'block';
     }
 
     function openDocument(doc) {
-      // Track the click
       trackDocumentClick(doc);
-
-      if (doc.url && doc.url.trim() !== '') {
-        window.open(doc.url, '_blank');
-      } else if (doc.status === 'uploaded') {
-        alert('Document is uploaded but URL not configured. Please contact the administrator.');
-      } else {
-        alert('Document is not yet available.');
+      const url = (doc.url || '').trim();
+      const status = (doc.status || '').toLowerCase();
+      if (status === 'uploaded' && url) {
+        window.open(url, '_blank');
       }
     }
 
-    function goBack() {
-      if (currentView === 'dashboard') return;
-
-      currentView = 'dashboard';
-      currentSection = null;
-
-      document.getElementById('breadcrumbCurrent').textContent = 'Dashboard';
-      document.getElementById('categoryView').classList.remove('active');
-      document.getElementById('dashboardView').classList.add('active');
-      document.getElementById('backBtn').classList.remove('visible');
-
-      updateMenuActive('dashboard');
-    }
-
-    // ===========================================
-    // THEME
-    // ===========================================
-    function initTheme() {
-      const saved = localStorage.getItem('dataroom-theme') || 'dark';
-      document.documentElement.setAttribute('data-theme', saved);
-    }
-
-    function toggleTheme() {
-      const current = document.documentElement.getAttribute('data-theme');
-      const newTheme = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('dataroom-theme', newTheme);
-    }
-
-    // ===========================================
-    // MENU
-    // ===========================================
-    function openMenu() {
-      document.getElementById('menuOverlay').classList.add('open');
-      document.getElementById('sideMenu').classList.add('open');
-    }
-
-    function closeMenu() {
-      document.getElementById('menuOverlay').classList.remove('open');
-      document.getElementById('sideMenu').classList.remove('open');
+    // ==========================================
+    // NAV + UI
+    // ==========================================
+    function updateBreadcrumb(current) {
+      const bc = document.getElementById('breadcrumbCurrent');
+      if (bc) bc.textContent = current || 'Dashboard';
     }
 
     function updateMenuActive(id) {
@@ -1845,64 +1798,80 @@
       });
     }
 
-    // ===========================================
-    // LOADING
-    // ===========================================
-    function showLoading() {
-      document.getElementById('loadingOverlay').classList.add('visible');
+    function goBack() {
+      if (currentView === 'dashboard') return;
+      currentView = 'dashboard';
+      currentSection = null;
+      updateBreadcrumb('Dashboard');
+      document.getElementById('categoryView').classList.remove('active');
+      document.getElementById('dashboardView').classList.add('active');
+      document.getElementById('backBtn').classList.remove('visible');
+      updateMenuActive('dashboard');
     }
 
-    function hideLoading() {
-      document.getElementById('loadingOverlay').classList.remove('visible');
+    function openMenu() {
+      document.getElementById('menuOverlay').classList.add('open');
+      document.getElementById('sideMenu').classList.add('open');
     }
 
-    // ===========================================
-    // SWIPE GESTURES
-    // ===========================================
-    function handleTouchStart(e) {
-      touchStartX = e.changedTouches[0].screenX;
+    function closeMenu() {
+      document.getElementById('menuOverlay').classList.remove('open');
+      document.getElementById('sideMenu').classList.remove('open');
     }
 
-    function handleTouchMove(e) {
-      const currentX = e.changedTouches[0].screenX;
-      const diff = currentX - touchStartX;
-      if (touchStartX < 30 && diff > 20 && currentView !== 'dashboard') {
-        document.getElementById('swipeIndicator').classList.add('visible');
-      } else {
-        document.getElementById('swipeIndicator').classList.remove('visible');
-      }
+    // ==========================================
+    // THEME
+    // ==========================================
+    function initTheme() {
+      const saved = localStorage.getItem('dataroom-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
     }
 
-    function handleTouchEnd(e) {
-      touchEndX = e.changedTouches[0].screenX;
-      document.getElementById('swipeIndicator').classList.remove('visible');
-      const diff = touchEndX - touchStartX;
-      if (diff > 80 && touchStartX < 50 && currentView !== 'dashboard') {
-        goBack();
-      }
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const newTheme = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('dataroom-theme', newTheme);
     }
 
-    // ===========================================
+    // ==========================================
     // EVENT LISTENERS
-    // ===========================================
+    // ==========================================
     function setupEventListeners() {
-      document.getElementById('menuBtn').addEventListener('click', openMenu);
-      document.getElementById('menuOverlay').addEventListener('click', closeMenu);
-      document.getElementById('backBtn').addEventListener('click', goBack);
-      document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-      document.getElementById('breadcrumbRoot').addEventListener('click', e => {
-        e.preventDefault();
-        goBack();
-      });
-
-      document.addEventListener('touchstart', handleTouchStart, { passive: true });
-      document.addEventListener('touchmove', handleTouchMove, { passive: true });
-      document.addEventListener('touchend', handleTouchEnd, { passive: true });
+      document.getElementById('menuBtn')?.addEventListener('click', openMenu);
+      document.getElementById('menuOverlay')?.addEventListener('click', closeMenu);
+      document.getElementById('backBtn')?.addEventListener('click', goBack);
+      document.getElementById('breadcrumbRoot')?.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
+      document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
     }
 
-    // ===========================================
-    // START
-    // ===========================================
+    // ==========================================
+    // BOOTSTRAP
+    // ==========================================
+    async function startApp() {
+      await loadData();
+      const allowed = await enforceAccessRules();
+      if (!allowed) return;
+      renderMenu();
+      renderDashboard();
+      setupEventListeners();
+      startVisitorTracking();
+      setupRealtimeSync();
+    }
+
+    async function init() {
+      initTheme();
+      initSupabase();
+      setupAccessModalHandlers();
+
+      visitorInfo = getStoredVisitor();
+      if (visitorInfo) {
+        await startApp();
+      } else {
+        showVisitorModal();
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
