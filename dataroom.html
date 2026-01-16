@@ -137,7 +137,7 @@
             color: var(--text-primary);
             font-family: 'Play', sans-serif;
             cursor: pointer;
-            font-weight: 700;
+            transition: all 0.15s;
         }
         .error-box button:hover { background: var(--bg-card); }
 
@@ -376,27 +376,27 @@
             align-items: center;
             justify-content: center;
             gap: 0.375rem;
+            transition: all 0.15s;
         }
         .logout-btn:hover { background: var(--bg-card); color: var(--text-primary); }
-        .theme-toggle-btn {
+        .theme-toggle-sidebar {
             width: 36px;
             padding: 0.5rem;
             background: var(--bg-tertiary);
             border: 1px solid var(--border);
             border-radius: 6px;
             color: var(--text-secondary);
-            font-size: 0.8rem;
-            font-family: 'Play', sans-serif;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.15s;
         }
-        .theme-toggle-btn:hover { background: var(--bg-card); color: var(--text-primary); border-color: var(--brand-green); }
-        .theme-toggle-btn .icon-sun { display: none; }
-        .theme-toggle-btn .icon-moon { display: block; }
-        [data-theme="light"] .theme-toggle-btn .icon-sun { display: block; }
-        [data-theme="light"] .theme-toggle-btn .icon-moon { display: none; }
+        .theme-toggle-sidebar:hover { background: var(--bg-card); color: var(--text-primary); }
+        .theme-toggle-sidebar .icon-sun { display: none; }
+        .theme-toggle-sidebar .icon-moon { display: block; }
+        [data-theme="light"] .theme-toggle-sidebar .icon-sun { display: block; }
+        [data-theme="light"] .theme-toggle-sidebar .icon-moon { display: none; }
 
         /* Main Content */
         .main {
@@ -433,7 +433,7 @@
         .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
         .breadcrumb span { color: var(--text-muted); }
         .breadcrumb strong { color: var(--text-primary); font-weight: 700; }
-        .header-actions { display: flex; gap: 0.75rem; }
+        .header-actions { display: flex; gap: 0.75rem; align-items: center; }
         .header-btn {
             padding: 0.5rem 1rem;
             background: var(--bg-tertiary);
@@ -461,7 +461,7 @@
 
         /* Dashboard */
         .dashboard-header { margin-bottom: 2rem; }
-        .dashboard-header h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+        .dashboard-header h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
         .dashboard-header p { color: var(--text-secondary); }
 
         .stats-grid {
@@ -575,7 +575,6 @@
             padding: 0.25rem 0.625rem;
             border-radius: 4px;
             color: var(--text-muted);
-            font-family: 'JetBrains Mono', monospace;
         }
         .doc-list { padding: 0.5rem; }
         .doc-item {
@@ -774,12 +773,11 @@
 
         /* Empty State */
         .empty-state {
-            padding: 3rem 2rem;
+            padding: 2rem;
             text-align: center;
             color: var(--text-muted);
         }
-        .empty-state .icon { margin-bottom: 1rem; opacity: 0.5; }
-        .empty-state p { font-size: 0.9rem; }
+        .empty-state .icon { margin-bottom: 0.75rem; opacity: 0.5; }
 
         /* Responsive */
         @media (max-width: 1200px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .info-cards { grid-template-columns: repeat(2, 1fr); } }
@@ -806,7 +804,6 @@
     <!-- SVG Icon Definitions -->
     <svg style="display: none;">
         <defs>
-            <!-- Navigation Icons -->
             <symbol id="icon-dashboard" viewBox="0 0 24 24">
                 <rect x="3" y="3" width="7" height="7"/>
                 <rect x="14" y="3" width="7" height="7"/>
@@ -818,7 +815,6 @@
                 <polyline points="14 2 14 8 20 8"/>
                 <line x1="16" y1="13" x2="8" y2="13"/>
                 <line x1="16" y1="17" x2="8" y2="17"/>
-                <polyline points="10 9 9 9 8 9"/>
             </symbol>
             <symbol id="icon-map" viewBox="0 0 24 24">
                 <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
@@ -856,15 +852,10 @@
             <symbol id="icon-building" viewBox="0 0 24 24">
                 <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
                 <path d="M9 22v-4h6v4"/>
-                <path d="M8 6h.01"/>
-                <path d="M16 6h.01"/>
-                <path d="M12 6h.01"/>
-                <path d="M12 10h.01"/>
-                <path d="M12 14h.01"/>
-                <path d="M16 10h.01"/>
-                <path d="M16 14h.01"/>
-                <path d="M8 10h.01"/>
-                <path d="M8 14h.01"/>
+                <path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/>
+                <path d="M12 10h.01"/><path d="M12 14h.01"/>
+                <path d="M16 10h.01"/><path d="M16 14h.01"/>
+                <path d="M8 10h.01"/><path d="M8 14h.01"/>
             </symbol>
             <symbol id="icon-users" viewBox="0 0 24 24">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
@@ -872,22 +863,16 @@
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
                 <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
             </symbol>
-            <!-- Action Icons -->
-            <symbol id="icon-sun" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="5"/>
-                <line x1="12" y1="1" x2="12" y2="3"/>
-                <line x1="12" y1="21" x2="12" y2="23"/>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                <line x1="1" y1="12" x2="3" y2="12"/>
-                <line x1="21" y1="12" x2="23" y2="12"/>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            <symbol id="icon-eye" viewBox="0 0 24 24">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
             </symbol>
-            <symbol id="icon-moon" viewBox="0 0 24 24">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            <symbol id="icon-printer" viewBox="0 0 24 24">
+                <polyline points="6 9 6 2 18 2 18 9"/>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                <rect x="6" y="14" width="12" height="8"/>
             </symbol>
-            <symbol id="icon-log-out" viewBox="0 0 24 24">
+            <symbol id="icon-logout" viewBox="0 0 24 24">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
                 <polyline points="16 17 21 12 16 7"/>
                 <line x1="21" y1="12" x2="9" y2="12"/>
@@ -897,14 +882,15 @@
                 <line x1="3" y1="6" x2="21" y2="6"/>
                 <line x1="3" y1="18" x2="21" y2="18"/>
             </symbol>
-            <symbol id="icon-printer" viewBox="0 0 24 24">
-                <polyline points="6 9 6 2 18 2 18 9"/>
-                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
-                <rect x="6" y="14" width="12" height="8"/>
+            <symbol id="icon-sun" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
             </symbol>
-            <symbol id="icon-eye" viewBox="0 0 24 24">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                <circle cx="12" cy="12" r="3"/>
+            <symbol id="icon-moon" viewBox="0 0 24 24">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
             </symbol>
             <symbol id="icon-folder" viewBox="0 0 24 24">
                 <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
@@ -920,7 +906,7 @@
             <symbol id="icon-bar-chart" viewBox="0 0 24 24">
                 <line x1="12" y1="20" x2="12" y2="10"/>
                 <line x1="18" y1="20" x2="18" y2="4"/>
-                <line x1="6" y1="20" x2="6" y2="16"/>
+                <line x1="6" y1="20" x2="6" y2="14"/>
             </symbol>
         </defs>
     </svg>
@@ -966,18 +952,15 @@
                 </div>
             </div>
 
-            <nav class="sidebar-nav" id="sidebarNav">
-                <!-- Generated dynamically -->
-            </nav>
+            <nav class="sidebar-nav" id="sidebarNav"></nav>
 
             <div class="sidebar-footer">
                 <div>Investor View • Session Active</div>
                 <div class="sidebar-footer-actions">
                     <button class="logout-btn" onclick="logout()">
-                        <svg class="icon icon-sm"><use href="#icon-log-out"/></svg>
-                        Sign Out
+                        <svg class="icon icon-sm"><use href="#icon-logout"/></svg> Sign Out
                     </button>
-                    <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle light/dark mode">
+                    <button class="theme-toggle-sidebar" onclick="toggleTheme()" title="Toggle theme">
                         <svg class="icon icon-sm icon-sun"><use href="#icon-sun"/></svg>
                         <svg class="icon icon-sm icon-moon"><use href="#icon-moon"/></svg>
                     </button>
@@ -999,25 +982,20 @@
                 </div>
                 <div class="header-actions">
                     <button class="header-btn" onclick="window.print()">
-                        <svg class="icon icon-sm"><use href="#icon-printer"/></svg>
-                        Print
+                        <svg class="icon icon-sm"><use href="#icon-printer"/></svg> Print
                     </button>
                 </div>
             </header>
 
-            <div class="content" id="contentContainer">
-                <!-- Generated dynamically -->
-            </div>
+            <div class="content" id="contentContainer"></div>
         </main>
     </div>
 
     <script>
         // ==================== CONFIGURATION ====================
-        // IMPORTANT: Replace these with your Supabase credentials
         var SUPABASE_URL = 'YOUR_SUPABASE_URL';
         var SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
 
-        // Try to load from localStorage (set by admin panel)
         try {
             var config = JSON.parse(localStorage.getItem('redew_admin_config'));
             if (config && config.url && config.key) {
@@ -1033,7 +1011,6 @@
         var settings = {};
         var currentSection = 'dashboard';
 
-        // Section definitions with icon IDs
         var sections = [
             { id: 'dashboard', name: 'Dashboard', icon: 'icon-dashboard' },
             { id: 'executive', name: 'Executive Summary', icon: 'icon-file-text' },
@@ -1052,58 +1029,29 @@
         // ==================== THEME ====================
         function toggleTheme() {
             var html = document.documentElement;
-            var currentTheme = html.getAttribute('data-theme');
-            var newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            var newTheme = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
             html.setAttribute('data-theme', newTheme);
             localStorage.setItem('redew_dataroom_theme', newTheme);
         }
 
         function loadTheme() {
             var saved = localStorage.getItem('redew_dataroom_theme');
-            if (saved) {
-                document.documentElement.setAttribute('data-theme', saved);
-            }
+            if (saved) document.documentElement.setAttribute('data-theme', saved);
         }
 
         // ==================== INITIALIZATION ====================
         async function init() {
             loadTheme();
-            
             try {
-                if (SUPABASE_URL === 'YOUR_SUPABASE_URL') {
-                    throw new Error('Database not configured. Please set up the admin panel first.');
-                }
-
+                if (SUPABASE_URL === 'YOUR_SUPABASE_URL') throw new Error('Database not configured. Please set up the admin panel first.');
                 db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-                // Load all data
                 await Promise.all([loadDocuments(), loadNotes(), loadSettings()]);
-
-                // Hide loading, show password screen
                 document.getElementById('loadingScreen').classList.add('hidden');
-
-                // Check if data room is active
-                if (settings.dr_status === 'disabled') {
-                    showError('Data room is currently disabled.');
-                    return;
-                }
-
-                if (settings.dr_status === 'maintenance') {
-                    showError('Data room is under maintenance. Please check back later.');
-                    return;
-                }
-
-                // Check session
-                if (sessionStorage.getItem('redew_dataroom_auth') === 'true') {
-                    showApp();
-                } else {
-                    document.getElementById('passwordScreen').classList.add('visible');
-                    document.getElementById('passwordInput').focus();
-                }
-
-            } catch (err) {
-                showError(err.message);
-            }
+                if (settings.dr_status === 'disabled') { showError('Data room is currently disabled.'); return; }
+                if (settings.dr_status === 'maintenance') { showError('Data room is under maintenance. Please check back later.'); return; }
+                if (sessionStorage.getItem('redew_dataroom_auth') === 'true') { showApp(); }
+                else { document.getElementById('passwordScreen').classList.add('visible'); document.getElementById('passwordInput').focus(); }
+            } catch (err) { showError(err.message); }
         }
 
         function showError(message) {
@@ -1113,14 +1061,10 @@
         }
 
         async function loadDocuments() {
-            var result = await db.from('dataroom_documents').select('*').order('sort_order', { ascending: true });
+            // CRITICAL: Filter out hidden documents so they don't show to investors
+            var result = await db.from('dataroom_documents').select('*').or('is_hidden.is.null,is_hidden.eq.false').order('sort_order', { ascending: true });
             if (result.error) throw new Error('Failed to load documents');
-            
-            // IMPORTANT: Filter out hidden documents
-            var allDocs = result.data || [];
-            documents = allDocs.filter(function(d) {
-                return !d.is_hidden;
-            });
+            documents = result.data || [];
         }
 
         async function loadNotes() {
@@ -1133,25 +1077,15 @@
             var result = await db.from('dataroom_settings').select('*');
             if (result.error) throw new Error('Failed to load settings');
             settings = {};
-            if (result.data) {
-                result.data.forEach(function(s) { settings[s.key] = s.value; });
-            }
+            if (result.data) result.data.forEach(function(s) { settings[s.key] = s.value; });
         }
 
         // ==================== AUTH ====================
         function checkPassword() {
             var input = document.getElementById('passwordInput').value.trim().toLowerCase();
-            var correctPassword = (settings.dr_password || 'redew2026').toLowerCase();
-            var errorEl = document.getElementById('passwordError');
-
-            if (input === correctPassword) {
-                sessionStorage.setItem('redew_dataroom_auth', 'true');
-                showApp();
-            } else {
-                errorEl.style.display = 'block';
-                document.getElementById('passwordInput').value = '';
-                document.getElementById('passwordInput').focus();
-            }
+            var correct = (settings.dr_password || 'redew2026').toLowerCase();
+            if (input === correct) { sessionStorage.setItem('redew_dataroom_auth', 'true'); showApp(); }
+            else { document.getElementById('passwordError').style.display = 'block'; document.getElementById('passwordInput').value = ''; document.getElementById('passwordInput').focus(); }
         }
 
         function logout() {
@@ -1165,12 +1099,9 @@
         function showApp() {
             document.getElementById('passwordScreen').classList.remove('visible');
             document.getElementById('app').classList.add('visible');
-
-            // Set project name from settings
             var projectName = settings.project_name || 'ReDew Anson';
             document.getElementById('projectName').textContent = projectName;
             document.getElementById('projectNameBreadcrumb').textContent = projectName;
-
             renderSidebar();
             showSection('dashboard');
         }
@@ -1179,46 +1110,33 @@
         function renderSidebar() {
             var nav = document.getElementById('sidebarNav');
             var html = '<div class="nav-section"><div class="nav-section-title">Overview</div>';
-            html += '<a class="nav-item active" data-section="dashboard" onclick="showSection(\'dashboard\')">';
-            html += '<svg class="icon icon-sm"><use href="#icon-dashboard"/></svg> Dashboard</a></div>';
+            html += '<a class="nav-item active" data-section="dashboard" onclick="showSection(\'dashboard\')"><svg class="icon icon-sm"><use href="#icon-dashboard"/></svg> Dashboard</a></div>';
             html += '<div class="nav-section"><div class="nav-section-title">Due Diligence</div>';
 
             sections.slice(1).forEach(function(s) {
                 var sectionDocs = documents.filter(function(d) { return d.section === s.id; });
-                var uploaded = sectionDocs.filter(function(d) { return d.status === 'uploaded'; }).length;
                 var total = sectionDocs.length;
-                var statusClass = total === 0 ? '' : (uploaded === total ? 'complete' : (uploaded > 0 ? 'partial' : 'pending'));
-
+                
+                // Skip sections with no visible documents
+                if (total === 0) return;
+                
+                var uploaded = sectionDocs.filter(function(d) { return d.status === 'uploaded'; }).length;
+                var statusClass = uploaded === total ? 'complete' : (uploaded > 0 ? 'partial' : 'pending');
                 html += '<a class="nav-item" data-section="' + s.id + '" onclick="showSection(\'' + s.id + '\')">';
                 html += '<svg class="icon icon-sm"><use href="#' + s.icon + '"/></svg> ' + s.name;
-                if (statusClass) html += '<span class="status ' + statusClass + '"></span>';
+                html += '<span class="status ' + statusClass + '"></span>';
                 html += '</a>';
             });
-
             html += '</div>';
             nav.innerHTML = html;
         }
 
         function showSection(sectionId) {
             currentSection = sectionId;
-
-            // Update nav
-            document.querySelectorAll('.nav-item').forEach(function(el) {
-                el.classList.toggle('active', el.dataset.section === sectionId);
-            });
-
-            // Update breadcrumb
+            document.querySelectorAll('.nav-item').forEach(function(el) { el.classList.toggle('active', el.dataset.section === sectionId); });
             var sectionName = sections.find(function(s) { return s.id === sectionId; });
             document.getElementById('breadcrumbCurrent').textContent = sectionName ? sectionName.name : sectionId;
-
-            // Render content
-            if (sectionId === 'dashboard') {
-                renderDashboard();
-            } else {
-                renderSectionPage(sectionId);
-            }
-
-            // Close mobile sidebar
+            if (sectionId === 'dashboard') renderDashboard(); else renderSectionPage(sectionId);
             document.getElementById('sidebar').classList.remove('open');
             document.getElementById('sidebarOverlay').classList.remove('visible');
             window.scrollTo(0, 0);
@@ -1234,77 +1152,45 @@
             var container = document.getElementById('contentContainer');
             var capacity = settings.capacity || '300 MW';
             var targetNtp = settings.target_ntp || 'Q1 2027';
-
             var uploaded = documents.filter(function(d) { return d.status === 'uploaded'; }).length;
             var pending = documents.filter(function(d) { return d.status === 'pending'; }).length;
 
-            var html = '<div class="page-section active">';
-            html += '<div class="dashboard-header">';
-            html += '<h1><svg class="icon icon-lg"><use href="#icon-dashboard"/></svg> ' + (settings.project_name || 'ReDew Anson') + ' — Project Dashboard</h1>';
-            html += '<p>' + capacity + ' Battery Energy Storage System • Jones County, Texas • ERCOT West</p></div>';
+            var html = '<div class="page-section active"><div class="dashboard-header">';
+            html += '<h1>' + esc(settings.project_name || 'ReDew Anson') + ' — Project Dashboard</h1>';
+            html += '<p>' + esc(capacity) + ' / Battery Energy Storage System • Jones County, Texas • ERCOT West</p></div>';
 
-            // Stats
             html += '<div class="stats-grid">';
-            html += '<div class="stat-card"><div class="label">Project Capacity</div><div class="value">' + capacity + '</div><div class="sub">Expandable to 400 MW</div></div>';
-            html += '<div class="stat-card"><div class="label">Target NTP</div><div class="value">' + targetNtp + '</div><div class="sub">Notice to Proceed</div></div>';
+            html += '<div class="stat-card"><div class="label">Project Capacity</div><div class="value">' + esc(capacity) + '</div><div class="sub">Expandable to 400 MW</div></div>';
+            html += '<div class="stat-card"><div class="label">Target NTP</div><div class="value">' + esc(targetNtp) + '</div><div class="sub">Notice to Proceed</div></div>';
             html += '<div class="stat-card"><div class="label">POI Distance</div><div class="value">0.5 mi</div><div class="sub">345 kV Phantom Hill Sub</div></div>';
-            html += '<div class="stat-card"><div class="label">Documents</div><div class="value">' + documents.length + '</div><div class="sub">' + uploaded + ' uploaded • ' + pending + ' pending</div></div>';
-            html += '</div>';
+            html += '<div class="stat-card"><div class="label">Documents</div><div class="value">' + documents.length + '</div><div class="sub">' + uploaded + ' uploaded • ' + pending + ' pending</div></div></div>';
 
-            // Progress bars
             html += '<div class="progress-section"><h3><svg class="icon"><use href="#icon-bar-chart"/></svg> Development Progress</h3><div class="progress-bars">';
-            var progressItems = [
-                { key: 'progress_land', label: 'Land & Site Control' },
-                { key: 'progress_interconnection', label: 'Interconnection' },
-                { key: 'progress_permitting', label: 'Permitting' },
-                { key: 'progress_engineering', label: 'Engineering' },
-                { key: 'progress_financial', label: 'Financial Model' },
-                { key: 'progress_epc', label: 'EPC Selection' }
-            ];
-            progressItems.forEach(function(item) {
+            [{ key: 'progress_land', label: 'Land & Site Control' }, { key: 'progress_interconnection', label: 'Interconnection' }, { key: 'progress_permitting', label: 'Permitting' }, { key: 'progress_engineering', label: 'Engineering' }, { key: 'progress_financial', label: 'Financial Model' }, { key: 'progress_epc', label: 'EPC Selection' }].forEach(function(item) {
                 var val = settings[item.key] || '0';
-                html += '<div class="progress-item"><div class="label">' + item.label + '</div>';
-                html += '<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + val + '%"></div></div>';
-                html += '<div class="percent">' + val + '%</div></div>';
+                html += '<div class="progress-item"><div class="label">' + item.label + '</div><div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + val + '%"></div></div><div class="percent">' + val + '%</div></div>';
             });
             html += '</div></div>';
 
-            // Recent documents
             var recentDocs = documents.filter(function(d) { return d.status === 'uploaded'; }).slice(0, 5);
             var pendingDocs = documents.filter(function(d) { return d.status !== 'uploaded'; }).slice(0, 4);
 
-            html += '<div class="documents-grid">';
-            html += '<div class="doc-category"><div class="doc-category-header"><h4><svg class="icon icon-sm"><use href="#icon-folder"/></svg> Recently Uploaded</h4><span class="count">' + recentDocs.length + '</span></div>';
-            html += '<div class="doc-list">';
-            if (recentDocs.length > 0) {
-                recentDocs.forEach(function(doc) { html += renderDocItem(doc); });
-            } else {
-                html += '<div class="empty-state"><svg class="icon icon-xl"><use href="#icon-folder"/></svg><p>No documents uploaded yet</p></div>';
-            }
+            html += '<div class="documents-grid"><div class="doc-category"><div class="doc-category-header"><h4><svg class="icon icon-sm"><use href="#icon-folder"/></svg> Recently Uploaded</h4><span class="count">' + recentDocs.length + ' files</span></div><div class="doc-list">';
+            if (recentDocs.length > 0) recentDocs.forEach(function(doc) { html += renderDocItem(doc); });
+            else html += '<div class="empty-state"><svg class="icon icon-xl"><use href="#icon-folder"/></svg><div>No documents uploaded yet</div></div>';
             html += '</div></div>';
 
-            html += '<div class="doc-category"><div class="doc-category-header"><h4><svg class="icon icon-sm"><use href="#icon-clock"/></svg> Pending Items</h4><span class="count">' + pendingDocs.length + '</span></div>';
-            html += '<div class="doc-list">';
-            if (pendingDocs.length > 0) {
-                pendingDocs.forEach(function(doc) { html += renderDocItem(doc); });
-            } else {
-                html += '<div class="empty-state"><svg class="icon icon-xl"><use href="#icon-clipboard"/></svg><p>All caught up!</p></div>';
-            }
-            html += '</div></div>';
-            html += '</div>';
+            html += '<div class="doc-category"><div class="doc-category-header"><h4><svg class="icon icon-sm"><use href="#icon-clock"/></svg> Pending Items</h4><span class="count">' + pendingDocs.length + ' items</span></div><div class="doc-list">';
+            if (pendingDocs.length > 0) pendingDocs.forEach(function(doc) { html += renderDocItem(doc); });
+            else html += '<div class="empty-state"><svg class="icon icon-xl"><use href="#icon-clipboard"/></svg><div>All caught up!</div></div>';
+            html += '</div></div></div></div>';
 
-            html += '</div>';
             container.innerHTML = html;
         }
 
         function renderDocItem(doc) {
             var hasLink = doc.url && doc.url.trim() !== '';
-            var html = '<div class="doc-item' + (hasLink ? '' : ' no-link') + '"' + (hasLink ? ' onclick="openDoc(\'' + esc(doc.url) + '\')"' : '') + '>';
-            html += '<div class="doc-icon ' + doc.file_type + '">' + doc.file_type.toUpperCase() + '</div>';
-            html += '<div class="doc-info"><div class="name">' + esc(doc.name) + '</div>';
-            html += '<div class="meta">' + doc.file_type.toUpperCase() + (doc.date_added ? ' • ' + doc.date_added : '') + '</div></div>';
-            html += '<div class="doc-status ' + doc.status + '"></div></div>';
-            return html;
+            return '<div class="doc-item' + (hasLink ? '' : ' no-link') + '"' + (hasLink ? ' onclick="openDoc(\'' + escAttr(doc.url) + '\')"' : '') + '><div class="doc-icon ' + doc.file_type + '">' + doc.file_type.toUpperCase() + '</div><div class="doc-info"><div class="name">' + esc(doc.name) + '</div><div class="meta">' + doc.file_type.toUpperCase() + (doc.date_added ? ' • ' + esc(doc.date_added) : '') + '</div></div><div class="doc-status ' + doc.status + '"></div></div>';
         }
 
         // ==================== SECTION PAGES ====================
@@ -1315,84 +1201,51 @@
 
             var sectionDocs = documents.filter(function(d) { return d.section === sectionId; });
             var sectionNotes = notes.filter(function(n) { return n.section === sectionId; });
-
             var uploaded = sectionDocs.filter(function(d) { return d.status === 'uploaded'; }).length;
             var total = sectionDocs.length;
             var percent = total > 0 ? Math.round((uploaded / total) * 100) : 0;
             var statusClass = total === 0 ? 'pending' : (percent === 100 ? 'complete' : (percent > 0 ? 'partial' : 'pending'));
 
-            var html = '<div class="page-section active">';
-            
-            // Header
-            html += '<div class="section-header">';
-            html += '<h1><svg class="icon icon-lg"><use href="#' + section.icon + '"/></svg> ' + section.name + ' <span class="status-badge ' + statusClass + '">' + percent + '% Complete</span></h1>';
-            html += '<p>Documentation and materials for ' + section.name.toLowerCase() + '.</p></div>';
+            var html = '<div class="page-section active"><div class="section-header">';
+            html += '<h1><svg class="icon icon-lg"><use href="#' + section.icon + '"/></svg> ' + esc(section.name) + ' <span class="status-badge ' + statusClass + '">' + percent + '% Complete</span></h1>';
+            html += '<p>Documentation and materials for ' + esc(section.name.toLowerCase()) + '.</p></div>';
 
-            // Documents table
             if (sectionDocs.length > 0) {
-                html += '<div class="doc-table"><table><thead><tr>';
-                html += '<th>Document</th><th>Type</th><th>Date</th><th>Status</th><th>Action</th>';
-                html += '</tr></thead><tbody>';
-
+                html += '<div class="doc-table"><table><thead><tr><th>Document</th><th>Type</th><th>Date</th><th>Status</th><th>Action</th></tr></thead><tbody>';
                 sectionDocs.forEach(function(doc) {
                     var hasLink = doc.url && doc.url.trim() !== '';
-                    html += '<tr>';
-                    html += '<td><div class="doc-name"><div class="file-icon ' + doc.file_type + '">' + doc.file_type.toUpperCase() + '</div><span>' + esc(doc.name) + '</span></div></td>';
-                    html += '<td>' + doc.file_type.toUpperCase() + '</td>';
-                    html += '<td>' + (doc.date_added || '—') + '</td>';
-                    html += '<td><span class="status-pill ' + doc.status + '"><span class="dot"></span>' + capitalize(doc.status) + '</span></td>';
-                    html += '<td>';
-                    if (doc.status === 'uploaded' && hasLink) {
-                        html += '<button class="action-btn" onclick="openDoc(\'' + esc(doc.url) + '\')"><svg class="icon icon-sm"><use href="#icon-eye"/></svg> View</button>';
-                    } else {
-                        html += '<button class="action-btn" disabled>' + (doc.status === 'pending' ? 'Pending' : 'Required') + '</button>';
-                    }
+                    html += '<tr><td><div class="doc-name"><div class="file-icon ' + doc.file_type + '">' + doc.file_type.toUpperCase() + '</div><span>' + esc(doc.name) + '</span></div></td>';
+                    html += '<td>' + doc.file_type.toUpperCase() + '</td><td>' + (doc.date_added ? esc(doc.date_added) : '—') + '</td>';
+                    html += '<td><span class="status-pill ' + doc.status + '"><span class="dot"></span>' + capitalize(doc.status) + '</span></td><td>';
+                    if (doc.status === 'uploaded' && hasLink) html += '<button class="action-btn" onclick="openDoc(\'' + escAttr(doc.url) + '\')"><svg class="icon icon-sm"><use href="#icon-eye"/></svg> View</button>';
+                    else html += '<button class="action-btn" disabled>' + (doc.status === 'pending' ? 'Pending' : 'Required') + '</button>';
                     html += '</td></tr>';
                 });
-
                 html += '</tbody></table></div>';
             } else {
-                html += '<div class="doc-table"><div class="empty-state"><svg class="icon icon-xl"><use href="#icon-folder"/></svg><p>No documents in this section yet.</p></div></div>';
+                html += '<div class="doc-table"><div class="empty-state"><svg class="icon icon-xl"><use href="#icon-folder"/></svg><div>No documents in this section yet.</div></div></div>';
             }
 
-            // Notes
             if (sectionNotes.length > 0) {
                 html += '<div class="notes-section"><h3><svg class="icon"><use href="#icon-edit"/></svg> Notes & Updates</h3>';
                 sectionNotes.forEach(function(note) {
-                    html += '<div class="note-item' + (note.is_highlight ? ' highlight' : '') + '">';
-                    html += '<div class="note-header"><span class="author">' + esc(note.author) + '</span><span class="date">' + esc(note.date) + '</span></div>';
-                    html += '<p>' + esc(note.content) + '</p></div>';
+                    html += '<div class="note-item' + (note.is_highlight ? ' highlight' : '') + '"><div class="note-header"><span class="author">' + esc(note.author) + '</span><span class="date">' + esc(note.date) + '</span></div><p>' + esc(note.content) + '</p></div>';
                 });
                 html += '</div>';
             }
-
             html += '</div>';
             container.innerHTML = html;
         }
 
         // ==================== UTILITIES ====================
-        function openDoc(url) {
-            if (url && url.trim() !== '' && url !== 'YOUR_FILE_ID') {
-                window.open(url, '_blank');
-            } else {
-                alert('Document link not yet configured.');
-            }
-        }
-
-        function esc(s) {
-            return (s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#39;');
-        }
-
-        function capitalize(s) {
-            return s ? s.charAt(0).toUpperCase() + s.slice(1).replace(/_/g, ' ') : '';
-        }
+        function openDoc(url) { if (url && url.trim() !== '' && url !== 'YOUR_FILE_ID') window.open(url, '_blank'); else alert('Document link not yet configured.'); }
+        function esc(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+        function escAttr(s) { return (s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+        function capitalize(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1).replace(/_/g, ' ') : ''; }
 
         // ==================== EVENT LISTENERS ====================
         document.addEventListener('DOMContentLoaded', init);
-
-        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') checkPassword();
-        });
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) { if (e.key === 'Enter') checkPassword(); });
     </script>
 </body>
 </html>
