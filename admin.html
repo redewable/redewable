@@ -824,6 +824,35 @@
             .progress-row { grid-template-columns: 1fr; gap: 0.5rem; }
             .settings-grid { grid-template-columns: 1fr; }
         }
+    
+        /* Analytics */
+        .analytics-toolbar{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;}
+        .analytics-actions{display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;}
+        .analytics-error{padding:0.75rem 1rem;border:1px solid var(--status-red);background:rgba(239,68,68,0.08);color:var(--text-primary);border-radius:12px;margin-bottom:1rem;}
+        .analytics-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;margin-bottom:1rem;}
+        @media(max-width: 980px){.analytics-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+        @media(max-width: 520px){.analytics-grid{grid-template-columns:1fr;}}
+        .analytics-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1rem;}
+        .analytics-label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);margin-bottom:0.35rem;}
+        .analytics-value{font-size:1.45rem;font-weight:800;color:var(--text-primary);font-family:'JetBrains Mono',monospace;line-height:1.1;}
+        .analytics-sub{margin-top:0.3rem;font-size:0.82rem;color:var(--text-secondary);}
+        .analytics-panels{display:grid;grid-template-columns:1fr;gap:1rem;}
+        .analytics-panel{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1rem;}
+        .analytics-panel h3{margin:0 0 0.75rem;font-size:1rem;color:var(--text-primary);}
+        .table-scroll{overflow:auto;max-height:420px;border:1px solid var(--border);border-radius:12px;}
+        .analytics-table{width:100%;border-collapse:collapse;min-width:860px;}
+        .analytics-table th,.analytics-table td{padding:0.65rem 0.75rem;border-bottom:1px solid var(--border);font-size:0.85rem;color:var(--text-primary);}
+        .analytics-table th{position:sticky;top:0;background:var(--bg-secondary);color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.08em;font-size:0.72rem;z-index:1;}
+        .analytics-pill{display:inline-flex;align-items:center;gap:0.35rem;padding:0.2rem 0.55rem;border-radius:999px;background:rgba(34,197,94,0.12);color:var(--status-green);font-size:0.75rem;font-weight:700;}
+        .analytics-pill.info{background:rgba(59,130,246,0.12);color:#3b82f6;}
+        .analytics-pill.warning{background:rgba(245,158,11,0.12);color:var(--status-yellow);}
+        .analytics-pill.danger{background:rgba(239,68,68,0.12);color:var(--status-red);}
+        .analytics-list{display:flex;flex-direction:column;gap:0.6rem;}
+        .analytics-list-item{display:flex;align-items:center;justify-content:space-between;gap:0.75rem;padding:0.7rem 0.85rem;border:1px solid var(--border);border-radius:12px;}
+        .analytics-list-item .name{font-weight:700;color:var(--text-primary);}
+        .analytics-list-item .meta{font-size:0.82rem;color:var(--text-secondary);margin-top:0.1rem;}
+        .analytics-list-item .count{font-family:'JetBrains Mono',monospace;font-weight:800;}
+
     </style>
 </head>
 <body>
@@ -999,6 +1028,10 @@
                 <circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/>
                 <circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/>
             </symbol>
+
+            <symbol id="icon-activity" viewBox="0 0 24 24">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            </symbol>
         </defs>
     </svg>
 
@@ -1064,7 +1097,13 @@
                         Data Room
                         <span class="badge" id="drCount">0</span>
                     </button>
-                    <button class="tab-btn" data-tab="settings" onclick="switchTab('settings')">
+
+                    <button class="tab-btn" data-tab="analytics" onclick="switchTab('analytics')">
+                        <svg class="icon icon-sm"><use href="#icon-activity"/></svg>
+                        Analytics
+                        <span class="badge" id="analyticsCount">0</span>
+                    </button>
+ onclick="switchTab('settings')">
                         <svg class="icon icon-sm"><use href="#icon-settings"/></svg>
                         Settings
                     </button>
@@ -1177,39 +1216,140 @@
                 <div id="dataroomContainer"></div>
             </div>
 
+
+            <!-- ANALYTICS TAB -->
+            <div class="tab-content" id="tab-analytics">
+                <div class="analytics-toolbar">
+                    <div>
+                        <h2 style="margin:0;">Data Room Analytics</h2>
+                        <div class="help-text" style="margin-top:0.25rem;">Visits and clicks are captured from the Data Room once visitors pass access gating.</div>
+                    </div>
+                    <div class="analytics-actions">
+                        <button class="btn btn-small btn-secondary" type="button" onclick="refreshAnalytics()">
+                            <svg class="icon icon-sm"><use href="#icon-refresh"/></svg>
+                            Refresh
+                        </button>
+                        <button class="btn btn-small" type="button" onclick="exportAnalyticsCSV()">
+                            <svg class="icon icon-sm"><use href="#icon-download"/></svg>
+                            Export CSV
+                        </button>
+                    </div>
+                </div>
+
+                <div class="analytics-error" id="analyticsError" style="display:none;"></div>
+
+                <div class="analytics-grid" id="analyticsSummary"></div>
+
+                <div class="analytics-panels">
+                    <div class="analytics-panel">
+                        <h3>Recent Visits</h3>
+                        <div class="table-scroll">
+                            <table class="analytics-table">
+                                <thead>
+                                    <tr>
+                                        <th>Started</th>
+                                        <th>Visitor</th>
+                                        <th>Email</th>
+                                        <th>Company</th>
+                                        <th>Duration</th>
+                                        <th>Device</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sessionsTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="analytics-panel">
+                        <h3>Recent Activity</h3>
+                        <div class="table-scroll">
+                            <table class="analytics-table">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Action</th>
+                                        <th>Section</th>
+                                        <th>Document</th>
+                                        <th>Visitor</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="clicksTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="analytics-panel">
+                        <h3>Top Documents</h3>
+                        <div class="analytics-list" id="topDocsList"></div>
+                    </div>
+
+                    <div class="analytics-panel">
+                        <h3>Top Sections</h3>
+                        <div class="analytics-list" id="topSectionsList"></div>
+                    </div>
+                </div>
+            </div>
+
             <!-- SETTINGS TAB -->
             <div class="tab-content" id="tab-settings">
                 <div class="settings-grid">
                     <div class="settings-card">
-                        <h4><svg class="icon"><use href="#icon-lock"/></svg> Data Room Access</h4>
-                        <div class="settings-row">
-                            <label>Investor Access Password</label>
-                            <input type="text" id="settingDrPassword" placeholder="redew2026" onchange="saveSetting('dr_password', this.value)">
-                        </div>
-                        <div class="settings-row">
-                            <label>Data Room Status</label>
-                            <select id="settingDrStatus" onchange="saveSetting('dr_status', this.value)">
-                                <option value="active">Active - Accessible</option>
-                                <option value="maintenance">Maintenance Mode</option>
-                                <option value="disabled">Disabled</option>
-                            </select>
-                        </div>
-                        <div class="settings-row" style="margin-top: 0.5rem;">
-                            <label>Public Data Room Link</label>
-                            <div style="display:flex; gap:0.5rem; align-items:stretch;">
-                                <input type="text" id="publicDataroomLink" readonly value="" style="flex:1;">
-                                <button class="btn btn-small btn-secondary" type="button" onclick="copyPublicDataroomLink()" style="white-space:nowrap;">Copy</button>
-                                <button class="btn btn-small btn-primary" type="button" onclick="openPublicDataroomLink()" style="white-space:nowrap;">Open</button>
-                            </div>
-                            <div style="margin-top:0.5rem; font-size:0.82rem; color: var(--text-secondary);">
-                                Use this link when sharing the Data Room. It includes the Supabase connection parameters required by <code>dataroom.html</code>.
-                            </div>
-                        </div>
+                    <h4><svg class="icon icon-sm"><use href="#icon-lock"/></svg> Data Room Access</h4>
 
-
+                    <div class="settings-row">
+                        <label>Access Mode</label>
+                        <select id="settingDrAccessMode" onchange="saveSetting('dr_access_mode', this.value); updatePublicLinkUI();">
+                            <option value="password">Password prompt (shared password)</option>
+                            <option value="open">No password (visitor identity only)</option>
+                            <option value="token">Link token only (auto-unlock link required)</option>
+                        </select>
                     </div>
 
-                    <div class="settings-card">
+                    <div class="settings-row">
+                        <label>Shared Password</label>
+                        <input type="text" id="settingDrPassword" placeholder="redew2026" onchange="saveSetting('dr_password', this.value)" />
+                        <div class="help-text">Typical investor data room pattern: one shared password. Visitors do <em>not</em> create their own password in this version.</div>
+                    </div>
+
+                    <div class="settings-row">
+                        <label>Auto-Unlock Link Token</label>
+                        <div style="display:flex; gap:0.5rem; align-items:stretch;">
+                            <input type="text" id="settingDrLinkToken" placeholder="Generate a token for auto-unlock links" onchange="saveSetting('dr_link_token', this.value); updatePublicLinkUI();" style="flex:1;" />
+                            <button class="btn btn-small btn-secondary" type="button" onclick="generateDrLinkToken()" style="white-space:nowrap;">Generate</button>
+                        </div>
+                        <div class="help-text">Send the auto-unlock link to avoid the password prompt (recommended for sending today). Rotate the token to revoke previous links.</div>
+                    </div>
+
+                    <div class="settings-row">
+                        <label>Data Room Status</label>
+                        <select id="settingDrStatus" onchange="saveSetting('dr_status', this.value)">
+                            <option value="active">Active</option>
+                            <option value="maintenance">Maintenance Mode</option>
+                            <option value="disabled">Disabled</option>
+                        </select>
+                    </div>
+
+                    <div class="settings-row">
+                        <label>Share Link</label>
+                        <div style="display:flex; gap:0.5rem; align-items:stretch;">
+                            <input type="text" id="publicDataroomLink" readonly value="" style="flex:1;" />
+                            <button class="btn btn-small btn-secondary" type="button" onclick="copyPublicDataroomLink()">Copy</button>
+                            <button class="btn btn-small" type="button" onclick="openPublicDataroomLink()">Open</button>
+                        </div>
+                        <div class="help-text">Includes the Supabase connection params required by the Data Room. If Access Mode is Password/Token, visitors may be prompted.</div>
+                    </div>
+
+                    <div class="settings-row">
+                        <label>Auto-Unlock Link</label>
+                        <div style="display:flex; gap:0.5rem; align-items:stretch;">
+                            <input type="text" id="investorDataroomLink" readonly value="" style="flex:1;" />
+                            <button class="btn btn-small btn-secondary" type="button" onclick="copyInvestorDataroomLink()">Copy</button>
+                            <button class="btn btn-small" type="button" onclick="openInvestorDataroomLink()">Open</button>
+                        </div>
+                        <div class="help-text">Uses your Link Token to auto-unlock the Data Room (no password prompt). Rotate the token any time.</div>
+                    </div>
+                </div>
+<div class="settings-card">
                         <h4><svg class="icon"><use href="#icon-users"/></svg> Vendor Management</h4>
                         <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
                             Manage vendors available in task dropdowns. Default vendors cannot be removed.
@@ -1364,6 +1504,8 @@
         var defaultSettings = {
             'dr_password': 'redew2026',
             'dr_status': 'active',
+            'dr_access_mode': 'password',
+            'dr_link_token': '',
             'project_name': 'ReDew Anson',
             'capacity': '300 MW',
             'target_ntp': 'Q1 2027',
@@ -1580,6 +1722,9 @@
             document.querySelectorAll('.tab-content').forEach(function(content) {
                 content.classList.toggle('active', content.id === 'tab-' + tabId);
             });
+            if (tabId === 'analytics') {
+                refreshAnalytics();
+            }
         }
 
         // ==================== NTP CHECKLIST ====================
@@ -2047,34 +2192,112 @@
         }
 
         function updatePublicLinkUI() {
-            var el = document.getElementById('publicDataroomLink');
-            if (!el) return;
-            var link = getPublicDataroomLink();
-            el.value = link || '';
+            const linkEl = document.getElementById('publicDataroomLink');
+            if (linkEl) linkEl.value = getPublicDataroomLink();
+            const investorEl = document.getElementById('investorDataroomLink');
+            if (investorEl) investorEl.value = getInvestorDataroomLink();
+        }
+
+        function guessDataroomPaths() {
+            // Preferred: /dataroom (pretty path). Alternate: /dataroom.html.
+            const origin = window.location.origin;
+            const path = window.location.pathname || '/';
+
+            // directory of current page
+            const dir = path.endsWith('/') ? path : path.replace(/\/[^\/]*$/, '/');
+
+            // If admin is hosted inside /dataroom/, prefer that directory (without trailing slash)
+            let pretty = dir.replace(/\/$/, '');
+            if (!pretty) pretty = '/';
+
+            // If admin is at site root, default pretty path to /dataroom
+            if (pretty === '/') pretty = '/dataroom';
+
+            const file = (dir === '/' ? '/dataroom.html' : dir + 'dataroom.html');
+
+            return {
+                origin,
+                prettyPath: pretty,
+                filePath: file
+            };
+        }
+
+        function getPublicDataroomLink() {
+            const config = JSON.parse(localStorage.getItem('redew_admin_config') || '{}');
+            if (!config.url || !config.key) return '';
+
+            const { origin, prettyPath } = guessDataroomPaths();
+            const u = new URL(prettyPath, origin);
+            u.searchParams.set('sbUrl', config.url);
+            u.searchParams.set('sbKey', config.key);
+            return u.toString();
+        }
+
+        function getInvestorDataroomLink() {
+            const config = JSON.parse(localStorage.getItem('redew_admin_config') || '{}');
+            if (!config.url || !config.key) return '';
+
+            const token = (settings && settings.dr_link_token ? String(settings.dr_link_token).trim() : '');
+            const mode = (settings && settings.dr_access_mode ? String(settings.dr_access_mode).toLowerCase() : 'password');
+
+            const { origin, prettyPath } = guessDataroomPaths();
+            const u = new URL(prettyPath, origin);
+            u.searchParams.set('sbUrl', config.url);
+            u.searchParams.set('sbKey', config.key);
+
+            // Auto-unlock via token when available
+            if (token) u.searchParams.set('token', token);
+
+            // If token mode but no token yet, still return base so user can test; the Data Room will gate.
+            return u.toString();
         }
 
         async function copyPublicDataroomLink() {
-            var link = getPublicDataroomLink();
-            if (!link) { alert('Missing Supabase config. Complete Setup first.'); return; }
+            const link = getPublicDataroomLink();
+            if (!link) return;
             try {
                 await navigator.clipboard.writeText(link);
-                showToast('Data Room link copied');
+                showSaveIndicator('saved');
             } catch (e) {
-                // fallback
-                var el = document.getElementById('publicDataroomLink');
-                if (el) { el.focus(); el.select(); document.execCommand('copy'); }
-                showToast('Data Room link copied');
+                alert('Copy failed. You can manually copy from the field.');
             }
         }
 
         function openPublicDataroomLink() {
-            var link = getPublicDataroomLink();
-            if (!link) { alert('Missing Supabase config. Complete Setup first.'); return; }
+            const link = getPublicDataroomLink();
+            if (!link) return;
             window.open(link, '_blank');
         }
 
-// ==================== SETTINGS ====================
-        function renderSettings() {
+        async function copyInvestorDataroomLink() {
+            const link = getInvestorDataroomLink();
+            if (!link) return;
+            try {
+                await navigator.clipboard.writeText(link);
+                showSaveIndicator('saved');
+            } catch (e) {
+                alert('Copy failed. You can manually copy from the field.');
+            }
+        }
+
+        function openInvestorDataroomLink() {
+            const link = getInvestorDataroomLink();
+            if (!link) return;
+            window.open(link, '_blank');
+        }
+
+        function generateDrLinkToken() {
+            // 16 bytes -> 32 hex chars
+            const bytes = new Uint8Array(16);
+            (window.crypto || window.msCrypto).getRandomValues(bytes);
+            const token = Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
+            const el = document.getElementById('settingDrLinkToken');
+            if (el) el.value = token;
+            saveSetting('dr_link_token', token);
+            updatePublicLinkUI();
+        }
+
+function renderSettings() {
             updatePublicLinkUI();
             document.getElementById('settingDrPassword').value = settings.dr_password || 'redew2026';
             document.getElementById('settingDrStatus').value = settings.dr_status || 'active';
@@ -2215,6 +2438,16 @@
             el.className = 'save-indicator visible ' + status;
             txt.textContent = status === 'saving' ? 'Saving...' : status === 'saved' ? '✓ Saved' : '✗ Error';
             if (status !== 'saving') setTimeout(function() { el.classList.remove('visible'); }, 2000);
+
+        function showToast(message) {
+            // Backwards-compatible helper used by older UI actions
+            try {
+                showSaveIndicator('saved');
+            } catch (e) {
+                if (message) alert(message);
+            }
+        }
+
         }
 
         function exportData() { document.getElementById('exportModal').classList.add('visible'); }
@@ -2240,7 +2473,245 @@
             closeExportModal();
         }
 
-        // ==================== INIT ====================
+        
+        // ==================== ANALYTICS ====================
+        var analyticsSessions = [];
+        var analyticsClicks = [];
+        var analyticsLoading = false;
+        var analyticsLastLoadedAt = null;
+
+        function formatDateTime(ts) {
+            if (!ts) return '';
+            try {
+                const d = new Date(ts);
+                return d.toLocaleString(undefined, { year:'2-digit', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit' });
+            } catch (_) {
+                return String(ts);
+            }
+        }
+
+        function formatDurationSeconds(sec) {
+            const n = Number(sec);
+            if (!Number.isFinite(n) || n <= 0) return '—';
+            const m = Math.floor(n / 60);
+            const s = Math.floor(n % 60);
+            if (m <= 0) return `${s}s`;
+            return `${m}m ${s.toString().padStart(2,'0')}s`;
+        }
+
+        function computeUniqueVisitors(sessions) {
+            const set = new Set();
+            (sessions || []).forEach(s => {
+                const email = (s.visitor_email || '').toLowerCase().trim();
+                if (email) set.add(email);
+            });
+            return set.size;
+        }
+
+        function groupCounts(list, keyFn) {
+            const map = new Map();
+            (list || []).forEach(item => {
+                const k = keyFn(item);
+                if (!k) return;
+                map.set(k, (map.get(k) || 0) + 1);
+            });
+            return Array.from(map.entries()).sort((a,b) => b[1] - a[1]);
+        }
+
+        async function refreshAnalytics() {
+            if (!db) {
+                const el = document.getElementById('analyticsError');
+                if (el) {
+                    el.style.display = 'block';
+                    el.textContent = 'Connect to Supabase to view analytics.';
+                }
+                return;
+            }
+            if (analyticsLoading) return;
+            analyticsLoading = true;
+
+            const errorEl = document.getElementById('analyticsError');
+            if (errorEl) {
+                errorEl.style.display = 'none';
+                errorEl.textContent = '';
+            }
+
+            try {
+                // Load most recent records (lightweight)
+                const sessionsRes = await db.from('visitor_sessions')
+                    .select('*')
+                    .order('started_at', { ascending: false })
+                    .limit(500);
+
+                const clicksRes = await db.from('visitor_clicks')
+                    .select('*')
+                    .order('clicked_at', { ascending: false })
+                    .limit(1000);
+
+                if (sessionsRes.error) throw sessionsRes.error;
+                if (clicksRes.error) throw clicksRes.error;
+
+                analyticsSessions = sessionsRes.data || [];
+                analyticsClicks = clicksRes.data || [];
+                analyticsLastLoadedAt = new Date();
+
+                renderAnalytics();
+
+            } catch (err) {
+                if (errorEl) {
+                    errorEl.style.display = 'block';
+                    errorEl.textContent = 'Analytics failed to load. Ensure visitor_sessions and visitor_clicks tables exist and RLS policies allow read.';
+                }
+            } finally {
+                analyticsLoading = false;
+            }
+        }
+
+        function renderAnalytics() {
+            // Summary
+            const summaryEl = document.getElementById('analyticsSummary');
+            if (summaryEl) {
+                const totalSessions = analyticsSessions.length;
+                const uniqueVisitors = computeUniqueVisitors(analyticsSessions);
+                const docClicks = analyticsClicks.filter(c => c.action === 'document_click').length;
+                const sectionViews = analyticsClicks.filter(c => c.action === 'section_view').length;
+
+                const durations = analyticsSessions.map(s => Number(s.duration_seconds)).filter(n => Number.isFinite(n) && n > 0);
+                const avgDuration = durations.length ? (durations.reduce((a,b) => a+b, 0) / durations.length) : 0;
+
+                summaryEl.innerHTML = [
+                    { label: 'Visits (loaded)', value: String(totalSessions), sub: analyticsLastLoadedAt ? `Updated ${analyticsLastLoadedAt.toLocaleTimeString()}` : '' },
+                    { label: 'Unique Visitors', value: String(uniqueVisitors), sub: 'Based on loaded sessions' },
+                    { label: 'Document Clicks', value: String(docClicks), sub: `Section views: ${sectionViews}` },
+                    { label: 'Avg Session', value: avgDuration ? formatDurationSeconds(avgDuration) : '—', sub: 'From duration_seconds' }
+                ].map(card => `
+                    <div class="analytics-card">
+                        <div class="analytics-label">${card.label}</div>
+                        <div class="analytics-value">${card.value}</div>
+                        <div class="analytics-sub">${card.sub || ''}</div>
+                    </div>
+                `).join('');
+
+                const badge = document.getElementById('analyticsCount');
+                if (badge) badge.textContent = String(totalSessions);
+            }
+
+            // Sessions table
+            const sessionsTbody = document.getElementById('sessionsTableBody');
+            if (sessionsTbody) {
+                const rows = analyticsSessions.slice(0, 100).map(s => {
+                    const device = (s.device && typeof s.device === 'object') ? `${s.device.screen || ''}` : (s.user_agent ? 'Browser' : '');
+                    return `
+                        <tr>
+                            <td>${formatDateTime(s.started_at)}</td>
+                            <td>${(s.visitor_name || '')}</td>
+                            <td>${(s.visitor_email || '')}</td>
+                            <td>${(s.visitor_company || '')}</td>
+                            <td>${formatDurationSeconds(s.duration_seconds)}</td>
+                            <td>${device || '—'}</td>
+                        </tr>
+                    `;
+                }).join('');
+                sessionsTbody.innerHTML = rows || '<tr><td colspan="6" style="color: var(--text-secondary);">No sessions yet.</td></tr>';
+            }
+
+            // Clicks table
+            const clicksTbody = document.getElementById('clicksTableBody');
+            if (clicksTbody) {
+                const rows = analyticsClicks.slice(0, 150).map(c => {
+                    const action = c.action === 'document_click' ? '<span class="analytics-pill">Document</span>' : (c.action === 'section_view' ? '<span class="analytics-pill info">Section</span>' : `<span class="analytics-pill warning">${c.action || 'event'}</span>`);
+                    const doc = c.document_name ? c.document_name : '—';
+                    const section = c.section ? c.section : '—';
+                    const visitor = c.visitor_email || c.visitor_name || '—';
+                    return `
+                        <tr>
+                            <td>${formatDateTime(c.clicked_at)}</td>
+                            <td>${action}</td>
+                            <td>${section}</td>
+                            <td>${doc}</td>
+                            <td>${visitor}</td>
+                        </tr>
+                    `;
+                }).join('');
+                clicksTbody.innerHTML = rows || '<tr><td colspan="5" style="color: var(--text-secondary);">No activity yet.</td></tr>';
+            }
+
+            // Top docs
+            const topDocs = document.getElementById('topDocsList');
+            if (topDocs) {
+                const counts = groupCounts(analyticsClicks.filter(c => c.action === 'document_click'), c => (c.document_name || '').trim());
+                topDocs.innerHTML = (counts.slice(0, 12).map((name,count) => `
+                    <div class="analytics-list-item">
+                        <div>
+                            <div class="name">${name || 'Untitled'}</div>
+                            <div class="meta">document_click</div>
+                        </div>
+                        <div class="count">${count}</div>
+                    </div>
+                `).join('')) || '<div class="help-text">No document clicks yet.</div>';
+            }
+
+            // Top sections
+            const topSections = document.getElementById('topSectionsList');
+            if (topSections) {
+                const counts = groupCounts(analyticsClicks.filter(c => c.action === 'section_view'), c => (c.section || '').trim());
+                topSections.innerHTML = (counts.slice(0, 12).map((name,count) => `
+                    <div class="analytics-list-item">
+                        <div>
+                            <div class="name">${name || 'Unknown'}</div>
+                            <div class="meta">section_view</div>
+                        </div>
+                        <div class="count">${count}</div>
+                    </div>
+                `).join('')) || '<div class="help-text">No section views yet.</div>';
+            }
+        }
+
+        function exportAnalyticsCSV() {
+            const rows = [];
+            rows.push(['type','timestamp','visitor_name','visitor_email','visitor_company','action','section','document_name','duration_seconds'].join(','));
+
+            analyticsSessions.forEach(s => {
+                rows.push([
+                    'session',
+                    JSON.stringify(s.started_at || ''),
+                    JSON.stringify(s.visitor_name || ''),
+                    JSON.stringify(s.visitor_email || ''),
+                    JSON.stringify(s.visitor_company || ''),
+                    '',
+                    '',
+                    '',
+                    JSON.stringify(s.duration_seconds || '')
+                ].join(','));
+            });
+
+            analyticsClicks.forEach(c => {
+                rows.push([
+                    'click',
+                    JSON.stringify(c.clicked_at || ''),
+                    JSON.stringify(c.visitor_name || ''),
+                    JSON.stringify(c.visitor_email || ''),
+                    JSON.stringify(c.visitor_company || ''),
+                    JSON.stringify(c.action || ''),
+                    JSON.stringify(c.section || ''),
+                    JSON.stringify(c.document_name || ''),
+                    ''
+                ].join(','));
+            });
+
+            const blob = new Blob([rows.join('
+')], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `redew_dataroom_analytics_${new Date().toISOString().slice(0,10)}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+        }
+
+// ==================== INIT ====================
         document.addEventListener('DOMContentLoaded', function() {
             loadTheme();
             if (localStorage.getItem('redew_admin_config')) {
