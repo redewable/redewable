@@ -994,9 +994,17 @@
     /* ==================== DESKTOP SIDEBAR (STATIC) ==================== */
     
     @media (min-width: 1024px) {
-      body { padding-left: 280px; }
+      html, body {
+        width: auto;
+        max-width: none;
+      }
+      body { 
+        margin-left: 280px;
+        padding-left: 0;
+      }
       .side-menu {
         transform: translateX(0) !important;
+        width: 280px;
         max-width: 280px;
         box-shadow: none;
         border-right: 1px solid var(--border);
@@ -1004,16 +1012,8 @@
       .menu-overlay { display: none !important; }
       #menuBtn { display: none; }
       .swipe-indicator { display: none; }
-      
-      /* ADD THESE: */
-      .header {
-        left: 280px;
-        width: calc(100% - 280px);
-      }
-      .site-footer {
-        margin-left: 0;
-      }
     }
+    
 
     /* ==================== MENU USER (LOGGED IN) ==================== */
     .menu-user {
