@@ -1,1251 +1,1288 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
-    <title>ReDew Anson — Data Room</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        :root {
-            /* Dark Mode (Default) */
-            --bg-primary: #0a0f0d;
-            --bg-secondary: #111916;
-            --bg-tertiary: #1a2420;
-            --bg-card: #141c19;
-            --brand-green: #2dd4a8;
-            --brand-green-dim: #1a8a6e;
-            --brand-green-glow: rgba(45, 212, 168, 0.15);
-            --brand-green-bright: #5eecc6;
-            --text-primary: #f0f4f2;
-            --text-secondary: #9ca8a3;
-            --text-muted: #5a6b64;
-            --border: #243029;
-            --border-light: #2d3d35;
-            --status-green: #22c55e;
-            --status-yellow: #eab308;
-            --status-red: #ef4444;
-            --status-blue: #3b82f6;
-            --sidebar-width: 280px;
-            --header-height: 64px;
-            --shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>ReDew Anson - Data Room</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        [data-theme="light"] {
-            --bg-primary: #f5f7f6;
-            --bg-secondary: #ffffff;
-            --bg-tertiary: #e8edeb;
-            --bg-card: #ffffff;
-            --brand-green: #1a8a6e;
-            --brand-green-dim: #2dd4a8;
-            --brand-green-glow: rgba(26, 138, 110, 0.1);
-            --brand-green-bright: #15735c;
-            --text-primary: #1a2420;
-            --text-secondary: #4a5854;
-            --text-muted: #7a8a84;
-            --border: #d0d8d4;
-            --border-light: #e0e8e4;
-            --shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
+  <style>
+    :root {
+      --bg-primary: #0a0f0a;
+      --bg-secondary: #0f1610;
+      --bg-card: #141a14;
+      --bg-card-hover: #1a221a;
+      --border: #1e2a1e;
+      --border-accent: #22c55e;
+      --text-primary: #f0f4f0;
+      --text-secondary: #8a9a8a;
+      --text-muted: #5a6a5a;
+      --accent: #22c55e;
+      --accent-dim: rgba(34, 197, 94, 0.15);
+      --accent-glow: rgba(34, 197, 94, 0.1);
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Play', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-            transition: background 0.3s, color 0.3s;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-primary); }
-        ::-webkit-scrollbar-thumb { background: var(--brand-green-dim); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--brand-green); }
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+    }
 
-        /* SVG Icons */
-        .icon {
-            width: 18px;
-            height: 18px;
-            stroke: currentColor;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            fill: none;
-            flex-shrink: 0;
-        }
-        .icon-sm { width: 14px; height: 14px; }
-        .icon-lg { width: 22px; height: 22px; }
-        .icon-xl { width: 28px; height: 28px; }
+    body {
+      font-family: 'Play', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
 
-        /* Loading State */
-        .loading-screen {
-            position: fixed;
-            inset: 0;
-            background: var(--bg-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 3000;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        .loading-screen.hidden { display: none; }
-        .loading-spinner {
-            width: 48px;
-            height: 48px;
-            border: 3px solid var(--border);
-            border-top-color: var(--brand-green);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .loading-text { color: var(--text-secondary); font-size: 0.9rem; }
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+    }
 
-        /* Error State */
-        .error-screen {
-            position: fixed;
-            inset: 0;
-            background: var(--bg-primary);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 3000;
-            padding: 2rem;
-        }
-        .error-screen.visible { display: flex; }
-        .error-box {
-            background: var(--bg-card);
-            border: 1px solid var(--status-red);
-            border-radius: 16px;
-            padding: 2.5rem;
-            max-width: 500px;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-        .error-box h2 { color: var(--status-red); margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
-        .error-box p { color: var(--text-secondary); margin-bottom: 1.5rem; }
-        .error-box button {
-            padding: 0.75rem 1.5rem;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-family: 'Play', sans-serif;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-        .error-box button:hover { background: var(--bg-card); }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-        /* Password Screen */
-        .password-screen {
-            position: fixed;
-            inset: 0;
-            background: var(--bg-primary);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-        }
-        .password-screen.visible { display: flex; }
-        .password-screen::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: 
-                radial-gradient(ellipse 80% 50% at 50% -20%, var(--brand-green-glow), transparent),
-                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(45, 212, 168, 0.08), transparent);
-            pointer-events: none;
-        }
-        .password-box {
-            position: relative;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 3rem;
-            max-width: 420px;
-            width: 90%;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-        .password-box::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: 17px;
-            background: linear-gradient(135deg, var(--brand-green-dim), transparent 50%);
-            z-index: -1;
-            opacity: 0.5;
-        }
-        .password-logo {
-            width: 72px;
-            height: 72px;
-            margin: 0 auto 1.5rem;
-            border-radius: 16px;
-            background: linear-gradient(135deg, var(--brand-green), var(--brand-green-dim));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--bg-primary);
-        }
-        .password-box h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-        .password-box .subtitle {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
-        }
-        .password-box input {
-            width: 100%;
-            padding: 1rem 1.25rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            font-size: 1rem;
-            color: var(--text-primary);
-            font-family: 'JetBrains Mono', monospace;
-            letter-spacing: 3px;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-        .password-box input:focus {
-            outline: none;
-            border-color: var(--brand-green);
-            box-shadow: 0 0 0 3px var(--brand-green-glow);
-        }
-        .password-box input::placeholder {
-            letter-spacing: normal;
-            color: var(--text-muted);
-            font-family: 'Play', sans-serif;
-        }
-        .password-box button {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, var(--brand-green), var(--brand-green-dim));
-            color: var(--bg-primary);
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 700;
-            font-family: 'Play', sans-serif;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-        .password-box button:hover {
-            box-shadow: 0 8px 24px rgba(45, 212, 168, 0.3);
-        }
-        .password-error {
-            color: var(--status-red);
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            display: none;
-        }
-        .password-footer {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border);
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
+    .menu-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
 
-        /* App Container */
-        .app { display: none; min-height: 100vh; }
-        .app.visible { display: flex; }
+    .back-btn {
+      display: none;
+    }
 
-        /* Mobile Overlay */
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 99;
-            backdrop-filter: blur(4px);
-        }
-        .sidebar-overlay.visible { display: block; }
+    .back-btn.visible {
+      display: flex;
+    }
 
-        /* Sidebar */
-        .sidebar {
-            width: var(--sidebar-width);
-            background: var(--bg-secondary);
-            border-right: 1px solid var(--border);
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            display: flex;
-            flex-direction: column;
-            z-index: 100;
-            transition: transform 0.3s ease;
-        }
-        .sidebar-header {
-            padding: 1.25rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 0.875rem;
-        }
-        .sidebar-logo {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, var(--brand-green), var(--brand-green-dim));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: var(--bg-primary);
-        }
-        .sidebar-brand h1 { font-size: 1.05rem; font-weight: 700; }
-        .sidebar-brand span {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
-        .sidebar-nav { flex: 1; overflow-y: auto; padding: 1rem 0; }
-        .nav-section { margin-bottom: 1.25rem; }
-        .nav-section-title {
-            padding: 0.5rem 1.5rem;
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-muted);
-            font-weight: 700;
-        }
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.7rem 1.5rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border-left: 3px solid transparent;
-            transition: all 0.15s;
-        }
-        .nav-item:hover { background: var(--bg-tertiary); color: var(--text-primary); }
-        .nav-item.active {
-            background: var(--brand-green-glow);
-            color: var(--brand-green);
-            border-left-color: var(--brand-green);
-        }
-        .nav-item .status {
-            margin-left: auto;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-        .nav-item .status.complete { background: var(--status-green); }
-        .nav-item .status.partial { background: var(--status-yellow); }
-        .nav-item .status.pending { background: var(--status-red); }
-        .nav-item .status.new { background: var(--status-blue); }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      overflow: hidden;
+    }
 
-        .sidebar-footer {
-            padding: 1rem 1.5rem;
-            border-top: 1px solid var(--border);
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-        .sidebar-footer-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 0.75rem;
-        }
-        .logout-btn {
-            flex: 1;
-            padding: 0.5rem;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            font-family: 'Play', sans-serif;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.375rem;
-            transition: all 0.15s;
-        }
-        .logout-btn:hover { background: var(--bg-card); color: var(--text-primary); }
-        .theme-toggle-sidebar {
-            width: 36px;
-            padding: 0.5rem;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.15s;
-        }
-        .theme-toggle-sidebar:hover { background: var(--bg-card); color: var(--text-primary); }
-        .theme-toggle-sidebar .icon-sun { display: none; }
-        .theme-toggle-sidebar .icon-moon { display: block; }
-        [data-theme="light"] .theme-toggle-sidebar .icon-sun { display: block; }
-        [data-theme="light"] .theme-toggle-sidebar .icon-moon { display: none; }
+    .breadcrumb-item {
+      color: var(--text-secondary);
+      text-decoration: none;
+      white-space: nowrap;
+    }
 
-        /* Main Content */
-        .main {
-            flex: 1;
-            margin-left: var(--sidebar-width);
-            min-height: 100vh;
-        }
-        .header {
-            height: var(--header-height);
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-        .header-left { display: flex; align-items: center; gap: 1rem; }
-        .mobile-menu-btn {
-            display: none;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-primary);
-            cursor: pointer;
-            padding: 0.5rem;
-            width: 40px;
-            height: 40px;
-            align-items: center;
-            justify-content: center;
-        }
-        .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
-        .breadcrumb span { color: var(--text-muted); }
-        .breadcrumb strong { color: var(--text-primary); font-weight: 700; }
-        .header-actions { display: flex; gap: 0.75rem; align-items: center; }
-        .header-btn {
-            padding: 0.5rem 1rem;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            font-weight: 700;
-            font-family: 'Play', sans-serif;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.15s;
-        }
-        .header-btn:hover { background: var(--bg-card); color: var(--text-primary); }
-        .header-btn.primary { background: var(--brand-green); border-color: var(--brand-green); color: var(--bg-primary); }
+    .breadcrumb-item:hover {
+      color: var(--accent);
+    }
 
-        .content { padding: 2rem; max-width: 1400px; }
+    .breadcrumb-separator {
+      color: var(--text-muted);
+    }
 
-        /* Page Sections */
-        .page-section { display: none; }
-        .page-section.active { display: block; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .breadcrumb-current {
+      color: var(--text-primary);
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-        /* Dashboard */
-        .dashboard-header { margin-bottom: 2rem; }
-        .dashboard-header h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .dashboard-header p { color: var(--text-secondary); }
+    /* Main Content */
+    .main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 16px 100px;
+    }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.25rem;
-            margin-bottom: 2rem;
-        }
-        .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--brand-green-dim), var(--brand-green), var(--brand-green-bright));
-        }
-        .stat-card .label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 0.5rem;
-        }
-        .stat-card .value {
-            font-size: 1.875rem;
-            font-weight: 700;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .stat-card .sub { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.375rem; }
+    /* Dashboard View */
+    .dashboard {
+      display: none;
+    }
 
-        /* Progress Section */
-        .progress-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-        }
-        .progress-section h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.625rem;
-        }
-        .progress-bars { display: flex; flex-direction: column; gap: 1rem; }
-        .progress-item {
-            display: grid;
-            grid-template-columns: 180px 1fr 60px;
-            align-items: center;
-            gap: 1rem;
-        }
-        .progress-item .label { font-size: 0.9rem; color: var(--text-secondary); }
-        .progress-bar-bg {
-            height: 10px;
-            background: var(--bg-tertiary);
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            border-radius: 5px;
-            background: linear-gradient(90deg, rgba(45, 212, 168, 0.4), var(--brand-green), var(--brand-green-bright));
-            box-shadow: 0 0 12px rgba(45, 212, 168, 0.4);
-            transition: width 0.6s ease;
-        }
-        .progress-item .percent {
-            font-size: 0.9rem;
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--brand-green);
-            text-align: right;
-        }
+    .dashboard.active {
+      display: block;
+    }
 
-        /* Document Grid */
-        .documents-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.25rem;
-        }
-        .doc-category {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-        .doc-category-header {
-            padding: 1rem 1.25rem;
-            background: var(--bg-tertiary);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .doc-category-header h4 { font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
-        .doc-category-header .count {
-            font-size: 0.7rem;
-            background: var(--bg-secondary);
-            padding: 0.25rem 0.625rem;
-            border-radius: 4px;
-            color: var(--text-muted);
-        }
-        .doc-list { padding: 0.5rem; }
-        .doc-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.15s;
-        }
-        .doc-item:hover { background: var(--bg-tertiary); }
-        .doc-item.no-link { cursor: default; }
-        .doc-icon {
-            width: 36px;
-            height: 36px;
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--text-muted);
-        }
-        .doc-icon.pdf { color: #ef4444; }
-        .doc-icon.xlsx { color: #22c55e; }
-        .doc-icon.doc { color: #3b82f6; }
-        .doc-icon.dwg { color: #06b6d4; }
-        .doc-icon.img { color: #a855f7; }
-        .doc-icon.audio { color: #f97316; }
-        .doc-info { flex: 1; min-width: 0; }
-        .doc-info .name {
-            font-size: 0.9rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .doc-info .meta { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.125rem; }
-        .doc-status { width: 8px; height: 8px; border-radius: 50%; }
-        .doc-status.uploaded { background: var(--status-green); }
-        .doc-status.pending { background: var(--status-yellow); }
-        .doc-status.missing { background: var(--status-red); }
+    .dashboard-hero {
+      background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
 
-        /* Section Header */
-        .section-header {
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
-        }
-        .section-header h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.625rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-        .section-header h1 .status-badge {
-            font-size: 0.7rem;
-            padding: 0.3rem 0.875rem;
-            border-radius: 20px;
-            font-weight: 700;
-        }
-        .status-badge.complete { background: rgba(34, 197, 94, 0.15); color: var(--status-green); }
-        .status-badge.partial { background: rgba(234, 179, 8, 0.15); color: var(--status-yellow); }
-        .status-badge.pending { background: rgba(239, 68, 68, 0.15); color: var(--status-red); }
-        .section-header p { color: var(--text-secondary); max-width: 700px; line-height: 1.7; }
+    .dashboard-hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
 
-        /* Info Cards */
-        .info-cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.25rem;
-            margin-bottom: 2rem;
-        }
-        .info-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-        }
-        .info-card h4 {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-        }
-        .info-card .value { font-size: 1.25rem; font-weight: 700; }
-        .info-card .sub { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem; }
+    .dashboard-hero-content {
+      position: relative;
+      z-index: 1;
+    }
 
-        /* Document Table */
-        .doc-table {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-        }
-        .doc-table table { width: 100%; border-collapse: collapse; }
-        .doc-table th {
-            text-align: left;
-            padding: 1rem 1.25rem;
-            background: var(--bg-tertiary);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-            border-bottom: 1px solid var(--border);
-        }
-        .doc-table td {
-            padding: 1rem 1.25rem;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.9rem;
-        }
-        .doc-table tr:last-child td { border-bottom: none; }
-        .doc-table tr:hover td { background: var(--bg-tertiary); }
-        .doc-table .doc-name { display: flex; align-items: center; gap: 0.75rem; }
-        .doc-table .file-icon {
-            width: 34px;
-            height: 34px;
-            background: var(--bg-secondary);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.65rem;
-            font-weight: 700;
-        }
-        .status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.375rem;
-            padding: 0.3rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-        .status-pill.uploaded { background: rgba(34, 197, 94, 0.15); color: var(--status-green); }
-        .status-pill.pending { background: rgba(234, 179, 8, 0.15); color: var(--status-yellow); }
-        .status-pill.missing { background: rgba(239, 68, 68, 0.15); color: var(--status-red); }
-        .status-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-        .action-btn {
-            padding: 0.4rem 0.875rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            font-weight: 700;
-            font-family: 'Play', sans-serif;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.375rem;
-            transition: all 0.15s;
-        }
-        .action-btn:hover { background: var(--bg-card); color: var(--text-primary); }
-        .action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .dashboard-title {
+      font-size: clamp(24px, 5vw, 32px);
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
 
-        /* Notes Section */
-        .notes-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-top: 2rem;
-            box-shadow: var(--shadow);
-        }
-        .notes-section h3 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-        .note-item {
-            padding: 1rem 1.25rem;
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            margin-bottom: 0.75rem;
-            border-left: 3px solid var(--brand-green-dim);
-        }
-        .note-item:last-child { margin-bottom: 0; }
-        .note-item.highlight {
-            border-left-color: var(--brand-green);
-            background: linear-gradient(90deg, rgba(45, 212, 168, 0.08), var(--bg-secondary));
-        }
-        .note-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            font-size: 0.85rem;
-        }
-        .note-header .author { font-weight: 700; }
-        .note-header .date { color: var(--text-muted); font-size: 0.8rem; }
-        .note-item p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+    .dashboard-subtitle {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
 
-        /* Empty State */
-        .empty-state {
-            padding: 2rem;
-            text-align: center;
-            color: var(--text-muted);
-        }
-        .empty-state .icon { margin-bottom: 0.75rem; opacity: 0.5; }
+    .dashboard-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
 
-        /* Responsive */
-        @media (max-width: 1200px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .info-cards { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 900px) { .documents-grid { grid-template-columns: 1fr; } }
-        @media (max-width: 768px) {
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.open { transform: translateX(0); }
-            .sidebar-overlay.visible { display: block; }
-            .main { margin-left: 0; }
-            .mobile-menu-btn { display: flex; }
-            .header { padding: 0 1rem; }
-            .stats-grid { grid-template-columns: 1fr; }
-            .info-cards { grid-template-columns: 1fr; }
-            .progress-item { grid-template-columns: 1fr; gap: 0.5rem; }
-            .progress-item .percent { text-align: left; }
-            .content { padding: 1.25rem; }
-            .header-actions { display: none; }
-            .doc-table { overflow-x: auto; }
-            .doc-table table { min-width: 600px; }
-        }
-    </style>
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .meta-item svg {
+      color: var(--accent);
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Stats Row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .stat-sub {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    /* Progress Section */
+    .progress-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .progress-title {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .progress-percent {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: var(--accent);
+    }
+
+    .progress-ring-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .progress-ring {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      flex-shrink: 0;
+    }
+
+    .progress-ring svg {
+      transform: rotate(-90deg);
+    }
+
+    .progress-ring-bg {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: 8;
+    }
+
+    .progress-ring-fill {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 8;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.5s ease;
+    }
+
+    .progress-ring-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .progress-breakdown {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .progress-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .progress-item-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      flex: 1;
+    }
+
+    .progress-item-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-primary);
+    }
+
+    /* Category Cards */
+    .categories-title {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .category-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .category-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .category-card:hover, .category-card:active {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+
+    .category-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--accent-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .category-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .category-name {
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 2px;
+    }
+
+    .category-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .category-status {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .category-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+
+    .category-count {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Category Detail View */
+    .category-view {
+      display: none;
+    }
+
+    .category-view.active {
+      display: block;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .category-header-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--accent-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+    }
+
+    .category-header-info h1 {
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .category-header-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: var(--accent-dim);
+      color: var(--accent);
+      margin-top: 4px;
+    }
+
+    .category-description {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Document List - Mobile First */
+    .doc-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .doc-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .doc-item:hover, .doc-item:active {
+      background: var(--bg-card-hover);
+      border-color: var(--border-accent);
+    }
+
+    .doc-type-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .doc-type-icon.pdf {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+    }
+
+    .doc-type-icon.img {
+      background: rgba(59, 130, 246, 0.15);
+      color: #3b82f6;
+    }
+
+    .doc-type-icon.www {
+      background: rgba(168, 85, 247, 0.15);
+      color: #a855f7;
+    }
+
+    .doc-type-icon.other {
+      background: rgba(107, 114, 128, 0.15);
+      color: #6b7280;
+    }
+
+    .doc-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .doc-name {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 1.3;
+      margin-bottom: 2px;
+    }
+
+    .doc-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .doc-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .doc-status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .doc-status.pending {
+      color: var(--warning);
+    }
+
+    .doc-status.pending .doc-status-dot {
+      background: var(--warning);
+    }
+
+    /* Notes Section */
+    .notes-section {
+      margin-top: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .notes-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-secondary);
+    }
+
+    .notes-header svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .note-item {
+      padding: 12px;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .note-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .note-source {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .note-text {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Mobile Menu Overlay */
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 200;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .menu-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 280px;
+      max-width: 85%;
+      background: var(--bg-secondary);
+      z-index: 201;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-menu.open {
+      transform: translateX(0);
+    }
+
+    .menu-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .menu-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .menu-logo img {
+      height: 28px;
+      width: auto;
+    }
+
+    .menu-items {
+      flex: 1;
+      padding: 12px;
+      overflow-y: auto;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 4px;
+      transition: all 0.15s ease;
+    }
+
+    .menu-item:hover, .menu-item.active {
+      background: var(--bg-card);
+      color: var(--text-primary);
+    }
+
+    .menu-item svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .menu-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .menu-footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    /* Swipe indicator */
+    .swipe-indicator {
+      position: fixed;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 60px;
+      background: var(--accent);
+      border-radius: 0 4px 4px 0;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+
+    .swipe-indicator.visible {
+      opacity: 0.5;
+    }
+
+    /* Responsive */
+    @media (min-width: 600px) {
+      .stats-row {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .doc-list {
+        gap: 8px;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .main {
+        padding: 32px 24px 100px;
+      }
+
+      .category-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .progress-ring {
+        width: 100px;
+        height: 100px;
+      }
+    }
+  </style>
+
 </head>
 <body>
-    <!-- SVG Icon Definitions -->
-    <svg style="display: none;">
-        <defs>
-            <symbol id="icon-dashboard" viewBox="0 0 24 24">
-                <rect x="3" y="3" width="7" height="7"/>
-                <rect x="14" y="3" width="7" height="7"/>
-                <rect x="14" y="14" width="7" height="7"/>
-                <rect x="3" y="14" width="7" height="7"/>
-            </symbol>
-            <symbol id="icon-file-text" viewBox="0 0 24 24">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-                <line x1="16" y1="13" x2="8" y2="13"/>
-                <line x1="16" y1="17" x2="8" y2="17"/>
-            </symbol>
-            <symbol id="icon-map" viewBox="0 0 24 24">
-                <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
-                <line x1="8" y1="2" x2="8" y2="18"/>
-                <line x1="16" y1="6" x2="16" y2="22"/>
-            </symbol>
-            <symbol id="icon-zap" viewBox="0 0 24 24">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-            </symbol>
-            <symbol id="icon-clipboard" viewBox="0 0 24 24">
-                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
-                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
-            </symbol>
-            <symbol id="icon-tool" viewBox="0 0 24 24">
-                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-            </symbol>
-            <symbol id="icon-hard-hat" viewBox="0 0 24 24">
-                <path d="M2 18a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v2z"/>
-                <path d="M10 15V6a2 2 0 0 1 4 0v9"/>
-                <path d="M4 15v-3a8 8 0 0 1 16 0v3"/>
-            </symbol>
-            <symbol id="icon-trending-up" viewBox="0 0 24 24">
-                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-                <polyline points="17 6 23 6 23 12"/>
-            </symbol>
-            <symbol id="icon-dollar" viewBox="0 0 24 24">
-                <line x1="12" y1="1" x2="12" y2="23"/>
-                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-            </symbol>
-            <symbol id="icon-alert-triangle" viewBox="0 0 24 24">
-                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-                <line x1="12" y1="9" x2="12" y2="13"/>
-                <line x1="12" y1="17" x2="12.01" y2="17"/>
-            </symbol>
-            <symbol id="icon-building" viewBox="0 0 24 24">
-                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
-                <path d="M9 22v-4h6v4"/>
-                <path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/>
-                <path d="M12 10h.01"/><path d="M12 14h.01"/>
-                <path d="M16 10h.01"/><path d="M16 14h.01"/>
-                <path d="M8 10h.01"/><path d="M8 14h.01"/>
-            </symbol>
-            <symbol id="icon-users" viewBox="0 0 24 24">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-            </symbol>
-            <symbol id="icon-eye" viewBox="0 0 24 24">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                <circle cx="12" cy="12" r="3"/>
-            </symbol>
-            <symbol id="icon-printer" viewBox="0 0 24 24">
-                <polyline points="6 9 6 2 18 2 18 9"/>
-                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
-                <rect x="6" y="14" width="12" height="8"/>
-            </symbol>
-            <symbol id="icon-logout" viewBox="0 0 24 24">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                <polyline points="16 17 21 12 16 7"/>
-                <line x1="21" y1="12" x2="9" y2="12"/>
-            </symbol>
-            <symbol id="icon-menu" viewBox="0 0 24 24">
-                <line x1="3" y1="12" x2="21" y2="12"/>
-                <line x1="3" y1="6" x2="21" y2="6"/>
-                <line x1="3" y1="18" x2="21" y2="18"/>
-            </symbol>
-            <symbol id="icon-sun" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="5"/>
-                <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-            </symbol>
-            <symbol id="icon-moon" viewBox="0 0 24 24">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-            </symbol>
-            <symbol id="icon-folder" viewBox="0 0 24 24">
-                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-            </symbol>
-            <symbol id="icon-clock" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10"/>
-                <polyline points="12 6 12 12 16 14"/>
-            </symbol>
-            <symbol id="icon-edit" viewBox="0 0 24 24">
-                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-            </symbol>
-            <symbol id="icon-bar-chart" viewBox="0 0 24 24">
-                <line x1="12" y1="20" x2="12" y2="10"/>
-                <line x1="18" y1="20" x2="18" y2="4"/>
-                <line x1="6" y1="20" x2="6" y2="14"/>
-            </symbol>
-        </defs>
+  <!-- Swipe Indicator -->
+  <div class="swipe-indicator" id="swipeIndicator"></div>
+
+  <!-- Menu Overlay -->
+
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <!-- Side Menu -->
+
+  <nav class="side-menu" id="sideMenu">
+    <div class="menu-header">
+      <div class="menu-logo">
+        <img src="/assets/logo-mark.png" alt="ReDewable">
+        <span>ReDew Anson</span>
+      </div>
+    </div>
+    <div class="menu-items">
+      <a href="#" class="menu-item active" data-view="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+        Dashboard
+      </a>
+      <a href="#" class="menu-item" data-category="executive-summary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Executive Summary
+      </a>
+      <a href="#" class="menu-item" data-category="land-control">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Land & Site Control
+      </a>
+      <a href="#" class="menu-item" data-category="interconnection">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Interconnection
+      </a>
+      <a href="#" class="menu-item" data-category="permitting">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg>
+        Permitting
+      </a>
+      <a href="#" class="menu-item" data-category="engineering">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Engineering
+      </a>
+      <a href="#" class="menu-item" data-category="financial">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Financial
+      </a>
+    </div>
+    <div class="menu-footer">
+      <a href="https://redewable.com">← Back to redewable.com</a>
+    </div>
+  </nav>
+
+  <!-- Header -->
+
+  <header class="header">
+    <div class="header-inner">
+      <button class="menu-btn" id="menuBtn">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+
+```
+  <button class="menu-btn back-btn" id="backBtn">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
     </svg>
+  </button>
+  
+  <div class="breadcrumb" id="breadcrumb">
+    <a href="#" class="breadcrumb-item" id="breadcrumbRoot">ReDew Anson</a>
+    <span class="breadcrumb-separator">/</span>
+    <span class="breadcrumb-current" id="breadcrumbCurrent">Dashboard</span>
+  </div>
+</div>
+```
 
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Loading Data Room...</div>
-    </div>
+  </header>
 
-    <!-- Error Screen -->
-    <div class="error-screen" id="errorScreen">
-        <div class="error-box">
-            <h2><svg class="icon icon-lg"><use href="#icon-alert-triangle"/></svg> Connection Error</h2>
-            <p id="errorMessage">Unable to connect to the data room. Please check your configuration.</p>
-            <button onclick="location.reload()">Try Again</button>
-        </div>
-    </div>
+  <!-- Main Content -->
 
-    <!-- Password Screen -->
-    <div class="password-screen" id="passwordScreen">
-        <div class="password-box">
-            <div class="password-logo">RD</div>
-            <h2>ReDew Anson Data Room</h2>
-            <p class="subtitle">Enter access code to view confidential project documents</p>
-            <input type="password" id="passwordInput" placeholder="Access Code" autocomplete="off">
-            <button onclick="checkPassword()">Access Data Room</button>
-            <p class="password-error" id="passwordError">Incorrect access code. Please try again.</p>
-            <div class="password-footer">Confidential — ReDewable Energy Co. LLC</div>
-        </div>
-    </div>
-
-    <!-- Main App -->
-    <div class="app" id="app">
-        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <div class="sidebar-logo">RD</div>
-                <div class="sidebar-brand">
-                    <h1 id="projectName">ReDew Anson</h1>
-                    <span>Data Room</span>
-                </div>
+  <main class="main" id="mainContent">
+    <!-- Dashboard View -->
+    <div class="dashboard active" id="dashboardView">
+      <!-- Hero Section -->
+      <div class="dashboard-hero">
+        <div class="dashboard-hero-content">
+          <h1 class="dashboard-title">ReDew Anson — Project Dashboard</h1>
+          <p class="dashboard-subtitle">300 MW / Battery Energy Storage System • Jones County, Texas • ERCOT West</p>
+          <div class="dashboard-meta">
+            <div class="meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Phantom Hill 345kV</span>
             </div>
-
-            <nav class="sidebar-nav" id="sidebarNav"></nav>
-
-            <div class="sidebar-footer">
-                <div>Investor View • Session Active</div>
-                <div class="sidebar-footer-actions">
-                    <button class="logout-btn" onclick="logout()">
-                        <svg class="icon icon-sm"><use href="#icon-logout"/></svg> Sign Out
-                    </button>
-                    <button class="theme-toggle-sidebar" onclick="toggleTheme()" title="Toggle theme">
-                        <svg class="icon icon-sm icon-sun"><use href="#icon-sun"/></svg>
-                        <svg class="icon icon-sm icon-moon"><use href="#icon-moon"/></svg>
-                    </button>
-                </div>
+            <div class="meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span>Target NTP: Q1 2027</span>
             </div>
-        </aside>
+          </div>
+        </div>
+      </div>
 
-        <main class="main">
-            <header class="header">
-                <div class="header-left">
-                    <button class="mobile-menu-btn" onclick="toggleSidebar()">
-                        <svg class="icon"><use href="#icon-menu"/></svg>
-                    </button>
-                    <div class="breadcrumb">
-                        <span id="projectNameBreadcrumb">ReDew Anson</span>
-                        <span>/</span>
-                        <strong id="breadcrumbCurrent">Dashboard</strong>
-                    </div>
-                </div>
-                <div class="header-actions">
-                    <button class="header-btn" onclick="window.print()">
-                        <svg class="icon icon-sm"><use href="#icon-printer"/></svg> Print
-                    </button>
-                </div>
-            </header>
-
-            <div class="content" id="contentContainer"></div>
-        </main>
+```
+  <!-- Stats Row -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">Capacity</div>
+      <div class="stat-value">300 MW</div>
+      <div class="stat-sub">Expandable to 400 MW</div>
     </div>
+    <div class="stat-card">
+      <div class="stat-label">Target NTP</div>
+      <div class="stat-value">Q1 2027</div>
+      <div class="stat-sub">Notice to Proceed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">POI Distance</div>
+      <div class="stat-value">0.5 mi</div>
+      <div class="stat-sub">345 kV Phantom Hill</div>
+    </div>
+  </div>
 
-    <script>
-        // ==================== CONFIGURATION ====================
-        var SUPABASE_URL = 'YOUR_SUPABASE_URL';
-        var SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
+  <!-- Progress Section -->
+  <div class="progress-section">
+    <div class="progress-header">
+      <span class="progress-title">Development Progress</span>
+      <span class="progress-percent" id="totalProgress">47%</span>
+    </div>
+    <div class="progress-ring-container">
+      <div class="progress-ring">
+        <svg width="80" height="80" viewBox="0 0 80 80">
+          <circle class="progress-ring-bg" cx="40" cy="40" r="32"/>
+          <circle class="progress-ring-fill" id="progressRing" cx="40" cy="40" r="32" stroke-dasharray="201" stroke-dashoffset="107"/>
+        </svg>
+        <span class="progress-ring-text" id="progressRingText">47%</span>
+      </div>
+      <div class="progress-breakdown">
+        <div class="progress-item">
+          <span class="progress-dot" style="background: #22c55e"></span>
+          <span class="progress-item-label">Land Control</span>
+          <span class="progress-item-value">85%</span>
+        </div>
+        <div class="progress-item">
+          <span class="progress-dot" style="background: #3b82f6"></span>
+          <span class="progress-item-label">Interconnection</span>
+          <span class="progress-item-value">40%</span>
+        </div>
+        <div class="progress-item">
+          <span class="progress-dot" style="background: #a855f7"></span>
+          <span class="progress-item-label">Permitting</span>
+          <span class="progress-item-value">50%</span>
+        </div>
+        <div class="progress-item">
+          <span class="progress-dot" style="background: #f59e0b"></span>
+          <span class="progress-item-label">Engineering</span>
+          <span class="progress-item-value">35%</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        try {
-            var config = JSON.parse(localStorage.getItem('redew_admin_config'));
-            if (config && config.url && config.key) {
-                SUPABASE_URL = config.url;
-                SUPABASE_KEY = config.key;
-            }
-        } catch (e) {}
+  <!-- Categories -->
+  <div class="categories-title">Data Room Categories</div>
+  <div class="category-grid" id="categoryGrid">
+    <!-- Populated by JS -->
+  </div>
+</div>
 
-        // ==================== GLOBAL STATE ====================
-        var db = null;
-        var documents = [];
-        var notes = [];
-        var settings = {};
-        var currentSection = 'dashboard';
+<!-- Category Detail View -->
+<div class="category-view" id="categoryView">
+  <div class="category-header">
+    <div class="category-header-icon" id="categoryIcon">
+      <!-- Icon inserted by JS -->
+    </div>
+    <div class="category-header-info">
+      <h1 id="categoryTitle">Category Title</h1>
+      <span class="category-header-badge" id="categoryBadge">100% Complete</span>
+    </div>
+  </div>
+  <p class="category-description" id="categoryDesc">Description</p>
+  
+  <div class="doc-list" id="docList">
+    <!-- Populated by JS -->
+  </div>
+  
+  <div class="notes-section" id="notesSection" style="display: none;">
+    <div class="notes-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      Notes & Updates
+    </div>
+    <div id="notesList">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</div>
+```
 
-        var sections = [
-            { id: 'dashboard', name: 'Dashboard', icon: 'icon-dashboard' },
-            { id: 'executive', name: 'Executive Summary', icon: 'icon-file-text' },
-            { id: 'land', name: 'Land & Site Control', icon: 'icon-map' },
-            { id: 'interconnection', name: 'Interconnection', icon: 'icon-zap' },
-            { id: 'permitting', name: 'Permitting', icon: 'icon-clipboard' },
-            { id: 'technical', name: 'Technical & Engineering', icon: 'icon-tool' },
-            { id: 'epc', name: 'EPC & Construction', icon: 'icon-hard-hat' },
-            { id: 'market', name: 'Market Analysis', icon: 'icon-trending-up' },
-            { id: 'financial', name: 'Financial Model', icon: 'icon-dollar' },
-            { id: 'risk', name: 'Risk Assessment', icon: 'icon-alert-triangle' },
-            { id: 'entity', name: 'Entity Structure', icon: 'icon-building' },
-            { id: 'team', name: 'Team & Partners', icon: 'icon-users' }
-        ];
+  </main>
 
-        // ==================== THEME ====================
-        function toggleTheme() {
-            var html = document.documentElement;
-            var newTheme = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('redew_dataroom_theme', newTheme);
+  <script>
+    // Data
+    const categories = [
+      {
+        id: 'executive-summary',
+        name: 'Executive Summary',
+        desc: 'Documentation and materials for executive summary.',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+        status: '100% Complete',
+        documents: [
+          { name: 'Site Map - ReDew Anson to Phantom Hill', type: 'img', status: 'uploaded' },
+          { name: 'Project One-Pager', type: 'pdf', status: 'uploaded' },
+          { name: 'Site Location Map - Phantom Hill', type: 'img', status: 'uploaded' },
+          { name: 'Investment Brief', type: 'www', url: '/invest', status: 'uploaded' }
+        ]
+      },
+      {
+        id: 'land-control',
+        name: 'Land & Site Control',
+        desc: 'Documentation and materials for land & site control.',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+        status: '100% Complete',
+        documents: [
+          { name: 'Property Field Survey', type: 'pdf', status: 'uploaded' },
+          { name: 'Land Control Agreement', type: 'pdf', status: 'uploaded' },
+          { name: 'Geotechnical Scope Contract', type: 'pdf', status: 'uploaded' }
+        ],
+        notes: [
+          { source: 'Tetra Tech', text: 'Environmental assessment indicates clear pathway - no wetlands, endangered species, or cultural resources identified. Formal Phase I ESA recommended before closing.' },
+          { source: 'Development', text: 'Land under control. Property is 0.5 miles from Phantom Hill 345kV substation.' }
+        ]
+      },
+      {
+        id: 'interconnection',
+        name: 'Interconnection',
+        desc: 'ERCOT interconnection studies and grid analysis.',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+        status: '40% Complete',
+        documents: [
+          { name: 'Injection Study Report - Enerzinx', type: 'pdf', status: 'uploaded' },
+          { name: 'POI Analysis Summary', type: 'pdf', status: 'uploaded' },
+          { name: 'ERCOT Queue Position Analysis', type: 'pdf', status: 'pending' }
+        ],
+        notes: [
+          { source: 'Enerzinx', text: 'Independent injection study confirms 300MW feasibility at Phantom Hill 345kV. SCR supports up to 4,200 MVA at SCR=3.' }
+        ]
+      },
+      {
+        id: 'permitting',
+        name: 'Permitting & Environmental',
+        desc: 'Permits, environmental assessments, and regulatory filings.',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg>',
+        status: '50% Complete',
+        documents: [
+          { name: 'Phase I ESA Scope', type: 'pdf', status: 'uploaded' },
+          { name: 'County Permits Checklist', type: 'pdf', status: 'pending' }
+        ]
+      },
+      {
+        id: 'engineering',
+        name: 'Engineering & Design',
+        desc: 'Technical specifications and engineering deliverables.',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
+        status: '35% Complete',
+        documents: [
+          { name: 'Preliminary Site Layout', type: 'pdf', status: 'uploaded' },
+          { name: 'Single Line Diagram', type: 'pdf', status: 'pending' }
+        ]
+      },
+      {
+        id: 'financial',
+        name: 'Financial & Legal',
+        desc: 'Financial models, legal documents, and corporate structure.',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+        status: '25% Complete',
+        documents: [
+          { name: 'Project Pro Forma', type: 'pdf', status: 'pending' },
+          { name: 'Operating Agreement', type: 'pdf', status: 'uploaded' }
+        ]
+      }
+    ];
+
+    // State
+    let currentView = 'dashboard';
+    let currentCategory = null;
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    // DOM Elements
+    const menuBtn = document.getElementById('menuBtn');
+    const backBtn = document.getElementById('backBtn');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const sideMenu = document.getElementById('sideMenu');
+    const dashboardView = document.getElementById('dashboardView');
+    const categoryView = document.getElementById('categoryView');
+    const breadcrumbCurrent = document.getElementById('breadcrumbCurrent');
+    const categoryGrid = document.getElementById('categoryGrid');
+    const swipeIndicator = document.getElementById('swipeIndicator');
+
+    // Initialize
+    function init() {
+      renderCategories();
+      setupEventListeners();
+      restoreScrollPosition();
+    }
+
+    // Render category cards on dashboard
+    function renderCategories() {
+      categoryGrid.innerHTML = categories.map(cat => `
+        <div class="category-card" data-category="${cat.id}">
+          <div class="category-icon">${cat.icon}</div>
+          <div class="category-info">
+            <div class="category-name">${cat.name}</div>
+            <div class="category-desc">${cat.desc}</div>
+          </div>
+          <div class="category-status">
+            <span class="category-badge">${cat.status}</span>
+            <span class="category-count">${cat.documents.length} docs</span>
+          </div>
+        </div>
+      `).join('');
+
+      // Add click listeners
+      document.querySelectorAll('.category-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const catId = card.dataset.category;
+          openCategory(catId);
+        });
+      });
+    }
+
+    // Open category view
+    function openCategory(categoryId) {
+      const cat = categories.find(c => c.id === categoryId);
+      if (!cat) return;
+
+      // Save scroll position before navigating
+      saveScrollPosition();
+
+      currentCategory = cat;
+      currentView = 'category';
+
+      // Update breadcrumb
+      breadcrumbCurrent.textContent = cat.name;
+
+      // Update header
+      document.getElementById('categoryTitle').textContent = cat.name;
+      document.getElementById('categoryBadge').textContent = cat.status;
+      document.getElementById('categoryDesc').textContent = cat.desc;
+      document.getElementById('categoryIcon').innerHTML = cat.icon;
+
+      // Render documents
+      const docList = document.getElementById('docList');
+      docList.innerHTML = cat.documents.map(doc => `
+        <div class="doc-item" ${doc.url ? `onclick="window.open('${doc.url}', '_blank')"` : ''}>
+          <div class="doc-type-icon ${doc.type}">${doc.type.toUpperCase()}</div>
+          <div class="doc-info">
+            <div class="doc-name">${doc.name}</div>
+            <div class="doc-meta">${doc.type.toUpperCase()}${doc.url ? ' • External Link' : ''}</div>
+          </div>
+          <div class="doc-status ${doc.status}">
+            <span class="doc-status-dot"></span>
+            ${doc.status === 'uploaded' ? 'Uploaded' : 'Pending'}
+          </div>
+        </div>
+      `).join('');
+
+      // Render notes if any
+      const notesSection = document.getElementById('notesSection');
+      const notesList = document.getElementById('notesList');
+      if (cat.notes && cat.notes.length > 0) {
+        notesSection.style.display = 'block';
+        notesList.innerHTML = cat.notes.map(note => `
+          <div class="note-item">
+            <div class="note-source">${note.source}</div>
+            <div class="note-text">${note.text}</div>
+          </div>
+        `).join('');
+      } else {
+        notesSection.style.display = 'none';
+      }
+
+      // Show category view
+      dashboardView.classList.remove('active');
+      categoryView.classList.add('active');
+      backBtn.classList.add('visible');
+
+      // Update menu active state
+      updateMenuActive(categoryId);
+
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+
+    // Go back to dashboard
+    function goBack() {
+      if (currentView === 'dashboard') return;
+
+      currentView = 'dashboard';
+      currentCategory = null;
+
+      // Update breadcrumb
+      breadcrumbCurrent.textContent = 'Dashboard';
+
+      // Show dashboard
+      categoryView.classList.remove('active');
+      dashboardView.classList.add('active');
+      backBtn.classList.remove('visible');
+
+      // Update menu
+      updateMenuActive('dashboard');
+
+      // Restore scroll position
+      restoreScrollPosition();
+    }
+
+    // Menu functions
+    function openMenu() {
+      menuOverlay.classList.add('open');
+      sideMenu.classList.add('open');
+    }
+
+    function closeMenu() {
+      menuOverlay.classList.remove('open');
+      sideMenu.classList.remove('open');
+    }
+
+    function updateMenuActive(id) {
+      document.querySelectorAll('.menu-item').forEach(item => {
+        item.classList.remove('active');
+        if (item.dataset.category === id || (id === 'dashboard' && item.dataset.view === 'dashboard')) {
+          item.classList.add('active');
         }
+      });
+    }
 
-        function loadTheme() {
-            var saved = localStorage.getItem('redew_dataroom_theme');
-            if (saved) document.documentElement.setAttribute('data-theme', saved);
-        }
+    // Scroll position memory
+    function saveScrollPosition() {
+      if (currentView === 'dashboard') {
+        sessionStorage.setItem('dashboardScroll', window.scrollY);
+      }
+    }
 
-        // ==================== INITIALIZATION ====================
-        async function init() {
-            loadTheme();
-            try {
-                if (SUPABASE_URL === 'YOUR_SUPABASE_URL') throw new Error('Database not configured. Please set up the admin panel first.');
-                db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-                await Promise.all([loadDocuments(), loadNotes(), loadSettings()]);
-                document.getElementById('loadingScreen').classList.add('hidden');
-                if (settings.dr_status === 'disabled') { showError('Data room is currently disabled.'); return; }
-                if (settings.dr_status === 'maintenance') { showError('Data room is under maintenance. Please check back later.'); return; }
-                if (sessionStorage.getItem('redew_dataroom_auth') === 'true') { showApp(); }
-                else { document.getElementById('passwordScreen').classList.add('visible'); document.getElementById('passwordInput').focus(); }
-            } catch (err) { showError(err.message); }
-        }
+    function restoreScrollPosition() {
+      const saved = sessionStorage.getItem('dashboardScroll');
+      if (saved && currentView === 'dashboard') {
+        setTimeout(() => {
+          window.scrollTo(0, parseInt(saved));
+        }, 10);
+      }
+    }
 
-        function showError(message) {
-            document.getElementById('loadingScreen').classList.add('hidden');
-            document.getElementById('errorMessage').textContent = message;
-            document.getElementById('errorScreen').classList.add('visible');
-        }
+    // Swipe detection
+    function handleTouchStart(e) {
+      touchStartX = e.changedTouches[0].screenX;
+    }
 
-        async function loadDocuments() {
-            // CRITICAL: Filter out hidden documents so they don't show to investors
-            var result = await db.from('dataroom_documents').select('*').or('is_hidden.is.null,is_hidden.eq.false').order('sort_order', { ascending: true });
-            if (result.error) throw new Error('Failed to load documents');
-            documents = result.data || [];
-        }
+    function handleTouchMove(e) {
+      const currentX = e.changedTouches[0].screenX;
+      const diff = currentX - touchStartX;
+      
+      // Show swipe indicator when swiping right from left edge
+      if (touchStartX < 30 && diff > 20 && currentView !== 'dashboard') {
+        swipeIndicator.classList.add('visible');
+      } else {
+        swipeIndicator.classList.remove('visible');
+      }
+    }
 
-        async function loadNotes() {
-            var result = await db.from('dataroom_notes').select('*').order('sort_order', { ascending: true });
-            if (result.error) throw new Error('Failed to load notes');
-            notes = result.data || [];
-        }
+    function handleTouchEnd(e) {
+      touchEndX = e.changedTouches[0].screenX;
+      swipeIndicator.classList.remove('visible');
+      handleSwipe();
+    }
 
-        async function loadSettings() {
-            var result = await db.from('dataroom_settings').select('*');
-            if (result.error) throw new Error('Failed to load settings');
-            settings = {};
-            if (result.data) result.data.forEach(function(s) { settings[s.key] = s.value; });
-        }
+    function handleSwipe() {
+      const swipeThreshold = 80;
+      const diff = touchEndX - touchStartX;
 
-        // ==================== AUTH ====================
-        function checkPassword() {
-            var input = document.getElementById('passwordInput').value.trim().toLowerCase();
-            var correct = (settings.dr_password || 'redew2026').toLowerCase();
-            if (input === correct) { sessionStorage.setItem('redew_dataroom_auth', 'true'); showApp(); }
-            else { document.getElementById('passwordError').style.display = 'block'; document.getElementById('passwordInput').value = ''; document.getElementById('passwordInput').focus(); }
-        }
+      // Swipe right from left edge to go back
+      if (diff > swipeThreshold && touchStartX < 50 && currentView !== 'dashboard') {
+        goBack();
+      }
+    }
 
-        function logout() {
-            sessionStorage.removeItem('redew_dataroom_auth');
-            document.getElementById('app').classList.remove('visible');
-            document.getElementById('passwordScreen').classList.add('visible');
-            document.getElementById('passwordInput').value = '';
-            document.getElementById('passwordInput').focus();
-        }
+    // Event listeners
+    function setupEventListeners() {
+      // Menu
+      menuBtn.addEventListener('click', openMenu);
+      menuOverlay.addEventListener('click', closeMenu);
+      backBtn.addEventListener('click', goBack);
 
-        function showApp() {
-            document.getElementById('passwordScreen').classList.remove('visible');
-            document.getElementById('app').classList.add('visible');
-            var projectName = settings.project_name || 'ReDew Anson';
-            document.getElementById('projectName').textContent = projectName;
-            document.getElementById('projectNameBreadcrumb').textContent = projectName;
-            renderSidebar();
-            showSection('dashboard');
-        }
+      // Menu items
+      document.querySelectorAll('.menu-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          closeMenu();
+          
+          if (item.dataset.view === 'dashboard') {
+            goBack();
+          } else if (item.dataset.category) {
+            openCategory(item.dataset.category);
+          }
+        });
+      });
 
-        // ==================== NAVIGATION ====================
-        function renderSidebar() {
-            var nav = document.getElementById('sidebarNav');
-            var html = '<div class="nav-section"><div class="nav-section-title">Overview</div>';
-            html += '<a class="nav-item active" data-section="dashboard" onclick="showSection(\'dashboard\')"><svg class="icon icon-sm"><use href="#icon-dashboard"/></svg> Dashboard</a></div>';
-            html += '<div class="nav-section"><div class="nav-section-title">Due Diligence</div>';
+      // Breadcrumb root
+      document.getElementById('breadcrumbRoot').addEventListener('click', (e) => {
+        e.preventDefault();
+        goBack();
+      });
 
-            sections.slice(1).forEach(function(s) {
-                var sectionDocs = documents.filter(function(d) { return d.section === s.id; });
-                var total = sectionDocs.length;
-                
-                // Skip sections with no visible documents
-                if (total === 0) return;
-                
-                var uploaded = sectionDocs.filter(function(d) { return d.status === 'uploaded'; }).length;
-                var statusClass = uploaded === total ? 'complete' : (uploaded > 0 ? 'partial' : 'pending');
-                html += '<a class="nav-item" data-section="' + s.id + '" onclick="showSection(\'' + s.id + '\')">';
-                html += '<svg class="icon icon-sm"><use href="#' + s.icon + '"/></svg> ' + s.name;
-                html += '<span class="status ' + statusClass + '"></span>';
-                html += '</a>';
-            });
-            html += '</div>';
-            nav.innerHTML = html;
-        }
+      // Swipe gestures
+      document.addEventListener('touchstart', handleTouchStart, { passive: true });
+      document.addEventListener('touchmove', handleTouchMove, { passive: true });
+      document.addEventListener('touchend', handleTouchEnd, { passive: true });
 
-        function showSection(sectionId) {
-            currentSection = sectionId;
-            document.querySelectorAll('.nav-item').forEach(function(el) { el.classList.toggle('active', el.dataset.section === sectionId); });
-            var sectionName = sections.find(function(s) { return s.id === sectionId; });
-            document.getElementById('breadcrumbCurrent').textContent = sectionName ? sectionName.name : sectionId;
-            if (sectionId === 'dashboard') renderDashboard(); else renderSectionPage(sectionId);
-            document.getElementById('sidebar').classList.remove('open');
-            document.getElementById('sidebarOverlay').classList.remove('visible');
-            window.scrollTo(0, 0);
-        }
+      // Save scroll on unload
+      window.addEventListener('beforeunload', saveScrollPosition);
+    }
 
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('open');
-            document.getElementById('sidebarOverlay').classList.toggle('visible');
-        }
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
 
-        // ==================== DASHBOARD ====================
-        function renderDashboard() {
-            var container = document.getElementById('contentContainer');
-            var capacity = settings.capacity || '300 MW';
-            var targetNtp = settings.target_ntp || 'Q1 2027';
-            var uploaded = documents.filter(function(d) { return d.status === 'uploaded'; }).length;
-            var pending = documents.filter(function(d) { return d.status === 'pending'; }).length;
-
-            var html = '<div class="page-section active"><div class="dashboard-header">';
-            html += '<h1>' + esc(settings.project_name || 'ReDew Anson') + ' — Project Dashboard</h1>';
-            html += '<p>' + esc(capacity) + ' / Battery Energy Storage System • Jones County, Texas • ERCOT West</p></div>';
-
-            html += '<div class="stats-grid">';
-            html += '<div class="stat-card"><div class="label">Project Capacity</div><div class="value">' + esc(capacity) + '</div><div class="sub">Expandable to 400 MW</div></div>';
-            html += '<div class="stat-card"><div class="label">Target NTP</div><div class="value">' + esc(targetNtp) + '</div><div class="sub">Notice to Proceed</div></div>';
-            html += '<div class="stat-card"><div class="label">POI Distance</div><div class="value">0.5 mi</div><div class="sub">345 kV Phantom Hill Sub</div></div>';
-            html += '<div class="stat-card"><div class="label">Documents</div><div class="value">' + documents.length + '</div><div class="sub">' + uploaded + ' uploaded • ' + pending + ' pending</div></div></div>';
-
-            html += '<div class="progress-section"><h3><svg class="icon"><use href="#icon-bar-chart"/></svg> Development Progress</h3><div class="progress-bars">';
-            [{ key: 'progress_land', label: 'Land & Site Control' }, { key: 'progress_interconnection', label: 'Interconnection' }, { key: 'progress_permitting', label: 'Permitting' }, { key: 'progress_engineering', label: 'Engineering' }, { key: 'progress_financial', label: 'Financial Model' }, { key: 'progress_epc', label: 'EPC Selection' }].forEach(function(item) {
-                var val = settings[item.key] || '0';
-                html += '<div class="progress-item"><div class="label">' + item.label + '</div><div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + val + '%"></div></div><div class="percent">' + val + '%</div></div>';
-            });
-            html += '</div></div>';
-
-            var recentDocs = documents.filter(function(d) { return d.status === 'uploaded'; }).slice(0, 5);
-            var pendingDocs = documents.filter(function(d) { return d.status !== 'uploaded'; }).slice(0, 4);
-
-            html += '<div class="documents-grid"><div class="doc-category"><div class="doc-category-header"><h4><svg class="icon icon-sm"><use href="#icon-folder"/></svg> Recently Uploaded</h4><span class="count">' + recentDocs.length + ' files</span></div><div class="doc-list">';
-            if (recentDocs.length > 0) recentDocs.forEach(function(doc) { html += renderDocItem(doc); });
-            else html += '<div class="empty-state"><svg class="icon icon-xl"><use href="#icon-folder"/></svg><div>No documents uploaded yet</div></div>';
-            html += '</div></div>';
-
-            html += '<div class="doc-category"><div class="doc-category-header"><h4><svg class="icon icon-sm"><use href="#icon-clock"/></svg> Pending Items</h4><span class="count">' + pendingDocs.length + ' items</span></div><div class="doc-list">';
-            if (pendingDocs.length > 0) pendingDocs.forEach(function(doc) { html += renderDocItem(doc); });
-            else html += '<div class="empty-state"><svg class="icon icon-xl"><use href="#icon-clipboard"/></svg><div>All caught up!</div></div>';
-            html += '</div></div></div></div>';
-
-            container.innerHTML = html;
-        }
-
-        function renderDocItem(doc) {
-            var hasLink = doc.url && doc.url.trim() !== '';
-            return '<div class="doc-item' + (hasLink ? '' : ' no-link') + '"' + (hasLink ? ' onclick="openDoc(\'' + escAttr(doc.url) + '\')"' : '') + '><div class="doc-icon ' + doc.file_type + '">' + doc.file_type.toUpperCase() + '</div><div class="doc-info"><div class="name">' + esc(doc.name) + '</div><div class="meta">' + doc.file_type.toUpperCase() + (doc.date_added ? ' • ' + esc(doc.date_added) : '') + '</div></div><div class="doc-status ' + doc.status + '"></div></div>';
-        }
-
-        // ==================== SECTION PAGES ====================
-        function renderSectionPage(sectionId) {
-            var container = document.getElementById('contentContainer');
-            var section = sections.find(function(s) { return s.id === sectionId; });
-            if (!section) return;
-
-            var sectionDocs = documents.filter(function(d) { return d.section === sectionId; });
-            var sectionNotes = notes.filter(function(n) { return n.section === sectionId; });
-            var uploaded = sectionDocs.filter(function(d) { return d.status === 'uploaded'; }).length;
-            var total = sectionDocs.length;
-            var percent = total > 0 ? Math.round((uploaded / total) * 100) : 0;
-            var statusClass = total === 0 ? 'pending' : (percent === 100 ? 'complete' : (percent > 0 ? 'partial' : 'pending'));
-
-            var html = '<div class="page-section active"><div class="section-header">';
-            html += '<h1><svg class="icon icon-lg"><use href="#' + section.icon + '"/></svg> ' + esc(section.name) + ' <span class="status-badge ' + statusClass + '">' + percent + '% Complete</span></h1>';
-            html += '<p>Documentation and materials for ' + esc(section.name.toLowerCase()) + '.</p></div>';
-
-            if (sectionDocs.length > 0) {
-                html += '<div class="doc-table"><table><thead><tr><th>Document</th><th>Type</th><th>Date</th><th>Status</th><th>Action</th></tr></thead><tbody>';
-                sectionDocs.forEach(function(doc) {
-                    var hasLink = doc.url && doc.url.trim() !== '';
-                    html += '<tr><td><div class="doc-name"><div class="file-icon ' + doc.file_type + '">' + doc.file_type.toUpperCase() + '</div><span>' + esc(doc.name) + '</span></div></td>';
-                    html += '<td>' + doc.file_type.toUpperCase() + '</td><td>' + (doc.date_added ? esc(doc.date_added) : '—') + '</td>';
-                    html += '<td><span class="status-pill ' + doc.status + '"><span class="dot"></span>' + capitalize(doc.status) + '</span></td><td>';
-                    if (doc.status === 'uploaded' && hasLink) html += '<button class="action-btn" onclick="openDoc(\'' + escAttr(doc.url) + '\')"><svg class="icon icon-sm"><use href="#icon-eye"/></svg> View</button>';
-                    else html += '<button class="action-btn" disabled>' + (doc.status === 'pending' ? 'Pending' : 'Required') + '</button>';
-                    html += '</td></tr>';
-                });
-                html += '</tbody></table></div>';
-            } else {
-                html += '<div class="doc-table"><div class="empty-state"><svg class="icon icon-xl"><use href="#icon-folder"/></svg><div>No documents in this section yet.</div></div></div>';
-            }
-
-            if (sectionNotes.length > 0) {
-                html += '<div class="notes-section"><h3><svg class="icon"><use href="#icon-edit"/></svg> Notes & Updates</h3>';
-                sectionNotes.forEach(function(note) {
-                    html += '<div class="note-item' + (note.is_highlight ? ' highlight' : '') + '"><div class="note-header"><span class="author">' + esc(note.author) + '</span><span class="date">' + esc(note.date) + '</span></div><p>' + esc(note.content) + '</p></div>';
-                });
-                html += '</div>';
-            }
-            html += '</div>';
-            container.innerHTML = html;
-        }
-
-        // ==================== UTILITIES ====================
-        function openDoc(url) { if (url && url.trim() !== '' && url !== 'YOUR_FILE_ID') window.open(url, '_blank'); else alert('Document link not yet configured.'); }
-        function esc(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-        function escAttr(s) { return (s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-        function capitalize(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1).replace(/_/g, ' ') : ''; }
-
-        // ==================== EVENT LISTENERS ====================
-        document.addEventListener('DOMContentLoaded', init);
-        document.getElementById('passwordInput').addEventListener('keypress', function(e) { if (e.key === 'Enter') checkPassword(); });
-    </script>
 </body>
 </html>
