@@ -796,6 +796,149 @@
 
     .connection-error.visible { display: block; }
 
+    /* Visitor Login Modal */
+    .visitor-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 400;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .visitor-modal-overlay.visible { opacity: 1; visibility: visible; }
+
+    .visitor-modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .visitor-modal-logo {
+      width: 60px;
+      height: 60px;
+      background: var(--accent-dim);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .visitor-modal-logo svg {
+      width: 32px;
+      height: 32px;
+      color: var(--accent);
+    }
+
+    .visitor-modal h2 {
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .visitor-modal p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .visitor-input {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 15px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s ease;
+    }
+
+    .visitor-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .visitor-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .visitor-btn {
+      width: 100%;
+      padding: 14px 24px;
+      background: var(--accent);
+      border: none;
+      border-radius: 10px;
+      color: #000;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      margin-top: 8px;
+    }
+
+    .visitor-btn:hover { opacity: 0.9; }
+    .visitor-btn:active { transform: scale(0.98); }
+
+    .visitor-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .visitor-error {
+      color: var(--danger);
+      font-size: 13px;
+      margin-top: 12px;
+      display: none;
+    }
+
+    .visitor-error.visible { display: block; }
+
+    /* Sync indicator */
+    .sync-indicator {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--accent);
+      color: #000;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 200;
+    }
+
+    .sync-indicator.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .sync-indicator svg {
+      width: 14px;
+      height: 14px;
+      animation: spin 1s linear infinite;
+    }
+
     /* Responsive */
     @media (min-width: 600px) {
       .stats-row { grid-template-columns: repeat(3, 1fr); }
@@ -817,9 +960,36 @@
   </style>
 </head>
 <body>
+  <!-- Visitor Login Modal -->
+  <div class="visitor-modal-overlay" id="visitorModal">
+    <div class="visitor-modal">
+      <div class="visitor-modal-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </div>
+      <h2>Welcome to the Data Room</h2>
+      <p>Please enter your details to access the project materials.</p>
+      <input type="text" class="visitor-input" id="visitorName" placeholder="Your Name" autocomplete="name">
+      <input type="email" class="visitor-input" id="visitorEmail" placeholder="Email Address" autocomplete="email">
+      <input type="text" class="visitor-input" id="visitorCompany" placeholder="Company (optional)" autocomplete="organization">
+      <button class="visitor-btn" id="visitorSubmit">Access Data Room</button>
+      <div class="visitor-error" id="visitorError">Please enter your name and email address.</div>
+    </div>
+  </div>
+
   <!-- Loading Overlay -->
   <div class="loading-overlay" id="loadingOverlay">
     <div class="loading-spinner"></div>
+  </div>
+
+  <!-- Sync Indicator -->
+  <div class="sync-indicator" id="syncIndicator">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+    </svg>
+    Syncing...
   </div>
 
   <!-- Swipe Indicator -->
@@ -982,6 +1152,8 @@
     let supabase = null;
     let sessionId = null;
     let sessionStart = null;
+    let visitorInfo = null;
+    let realtimeSubscription = null;
 
     // ===========================================
     // SECTION DEFINITIONS (matches admin panel)
@@ -1032,11 +1204,106 @@
     async function init() {
       initTheme();
       initSupabase();
+
+      // Check if visitor is already logged in
+      visitorInfo = getStoredVisitor();
+
+      if (visitorInfo) {
+        // Visitor already identified, proceed to app
+        await startApp();
+      } else {
+        // Show visitor login modal
+        showVisitorModal();
+      }
+    }
+
+    async function startApp() {
       await loadData();
       renderMenu();
       renderDashboard();
       setupEventListeners();
       startVisitorTracking();
+      setupRealtimeSync();
+    }
+
+    // ===========================================
+    // VISITOR IDENTIFICATION
+    // ===========================================
+    function getStoredVisitor() {
+      try {
+        const stored = localStorage.getItem('redew_visitor');
+        if (stored) {
+          return JSON.parse(stored);
+        }
+      } catch (e) {
+        console.error('Error reading stored visitor:', e);
+      }
+      return null;
+    }
+
+    function storeVisitor(info) {
+      try {
+        localStorage.setItem('redew_visitor', JSON.stringify(info));
+      } catch (e) {
+        console.error('Error storing visitor:', e);
+      }
+    }
+
+    function showVisitorModal() {
+      document.getElementById('visitorModal').classList.add('visible');
+      document.getElementById('visitorName').focus();
+
+      // Setup form handlers
+      document.getElementById('visitorSubmit').addEventListener('click', handleVisitorSubmit);
+      document.getElementById('visitorEmail').addEventListener('keypress', e => {
+        if (e.key === 'Enter') handleVisitorSubmit();
+      });
+      document.getElementById('visitorCompany').addEventListener('keypress', e => {
+        if (e.key === 'Enter') handleVisitorSubmit();
+      });
+    }
+
+    async function handleVisitorSubmit() {
+      const name = document.getElementById('visitorName').value.trim();
+      const email = document.getElementById('visitorEmail').value.trim();
+      const company = document.getElementById('visitorCompany').value.trim();
+      const errorEl = document.getElementById('visitorError');
+
+      // Validate
+      if (!name || !email) {
+        errorEl.textContent = 'Please enter your name and email address.';
+        errorEl.classList.add('visible');
+        return;
+      }
+
+      // Basic email validation
+      if (!email.includes('@') || !email.includes('.')) {
+        errorEl.textContent = 'Please enter a valid email address.';
+        errorEl.classList.add('visible');
+        return;
+      }
+
+      errorEl.classList.remove('visible');
+
+      // Disable button while processing
+      const btn = document.getElementById('visitorSubmit');
+      btn.disabled = true;
+      btn.textContent = 'Loading...';
+
+      // Store visitor info
+      visitorInfo = {
+        name: name,
+        email: email,
+        company: company || null,
+        first_visit: new Date().toISOString()
+      };
+      storeVisitor(visitorInfo);
+
+      // Hide modal
+      document.getElementById('visitorModal').classList.remove('visible');
+
+      // Start the app
+      await startApp();
     }
 
     function initSupabase() {
@@ -1054,10 +1321,124 @@
     }
 
     // ===========================================
+    // REAL-TIME SYNC
+    // ===========================================
+    function setupRealtimeSync() {
+      if (!supabase) return;
+
+      try {
+        // Subscribe to all dataroom tables
+        realtimeSubscription = supabase
+          .channel('dataroom-changes')
+          .on('postgres_changes',
+            { event: '*', schema: 'public', table: 'dataroom_documents' },
+            handleDocumentsChange
+          )
+          .on('postgres_changes',
+            { event: '*', schema: 'public', table: 'dataroom_notes' },
+            handleNotesChange
+          )
+          .on('postgres_changes',
+            { event: '*', schema: 'public', table: 'dataroom_settings' },
+            handleSettingsChange
+          )
+          .subscribe((status) => {
+            console.log('Realtime subscription status:', status);
+          });
+
+        console.log('Real-time sync enabled');
+      } catch (e) {
+        console.error('Failed to setup real-time sync:', e);
+      }
+    }
+
+    function showSyncIndicator() {
+      const indicator = document.getElementById('syncIndicator');
+      indicator.classList.add('visible');
+      setTimeout(() => {
+        indicator.classList.remove('visible');
+      }, 2000);
+    }
+
+    async function handleDocumentsChange(payload) {
+      console.log('Documents changed:', payload);
+      showSyncIndicator();
+
+      // Reload documents
+      try {
+        const docsResult = await supabase
+          .from('dataroom_documents')
+          .select('*')
+          .eq('is_hidden', false)
+          .order('sort_order', { ascending: true });
+
+        if (docsResult.data) {
+          documents = docsResult.data;
+          // Re-render current view
+          if (currentView === 'dashboard') {
+            renderDashboard();
+          } else if (currentSection) {
+            renderCategory(currentSection);
+          }
+        }
+      } catch (e) {
+        console.error('Error reloading documents:', e);
+      }
+    }
+
+    async function handleNotesChange(payload) {
+      console.log('Notes changed:', payload);
+      showSyncIndicator();
+
+      // Reload notes
+      try {
+        const notesResult = await supabase
+          .from('dataroom_notes')
+          .select('*')
+          .order('sort_order', { ascending: true });
+
+        if (notesResult.data) {
+          notes = notesResult.data;
+          // Re-render if viewing a category
+          if (currentSection) {
+            renderCategory(currentSection);
+          }
+        }
+      } catch (e) {
+        console.error('Error reloading notes:', e);
+      }
+    }
+
+    async function handleSettingsChange(payload) {
+      console.log('Settings changed:', payload);
+      showSyncIndicator();
+
+      // Reload settings
+      try {
+        const settingsResult = await supabase
+          .from('dataroom_settings')
+          .select('*');
+
+        if (settingsResult.data) {
+          settings = {};
+          settingsResult.data.forEach(s => {
+            settings[s.key] = s.value;
+          });
+          // Re-render dashboard to show updated settings
+          if (currentView === 'dashboard') {
+            renderDashboard();
+          }
+        }
+      } catch (e) {
+        console.error('Error reloading settings:', e);
+      }
+    }
+
+    // ===========================================
     // VISITOR TRACKING
     // ===========================================
     async function startVisitorTracking() {
-      if (!supabase) return;
+      if (!supabase || !visitorInfo) return;
 
       sessionId = crypto.randomUUID ? crypto.randomUUID() : 'session_' + Date.now();
       sessionStart = new Date().toISOString();
@@ -1065,6 +1446,9 @@
       try {
         await supabase.from('visitor_sessions').insert({
           session_id: sessionId,
+          visitor_name: visitorInfo.name,
+          visitor_email: visitorInfo.email,
+          visitor_company: visitorInfo.company,
           started_at: sessionStart,
           user_agent: navigator.userAgent,
           referrer: document.referrer || null,
@@ -1072,7 +1456,7 @@
           screen_height: window.innerHeight
         });
       } catch (e) {
-        console.log('Visitor tracking not available');
+        console.log('Visitor tracking not available - table may need updating');
       }
 
       // Track page views
@@ -1100,6 +1484,7 @@
       try {
         await supabase.from('visitor_clicks').insert({
           session_id: sessionId,
+          visitor_email: visitorInfo?.email || null,
           document_id: doc.id,
           document_name: doc.name,
           section: doc.section,
@@ -1116,6 +1501,7 @@
       try {
         await supabase.from('visitor_clicks').insert({
           session_id: sessionId,
+          visitor_email: visitorInfo?.email || null,
           section: sectionId,
           action: 'section_view',
           clicked_at: new Date().toISOString()
