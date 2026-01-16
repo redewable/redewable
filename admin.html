@@ -1194,6 +1194,19 @@
                                 <option value="disabled">Disabled</option>
                             </select>
                         </div>
+                        <div class="settings-row" style="margin-top: 0.5rem;">
+                            <label>Public Data Room Link</label>
+                            <div style="display:flex; gap:0.5rem; align-items:stretch;">
+                                <input type="text" id="publicDataroomLink" readonly value="" style="flex:1;">
+                                <button class="btn btn-small btn-secondary" type="button" onclick="copyPublicDataroomLink()" style="white-space:nowrap;">Copy</button>
+                                <button class="btn btn-small btn-primary" type="button" onclick="openPublicDataroomLink()" style="white-space:nowrap;">Open</button>
+                            </div>
+                            <div style="margin-top:0.5rem; font-size:0.82rem; color: var(--text-secondary);">
+                                Use this link when sharing the Data Room. It includes the Supabase connection parameters required by <code>dataroom.html</code>.
+                            </div>
+                        </div>
+
+
                     </div>
 
                     <div class="settings-card">
@@ -1922,7 +1935,12 @@
             if (!name) return;
 
             showSaveIndicator('saving');
-            var newDoc = { section: section, name: name, file_type: 'pdf', url: '', status: 'missing', date_added: '', is_hidden: false };
+            var maxOrder = -1;
+            documents.filter(function(d){ return d.section === section; }).forEach(function(d){
+                var so = parseInt(d.sort_order || 0, 10);
+                if (!isNaN(so) && so > maxOrder) maxOrder = so;
+            });
+            var newDoc = { section: section, name: name, file_type: 'pdf', url: '', status: 'missing', date_added: '', is_hidden: false, sort_order: maxOrder + 1 };
             var result = await db.from('dataroom_documents').insert([newDoc]).select().single();
 
             if (result.error) {
@@ -1970,7 +1988,12 @@
 
         async function addNote(section) {
             showSaveIndicator('saving');
-            var newNote = { section: section, author: '', date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }), content: '', is_highlight: false };
+            var maxOrder = -1;
+            notes.filter(function(n){ return n.section === section; }).forEach(function(n){
+                var so = parseInt(n.sort_order || 0, 10);
+                if (!isNaN(so) && so > maxOrder) maxOrder = so;
+            });
+            var newNote = { section: section, author: '', date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }), content: '', is_highlight: false, sort_order: maxOrder + 1 };
             var result = await db.from('dataroom_notes').insert([newNote]).select().single();
 
             if (result.error) {
@@ -1997,8 +2020,62 @@
             }
         }
 
-        // ==================== SETTINGS ====================
+        
+        function getPublicDataroomLink() {
+            // Replace current page filename with dataroom.html (works for local and hosted deployments)
+            var base = window.location.href;
+            try {
+                var u = new URL(window.location.href);
+                // if on admin.html, swap to dataroom.html; otherwise just append
+                if (u.pathname.endsWith('/admin.html')) u.pathname = u.pathname.replace(/admin\.html$/, 'dataroom.html');
+                else if (!u.pathname.endsWith('/dataroom.html')) {
+                    // if opened from some other path, keep directory and point to dataroom.html
+                    u.pathname = u.pathname.replace(/\/[^\/]*$/, '/dataroom.html');
+                }
+                // pull supabase config from localStorage
+                var cfg = null;
+                try { cfg = JSON.parse(localStorage.getItem('redew_admin_config') || 'null'); } catch (e) {}
+                if (!cfg || !cfg.url || !cfg.key) return '';
+                u.searchParams.set('sbUrl', cfg.url);
+                u.searchParams.set('sbKey', cfg.key);
+                // strip hashes
+                u.hash = '';
+                return u.toString();
+            } catch (e) {
+                return '';
+            }
+        }
+
+        function updatePublicLinkUI() {
+            var el = document.getElementById('publicDataroomLink');
+            if (!el) return;
+            var link = getPublicDataroomLink();
+            el.value = link || '';
+        }
+
+        async function copyPublicDataroomLink() {
+            var link = getPublicDataroomLink();
+            if (!link) { alert('Missing Supabase config. Complete Setup first.'); return; }
+            try {
+                await navigator.clipboard.writeText(link);
+                showToast('Data Room link copied');
+            } catch (e) {
+                // fallback
+                var el = document.getElementById('publicDataroomLink');
+                if (el) { el.focus(); el.select(); document.execCommand('copy'); }
+                showToast('Data Room link copied');
+            }
+        }
+
+        function openPublicDataroomLink() {
+            var link = getPublicDataroomLink();
+            if (!link) { alert('Missing Supabase config. Complete Setup first.'); return; }
+            window.open(link, '_blank');
+        }
+
+// ==================== SETTINGS ====================
         function renderSettings() {
+            updatePublicLinkUI();
             document.getElementById('settingDrPassword').value = settings.dr_password || 'redew2026';
             document.getElementById('settingDrStatus').value = settings.dr_status || 'active';
             document.getElementById('settingProjectName').value = settings.project_name || 'ReDew Anson';
