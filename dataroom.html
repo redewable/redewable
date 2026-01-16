@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -28,7 +27,6 @@
       --danger: #ef4444;
     }
 
-    /* Light mode variables */
     [data-theme="light"] {
       --bg-primary: #f8faf8;
       --bg-secondary: #ffffff;
@@ -140,21 +138,10 @@
       border-color: var(--accent);
     }
 
-    .theme-toggle .sun-icon {
-      display: none;
-    }
-
-    .theme-toggle .moon-icon {
-      display: block;
-    }
-
-    [data-theme="light"] .theme-toggle .sun-icon {
-      display: block;
-    }
-
-    [data-theme="light"] .theme-toggle .moon-icon {
-      display: none;
-    }
+    .theme-toggle .sun-icon { display: none; }
+    .theme-toggle .moon-icon { display: block; }
+    [data-theme="light"] .theme-toggle .sun-icon { display: block; }
+    [data-theme="light"] .theme-toggle .moon-icon { display: none; }
 
     .breadcrumb {
       display: flex;
@@ -172,13 +159,8 @@
       white-space: nowrap;
     }
 
-    .breadcrumb-item:hover {
-      color: var(--accent);
-    }
-
-    .breadcrumb-separator {
-      color: var(--text-muted);
-    }
+    .breadcrumb-item:hover { color: var(--accent); }
+    .breadcrumb-separator { color: var(--text-muted); }
 
     .breadcrumb-current {
       color: var(--text-primary);
@@ -197,13 +179,8 @@
     }
 
     /* Dashboard View */
-    .dashboard {
-      display: none;
-    }
-
-    .dashboard.active {
-      display: block;
-    }
+    .dashboard { display: none; }
+    .dashboard.active { display: block; }
 
     .dashboard-hero {
       background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
@@ -343,15 +320,8 @@
       flex-shrink: 0;
     }
 
-    .progress-ring svg {
-      transform: rotate(-90deg);
-    }
-
-    .progress-ring-bg {
-      fill: none;
-      stroke: var(--border);
-      stroke-width: 8;
-    }
+    .progress-ring svg { transform: rotate(-90deg); }
+    .progress-ring-bg { fill: none; stroke: var(--border); stroke-width: 8; }
 
     .progress-ring-fill {
       fill: none;
@@ -413,10 +383,7 @@
       margin-bottom: 12px;
     }
 
-    .category-grid {
-      display: grid;
-      gap: 12px;
-    }
+    .category-grid { display: grid; gap: 12px; }
 
     .category-card {
       background: var(--bg-card);
@@ -494,13 +461,8 @@
     }
 
     /* Category Detail View */
-    .category-view {
-      display: none;
-    }
-
-    .category-view.active {
-      display: block;
-    }
+    .category-view { display: none; }
+    .category-view.active { display: block; }
 
     .category-header {
       display: flex;
@@ -587,25 +549,13 @@
       flex-shrink: 0;
     }
 
-    .doc-type-icon.pdf {
-      background: rgba(239, 68, 68, 0.15);
-      color: #ef4444;
-    }
-
-    .doc-type-icon.img {
-      background: rgba(59, 130, 246, 0.15);
-      color: #3b82f6;
-    }
-
-    .doc-type-icon.www {
-      background: rgba(168, 85, 247, 0.15);
-      color: #a855f7;
-    }
-
-    .doc-type-icon.other {
-      background: rgba(107, 114, 128, 0.15);
-      color: #6b7280;
-    }
+    .doc-type-icon.pdf { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+    .doc-type-icon.img { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+    .doc-type-icon.www { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+    .doc-type-icon.xlsx { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+    .doc-type-icon.doc { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+    .doc-type-icon.dwg { background: rgba(249, 115, 22, 0.15); color: #f97316; }
+    .doc-type-icon.other { background: rgba(107, 114, 128, 0.15); color: #6b7280; }
 
     .doc-info {
       flex: 1;
@@ -640,13 +590,10 @@
       background: var(--accent);
     }
 
-    .doc-status.pending {
-      color: var(--warning);
-    }
-
-    .doc-status.pending .doc-status-dot {
-      background: var(--warning);
-    }
+    .doc-status.pending { color: var(--warning); }
+    .doc-status.pending .doc-status-dot { background: var(--warning); }
+    .doc-status.missing { color: var(--danger); }
+    .doc-status.missing .doc-status-dot { background: var(--danger); }
 
     /* Notes Section */
     .notes-section {
@@ -668,10 +615,7 @@
       color: var(--text-secondary);
     }
 
-    .notes-header svg {
-      width: 18px;
-      height: 18px;
-    }
+    .notes-header svg { width: 18px; height: 18px; }
 
     .note-item {
       padding: 12px;
@@ -681,15 +625,23 @@
       border-left: 3px solid var(--accent);
     }
 
-    .note-item:last-child {
-      margin-bottom: 0;
-    }
+    .note-item:last-child { margin-bottom: 0; }
+    .note-item.highlight { border-left-color: var(--warning); background: rgba(245, 158, 11, 0.05); }
 
     .note-source {
       font-size: 12px;
       font-weight: 700;
       color: var(--accent);
       margin-bottom: 4px;
+    }
+
+    .note-item.highlight .note-source { color: var(--warning); }
+
+    .note-date {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-left: 8px;
+      font-weight: 400;
     }
 
     .note-text {
@@ -712,10 +664,7 @@
       transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
-    .menu-overlay.open {
-      opacity: 1;
-      visibility: visible;
-    }
+    .menu-overlay.open { opacity: 1; visibility: visible; }
 
     .side-menu {
       position: fixed;
@@ -732,9 +681,7 @@
       flex-direction: column;
     }
 
-    .side-menu.open {
-      transform: translateX(0);
-    }
+    .side-menu.open { transform: translateX(0); }
 
     .menu-header {
       padding: 20px;
@@ -749,10 +696,7 @@
       font-size: 16px;
     }
 
-    .menu-logo img {
-      height: 28px;
-      width: auto;
-    }
+    .menu-logo img { height: 28px; width: auto; }
 
     .menu-items {
       flex: 1;
@@ -778,11 +722,7 @@
       color: var(--text-primary);
     }
 
-    .menu-item svg {
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
-    }
+    .menu-item svg { width: 20px; height: 20px; flex-shrink: 0; }
 
     .menu-footer {
       padding: 16px 20px;
@@ -810,11 +750,9 @@
       pointer-events: none;
     }
 
-    .swipe-indicator.visible {
-      opacity: 0.5;
-    }
+    .swipe-indicator.visible { opacity: 0.5; }
 
-    /* Loading overlay for document opens */
+    /* Loading overlay */
     .loading-overlay {
       position: fixed;
       top: 0;
@@ -831,10 +769,7 @@
       transition: opacity 0.2s ease, visibility 0.2s ease;
     }
 
-    .loading-overlay.visible {
-      opacity: 1;
-      visibility: visible;
-    }
+    .loading-overlay.visible { opacity: 1; visibility: visible; }
 
     .loading-spinner {
       width: 40px;
@@ -845,56 +780,41 @@
       animation: spin 0.8s linear infinite;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Connection error banner */
+    .connection-error {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid var(--danger);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      color: var(--danger);
+      font-size: 13px;
+      display: none;
     }
+
+    .connection-error.visible { display: block; }
 
     /* Responsive */
     @media (min-width: 600px) {
-      .stats-row {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .category-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .doc-list {
-        gap: 8px;
-      }
+      .stats-row { grid-template-columns: repeat(3, 1fr); }
+      .category-grid { grid-template-columns: repeat(2, 1fr); }
+      .doc-list { gap: 8px; }
     }
 
     @media (min-width: 900px) {
-      .main {
-        padding: 32px 24px 100px;
-      }
-
-      .category-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .progress-ring {
-        width: 100px;
-        height: 100px;
-      }
+      .main { padding: 32px 24px 100px; }
+      .category-grid { grid-template-columns: repeat(3, 1fr); }
+      .progress-ring { width: 100px; height: 100px; }
     }
 
-    /* Small screen stat cards */
     @media (max-width: 400px) {
-      .stats-row {
-        grid-template-columns: 1fr;
-      }
-      
-      .stat-card {
-        padding: 12px;
-      }
-      
-      .stat-value {
-        font-size: 18px;
-      }
+      .stats-row { grid-template-columns: 1fr; }
+      .stat-card { padding: 12px; }
+      .stat-value { font-size: 18px; }
     }
   </style>
-
 </head>
 <body>
   <!-- Loading Overlay -->
@@ -903,15 +823,12 @@
   </div>
 
   <!-- Swipe Indicator -->
-
   <div class="swipe-indicator" id="swipeIndicator"></div>
 
   <!-- Menu Overlay -->
-
   <div class="menu-overlay" id="menuOverlay"></div>
 
   <!-- Side Menu -->
-
   <nav class="side-menu" id="sideMenu">
     <div class="menu-header">
       <div class="menu-logo">
@@ -919,35 +836,8 @@
         <span>ReDew Anson</span>
       </div>
     </div>
-    <div class="menu-items">
-      <a href="#" class="menu-item active" data-view="dashboard">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
-        Dashboard
-      </a>
-      <a href="#" class="menu-item" data-category="executive-summary">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        Executive Summary
-      </a>
-      <a href="#" class="menu-item" data-category="land-control">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        Land & Site Control
-      </a>
-      <a href="#" class="menu-item" data-category="interconnection">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        Interconnection
-      </a>
-      <a href="#" class="menu-item" data-category="permitting">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg>
-        Permitting
-      </a>
-      <a href="#" class="menu-item" data-category="engineering">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-        Engineering
-      </a>
-      <a href="#" class="menu-item" data-category="financial">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        Financial
-      </a>
+    <div class="menu-items" id="menuItems">
+      <!-- Populated by JS -->
     </div>
     <div class="menu-footer">
       <a href="https://redewable.com">← Back to redewable.com</a>
@@ -955,7 +845,6 @@
   </nav>
 
   <!-- Header -->
-
   <header class="header">
     <div class="header-inner">
       <button class="menu-btn" id="menuBtn" aria-label="Open menu">
@@ -987,15 +876,19 @@
   </header>
 
   <!-- Main Content -->
-
   <main class="main" id="mainContent">
+    <!-- Connection Error Banner -->
+    <div class="connection-error" id="connectionError">
+      Unable to connect to database. Showing cached data.
+    </div>
+
     <!-- Dashboard View -->
     <div class="dashboard active" id="dashboardView">
       <!-- Hero Section -->
       <div class="dashboard-hero">
         <div class="dashboard-hero-content">
-          <h1 class="dashboard-title">ReDew Anson — Project Dashboard</h1>
-          <p class="dashboard-subtitle">300 MW / Battery Energy Storage System • Jones County, Texas • ERCOT West</p>
+          <h1 class="dashboard-title" id="projectTitle">ReDew Anson — Project Dashboard</h1>
+          <p class="dashboard-subtitle" id="projectSubtitle">300 MW / Battery Energy Storage System • Jones County, Texas • ERCOT West</p>
           <div class="dashboard-meta">
             <div class="meta-item">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -1003,516 +896,582 @@
             </div>
             <div class="meta-item">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              <span>Target NTP: Q1 2027</span>
+              <span id="targetNtp">Target NTP: Q1 2027</span>
             </div>
           </div>
         </div>
       </div>
 
-```
-  <!-- Stats Row -->
-  <div class="stats-row">
-    <div class="stat-card">
-      <div class="stat-label">Capacity</div>
-      <div class="stat-value">300 MW</div>
-      <div class="stat-sub">Expandable to 400 MW</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Target NTP</div>
-      <div class="stat-value">Q1 2027</div>
-      <div class="stat-sub">Notice to Proceed</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">POI Distance</div>
-      <div class="stat-value">0.5 mi</div>
-      <div class="stat-sub">345 kV Phantom Hill</div>
-    </div>
-  </div>
-
-  <!-- Progress Section -->
-  <div class="progress-section">
-    <div class="progress-header">
-      <span class="progress-title">Development Progress</span>
-      <span class="progress-percent" id="totalProgress">47%</span>
-    </div>
-    <div class="progress-ring-container">
-      <div class="progress-ring">
-        <svg width="80" height="80" viewBox="0 0 80 80">
-          <circle class="progress-ring-bg" cx="40" cy="40" r="32"/>
-          <circle class="progress-ring-fill" id="progressRing" cx="40" cy="40" r="32" stroke-dasharray="201" stroke-dashoffset="107"/>
-        </svg>
-        <span class="progress-ring-text" id="progressRingText">47%</span>
-      </div>
-      <div class="progress-breakdown">
-        <div class="progress-item">
-          <span class="progress-dot" style="background: #22c55e"></span>
-          <span class="progress-item-label">Land Control</span>
-          <span class="progress-item-value">85%</span>
+      <!-- Stats Row -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Capacity</div>
+          <div class="stat-value" id="capacityValue">300 MW</div>
+          <div class="stat-sub">Expandable to 400 MW</div>
         </div>
-        <div class="progress-item">
-          <span class="progress-dot" style="background: #3b82f6"></span>
-          <span class="progress-item-label">Interconnection</span>
-          <span class="progress-item-value">40%</span>
+        <div class="stat-card">
+          <div class="stat-label">Target NTP</div>
+          <div class="stat-value" id="ntpValue">Q1 2027</div>
+          <div class="stat-sub">Notice to Proceed</div>
         </div>
-        <div class="progress-item">
-          <span class="progress-dot" style="background: #a855f7"></span>
-          <span class="progress-item-label">Permitting</span>
-          <span class="progress-item-value">50%</span>
-        </div>
-        <div class="progress-item">
-          <span class="progress-dot" style="background: #f59e0b"></span>
-          <span class="progress-item-label">Engineering</span>
-          <span class="progress-item-value">35%</span>
+        <div class="stat-card">
+          <div class="stat-label">POI Distance</div>
+          <div class="stat-value">0.5 mi</div>
+          <div class="stat-sub">345 kV Phantom Hill</div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Categories -->
-  <div class="categories-title">Data Room Categories</div>
-  <div class="category-grid" id="categoryGrid">
-    <!-- Populated by JS -->
-  </div>
-</div>
+      <!-- Progress Section -->
+      <div class="progress-section">
+        <div class="progress-header">
+          <span class="progress-title">Development Progress</span>
+          <span class="progress-percent" id="totalProgress">47%</span>
+        </div>
+        <div class="progress-ring-container">
+          <div class="progress-ring">
+            <svg width="80" height="80" viewBox="0 0 80 80">
+              <circle class="progress-ring-bg" cx="40" cy="40" r="32"/>
+              <circle class="progress-ring-fill" id="progressRing" cx="40" cy="40" r="32" stroke-dasharray="201" stroke-dashoffset="107"/>
+            </svg>
+            <span class="progress-ring-text" id="progressRingText">47%</span>
+          </div>
+          <div class="progress-breakdown" id="progressBreakdown">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
 
-<!-- Category Detail View -->
-<div class="category-view" id="categoryView">
-  <div class="category-header">
-    <div class="category-header-icon" id="categoryIcon">
-      <!-- Icon inserted by JS -->
+      <!-- Categories -->
+      <div class="categories-title">Data Room Categories</div>
+      <div class="category-grid" id="categoryGrid">
+        <!-- Populated by JS -->
+      </div>
     </div>
-    <div class="category-header-info">
-      <h1 id="categoryTitle">Category Title</h1>
-      <span class="category-header-badge" id="categoryBadge">100% Complete</span>
-    </div>
-  </div>
-  <p class="category-description" id="categoryDesc">Description</p>
-  
-  <div class="doc-list" id="docList">
-    <!-- Populated by JS -->
-  </div>
-  
-  <div class="notes-section" id="notesSection" style="display: none;">
-    <div class="notes-header">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-      Notes & Updates
-    </div>
-    <div id="notesList">
-      <!-- Populated by JS -->
-    </div>
-  </div>
-</div>
-```
 
+    <!-- Category Detail View -->
+    <div class="category-view" id="categoryView">
+      <div class="category-header">
+        <div class="category-header-icon" id="categoryIcon"></div>
+        <div class="category-header-info">
+          <h1 id="categoryTitle">Category Title</h1>
+          <span class="category-header-badge" id="categoryBadge">100% Complete</span>
+        </div>
+      </div>
+      <p class="category-description" id="categoryDesc">Description</p>
+      
+      <div class="doc-list" id="docList"></div>
+      
+      <div class="notes-section" id="notesSection" style="display: none;">
+        <div class="notes-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Notes & Updates
+        </div>
+        <div id="notesList"></div>
+      </div>
+    </div>
   </main>
 
   <script>
     // ===========================================
     // SUPABASE CONFIGURATION
     // ===========================================
-    // Replace these with your actual Supabase credentials
+    // UPDATE THESE WITH YOUR ACTUAL CREDENTIALS
     const SUPABASE_URL = 'https://egebfglxeevvmtplvbun.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_J6AvCB8BDv4LjJWjX3sHPw_hhqnm4R4';
     
     let supabase = null;
-    let useSupabase = false;
-    
-    // Try to initialize Supabase if credentials are provided
-    if (SUPABASE_URL !== 'https://egebfglxeevvmtplvbun.supabase.co' && SUPABASE_ANON_KEY !== 'sb_publishable_J6AvCB8BDv4LjJWjX3sHPw_hhqnm4R4') {
-      try {
-        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        useSupabase = true;
-        console.log('Supabase initialized successfully');
-      } catch (e) {
-        console.warn('Failed to initialize Supabase:', e);
-      }
-    }
+    let sessionId = null;
+    let sessionStart = null;
 
     // ===========================================
-    // SVG ICONS
+    // SECTION DEFINITIONS (matches admin panel)
     // ===========================================
-    const ICONS = {
-      document: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
-      location: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
-      bolt: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
-      permit: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg>`,
-      gear: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
-      dollar: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`
-    };
-
-    // ===========================================
-    // FALLBACK DATA (used when Supabase not configured)
-    // ===========================================
-    const categories = [
-      {
-        id: 'executive-summary',
-        name: 'Executive Summary',
-        desc: 'Documentation and materials for executive summary.',
-        icon: 'document',
-        status: '100% Complete',
-        documents: [
-          { id: 'doc-1', name: 'Site Map - ReDew Anson to Phantom Hill', type: 'img', status: 'uploaded', file_url: null },
-          { id: 'doc-2', name: 'Project One-Pager', type: 'pdf', status: 'uploaded', file_url: null },
-          { id: 'doc-3', name: 'Site Location Map - Phantom Hill', type: 'img', status: 'uploaded', file_url: null },
-          { id: 'doc-4', name: 'Investment Brief', type: 'www', url: '/invest', status: 'uploaded', file_url: '/invest' }
-        ]
-      },
-      {
-        id: 'land-control',
-        name: 'Land & Site Control',
-        desc: 'Documentation and materials for land & site control.',
-        icon: 'location',
-        status: '100% Complete',
-        documents: [
-          { id: 'doc-5', name: 'Property Field Survey', type: 'pdf', status: 'uploaded', file_url: null },
-          { id: 'doc-6', name: 'Land Control Agreement', type: 'pdf', status: 'uploaded', file_url: null },
-          { id: 'doc-7', name: 'Geotechnical Scope Contract', type: 'pdf', status: 'uploaded', file_url: null }
-        ],
-        notes: [
-          { source: 'Tetra Tech', text: 'Environmental assessment indicates clear pathway - no wetlands, endangered species, or cultural resources identified. Formal Phase I ESA recommended before closing.' },
-          { source: 'Development', text: 'Land under control. Property is 0.5 miles from Phantom Hill 345kV substation.' }
-        ]
-      },
-      {
-        id: 'interconnection',
-        name: 'Interconnection',
-        desc: 'ERCOT interconnection studies and grid analysis.',
-        icon: 'bolt',
-        status: '40% Complete',
-        documents: [
-          { id: 'doc-8', name: 'Injection Study Report - Enerzinx', type: 'pdf', status: 'uploaded', file_url: null },
-          { id: 'doc-9', name: 'POI Analysis Summary', type: 'pdf', status: 'uploaded', file_url: null },
-          { id: 'doc-10', name: 'ERCOT Queue Position Analysis', type: 'pdf', status: 'pending', file_url: null }
-        ],
-        notes: [
-          { source: 'Enerzinx', text: 'Independent injection study confirms 300MW feasibility at Phantom Hill 345kV. SCR supports up to 4,200 MVA at SCR=3.' }
-        ]
-      },
-      {
-        id: 'permitting',
-        name: 'Permitting & Environmental',
-        desc: 'Permits, environmental assessments, and regulatory filings.',
-        icon: 'permit',
-        status: '50% Complete',
-        documents: [
-          { id: 'doc-11', name: 'Phase I ESA Scope', type: 'pdf', status: 'uploaded', file_url: null },
-          { id: 'doc-12', name: 'County Permits Checklist', type: 'pdf', status: 'pending', file_url: null }
-        ]
-      },
-      {
-        id: 'engineering',
-        name: 'Engineering & Design',
-        desc: 'Technical specifications and engineering deliverables.',
-        icon: 'gear',
-        status: '35% Complete',
-        documents: [
-          { id: 'doc-13', name: 'Preliminary Site Layout', type: 'pdf', status: 'uploaded', file_url: null },
-          { id: 'doc-14', name: 'Single Line Diagram', type: 'pdf', status: 'pending', file_url: null }
-        ]
-      },
-      {
-        id: 'financial',
-        name: 'Financial & Legal',
-        desc: 'Financial models, legal documents, and corporate structure.',
-        icon: 'dollar',
-        status: '25% Complete',
-        documents: [
-          { id: 'doc-15', name: 'Project Pro Forma', type: 'pdf', status: 'pending', file_url: null },
-          { id: 'doc-16', name: 'Operating Agreement', type: 'pdf', status: 'uploaded', file_url: null }
-        ]
-      }
+    const SECTIONS = [
+      { id: 'executive', name: 'Executive Summary', desc: 'Project overview and investment materials.', icon: 'file-text', progressKey: 'progress_land' },
+      { id: 'land', name: 'Land & Site Control', desc: 'Property agreements and site documentation.', icon: 'map-pin', progressKey: 'progress_land' },
+      { id: 'interconnection', name: 'Interconnection', desc: 'ERCOT interconnection studies and grid analysis.', icon: 'zap', progressKey: 'progress_interconnection' },
+      { id: 'permitting', name: 'Permitting', desc: 'Permits and regulatory filings.', icon: 'clipboard', progressKey: 'progress_permitting' },
+      { id: 'technical', name: 'Technical & Engineering', desc: 'Engineering specifications and designs.', icon: 'tool', progressKey: 'progress_engineering' },
+      { id: 'epc', name: 'EPC & Construction', desc: 'Construction contracts and planning.', icon: 'hard-hat', progressKey: 'progress_epc' },
+      { id: 'market', name: 'Market Analysis', desc: 'ERCOT market research and revenue projections.', icon: 'trending-up', progressKey: 'progress_financial' },
+      { id: 'financial', name: 'Financial Model', desc: 'Pro forma and financial projections.', icon: 'dollar-sign', progressKey: 'progress_financial' },
+      { id: 'risk', name: 'Risk Assessment', desc: 'Risk analysis and mitigation strategies.', icon: 'alert-triangle', progressKey: 'progress_financial' },
+      { id: 'entity', name: 'Entity Structure', desc: 'Corporate structure and legal documents.', icon: 'building', progressKey: 'progress_financial' },
+      { id: 'team', name: 'Team & Partners', desc: 'Development team and partner information.', icon: 'users', progressKey: 'progress_financial' }
     ];
+
+    const ICONS = {
+      'file-text': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+      'map-pin': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+      'zap': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+      'clipboard': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>',
+      'tool': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+      'hard-hat': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 18a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v2z"/><path d="M10 15V6a2 2 0 0 1 4 0v9"/><path d="M4 15v-3a8 8 0 0 1 16 0v3"/></svg>',
+      'trending-up': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
+      'dollar-sign': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+      'alert-triangle': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+      'building': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>',
+      'users': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+      'dashboard': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>'
+    };
 
     // ===========================================
     // STATE
     // ===========================================
     let currentView = 'dashboard';
-    let currentCategory = null;
+    let currentSection = null;
+    let documents = [];
+    let notes = [];
+    let settings = {};
     let touchStartX = 0;
     let touchEndX = 0;
-    let loadedCategories = categories; // Will be replaced with Supabase data if available
 
     // ===========================================
-    // DOM ELEMENTS
+    // INITIALIZATION
     // ===========================================
-    const menuBtn = document.getElementById('menuBtn');
-    const backBtn = document.getElementById('backBtn');
-    const menuOverlay = document.getElementById('menuOverlay');
-    const sideMenu = document.getElementById('sideMenu');
-    const dashboardView = document.getElementById('dashboardView');
-    const categoryView = document.getElementById('categoryView');
-    const breadcrumbCurrent = document.getElementById('breadcrumbCurrent');
-    const categoryGrid = document.getElementById('categoryGrid');
-    const swipeIndicator = document.getElementById('swipeIndicator');
-    const themeToggle = document.getElementById('themeToggle');
-    const loadingOverlay = document.getElementById('loadingOverlay');
-
-    // ===========================================
-    // THEME MANAGEMENT
-    // ===========================================
-    function initTheme() {
-      const savedTheme = localStorage.getItem('dataroom-theme') || 'dark';
-      document.documentElement.setAttribute('data-theme', savedTheme);
+    async function init() {
+      initTheme();
+      initSupabase();
+      await loadData();
+      renderMenu();
+      renderDashboard();
+      setupEventListeners();
+      startVisitorTracking();
     }
 
-    function toggleTheme() {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('dataroom-theme', newTheme);
-    }
-
-    // ===========================================
-    // LOADING
-    // ===========================================
-    function showLoading() {
-      loadingOverlay.classList.add('visible');
-    }
-
-    function hideLoading() {
-      loadingOverlay.classList.remove('visible');
-    }
-
-    // ===========================================
-    // SUPABASE DATA FETCHING
-    // ===========================================
-    async function fetchCategoriesFromSupabase() {
-      if (!useSupabase) return null;
-      
+    function initSupabase() {
       try {
-        // Fetch categories
-        const { data: cats, error: catError } = await supabase
-          .from('categories')
-          .select('*')
-          .order('sort_order');
-        
-        if (catError) throw catError;
-        
-        // Fetch documents
-        const { data: docs, error: docError } = await supabase
-          .from('documents')
-          .select('*');
-        
-        if (docError) throw docError;
-        
-        // Fetch notes
-        const { data: notes, error: noteError } = await supabase
-          .from('notes')
-          .select('*');
-        
-        if (noteError) throw noteError;
-        
-        // Merge documents and notes into categories
-        return cats.map(cat => ({
-          ...cat,
-          documents: docs.filter(d => d.category_id === cat.id),
-          notes: notes.filter(n => n.category_id === cat.id)
-        }));
+        // Only initialize if we have real credentials
+        if (SUPABASE_ANON_KEY && !SUPABASE_ANON_KEY.includes('REPLACE_WITH')) {
+          supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+          console.log('Supabase initialized');
+        } else {
+          console.warn('Supabase credentials not configured - using fallback data');
+        }
       } catch (e) {
-        console.error('Error fetching from Supabase:', e);
-        return null;
+        console.error('Failed to initialize Supabase:', e);
       }
     }
 
     // ===========================================
-    // DOCUMENT HANDLING
+    // VISITOR TRACKING
     // ===========================================
-    function openDocument(doc) {
-      // If document has a URL, open it
-      if (doc.file_url || doc.url) {
-        const url = doc.file_url || doc.url;
-        window.open(url, '_blank');
+    async function startVisitorTracking() {
+      if (!supabase) return;
+
+      sessionId = crypto.randomUUID ? crypto.randomUUID() : 'session_' + Date.now();
+      sessionStart = new Date().toISOString();
+
+      try {
+        await supabase.from('visitor_sessions').insert({
+          session_id: sessionId,
+          started_at: sessionStart,
+          user_agent: navigator.userAgent,
+          referrer: document.referrer || null,
+          screen_width: window.innerWidth,
+          screen_height: window.innerHeight
+        });
+      } catch (e) {
+        console.log('Visitor tracking not available');
+      }
+
+      // Track page views
+      window.addEventListener('beforeunload', endVisitorSession);
+    }
+
+    async function endVisitorSession() {
+      if (!supabase || !sessionId) return;
+
+      const duration = Math.round((Date.now() - new Date(sessionStart).getTime()) / 1000);
+
+      try {
+        await supabase.from('visitor_sessions').update({
+          ended_at: new Date().toISOString(),
+          duration_seconds: duration
+        }).eq('session_id', sessionId);
+      } catch (e) {
+        // Silent fail
+      }
+    }
+
+    async function trackDocumentClick(doc) {
+      if (!supabase || !sessionId) return;
+
+      try {
+        await supabase.from('visitor_clicks').insert({
+          session_id: sessionId,
+          document_id: doc.id,
+          document_name: doc.name,
+          section: doc.section,
+          clicked_at: new Date().toISOString()
+        });
+      } catch (e) {
+        // Silent fail
+      }
+    }
+
+    async function trackSectionView(sectionId) {
+      if (!supabase || !sessionId) return;
+
+      try {
+        await supabase.from('visitor_clicks').insert({
+          session_id: sessionId,
+          section: sectionId,
+          action: 'section_view',
+          clicked_at: new Date().toISOString()
+        });
+      } catch (e) {
+        // Silent fail
+      }
+    }
+
+    // ===========================================
+    // DATA LOADING
+    // ===========================================
+    async function loadData() {
+      showLoading();
+
+      if (!supabase) {
+        hideLoading();
         return;
       }
-      
-      // If using Supabase and document has storage path
-      if (useSupabase && doc.storage_path) {
-        showLoading();
-        
-        // Get signed URL from Supabase Storage
-        supabase.storage
-          .from('documents')
-          .createSignedUrl(doc.storage_path, 3600) // 1 hour expiry
-          .then(({ data, error }) => {
-            hideLoading();
-            if (error) {
-              console.error('Error getting signed URL:', error);
-              alert('Unable to open document. Please try again.');
-              return;
-            }
-            window.open(data.signedUrl, '_blank');
+
+      try {
+        // Load documents from admin's table
+        const docsResult = await supabase
+          .from('dataroom_documents')
+          .select('*')
+          .eq('is_hidden', false)
+          .order('sort_order', { ascending: true });
+
+        if (docsResult.data) {
+          documents = docsResult.data;
+        }
+
+        // Load notes from admin's table
+        const notesResult = await supabase
+          .from('dataroom_notes')
+          .select('*')
+          .order('sort_order', { ascending: true });
+
+        if (notesResult.data) {
+          notes = notesResult.data;
+        }
+
+        // Load settings from admin's table
+        const settingsResult = await supabase
+          .from('dataroom_settings')
+          .select('*');
+
+        if (settingsResult.data) {
+          settingsResult.data.forEach(s => {
+            settings[s.key] = s.value;
           });
-        return;
+        }
+
+        hideLoading();
+      } catch (e) {
+        console.error('Error loading data:', e);
+        document.getElementById('connectionError').classList.add('visible');
+        hideLoading();
       }
-      
-      // Fallback - show message that document is not yet available
-      alert(`Document "${doc.name}" is not yet available for viewing. Please check back later or contact the administrator.`);
     }
 
     // ===========================================
-    // RENDER FUNCTIONS
+    // RENDERING
     // ===========================================
-    function getIcon(iconName) {
-      return ICONS[iconName] || ICONS.document;
+    function renderMenu() {
+      const menuHtml = `
+        <a href="#" class="menu-item active" data-view="dashboard">
+          ${ICONS['dashboard']}
+          Dashboard
+        </a>
+        ${SECTIONS.map(s => `
+          <a href="#" class="menu-item" data-section="${s.id}">
+            ${ICONS[s.icon]}
+            ${s.name}
+          </a>
+        `).join('')}
+      `;
+      document.getElementById('menuItems').innerHTML = menuHtml;
+
+      // Add click handlers
+      document.querySelectorAll('.menu-item').forEach(item => {
+        item.addEventListener('click', e => {
+          e.preventDefault();
+          closeMenu();
+          if (item.dataset.view === 'dashboard') {
+            goBack();
+          } else if (item.dataset.section) {
+            openSection(item.dataset.section);
+          }
+        });
+      });
+    }
+
+    function renderDashboard() {
+      // Update project info from settings
+      if (settings.project_name) {
+        document.getElementById('projectTitle').textContent = settings.project_name + ' — Project Dashboard';
+      }
+      if (settings.capacity) {
+        document.getElementById('capacityValue').textContent = settings.capacity;
+      }
+      if (settings.target_ntp) {
+        document.getElementById('ntpValue').textContent = settings.target_ntp;
+        document.getElementById('targetNtp').textContent = 'Target NTP: ' + settings.target_ntp;
+      }
+
+      // Calculate overall progress
+      const progressKeys = ['progress_land', 'progress_interconnection', 'progress_permitting', 'progress_engineering', 'progress_financial', 'progress_epc'];
+      let totalProgress = 0;
+      let progressCount = 0;
+
+      progressKeys.forEach(key => {
+        const val = parseInt(settings[key] || '0');
+        totalProgress += val;
+        progressCount++;
+      });
+
+      const avgProgress = progressCount > 0 ? Math.round(totalProgress / progressCount) : 0;
+      const circumference = 201;
+      const offset = circumference - (avgProgress / 100) * circumference;
+
+      document.getElementById('totalProgress').textContent = avgProgress + '%';
+      document.getElementById('progressRingText').textContent = avgProgress + '%';
+      document.getElementById('progressRing').style.strokeDashoffset = offset;
+
+      // Render progress breakdown
+      const breakdownHtml = [
+        { label: 'Land Control', key: 'progress_land', color: '#22c55e' },
+        { label: 'Interconnection', key: 'progress_interconnection', color: '#3b82f6' },
+        { label: 'Permitting', key: 'progress_permitting', color: '#a855f7' },
+        { label: 'Engineering', key: 'progress_engineering', color: '#f59e0b' }
+      ].map(item => `
+        <div class="progress-item">
+          <span class="progress-dot" style="background: ${item.color}"></span>
+          <span class="progress-item-label">${item.label}</span>
+          <span class="progress-item-value">${settings[item.key] || '0'}%</span>
+        </div>
+      `).join('');
+
+      document.getElementById('progressBreakdown').innerHTML = breakdownHtml;
+
+      // Render category cards
+      renderCategories();
     }
 
     function renderCategories() {
-      categoryGrid.innerHTML = loadedCategories.map(cat => `
-        <div class="category-card" data-category="${cat.id}">
-          <div class="category-icon">${getIcon(cat.icon)}</div>
-          <div class="category-info">
-            <div class="category-name">${cat.name}</div>
-            <div class="category-desc">${cat.desc}</div>
-          </div>
-          <div class="category-status">
-            <span class="category-badge">${cat.status}</span>
-            <span class="category-count">${cat.documents ? cat.documents.length : 0} docs</span>
-          </div>
-        </div>
-      `).join('');
+      const html = SECTIONS.map(section => {
+        const sectionDocs = documents.filter(d => d.section === section.id);
+        const uploadedCount = sectionDocs.filter(d => d.status === 'uploaded').length;
+        const totalCount = sectionDocs.length;
+        const percent = totalCount > 0 ? Math.round((uploadedCount / totalCount) * 100) : 0;
 
-      // Add click listeners
+        return `
+          <div class="category-card" data-section="${section.id}">
+            <div class="category-icon">${ICONS[section.icon]}</div>
+            <div class="category-info">
+              <div class="category-name">${section.name}</div>
+              <div class="category-desc">${section.desc}</div>
+            </div>
+            <div class="category-status">
+              <span class="category-badge">${percent}%</span>
+              <span class="category-count">${totalCount} docs</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('categoryGrid').innerHTML = html;
+
+      // Add click handlers
       document.querySelectorAll('.category-card').forEach(card => {
         card.addEventListener('click', () => {
-          const catId = card.dataset.category;
-          openCategory(catId);
+          openSection(card.dataset.section);
         });
       });
     }
 
-    function openCategory(categoryId) {
-      const cat = loadedCategories.find(c => c.id === categoryId);
-      if (!cat) return;
+    function openSection(sectionId) {
+      const section = SECTIONS.find(s => s.id === sectionId);
+      if (!section) return;
 
-      // Save scroll position before navigating
-      saveScrollPosition();
+      currentSection = section;
+      currentView = 'section';
 
-      currentCategory = cat;
-      currentView = 'category';
+      // Track this view
+      trackSectionView(sectionId);
 
       // Update breadcrumb
-      breadcrumbCurrent.textContent = cat.name;
+      document.getElementById('breadcrumbCurrent').textContent = section.name;
 
       // Update header
-      document.getElementById('categoryTitle').textContent = cat.name;
-      document.getElementById('categoryBadge').textContent = cat.status;
-      document.getElementById('categoryDesc').textContent = cat.desc;
-      document.getElementById('categoryIcon').innerHTML = getIcon(cat.icon);
+      document.getElementById('categoryTitle').textContent = section.name;
+      document.getElementById('categoryDesc').textContent = section.desc;
+      document.getElementById('categoryIcon').innerHTML = ICONS[section.icon];
 
-      // Render documents with click handlers
-      const docList = document.getElementById('docList');
-      docList.innerHTML = (cat.documents || []).map((doc, index) => `
-        <div class="doc-item" data-doc-index="${index}">
-          <div class="doc-type-icon ${doc.type}">${doc.type.toUpperCase()}</div>
-          <div class="doc-info">
-            <div class="doc-name">${doc.name}</div>
-            <div class="doc-meta">${doc.type.toUpperCase()}${doc.url || doc.file_url ? ' • External Link' : ''}</div>
+      // Calculate completion
+      const sectionDocs = documents.filter(d => d.section === sectionId);
+      const uploadedCount = sectionDocs.filter(d => d.status === 'uploaded').length;
+      const totalCount = sectionDocs.length;
+      const percent = totalCount > 0 ? Math.round((uploadedCount / totalCount) * 100) : 0;
+      document.getElementById('categoryBadge').textContent = percent + '% Complete';
+
+      // Render documents
+      renderDocuments(sectionId);
+
+      // Render notes
+      renderNotes(sectionId);
+
+      // Show section view
+      document.getElementById('dashboardView').classList.remove('active');
+      document.getElementById('categoryView').classList.add('active');
+      document.getElementById('backBtn').classList.add('visible');
+
+      // Update menu
+      updateMenuActive(sectionId);
+
+      window.scrollTo(0, 0);
+    }
+
+    function renderDocuments(sectionId) {
+      const sectionDocs = documents.filter(d => d.section === sectionId);
+
+      if (sectionDocs.length === 0) {
+        document.getElementById('docList').innerHTML = '<p style="color: var(--text-muted); font-size: 14px;">No documents available yet.</p>';
+        return;
+      }
+
+      const html = sectionDocs.map(doc => {
+        const fileType = doc.file_type || 'pdf';
+        const statusClass = doc.status || 'missing';
+        const statusText = statusClass === 'uploaded' ? 'Uploaded' : statusClass === 'pending' ? 'Pending' : 'Missing';
+        const hasUrl = doc.url && doc.url.trim() !== '';
+
+        return `
+          <div class="doc-item ${hasUrl ? 'clickable' : ''}" data-doc-id="${doc.id}">
+            <div class="doc-type-icon ${fileType}">${fileType.toUpperCase()}</div>
+            <div class="doc-info">
+              <div class="doc-name">${doc.name}</div>
+              <div class="doc-meta">${fileType.toUpperCase()}${doc.date_added ? ' • ' + doc.date_added : ''}</div>
+            </div>
+            <div class="doc-status ${statusClass}">
+              <span class="doc-status-dot"></span>
+              ${statusText}
+            </div>
           </div>
-          <div class="doc-status ${doc.status}">
-            <span class="doc-status-dot"></span>
-            ${doc.status === 'uploaded' ? 'Uploaded' : 'Pending'}
-          </div>
+        `;
+      }).join('');
+
+      document.getElementById('docList').innerHTML = html;
+
+      // Add click handlers
+      document.querySelectorAll('.doc-item').forEach(item => {
+        item.addEventListener('click', () => {
+          const docId = item.dataset.docId;
+          const doc = documents.find(d => d.id === docId);
+          if (doc) openDocument(doc);
+        });
+      });
+    }
+
+    function renderNotes(sectionId) {
+      const sectionNotes = notes.filter(n => n.section === sectionId);
+
+      if (sectionNotes.length === 0) {
+        document.getElementById('notesSection').style.display = 'none';
+        return;
+      }
+
+      const html = sectionNotes.map(note => `
+        <div class="note-item ${note.is_highlight ? 'highlight' : ''}">
+          <div class="note-source">${note.author || 'Note'}<span class="note-date">${note.date || ''}</span></div>
+          <div class="note-text">${note.content}</div>
         </div>
       `).join('');
 
-      // Add click handlers to documents
-      docList.querySelectorAll('.doc-item').forEach((item, index) => {
-        item.addEventListener('click', () => {
-          const doc = cat.documents[index];
-          openDocument(doc);
-        });
-      });
+      document.getElementById('notesList').innerHTML = html;
+      document.getElementById('notesSection').style.display = 'block';
+    }
 
-      // Render notes if any
-      const notesSection = document.getElementById('notesSection');
-      const notesList = document.getElementById('notesList');
-      if (cat.notes && cat.notes.length > 0) {
-        notesSection.style.display = 'block';
-        notesList.innerHTML = cat.notes.map(note => `
-          <div class="note-item">
-            <div class="note-source">${note.source}</div>
-            <div class="note-text">${note.text}</div>
-          </div>
-        `).join('');
+    function openDocument(doc) {
+      // Track the click
+      trackDocumentClick(doc);
+
+      if (doc.url && doc.url.trim() !== '') {
+        window.open(doc.url, '_blank');
+      } else if (doc.status === 'uploaded') {
+        alert('Document is uploaded but URL not configured. Please contact the administrator.');
       } else {
-        notesSection.style.display = 'none';
+        alert('Document is not yet available.');
       }
-
-      // Show category view
-      dashboardView.classList.remove('active');
-      categoryView.classList.add('active');
-      backBtn.classList.add('visible');
-
-      // Update menu active state
-      updateMenuActive(categoryId);
-
-      // Scroll to top
-      window.scrollTo(0, 0);
     }
 
     function goBack() {
       if (currentView === 'dashboard') return;
 
       currentView = 'dashboard';
-      currentCategory = null;
+      currentSection = null;
 
-      // Update breadcrumb
-      breadcrumbCurrent.textContent = 'Dashboard';
+      document.getElementById('breadcrumbCurrent').textContent = 'Dashboard';
+      document.getElementById('categoryView').classList.remove('active');
+      document.getElementById('dashboardView').classList.add('active');
+      document.getElementById('backBtn').classList.remove('visible');
 
-      // Show dashboard
-      categoryView.classList.remove('active');
-      dashboardView.classList.add('active');
-      backBtn.classList.remove('visible');
-
-      // Update menu
       updateMenuActive('dashboard');
-
-      // Restore scroll position
-      restoreScrollPosition();
     }
 
     // ===========================================
-    // MENU FUNCTIONS
+    // THEME
+    // ===========================================
+    function initTheme() {
+      const saved = localStorage.getItem('dataroom-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const newTheme = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('dataroom-theme', newTheme);
+    }
+
+    // ===========================================
+    // MENU
     // ===========================================
     function openMenu() {
-      menuOverlay.classList.add('open');
-      sideMenu.classList.add('open');
+      document.getElementById('menuOverlay').classList.add('open');
+      document.getElementById('sideMenu').classList.add('open');
     }
 
     function closeMenu() {
-      menuOverlay.classList.remove('open');
-      sideMenu.classList.remove('open');
+      document.getElementById('menuOverlay').classList.remove('open');
+      document.getElementById('sideMenu').classList.remove('open');
     }
 
     function updateMenuActive(id) {
       document.querySelectorAll('.menu-item').forEach(item => {
         item.classList.remove('active');
-        if (item.dataset.category === id || (id === 'dashboard' && item.dataset.view === 'dashboard')) {
+        if (item.dataset.section === id || (id === 'dashboard' && item.dataset.view === 'dashboard')) {
           item.classList.add('active');
         }
       });
     }
 
     // ===========================================
-    // SCROLL POSITION MEMORY
+    // LOADING
     // ===========================================
-    function saveScrollPosition() {
-      if (currentView === 'dashboard') {
-        sessionStorage.setItem('dashboardScroll', window.scrollY);
-      }
+    function showLoading() {
+      document.getElementById('loadingOverlay').classList.add('visible');
     }
 
-    function restoreScrollPosition() {
-      const saved = sessionStorage.getItem('dashboardScroll');
-      if (saved && currentView === 'dashboard') {
-        setTimeout(() => {
-          window.scrollTo(0, parseInt(saved));
-        }, 10);
-      }
+    function hideLoading() {
+      document.getElementById('loadingOverlay').classList.remove('visible');
     }
 
     // ===========================================
-    // SWIPE DETECTION
+    // SWIPE GESTURES
     // ===========================================
     function handleTouchStart(e) {
       touchStartX = e.changedTouches[0].screenX;
@@ -1521,25 +1480,18 @@
     function handleTouchMove(e) {
       const currentX = e.changedTouches[0].screenX;
       const diff = currentX - touchStartX;
-      
       if (touchStartX < 30 && diff > 20 && currentView !== 'dashboard') {
-        swipeIndicator.classList.add('visible');
+        document.getElementById('swipeIndicator').classList.add('visible');
       } else {
-        swipeIndicator.classList.remove('visible');
+        document.getElementById('swipeIndicator').classList.remove('visible');
       }
     }
 
     function handleTouchEnd(e) {
       touchEndX = e.changedTouches[0].screenX;
-      swipeIndicator.classList.remove('visible');
-      handleSwipe();
-    }
-
-    function handleSwipe() {
-      const swipeThreshold = 80;
+      document.getElementById('swipeIndicator').classList.remove('visible');
       const diff = touchEndX - touchStartX;
-
-      if (diff > swipeThreshold && touchStartX < 50 && currentView !== 'dashboard') {
+      if (diff > 80 && touchStartX < 50 && currentView !== 'dashboard') {
         goBack();
       }
     }
@@ -1548,67 +1500,24 @@
     // EVENT LISTENERS
     // ===========================================
     function setupEventListeners() {
-      // Menu
-      menuBtn.addEventListener('click', openMenu);
-      menuOverlay.addEventListener('click', closeMenu);
-      backBtn.addEventListener('click', goBack);
-
-      // Theme toggle
-      themeToggle.addEventListener('click', toggleTheme);
-
-      // Menu items
-      document.querySelectorAll('.menu-item').forEach(item => {
-        item.addEventListener('click', (e) => {
-          e.preventDefault();
-          closeMenu();
-          
-          if (item.dataset.view === 'dashboard') {
-            goBack();
-          } else if (item.dataset.category) {
-            openCategory(item.dataset.category);
-          }
-        });
-      });
-
-      // Breadcrumb root
-      document.getElementById('breadcrumbRoot').addEventListener('click', (e) => {
+      document.getElementById('menuBtn').addEventListener('click', openMenu);
+      document.getElementById('menuOverlay').addEventListener('click', closeMenu);
+      document.getElementById('backBtn').addEventListener('click', goBack);
+      document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+      document.getElementById('breadcrumbRoot').addEventListener('click', e => {
         e.preventDefault();
         goBack();
       });
 
-      // Swipe gestures
       document.addEventListener('touchstart', handleTouchStart, { passive: true });
       document.addEventListener('touchmove', handleTouchMove, { passive: true });
       document.addEventListener('touchend', handleTouchEnd, { passive: true });
-
-      // Save scroll on unload
-      window.addEventListener('beforeunload', saveScrollPosition);
     }
 
     // ===========================================
-    // INITIALIZE
+    // START
     // ===========================================
-    async function init() {
-      initTheme();
-      
-      // Try to load from Supabase first
-      if (useSupabase) {
-        showLoading();
-        const supabaseData = await fetchCategoriesFromSupabase();
-        hideLoading();
-        
-        if (supabaseData) {
-          loadedCategories = supabaseData;
-        }
-      }
-      
-      renderCategories();
-      setupEventListeners();
-      restoreScrollPosition();
-    }
-
     document.addEventListener('DOMContentLoaded', init);
   </script>
-
 </body>
 </html>
