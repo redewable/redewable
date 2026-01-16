@@ -28,6 +28,22 @@
       --danger: #ef4444;
     }
 
+    /* Light mode variables */
+    [data-theme="light"] {
+      --bg-primary: #f8faf8;
+      --bg-secondary: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f0f4f0;
+      --border: #d4ddd4;
+      --border-accent: #22c55e;
+      --text-primary: #1a1f1a;
+      --text-secondary: #4a5a4a;
+      --text-muted: #7a8a7a;
+      --accent: #16a34a;
+      --accent-dim: rgba(34, 197, 94, 0.12);
+      --accent-glow: rgba(34, 197, 94, 0.08);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -38,6 +54,7 @@
     html, body {
       overflow-x: hidden;
       width: 100%;
+      max-width: 100vw;
     }
 
     body {
@@ -46,6 +63,7 @@
       color: var(--text-primary);
       min-height: 100vh;
       line-height: 1.5;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     /* Header */
@@ -56,6 +74,7 @@
       background: var(--bg-primary);
       border-bottom: 1px solid var(--border);
       padding: 12px 16px;
+      transition: background 0.3s ease;
     }
 
     .header-inner {
@@ -78,6 +97,12 @@
       justify-content: center;
       cursor: pointer;
       flex-shrink: 0;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .menu-btn:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
     }
 
     .back-btn {
@@ -88,12 +113,57 @@
       display: flex;
     }
 
+    .header-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .theme-toggle {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+
+    .theme-toggle .sun-icon {
+      display: none;
+    }
+
+    .theme-toggle .moon-icon {
+      display: block;
+    }
+
+    [data-theme="light"] .theme-toggle .sun-icon {
+      display: block;
+    }
+
+    [data-theme="light"] .theme-toggle .moon-icon {
+      display: none;
+    }
+
     .breadcrumb {
       display: flex;
       align-items: center;
       gap: 8px;
       font-size: 14px;
       overflow: hidden;
+      flex: 1;
+      min-width: 0;
     }
 
     .breadcrumb-item {
@@ -123,6 +193,7 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 20px 16px 100px;
+      width: 100%;
     }
 
     /* Dashboard View */
@@ -207,6 +278,7 @@
       border-left: 3px solid var(--accent);
       border-radius: 12px;
       padding: 16px;
+      transition: background 0.3s ease, border-color 0.3s ease;
     }
 
     .stat-label {
@@ -237,6 +309,7 @@
       border-radius: 16px;
       padding: 20px;
       margin-bottom: 24px;
+      transition: background 0.3s ease, border-color 0.3s ease;
     }
 
     .progress-header {
@@ -374,6 +447,12 @@
       flex-shrink: 0;
     }
 
+    .category-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+    }
+
     .category-info {
       flex: 1;
       min-width: 0;
@@ -441,6 +520,12 @@
       color: var(--accent);
     }
 
+    .category-header-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+    }
+
     .category-header-info h1 {
       font-size: 22px;
       font-weight: 700;
@@ -466,7 +551,7 @@
       border-bottom: 1px solid var(--border);
     }
 
-    /* Document List - Mobile First */
+    /* Document List */
     .doc-list {
       display: flex;
       flex-direction: column;
@@ -570,6 +655,7 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 16px;
+      transition: background 0.3s ease, border-color 0.3s ease;
     }
 
     .notes-header {
@@ -641,7 +727,7 @@
       background: var(--bg-secondary);
       z-index: 201;
       transform: translateX(-100%);
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, background 0.3s ease;
       display: flex;
       flex-direction: column;
     }
@@ -728,6 +814,41 @@
       opacity: 0.5;
     }
 
+    /* Loading overlay for document opens */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 300;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+
+    .loading-overlay.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
     /* Responsive */
     @media (min-width: 600px) {
       .stats-row {
@@ -757,11 +878,32 @@
         height: 100px;
       }
     }
+
+    /* Small screen stat cards */
+    @media (max-width: 400px) {
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .stat-card {
+        padding: 12px;
+      }
+      
+      .stat-value {
+        font-size: 18px;
+      }
+    }
   </style>
 
 </head>
 <body>
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+  </div>
+
   <!-- Swipe Indicator -->
+
   <div class="swipe-indicator" id="swipeIndicator"></div>
 
   <!-- Menu Overlay -->
@@ -773,7 +915,7 @@
   <nav class="side-menu" id="sideMenu">
     <div class="menu-header">
       <div class="menu-logo">
-        <img src="/assets/logo-mark.png" alt="ReDewable">
+        <img src="/assets/logo-mark.png" alt="ReDewable" onerror="this.style.display='none'">
         <span>ReDew Anson</span>
       </div>
     </div>
@@ -816,27 +958,32 @@
 
   <header class="header">
     <div class="header-inner">
-      <button class="menu-btn" id="menuBtn">
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
         </svg>
       </button>
-
-```
-  <button class="menu-btn back-btn" id="backBtn">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="15 18 9 12 15 6"/>
-    </svg>
-  </button>
-  
-  <div class="breadcrumb" id="breadcrumb">
-    <a href="#" class="breadcrumb-item" id="breadcrumbRoot">ReDew Anson</a>
-    <span class="breadcrumb-separator">/</span>
-    <span class="breadcrumb-current" id="breadcrumbCurrent">Dashboard</span>
-  </div>
-</div>
-```
-
+      <button class="menu-btn back-btn" id="backBtn" aria-label="Go back">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <div class="breadcrumb" id="breadcrumb">
+        <a href="#" class="breadcrumb-item" id="breadcrumbRoot">ReDew Anson</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current" id="breadcrumbCurrent">Dashboard</span>
+      </div>
+      <div class="header-right">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        </button>
+      </div>
+    </div>
   </header>
 
   <!-- Main Content -->
@@ -960,31 +1107,66 @@
   </main>
 
   <script>
-    // Data
+    // ===========================================
+    // SUPABASE CONFIGURATION
+    // ===========================================
+    // Replace these with your actual Supabase credentials
+    const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+    
+    let supabase = null;
+    let useSupabase = false;
+    
+    // Try to initialize Supabase if credentials are provided
+    if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
+      try {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        useSupabase = true;
+        console.log('Supabase initialized successfully');
+      } catch (e) {
+        console.warn('Failed to initialize Supabase:', e);
+      }
+    }
+
+    // ===========================================
+    // SVG ICONS
+    // ===========================================
+    const ICONS = {
+      document: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
+      location: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+      bolt: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+      permit: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg>`,
+      gear: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+      dollar: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`
+    };
+
+    // ===========================================
+    // FALLBACK DATA (used when Supabase not configured)
+    // ===========================================
     const categories = [
       {
         id: 'executive-summary',
         name: 'Executive Summary',
         desc: 'Documentation and materials for executive summary.',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+        icon: 'document',
         status: '100% Complete',
         documents: [
-          { name: 'Site Map - ReDew Anson to Phantom Hill', type: 'img', status: 'uploaded' },
-          { name: 'Project One-Pager', type: 'pdf', status: 'uploaded' },
-          { name: 'Site Location Map - Phantom Hill', type: 'img', status: 'uploaded' },
-          { name: 'Investment Brief', type: 'www', url: '/invest', status: 'uploaded' }
+          { id: 'doc-1', name: 'Site Map - ReDew Anson to Phantom Hill', type: 'img', status: 'uploaded', file_url: null },
+          { id: 'doc-2', name: 'Project One-Pager', type: 'pdf', status: 'uploaded', file_url: null },
+          { id: 'doc-3', name: 'Site Location Map - Phantom Hill', type: 'img', status: 'uploaded', file_url: null },
+          { id: 'doc-4', name: 'Investment Brief', type: 'www', url: '/invest', status: 'uploaded', file_url: '/invest' }
         ]
       },
       {
         id: 'land-control',
         name: 'Land & Site Control',
         desc: 'Documentation and materials for land & site control.',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+        icon: 'location',
         status: '100% Complete',
         documents: [
-          { name: 'Property Field Survey', type: 'pdf', status: 'uploaded' },
-          { name: 'Land Control Agreement', type: 'pdf', status: 'uploaded' },
-          { name: 'Geotechnical Scope Contract', type: 'pdf', status: 'uploaded' }
+          { id: 'doc-5', name: 'Property Field Survey', type: 'pdf', status: 'uploaded', file_url: null },
+          { id: 'doc-6', name: 'Land Control Agreement', type: 'pdf', status: 'uploaded', file_url: null },
+          { id: 'doc-7', name: 'Geotechnical Scope Contract', type: 'pdf', status: 'uploaded', file_url: null }
         ],
         notes: [
           { source: 'Tetra Tech', text: 'Environmental assessment indicates clear pathway - no wetlands, endangered species, or cultural resources identified. Formal Phase I ESA recommended before closing.' },
@@ -995,12 +1177,12 @@
         id: 'interconnection',
         name: 'Interconnection',
         desc: 'ERCOT interconnection studies and grid analysis.',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+        icon: 'bolt',
         status: '40% Complete',
         documents: [
-          { name: 'Injection Study Report - Enerzinx', type: 'pdf', status: 'uploaded' },
-          { name: 'POI Analysis Summary', type: 'pdf', status: 'uploaded' },
-          { name: 'ERCOT Queue Position Analysis', type: 'pdf', status: 'pending' }
+          { id: 'doc-8', name: 'Injection Study Report - Enerzinx', type: 'pdf', status: 'uploaded', file_url: null },
+          { id: 'doc-9', name: 'POI Analysis Summary', type: 'pdf', status: 'uploaded', file_url: null },
+          { id: 'doc-10', name: 'ERCOT Queue Position Analysis', type: 'pdf', status: 'pending', file_url: null }
         ],
         notes: [
           { source: 'Enerzinx', text: 'Independent injection study confirms 300MW feasibility at Phantom Hill 345kV. SCR supports up to 4,200 MVA at SCR=3.' }
@@ -1010,44 +1192,49 @@
         id: 'permitting',
         name: 'Permitting & Environmental',
         desc: 'Permits, environmental assessments, and regulatory filings.',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg>',
+        icon: 'permit',
         status: '50% Complete',
         documents: [
-          { name: 'Phase I ESA Scope', type: 'pdf', status: 'uploaded' },
-          { name: 'County Permits Checklist', type: 'pdf', status: 'pending' }
+          { id: 'doc-11', name: 'Phase I ESA Scope', type: 'pdf', status: 'uploaded', file_url: null },
+          { id: 'doc-12', name: 'County Permits Checklist', type: 'pdf', status: 'pending', file_url: null }
         ]
       },
       {
         id: 'engineering',
         name: 'Engineering & Design',
         desc: 'Technical specifications and engineering deliverables.',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
+        icon: 'gear',
         status: '35% Complete',
         documents: [
-          { name: 'Preliminary Site Layout', type: 'pdf', status: 'uploaded' },
-          { name: 'Single Line Diagram', type: 'pdf', status: 'pending' }
+          { id: 'doc-13', name: 'Preliminary Site Layout', type: 'pdf', status: 'uploaded', file_url: null },
+          { id: 'doc-14', name: 'Single Line Diagram', type: 'pdf', status: 'pending', file_url: null }
         ]
       },
       {
         id: 'financial',
         name: 'Financial & Legal',
         desc: 'Financial models, legal documents, and corporate structure.',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+        icon: 'dollar',
         status: '25% Complete',
         documents: [
-          { name: 'Project Pro Forma', type: 'pdf', status: 'pending' },
-          { name: 'Operating Agreement', type: 'pdf', status: 'uploaded' }
+          { id: 'doc-15', name: 'Project Pro Forma', type: 'pdf', status: 'pending', file_url: null },
+          { id: 'doc-16', name: 'Operating Agreement', type: 'pdf', status: 'uploaded', file_url: null }
         ]
       }
     ];
 
-    // State
+    // ===========================================
+    // STATE
+    // ===========================================
     let currentView = 'dashboard';
     let currentCategory = null;
     let touchStartX = 0;
     let touchEndX = 0;
+    let loadedCategories = categories; // Will be replaced with Supabase data if available
 
-    // DOM Elements
+    // ===========================================
+    // DOM ELEMENTS
+    // ===========================================
     const menuBtn = document.getElementById('menuBtn');
     const backBtn = document.getElementById('backBtn');
     const menuOverlay = document.getElementById('menuOverlay');
@@ -1057,26 +1244,129 @@
     const breadcrumbCurrent = document.getElementById('breadcrumbCurrent');
     const categoryGrid = document.getElementById('categoryGrid');
     const swipeIndicator = document.getElementById('swipeIndicator');
+    const themeToggle = document.getElementById('themeToggle');
+    const loadingOverlay = document.getElementById('loadingOverlay');
 
-    // Initialize
-    function init() {
-      renderCategories();
-      setupEventListeners();
-      restoreScrollPosition();
+    // ===========================================
+    // THEME MANAGEMENT
+    // ===========================================
+    function initTheme() {
+      const savedTheme = localStorage.getItem('dataroom-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
     }
 
-    // Render category cards on dashboard
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('dataroom-theme', newTheme);
+    }
+
+    // ===========================================
+    // LOADING
+    // ===========================================
+    function showLoading() {
+      loadingOverlay.classList.add('visible');
+    }
+
+    function hideLoading() {
+      loadingOverlay.classList.remove('visible');
+    }
+
+    // ===========================================
+    // SUPABASE DATA FETCHING
+    // ===========================================
+    async function fetchCategoriesFromSupabase() {
+      if (!useSupabase) return null;
+      
+      try {
+        // Fetch categories
+        const { data: cats, error: catError } = await supabase
+          .from('categories')
+          .select('*')
+          .order('sort_order');
+        
+        if (catError) throw catError;
+        
+        // Fetch documents
+        const { data: docs, error: docError } = await supabase
+          .from('documents')
+          .select('*');
+        
+        if (docError) throw docError;
+        
+        // Fetch notes
+        const { data: notes, error: noteError } = await supabase
+          .from('notes')
+          .select('*');
+        
+        if (noteError) throw noteError;
+        
+        // Merge documents and notes into categories
+        return cats.map(cat => ({
+          ...cat,
+          documents: docs.filter(d => d.category_id === cat.id),
+          notes: notes.filter(n => n.category_id === cat.id)
+        }));
+      } catch (e) {
+        console.error('Error fetching from Supabase:', e);
+        return null;
+      }
+    }
+
+    // ===========================================
+    // DOCUMENT HANDLING
+    // ===========================================
+    function openDocument(doc) {
+      // If document has a URL, open it
+      if (doc.file_url || doc.url) {
+        const url = doc.file_url || doc.url;
+        window.open(url, '_blank');
+        return;
+      }
+      
+      // If using Supabase and document has storage path
+      if (useSupabase && doc.storage_path) {
+        showLoading();
+        
+        // Get signed URL from Supabase Storage
+        supabase.storage
+          .from('documents')
+          .createSignedUrl(doc.storage_path, 3600) // 1 hour expiry
+          .then(({ data, error }) => {
+            hideLoading();
+            if (error) {
+              console.error('Error getting signed URL:', error);
+              alert('Unable to open document. Please try again.');
+              return;
+            }
+            window.open(data.signedUrl, '_blank');
+          });
+        return;
+      }
+      
+      // Fallback - show message that document is not yet available
+      alert(`Document "${doc.name}" is not yet available for viewing. Please check back later or contact the administrator.`);
+    }
+
+    // ===========================================
+    // RENDER FUNCTIONS
+    // ===========================================
+    function getIcon(iconName) {
+      return ICONS[iconName] || ICONS.document;
+    }
+
     function renderCategories() {
-      categoryGrid.innerHTML = categories.map(cat => `
+      categoryGrid.innerHTML = loadedCategories.map(cat => `
         <div class="category-card" data-category="${cat.id}">
-          <div class="category-icon">${cat.icon}</div>
+          <div class="category-icon">${getIcon(cat.icon)}</div>
           <div class="category-info">
             <div class="category-name">${cat.name}</div>
             <div class="category-desc">${cat.desc}</div>
           </div>
           <div class="category-status">
             <span class="category-badge">${cat.status}</span>
-            <span class="category-count">${cat.documents.length} docs</span>
+            <span class="category-count">${cat.documents ? cat.documents.length : 0} docs</span>
           </div>
         </div>
       `).join('');
@@ -1090,9 +1380,8 @@
       });
     }
 
-    // Open category view
     function openCategory(categoryId) {
-      const cat = categories.find(c => c.id === categoryId);
+      const cat = loadedCategories.find(c => c.id === categoryId);
       if (!cat) return;
 
       // Save scroll position before navigating
@@ -1108,16 +1397,16 @@
       document.getElementById('categoryTitle').textContent = cat.name;
       document.getElementById('categoryBadge').textContent = cat.status;
       document.getElementById('categoryDesc').textContent = cat.desc;
-      document.getElementById('categoryIcon').innerHTML = cat.icon;
+      document.getElementById('categoryIcon').innerHTML = getIcon(cat.icon);
 
-      // Render documents
+      // Render documents with click handlers
       const docList = document.getElementById('docList');
-      docList.innerHTML = cat.documents.map(doc => `
-        <div class="doc-item" ${doc.url ? `onclick="window.open('${doc.url}', '_blank')"` : ''}>
+      docList.innerHTML = (cat.documents || []).map((doc, index) => `
+        <div class="doc-item" data-doc-index="${index}">
           <div class="doc-type-icon ${doc.type}">${doc.type.toUpperCase()}</div>
           <div class="doc-info">
             <div class="doc-name">${doc.name}</div>
-            <div class="doc-meta">${doc.type.toUpperCase()}${doc.url ? ' • External Link' : ''}</div>
+            <div class="doc-meta">${doc.type.toUpperCase()}${doc.url || doc.file_url ? ' • External Link' : ''}</div>
           </div>
           <div class="doc-status ${doc.status}">
             <span class="doc-status-dot"></span>
@@ -1125,6 +1414,14 @@
           </div>
         </div>
       `).join('');
+
+      // Add click handlers to documents
+      docList.querySelectorAll('.doc-item').forEach((item, index) => {
+        item.addEventListener('click', () => {
+          const doc = cat.documents[index];
+          openDocument(doc);
+        });
+      });
 
       // Render notes if any
       const notesSection = document.getElementById('notesSection');
@@ -1153,7 +1450,6 @@
       window.scrollTo(0, 0);
     }
 
-    // Go back to dashboard
     function goBack() {
       if (currentView === 'dashboard') return;
 
@@ -1175,7 +1471,9 @@
       restoreScrollPosition();
     }
 
-    // Menu functions
+    // ===========================================
+    // MENU FUNCTIONS
+    // ===========================================
     function openMenu() {
       menuOverlay.classList.add('open');
       sideMenu.classList.add('open');
@@ -1195,7 +1493,9 @@
       });
     }
 
-    // Scroll position memory
+    // ===========================================
+    // SCROLL POSITION MEMORY
+    // ===========================================
     function saveScrollPosition() {
       if (currentView === 'dashboard') {
         sessionStorage.setItem('dashboardScroll', window.scrollY);
@@ -1211,7 +1511,9 @@
       }
     }
 
-    // Swipe detection
+    // ===========================================
+    // SWIPE DETECTION
+    // ===========================================
     function handleTouchStart(e) {
       touchStartX = e.changedTouches[0].screenX;
     }
@@ -1220,7 +1522,6 @@
       const currentX = e.changedTouches[0].screenX;
       const diff = currentX - touchStartX;
       
-      // Show swipe indicator when swiping right from left edge
       if (touchStartX < 30 && diff > 20 && currentView !== 'dashboard') {
         swipeIndicator.classList.add('visible');
       } else {
@@ -1238,18 +1539,22 @@
       const swipeThreshold = 80;
       const diff = touchEndX - touchStartX;
 
-      // Swipe right from left edge to go back
       if (diff > swipeThreshold && touchStartX < 50 && currentView !== 'dashboard') {
         goBack();
       }
     }
 
-    // Event listeners
+    // ===========================================
+    // EVENT LISTENERS
+    // ===========================================
     function setupEventListeners() {
       // Menu
       menuBtn.addEventListener('click', openMenu);
       menuOverlay.addEventListener('click', closeMenu);
       backBtn.addEventListener('click', goBack);
+
+      // Theme toggle
+      themeToggle.addEventListener('click', toggleTheme);
 
       // Menu items
       document.querySelectorAll('.menu-item').forEach(item => {
@@ -1280,7 +1585,28 @@
       window.addEventListener('beforeunload', saveScrollPosition);
     }
 
-    // Initialize on load
+    // ===========================================
+    // INITIALIZE
+    // ===========================================
+    async function init() {
+      initTheme();
+      
+      // Try to load from Supabase first
+      if (useSupabase) {
+        showLoading();
+        const supabaseData = await fetchCategoriesFromSupabase();
+        hideLoading();
+        
+        if (supabaseData) {
+          loadedCategories = supabaseData;
+        }
+      }
+      
+      renderCategories();
+      setupEventListeners();
+      restoreScrollPosition();
+    }
+
     document.addEventListener('DOMContentLoaded', init);
   </script>
 
