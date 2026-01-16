@@ -1036,12 +1036,12 @@ async function logout() {
         .map((item) => {
           const val = escapeHtml(settings[item.key] || '0');
           return `
-            <div class="progress-item">
-              <span class="progress-dot" style="background: var(--accent);"></span>
-              <span class="progress-item-label">${escapeHtml(item.label)}</span>
-              <span class="progress-item-value">${val}%</span>
-            </div>
-          `;
+          <div class="progress-item">
+            <span class="progress-dot" style="background: var(--accent);"></span>
+            <span class="progress-item-label">${escapeHtml(item.label)}</span>
+            <span class="progress-item-value">${val}%</span>
+          </div>
+        `;
         })
         .join('');
     }
