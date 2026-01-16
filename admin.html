@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
+            /* Dark Mode (Default) */
             --bg-primary: #0a0f0d;
             --bg-secondary: #111916;
             --bg-tertiary: #1a2420;
@@ -29,7 +30,26 @@
             --status-red: #ef4444;
             --status-blue: #3b82f6;
             --status-purple: #a855f7;
+            --shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
+
+        [data-theme="light"] {
+            --bg-primary: #f5f7f6;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e8edeb;
+            --bg-card: #ffffff;
+            --brand-green: #1a8a6e;
+            --brand-green-dim: #2dd4a8;
+            --brand-green-glow: rgba(26, 138, 110, 0.1);
+            --brand-green-bright: #15735c;
+            --text-primary: #1a2420;
+            --text-secondary: #4a5854;
+            --text-muted: #7a8a84;
+            --border: #d0d8d4;
+            --border-light: #e0e8e4;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Play', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -37,11 +57,26 @@
             color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
         }
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-primary); }
         ::-webkit-scrollbar-thumb { background: var(--brand-green-dim); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--brand-green); }
+
+        /* SVG Icons */
+        .icon {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            flex-shrink: 0;
+        }
+        .icon-sm { width: 14px; height: 14px; }
+        .icon-lg { width: 22px; height: 22px; }
 
         /* Auth Screens */
         .screen {
@@ -62,8 +97,9 @@
             padding: 2.5rem;
             max-width: 600px;
             width: 100%;
+            box-shadow: var(--shadow);
         }
-        .box h2 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--brand-green); }
+        .box h2 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--brand-green); display: flex; align-items: center; gap: 0.75rem; }
         .box p { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem; }
         .box label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
         .box input[type="text"], .box input[type="password"] {
@@ -90,6 +126,7 @@
             font-family: 'Play', sans-serif;
             cursor: pointer;
             margin-top: 0.5rem;
+            transition: all 0.15s;
         }
         .box button:hover { background: var(--brand-green-bright); }
         .box button.secondary { background: var(--bg-tertiary); border: 1px solid var(--border); color: var(--text-secondary); }
@@ -188,7 +225,31 @@
             font-size: 0.75rem;
         }
 
-        .header-actions { display: flex; gap: 0.75rem; }
+        .header-actions { display: flex; gap: 0.5rem; align-items: center; }
+        
+        /* Theme Toggle */
+        .theme-toggle {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+        }
+        .theme-toggle:hover {
+            color: var(--text-primary);
+            border-color: var(--brand-green);
+        }
+        .theme-toggle .icon-sun { display: none; }
+        .theme-toggle .icon-moon { display: block; }
+        [data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        [data-theme="light"] .theme-toggle .icon-moon { display: none; }
+
         .btn {
             padding: 0.625rem 1.25rem;
             border-radius: 8px;
@@ -230,6 +291,7 @@
             opacity: 0;
             transform: translateY(10px);
             transition: all 0.3s;
+            box-shadow: var(--shadow);
         }
         .save-indicator.visible { opacity: 1; transform: translateY(0); }
         .save-indicator.saving { border-color: var(--status-yellow); color: var(--status-yellow); }
@@ -244,12 +306,13 @@
             padding: 1.5rem;
             margin-bottom: 2rem;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 1.5rem;
+            box-shadow: var(--shadow);
         }
         .total-item { text-align: center; }
-        .total-item .label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.375rem; }
-        .total-item .value { font-size: 1.75rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--text-primary); }
+        .total-item .label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.375rem; }
+        .total-item .value { font-size: 1.5rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--text-primary); }
         .total-item .value.green { color: var(--status-green); }
         .total-item .value.yellow { color: var(--status-yellow); }
         .total-item .value.brand { color: var(--brand-green); }
@@ -287,8 +350,8 @@
         .category-progress .bar { width: 120px; height: 8px; background: var(--bg-primary); border-radius: 4px; overflow: hidden; }
         .category-progress .bar .fill { height: 100%; background: linear-gradient(90deg, var(--brand-green-dim), var(--brand-green), var(--brand-green-bright)); border-radius: 4px; transition: width 0.3s; }
         .category-progress .percent { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--brand-green); min-width: 45px; }
-        .chevron { width: 20px; height: 20px; color: var(--text-muted); transition: transform 0.2s; }
-        .category-section.collapsed .chevron { transform: rotate(-90deg); }
+        .chevron-icon { color: var(--text-muted); transition: transform 0.2s; }
+        .category-section.collapsed .chevron-icon { transform: rotate(-90deg); }
         .category-section.collapsed .category-body { display: none; }
         .category-body {
             background: var(--bg-card);
@@ -313,9 +376,9 @@
         .task-table th.col-status { width: 130px; }
         .task-table th.col-task { min-width: 250px; }
         .task-table th.col-vendor { width: 160px; }
-        .task-table th.col-cost { width: 120px; }
-        .task-table th.col-time { width: 120px; }
-        .task-table th.col-notes { width: 180px; }
+        .task-table th.col-cost { width: 110px; }
+        .task-table th.col-time { width: 110px; }
+        .task-table th.col-notes { width: 160px; }
         .task-table th.col-actions { width: 50px; }
         .task-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
         .task-table tr:last-child td { border-bottom: none; }
@@ -407,12 +470,32 @@
         .add-task-btn:hover { background: var(--brand-green); color: var(--bg-primary); }
 
         /* ==================== DATA ROOM CONTROL STYLES ==================== */
+        .dr-toolbar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .dr-toolbar label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        .dr-toolbar input[type="checkbox"] {
+            accent-color: var(--brand-green);
+        }
+
         .dr-section {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
             margin-bottom: 1.5rem;
             overflow: hidden;
+            box-shadow: var(--shadow);
         }
         .dr-section-header {
             padding: 1rem 1.25rem;
@@ -440,7 +523,7 @@
             font-family: 'JetBrains Mono', monospace;
         }
         .dr-section.collapsed .dr-section-body { display: none; }
-        .dr-section.collapsed .chevron { transform: rotate(-90deg); }
+        .dr-section.collapsed .chevron-icon { transform: rotate(-90deg); }
         .dr-section-body { padding: 1rem; }
 
         .dr-doc-table { width: 100%; border-collapse: collapse; }
@@ -461,6 +544,8 @@
         }
         .dr-doc-table tr:last-child td { border-bottom: none; }
         .dr-doc-table tr:hover td { background: var(--bg-tertiary); }
+        .dr-doc-table tr.is-hidden { opacity: 0.5; }
+        .dr-doc-table tr.is-hidden td { background: var(--bg-tertiary); }
 
         .dr-input {
             background: var(--bg-secondary);
@@ -499,6 +584,24 @@
             font-size: 0.8rem;
             cursor: pointer;
         }
+
+        /* Visibility Toggle */
+        .visibility-toggle {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+        }
+        .visibility-toggle:hover { background: var(--bg-tertiary); border-color: var(--border); }
+        .visibility-toggle.hidden-doc { color: var(--status-red); opacity: 0.6; }
+        .visibility-toggle.hidden-doc:hover { opacity: 1; }
 
         .dr-add-row {
             display: flex;
@@ -552,10 +655,10 @@
         .dr-note-item:hover .dr-note-delete { opacity: 1; }
         .dr-note-delete:hover { background: rgba(239, 68, 68, 0.15); color: var(--status-red); }
 
-        /* Settings Panel */
+        /* ==================== SETTINGS STYLES ==================== */
         .settings-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 1.5rem;
         }
         .settings-card {
@@ -563,9 +666,10 @@
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 1.5rem;
+            box-shadow: var(--shadow);
         }
         .settings-card h4 {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 700;
             margin-bottom: 1rem;
             color: var(--text-primary);
@@ -600,6 +704,41 @@
             border-color: var(--brand-green);
         }
 
+        /* Vendor Management */
+        .vendor-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .vendor-tag {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 0.375rem 0.625rem 0.375rem 0.875rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        .vendor-tag.default { background: var(--brand-green-glow); border-color: var(--brand-green-dim); color: var(--brand-green); }
+        .vendor-tag button {
+            background: transparent;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            opacity: 0.6;
+        }
+        .vendor-tag button:hover { opacity: 1; color: var(--status-red); }
+        .add-vendor-row {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .add-vendor-row input { flex: 1; }
+
         /* Progress Editor */
         .progress-editor {
             display: flex;
@@ -608,18 +747,18 @@
         }
         .progress-row {
             display: grid;
-            grid-template-columns: 1fr 80px 60px;
+            grid-template-columns: 1fr 80px 50px;
             gap: 1rem;
             align-items: center;
         }
-        .progress-row .label { font-size: 0.9rem; color: var(--text-secondary); }
+        .progress-row .label { font-size: 0.85rem; color: var(--text-secondary); }
         .progress-row input[type="range"] {
             width: 100%;
             accent-color: var(--brand-green);
         }
         .progress-row .value {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--brand-green);
             text-align: right;
         }
@@ -643,6 +782,7 @@
             padding: 2rem;
             max-width: 500px;
             width: 100%;
+            box-shadow: var(--shadow);
         }
         .modal h3 { font-size: 1.25rem; margin-bottom: 1rem; }
         .modal p { color: var(--text-secondary); margin-bottom: 1.5rem; }
@@ -655,25 +795,197 @@
         @media (max-width: 768px) {
             .header { padding: 1rem; }
             .header-inner { flex-direction: column; gap: 1rem; }
-            .header-actions { display: none; }
+            .header-actions { width: 100%; justify-content: space-between; }
             .main { padding: 1rem; }
             .filter-bar { flex-direction: column; }
             .task-table { display: block; overflow-x: auto; }
             .totals-bar { grid-template-columns: repeat(2, 1fr); }
             .progress-row { grid-template-columns: 1fr; gap: 0.5rem; }
+            .settings-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+    <!-- SVG Icon Definitions -->
+    <svg style="display: none;">
+        <defs>
+            <!-- Navigation / Actions -->
+            <symbol id="icon-checklist" viewBox="0 0 24 24">
+                <path d="M9 11l3 3L22 4"/>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </symbol>
+            <symbol id="icon-folder" viewBox="0 0 24 24">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+            </symbol>
+            <symbol id="icon-settings" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </symbol>
+            <symbol id="icon-download" viewBox="0 0 24 24">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+            </symbol>
+            <symbol id="icon-logout" viewBox="0 0 24 24">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+            </symbol>
+            <symbol id="icon-sun" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/>
+                <line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </symbol>
+            <symbol id="icon-moon" viewBox="0 0 24 24">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </symbol>
+            <symbol id="icon-chevron-down" viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9"/>
+            </symbol>
+            <symbol id="icon-plus" viewBox="0 0 24 24">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+            </symbol>
+            <symbol id="icon-trash" viewBox="0 0 24 24">
+                <polyline points="3 6 5 6 21 6"/>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            </symbol>
+            <symbol id="icon-x" viewBox="0 0 24 24">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </symbol>
+            <symbol id="icon-eye" viewBox="0 0 24 24">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+            </symbol>
+            <symbol id="icon-eye-off" viewBox="0 0 24 24">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                <line x1="1" y1="1" x2="23" y2="23"/>
+            </symbol>
+            <symbol id="icon-lock" viewBox="0 0 24 24">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </symbol>
+            <symbol id="icon-database" viewBox="0 0 24 24">
+                <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+            </symbol>
+            <symbol id="icon-users" viewBox="0 0 24 24">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </symbol>
+            <!-- Categories -->
+            <symbol id="icon-map" viewBox="0 0 24 24">
+                <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
+                <line x1="8" y1="2" x2="8" y2="18"/>
+                <line x1="16" y1="6" x2="16" y2="22"/>
+            </symbol>
+            <symbol id="icon-zap" viewBox="0 0 24 24">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </symbol>
+            <symbol id="icon-clipboard" viewBox="0 0 24 24">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+            </symbol>
+            <symbol id="icon-leaf" viewBox="0 0 24 24">
+                <path d="M6 3v18"/>
+                <path d="M18 9a6 6 0 0 1-12 0c0-6 6-9 12-9a6 6 0 0 1 0 12"/>
+            </symbol>
+            <symbol id="icon-tool" viewBox="0 0 24 24">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </symbol>
+            <symbol id="icon-package" viewBox="0 0 24 24">
+                <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/>
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </symbol>
+            <symbol id="icon-hard-hat" viewBox="0 0 24 24">
+                <path d="M2 18a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v2z"/>
+                <path d="M10 15V6a2 2 0 0 1 4 0v9"/>
+                <path d="M4 15v-3a8 8 0 0 1 16 0v3"/>
+            </symbol>
+            <symbol id="icon-dollar" viewBox="0 0 24 24">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </symbol>
+            <symbol id="icon-trending-up" viewBox="0 0 24 24">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                <polyline points="17 6 23 6 23 12"/>
+            </symbol>
+            <symbol id="icon-scale" viewBox="0 0 24 24">
+                <path d="M16 16l3-8 3 8c-.9 1.1-2.1 2-3.5 2s-2.6-.9-3.5-2z"/>
+                <path d="M2 16l3-8 3 8c-.9 1.1-2.1 2-3.5 2s-2.6-.9-3.5-2z"/>
+                <path d="M7 21h10"/>
+                <path d="M12 3v18"/>
+                <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>
+            </symbol>
+            <symbol id="icon-shield" viewBox="0 0 24 24">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </symbol>
+            <symbol id="icon-wifi" viewBox="0 0 24 24">
+                <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+                <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+                <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+                <line x1="12" y1="20" x2="12.01" y2="20"/>
+            </symbol>
+            <symbol id="icon-heart-handshake" viewBox="0 0 24 24">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                <path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08v0c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"/>
+                <path d="m18 15-2-2"/>
+                <path d="m15 18-2-2"/>
+            </symbol>
+            <symbol id="icon-target" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"/>
+                <circle cx="12" cy="12" r="6"/>
+                <circle cx="12" cy="12" r="2"/>
+            </symbol>
+            <symbol id="icon-building" viewBox="0 0 24 24">
+                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+                <path d="M9 22v-4h6v4"/>
+                <path d="M8 6h.01"/>
+                <path d="M16 6h.01"/>
+                <path d="M12 6h.01"/>
+                <path d="M12 10h.01"/>
+                <path d="M12 14h.01"/>
+                <path d="M16 10h.01"/>
+                <path d="M16 14h.01"/>
+                <path d="M8 10h.01"/>
+                <path d="M8 14h.01"/>
+            </symbol>
+            <symbol id="icon-alert-triangle" viewBox="0 0 24 24">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </symbol>
+            <symbol id="icon-file-text" viewBox="0 0 24 24">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+                <polyline points="10 9 9 9 8 9"/>
+            </symbol>
+        </defs>
+    </svg>
+
     <!-- Setup Screen -->
     <div class="screen" id="setupScreen">
         <div class="box">
-            <h2>🔐 Database Setup</h2>
+            <h2><svg class="icon icon-lg"><use href="#icon-database"/></svg> Database Setup</h2>
             <p>Connect to Supabase for persistent storage.</p>
             <div class="instructions">
                 <strong>Quick Setup:</strong><br>
                 1. Go to <code>supabase.com</code> → Create account → New project<br>
-                2. SQL Editor → Run the table creation query (see below)<br>
+                2. SQL Editor → Run the table creation query (see error if tables missing)<br>
                 3. Settings → API → Copy URL and anon key
             </div>
             <div class="error-msg" id="setupError"></div>
@@ -693,7 +1005,7 @@
     <!-- Login Screen -->
     <div class="screen hidden" id="loginScreen">
         <div class="box">
-            <h2>🔒 Admin Login</h2>
+            <h2><svg class="icon icon-lg"><use href="#icon-lock"/></svg> Admin Login</h2>
             <p>Enter your password to access the admin dashboard.</p>
             <div class="error-msg" id="loginError"></div>
             <label>Admin Password</label>
@@ -718,20 +1030,33 @@
                 </div>
                 <nav class="tab-nav">
                     <button class="tab-btn active" data-tab="ntp" onclick="switchTab('ntp')">
-                        📋 NTP Checklist
+                        <svg class="icon icon-sm"><use href="#icon-checklist"/></svg>
+                        NTP Checklist
                         <span class="badge" id="ntpCount">0</span>
                     </button>
                     <button class="tab-btn" data-tab="dataroom" onclick="switchTab('dataroom')">
-                        📁 Data Room
+                        <svg class="icon icon-sm"><use href="#icon-folder"/></svg>
+                        Data Room
                         <span class="badge" id="drCount">0</span>
                     </button>
                     <button class="tab-btn" data-tab="settings" onclick="switchTab('settings')">
-                        ⚙️ Settings
+                        <svg class="icon icon-sm"><use href="#icon-settings"/></svg>
+                        Settings
                     </button>
                 </nav>
                 <div class="header-actions">
-                    <button class="btn btn-secondary" onclick="exportData()">Export</button>
-                    <button class="btn btn-secondary" onclick="doLogout()">Logout</button>
+                    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+                        <svg class="icon icon-sun"><use href="#icon-sun"/></svg>
+                        <svg class="icon icon-moon"><use href="#icon-moon"/></svg>
+                    </button>
+                    <button class="btn btn-secondary btn-small" onclick="exportData()">
+                        <svg class="icon icon-sm"><use href="#icon-download"/></svg>
+                        Export
+                    </button>
+                    <button class="btn btn-secondary btn-small" onclick="doLogout()">
+                        <svg class="icon icon-sm"><use href="#icon-logout"/></svg>
+                        Logout
+                    </button>
                 </div>
             </div>
         </header>
@@ -741,7 +1066,7 @@
             <div class="tab-content active" id="tab-ntp">
                 <div class="totals-bar">
                     <div class="total-item">
-                        <div class="label">Total Est. Cost</div>
+                        <div class="label">Est. Cost</div>
                         <div class="value brand" id="totalCost">$0</div>
                     </div>
                     <div class="total-item">
@@ -759,6 +1084,10 @@
                     <div class="total-item">
                         <div class="label">Blocked</div>
                         <div class="value" style="color: var(--status-red);" id="totalBlocked">0</div>
+                    </div>
+                    <div class="total-item">
+                        <div class="label">Total</div>
+                        <div class="value" id="statTotal">0</div>
                     </div>
                 </div>
 
@@ -792,7 +1121,7 @@
             <div class="tab-content" id="tab-dataroom">
                 <div class="totals-bar">
                     <div class="total-item">
-                        <div class="label">Total Documents</div>
+                        <div class="label">Total Docs</div>
                         <div class="value brand" id="drTotalDocs">0</div>
                     </div>
                     <div class="total-item">
@@ -807,6 +1136,17 @@
                         <div class="label">Missing</div>
                         <div class="value" style="color: var(--status-red);" id="drMissing">0</div>
                     </div>
+                    <div class="total-item">
+                        <div class="label">Hidden</div>
+                        <div class="value" style="color: var(--text-muted);" id="drHidden">0</div>
+                    </div>
+                </div>
+
+                <div class="dr-toolbar">
+                    <label>
+                        <input type="checkbox" id="showHiddenDocs" onchange="renderDataroom()">
+                        Show hidden documents
+                    </label>
                 </div>
 
                 <div id="dataroomContainer"></div>
@@ -816,7 +1156,7 @@
             <div class="tab-content" id="tab-settings">
                 <div class="settings-grid">
                     <div class="settings-card">
-                        <h4>🔐 Data Room Access</h4>
+                        <h4><svg class="icon"><use href="#icon-lock"/></svg> Data Room Access</h4>
                         <div class="settings-row">
                             <label>Investor Access Password</label>
                             <input type="text" id="settingDrPassword" placeholder="redew2026" onchange="saveSetting('dr_password', this.value)">
@@ -832,15 +1172,29 @@
                     </div>
 
                     <div class="settings-card">
-                        <h4>📊 Progress Overrides</h4>
+                        <h4><svg class="icon"><use href="#icon-users"/></svg> Vendor Management</h4>
                         <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
-                            Override the auto-calculated progress bars shown in the Data Room.
+                            Manage vendors available in task dropdowns. Default vendors cannot be removed.
+                        </p>
+                        <div class="vendor-list" id="vendorList"></div>
+                        <div class="add-vendor-row">
+                            <input type="text" id="newVendorInput" placeholder="New vendor name..." class="dr-input">
+                            <button class="btn btn-small btn-primary" onclick="addVendor()">
+                                <svg class="icon icon-sm"><use href="#icon-plus"/></svg> Add
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h4><svg class="icon"><use href="#icon-trending-up"/></svg> Progress Overrides</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                            Override auto-calculated progress bars shown in the Data Room.
                         </p>
                         <div class="progress-editor" id="progressEditor"></div>
                     </div>
 
                     <div class="settings-card">
-                        <h4>📋 Project Info</h4>
+                        <h4><svg class="icon"><use href="#icon-file-text"/></svg> Project Info</h4>
                         <div class="settings-row">
                             <label>Project Name</label>
                             <input type="text" id="settingProjectName" value="ReDew Anson" onchange="saveSetting('project_name', this.value)">
@@ -856,7 +1210,7 @@
                     </div>
 
                     <div class="settings-card">
-                        <h4>🗄️ Database</h4>
+                        <h4><svg class="icon"><use href="#icon-database"/></svg> Database</h4>
                         <div class="settings-row">
                             <label>Connected To</label>
                             <input type="text" id="settingDbUrl" readonly style="opacity: 0.7;">
@@ -893,8 +1247,9 @@
         var documents = [];
         var notes = [];
         var settings = {};
+        var customVendors = [];
 
-        var vendors = [
+        var defaultVendors = [
             'ReDewable Energy', 'ANS Engineering', 'Enerzinx', 'Optimum EPC',
             'PACE Houston', 'FiberLight', 'Clearleaf Hills LTD', 'Grid Power Solutions',
             'Tesla', 'ERCOT', 'Jones County', 'Title Company', 'Legal Counsel',
@@ -902,118 +1257,70 @@
         ];
 
         var ntpCategories = [
-            { id: 'land', name: 'Land & Site Control', icon: '🗺️' },
-            { id: 'interconnection', name: 'Interconnection', icon: '⚡' },
-            { id: 'permitting', name: 'Permitting', icon: '📋' },
-            { id: 'environmental', name: 'Environmental', icon: '🌿' },
-            { id: 'engineering', name: 'Engineering & Design', icon: '🔧' },
-            { id: 'procurement', name: 'Technology & Procurement', icon: '📦' },
-            { id: 'epc', name: 'EPC & Construction', icon: '🏗️' },
-            { id: 'financial', name: 'Financial / Capital', icon: '💰' },
-            { id: 'revenue', name: 'Revenue / Off-take', icon: '📈' },
-            { id: 'legal', name: 'Legal / Corporate', icon: '⚖️' },
-            { id: 'insurance', name: 'Insurance & Risk', icon: '🛡️' },
-            { id: 'fiber', name: 'Fiber / Communications', icon: '📡' },
-            { id: 'community', name: 'Community / Stakeholder', icon: '🤝' },
-            { id: 'ntp', name: 'NTP Deliverables', icon: '🎯' }
+            { id: 'land', name: 'Land & Site Control', icon: 'icon-map' },
+            { id: 'interconnection', name: 'Interconnection', icon: 'icon-zap' },
+            { id: 'permitting', name: 'Permitting', icon: 'icon-clipboard' },
+            { id: 'environmental', name: 'Environmental', icon: 'icon-leaf' },
+            { id: 'engineering', name: 'Engineering & Design', icon: 'icon-tool' },
+            { id: 'procurement', name: 'Technology & Procurement', icon: 'icon-package' },
+            { id: 'epc', name: 'EPC & Construction', icon: 'icon-hard-hat' },
+            { id: 'financial', name: 'Financial / Capital', icon: 'icon-dollar' },
+            { id: 'revenue', name: 'Revenue / Off-take', icon: 'icon-trending-up' },
+            { id: 'legal', name: 'Legal / Corporate', icon: 'icon-scale' },
+            { id: 'insurance', name: 'Insurance & Risk', icon: 'icon-shield' },
+            { id: 'fiber', name: 'Fiber / Communications', icon: 'icon-wifi' },
+            { id: 'community', name: 'Community / Stakeholder', icon: 'icon-heart-handshake' },
+            { id: 'ntp', name: 'NTP Deliverables', icon: 'icon-target' }
         ];
 
         var drSections = [
-            { id: 'executive', name: 'Executive Summary', icon: '📋' },
-            { id: 'land', name: 'Land & Site Control', icon: '🗺️' },
-            { id: 'interconnection', name: 'Interconnection', icon: '⚡' },
-            { id: 'permitting', name: 'Permitting', icon: '📋' },
-            { id: 'technical', name: 'Technical & Engineering', icon: '🔧' },
-            { id: 'epc', name: 'EPC & Construction', icon: '🏗️' },
-            { id: 'market', name: 'Market Analysis', icon: '📈' },
-            { id: 'financial', name: 'Financial Model', icon: '💰' },
-            { id: 'risk', name: 'Risk Assessment', icon: '⚠️' },
-            { id: 'entity', name: 'Entity Structure', icon: '🏢' },
-            { id: 'team', name: 'Team & Partners', icon: '👥' }
+            { id: 'executive', name: 'Executive Summary', icon: 'icon-file-text' },
+            { id: 'land', name: 'Land & Site Control', icon: 'icon-map' },
+            { id: 'interconnection', name: 'Interconnection', icon: 'icon-zap' },
+            { id: 'permitting', name: 'Permitting', icon: 'icon-clipboard' },
+            { id: 'technical', name: 'Technical & Engineering', icon: 'icon-tool' },
+            { id: 'epc', name: 'EPC & Construction', icon: 'icon-hard-hat' },
+            { id: 'market', name: 'Market Analysis', icon: 'icon-trending-up' },
+            { id: 'financial', name: 'Financial Model', icon: 'icon-dollar' },
+            { id: 'risk', name: 'Risk Assessment', icon: 'icon-alert-triangle' },
+            { id: 'entity', name: 'Entity Structure', icon: 'icon-building' },
+            { id: 'team', name: 'Team & Partners', icon: 'icon-users' }
         ];
 
-        // Default NTP tasks (abbreviated for space - full list in production)
+        // Default tasks (abbreviated)
         var defaultTasks = [
             { category: 'land', task: 'Execute land purchase or long-term lease', status: 'not_started', vendor: 'Clearleaf Hills LTD', cost: '', time: '', notes: '' },
             { category: 'land', task: 'Title search and commitment', status: 'not_started', vendor: 'Title Company', cost: '$2,000', time: '2 weeks', notes: '' },
-            { category: 'land', task: 'ALTA survey', status: 'not_started', vendor: 'Other', cost: '$5,000', time: '3 weeks', notes: '' },
             { category: 'interconnection', task: 'Submit Full Interconnection Study (FIS) application', status: 'not_started', vendor: 'Enerzinx', cost: '$50,000', time: '1 week', notes: '' },
             { category: 'interconnection', task: 'Complete FIS process', status: 'not_started', vendor: 'ERCOT', cost: '', time: '6-9 months', notes: 'CRITICAL PATH' },
-            { category: 'permitting', task: 'County zoning confirmation letter', status: 'not_started', vendor: 'Jones County', cost: '$0', time: '2 weeks', notes: '' },
             { category: 'permitting', task: 'SWPPP (Stormwater Plan)', status: 'waiting', vendor: 'ANS Engineering', cost: '$3,000', time: '3 weeks', notes: 'Requested from ANS' },
-            { category: 'environmental', task: 'Phase I Environmental Site Assessment (ESA)', status: 'waiting', vendor: 'ANS Engineering', cost: '$3,500', time: '3 weeks', notes: 'Requested from ANS' },
-            { category: 'environmental', task: 'Geotechnical investigation report', status: 'in_progress', vendor: 'ANS Engineering', cost: '$8,000', time: '3 weeks', notes: 'Scope contracted' },
+            { category: 'environmental', task: 'Phase I ESA', status: 'waiting', vendor: 'ANS Engineering', cost: '$3,500', time: '3 weeks', notes: 'Requested from ANS' },
+            { category: 'environmental', task: 'Geotechnical investigation', status: 'in_progress', vendor: 'ANS Engineering', cost: '$8,000', time: '3 weeks', notes: '' },
             { category: 'engineering', task: 'Preliminary site layout', status: 'waiting', vendor: 'ANS Engineering', cost: '$10,000', time: '2 weeks', notes: 'Requested from ANS' },
             { category: 'engineering', task: 'Single-line diagram (SLD)', status: 'waiting', vendor: 'ANS Engineering', cost: '$8,000', time: '2 weeks', notes: 'Requested from ANS' },
+            { category: 'procurement', task: 'Main Power Transformer procurement', status: 'not_started', vendor: 'Grid Power Solutions', cost: '$2,500,000', time: '12-18 months', notes: 'CRITICAL PATH' },
             { category: 'epc', task: 'Receive indicative EPC pricing', status: 'in_progress', vendor: 'Optimum EPC', cost: '', time: '2 weeks', notes: '' },
-            { category: 'financial', task: 'Development capital raise (to NTP)', status: 'not_started', vendor: 'Investor', cost: '', time: '8 weeks', notes: 'Kola intro pending' },
-            { category: 'ntp', task: '🎯 FULL NTP ISSUED', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '', notes: 'THE GOAL!' }
+            { category: 'financial', task: 'Development capital raise', status: 'not_started', vendor: 'Investor', cost: '', time: '8 weeks', notes: 'Kola intro pending' },
+            { category: 'ntp', task: 'FULL NTP ISSUED', status: 'not_started', vendor: 'ReDewable Energy', cost: '', time: '', notes: 'THE GOAL!' }
         ];
 
         var defaultDocuments = [
-            // Executive Summary
-            { section: 'executive', name: 'Project One-Pager', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
-            { section: 'executive', name: 'Investment Teaser', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
-            { section: 'executive', name: 'Site Location Maps', file_type: 'img', url: '', status: 'missing', date_added: '' },
-            { section: 'executive', name: 'Project Overview Presentation', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Jan 2026' },
-            // Land & Site Control
-            { section: 'land', name: 'Purchase Option Agreement', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Dec 15, 2025' },
-            { section: 'land', name: 'Land Control Agreement', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Jan 8, 2026' },
-            { section: 'land', name: 'Environmental Assessment Notes', file_type: 'audio', url: '', status: 'uploaded', date_added: 'Jan 5, 2026' },
-            { section: 'land', name: 'Geotechnical Scope Contract', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Jan 3, 2026' },
-            { section: 'land', name: 'Phase I Environmental Site Assessment', file_type: 'pdf', url: '', status: 'pending', date_added: '' },
-            { section: 'land', name: 'Title Report / Commitment', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
-            // Interconnection
-            { section: 'interconnection', name: 'Injection Study - 300 MW', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Jan 10, 2026' },
-            { section: 'interconnection', name: 'Transmission Upgrade Analysis', file_type: 'xlsx', url: '', status: 'uploaded', date_added: 'Jan 10, 2026' },
-            { section: 'interconnection', name: 'Queue Position Documentation', file_type: 'pdf', url: '', status: 'pending', date_added: '' },
-            { section: 'interconnection', name: 'FIS Timeline & Application', file_type: 'pdf', url: '', status: 'pending', date_added: '' },
-            // Permitting
-            { section: 'permitting', name: 'SWPPP (Stormwater Plan)', file_type: 'pdf', url: '', status: 'pending', date_added: '' },
-            { section: 'permitting', name: 'County Zoning Confirmation Letter', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
-            { section: 'permitting', name: 'AHJ Contact Log / Correspondence', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
-            { section: 'permitting', name: 'Fire Safety / Emergency Response Plan', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
-            // Technical & Engineering
-            { section: 'technical', name: 'Preliminary Site Layout', file_type: 'dwg', url: '', status: 'pending', date_added: '' },
-            { section: 'technical', name: 'Single-Line Diagram', file_type: 'dwg', url: '', status: 'pending', date_added: '' },
-            { section: 'technical', name: 'OEM Specifications - Tesla Megapack', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
-            { section: 'technical', name: 'OEM Comparison Analysis', file_type: 'xlsx', url: '', status: 'missing', date_added: '' },
-            // EPC & Construction
-            { section: 'epc', name: 'EPC Indicative Pricing', file_type: 'xlsx', url: '', status: 'pending', date_added: '' },
-            { section: 'epc', name: 'Construction Schedule', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
-            { section: 'epc', name: 'Phasing Plan (150/300/400 MW)', file_type: 'pdf', url: '', status: 'missing', date_added: '' },
-            // Market Analysis
-            { section: 'market', name: 'ERCOT BESS Market Analysis', file_type: 'xlsx', url: '', status: 'uploaded', date_added: 'Jan 6, 2026' },
-            { section: 'market', name: 'Revenue Stack Analysis', file_type: 'xlsx', url: '', status: 'uploaded', date_added: 'Jan 6, 2026' },
-            { section: 'market', name: 'Competitive Queue Analysis', file_type: 'xlsx', url: '', status: 'uploaded', date_added: 'Jan 6, 2026' },
-            // Financial Model
-            { section: 'financial', name: 'Pro Forma Financial Model', file_type: 'xlsx', url: '', status: 'pending', date_added: 'Dec 2025' },
-            { section: 'financial', name: 'Private Placement Memorandum', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Dec 2025' },
-            { section: 'financial', name: 'Sensitivity Analysis', file_type: 'xlsx', url: '', status: 'missing', date_added: '' },
-            // Entity Structure
-            { section: 'entity', name: 'Entity Structure Overview', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Jan 2026' },
-            { section: 'entity', name: 'ReDew Anson LLC - Formation Docs', file_type: 'pdf', url: '', status: 'pending', date_added: '' },
-            { section: 'entity', name: 'Operating Agreement', file_type: 'pdf', url: '', status: 'pending', date_added: '' }
+            { section: 'executive', name: 'Project One-Pager', file_type: 'pdf', url: '', status: 'missing', date_added: '', is_hidden: false },
+            { section: 'executive', name: 'Investment Teaser', file_type: 'pdf', url: '', status: 'missing', date_added: '', is_hidden: false },
+            { section: 'land', name: 'Land Control Agreement', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Jan 8, 2026', is_hidden: false },
+            { section: 'land', name: 'Phase I ESA', file_type: 'pdf', url: '', status: 'pending', date_added: '', is_hidden: false },
+            { section: 'interconnection', name: 'Injection Study - 300 MW', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Jan 10, 2026', is_hidden: false },
+            { section: 'interconnection', name: 'Transmission Upgrade Analysis', file_type: 'xlsx', url: '', status: 'uploaded', date_added: 'Jan 10, 2026', is_hidden: false },
+            { section: 'technical', name: 'Preliminary Site Layout', file_type: 'dwg', url: '', status: 'pending', date_added: '', is_hidden: false },
+            { section: 'technical', name: 'Single-Line Diagram', file_type: 'dwg', url: '', status: 'pending', date_added: '', is_hidden: false },
+            { section: 'market', name: 'ERCOT BESS Market Analysis', file_type: 'xlsx', url: '', status: 'uploaded', date_added: 'Jan 6, 2026', is_hidden: false },
+            { section: 'financial', name: 'Pro Forma Financial Model', file_type: 'xlsx', url: '', status: 'pending', date_added: '', is_hidden: false }
         ];
 
         var defaultNotes = [
-            // Land & Site Control
-            { section: 'land', author: 'ANS Engineering', date: 'Jan 12, 2026', content: 'Requested Phase I ESA, Preliminary Site Drawings, Single-Line Diagram, and SWPPP from ANS. Response: "Let me check with the team and report back."', is_highlight: true },
-            { section: 'land', author: 'Engineering Team', date: 'Jan 5, 2026', content: 'Environmental assessment indicates clear pathway - no wetlands, endangered species, or cultural resources identified. Formal Phase I ESA recommended before closing.', is_highlight: false },
-            { section: 'land', author: 'Development', date: 'Dec 20, 2025', content: 'Land under control with Clearleaf Hills, LTD. Property is 0.5 miles from Phantom Hill 345 kV substation - excellent POI proximity.', is_highlight: false },
-            // Interconnection
-            { section: 'interconnection', author: 'Enerzinx (Interconnection)', date: 'Jan 10, 2026', content: 'Injection study completed at 300 MW. POI can accommodate up to 2,500 MW of batteries. Some downstream transmission upgrades required (5 constraint points identified). Phased approach recommended: 150 MW Phase 1 (no upgrades), 300 MW Phase 2 with upgrades.', is_highlight: false },
-            { section: 'interconnection', author: 'Development', date: 'Jan 8, 2026', content: 'Adjacent projects in queue: ~140 MW BESS 15 miles west, 200+ MW solar phases under construction by ENGIE. Studies conducted with these projects in consideration.', is_highlight: false },
-            // Permitting
-            { section: 'permitting', author: 'ANS Engineering', date: 'Jan 12, 2026', content: 'SWPPP requested from ANS Engineering along with Phase I ESA, Site Drawings, and SLD. Awaiting response.', is_highlight: true },
-            { section: 'permitting', author: 'Priority Task', date: 'Immediate', content: 'Contact Jones County Planning & Development to confirm zoning compatibility for utility-scale battery storage. Texas counties are generally permissive for energy infrastructure.', is_highlight: false },
-            // Technical
-            { section: 'technical', author: 'ANS Request Submitted', date: 'Jan 12, 2026', content: 'Requested from ANS Engineering: Phase I ESA, Preliminary Site Drawings, Single-Line Diagram, and SWPPP. Awaiting response from their team.', is_highlight: true },
-            // EPC
-            { section: 'epc', author: 'Call Summary', date: 'Jan 12, 2026', content: 'Optimum EPC engaged for indicative pricing. They have experience with 200 MW BESS in Midland and connections to Grid Power Solutions (Dallas) for OEMs including CATL. Main Power Transformer identified as longest lead item for Q1 2027 COD. Grid Power may have MPTs in stock.', is_highlight: true },
-            { section: 'epc', author: 'Capital Partner', date: 'Jan 12, 2026', content: 'Ethan to introduce to Kola - Houston-based family office investor with interest in Texas energy projects. They typically fund from development through NTP for shovel-ready sale.', is_highlight: false },
-            // Financial
-            { section: 'financial', author: 'Action Required', date: 'Jan 2026', content: 'Financial model needs updating to reflect current 2025 ERCOT revenue environment. Historical models may use outdated assumptions from 2023 peak period. EPC pricing from Optimum will inform CapEx assumptions.', is_highlight: false }
+            { section: 'land', author: 'ANS Engineering', date: 'Jan 12, 2026', content: 'Requested Phase I ESA, Preliminary Site Drawings, SLD, and SWPPP from ANS.', is_highlight: true },
+            { section: 'interconnection', author: 'Enerzinx', date: 'Jan 10, 2026', content: 'Injection study completed at 300 MW. POI can accommodate up to 2,500 MW.', is_highlight: false },
+            { section: 'epc', author: 'Call Summary', date: 'Jan 12, 2026', content: 'Optimum EPC engaged for indicative pricing. MPT is longest lead item.', is_highlight: true }
         ];
 
         var defaultSettings = {
@@ -1027,8 +1334,25 @@
             'progress_permitting': '15',
             'progress_engineering': '35',
             'progress_financial': '60',
-            'progress_epc': '20'
+            'progress_epc': '20',
+            'custom_vendors': '[]'
         };
+
+        // ==================== THEME ====================
+        function toggleTheme() {
+            var html = document.documentElement;
+            var currentTheme = html.getAttribute('data-theme');
+            var newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('redew_theme', newTheme);
+        }
+
+        function loadTheme() {
+            var saved = localStorage.getItem('redew_theme');
+            if (saved) {
+                document.documentElement.setAttribute('data-theme', saved);
+            }
+        }
 
         // ==================== AUTH FUNCTIONS ====================
         function goToSetup() {
@@ -1069,63 +1393,17 @@
 
             try {
                 db = window.supabase.createClient(url, key);
-                
-                // Test connection and create tables if needed
                 var testResult = await db.from('ntp_tasks').select('id').limit(1);
                 
                 if (testResult.error && testResult.error.code === '42P01') {
-                    errorEl.innerHTML = '<strong>Tables not found!</strong> Run this SQL in Supabase SQL Editor:<br><br>' +
-                        '<code style="display:block;background:#000;padding:0.5rem;border-radius:4px;font-size:0.6rem;white-space:pre-wrap;max-height:200px;overflow:auto;">' +
-                        '-- NTP Tasks\n' +
-                        'CREATE TABLE ntp_tasks (\n' +
-                        '  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,\n' +
-                        '  category TEXT NOT NULL,\n' +
-                        '  task TEXT NOT NULL,\n' +
-                        '  status TEXT DEFAULT \'not_started\',\n' +
-                        '  vendor TEXT DEFAULT \'\',\n' +
-                        '  cost TEXT DEFAULT \'\',\n' +
-                        '  time TEXT DEFAULT \'\',\n' +
-                        '  notes TEXT DEFAULT \'\',\n' +
-                        '  created_at TIMESTAMPTZ DEFAULT NOW(),\n' +
-                        '  updated_at TIMESTAMPTZ DEFAULT NOW()\n' +
-                        ');\n\n' +
-                        '-- Data Room Documents\n' +
-                        'CREATE TABLE dataroom_documents (\n' +
-                        '  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,\n' +
-                        '  section TEXT NOT NULL,\n' +
-                        '  name TEXT NOT NULL,\n' +
-                        '  file_type TEXT DEFAULT \'pdf\',\n' +
-                        '  url TEXT DEFAULT \'\',\n' +
-                        '  status TEXT DEFAULT \'missing\',\n' +
-                        '  date_added TEXT DEFAULT \'\',\n' +
-                        '  sort_order INT DEFAULT 0,\n' +
-                        '  created_at TIMESTAMPTZ DEFAULT NOW()\n' +
-                        ');\n\n' +
-                        '-- Data Room Notes\n' +
-                        'CREATE TABLE dataroom_notes (\n' +
-                        '  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,\n' +
-                        '  section TEXT NOT NULL,\n' +
-                        '  author TEXT DEFAULT \'\',\n' +
-                        '  date TEXT DEFAULT \'\',\n' +
-                        '  content TEXT DEFAULT \'\',\n' +
-                        '  is_highlight BOOLEAN DEFAULT false,\n' +
-                        '  sort_order INT DEFAULT 0,\n' +
-                        '  created_at TIMESTAMPTZ DEFAULT NOW()\n' +
-                        ');\n\n' +
-                        '-- Settings\n' +
-                        'CREATE TABLE dataroom_settings (\n' +
-                        '  key TEXT PRIMARY KEY,\n' +
-                        '  value TEXT DEFAULT \'\'\n' +
-                        ');\n\n' +
-                        '-- Enable RLS\n' +
-                        'ALTER TABLE ntp_tasks ENABLE ROW LEVEL SECURITY;\n' +
-                        'ALTER TABLE dataroom_documents ENABLE ROW LEVEL SECURITY;\n' +
-                        'ALTER TABLE dataroom_notes ENABLE ROW LEVEL SECURITY;\n' +
-                        'ALTER TABLE dataroom_settings ENABLE ROW LEVEL SECURITY;\n\n' +
-                        'CREATE POLICY "Allow all" ON ntp_tasks FOR ALL USING (true);\n' +
-                        'CREATE POLICY "Allow all" ON dataroom_documents FOR ALL USING (true);\n' +
-                        'CREATE POLICY "Allow all" ON dataroom_notes FOR ALL USING (true);\n' +
-                        'CREATE POLICY "Allow all" ON dataroom_settings FOR ALL USING (true);</code>';
+                    errorEl.innerHTML = '<strong>Tables not found!</strong> Run this SQL in Supabase:<br><br>' +
+                        '<code style="display:block;background:#000;padding:0.5rem;border-radius:4px;font-size:0.55rem;white-space:pre-wrap;max-height:180px;overflow:auto;">' +
+                        'CREATE TABLE ntp_tasks (\n  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,\n  category TEXT NOT NULL,\n  task TEXT NOT NULL,\n  status TEXT DEFAULT \'not_started\',\n  vendor TEXT DEFAULT \'\',\n  cost TEXT DEFAULT \'\',\n  time TEXT DEFAULT \'\',\n  notes TEXT DEFAULT \'\',\n  created_at TIMESTAMPTZ DEFAULT NOW(),\n  updated_at TIMESTAMPTZ DEFAULT NOW()\n);\n\n' +
+                        'CREATE TABLE dataroom_documents (\n  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,\n  section TEXT NOT NULL,\n  name TEXT NOT NULL,\n  file_type TEXT DEFAULT \'pdf\',\n  url TEXT DEFAULT \'\',\n  status TEXT DEFAULT \'missing\',\n  date_added TEXT DEFAULT \'\',\n  is_hidden BOOLEAN DEFAULT false,\n  sort_order INT DEFAULT 0,\n  created_at TIMESTAMPTZ DEFAULT NOW()\n);\n\n' +
+                        'CREATE TABLE dataroom_notes (\n  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,\n  section TEXT NOT NULL,\n  author TEXT DEFAULT \'\',\n  date TEXT DEFAULT \'\',\n  content TEXT DEFAULT \'\',\n  is_highlight BOOLEAN DEFAULT false,\n  sort_order INT DEFAULT 0,\n  created_at TIMESTAMPTZ DEFAULT NOW()\n);\n\n' +
+                        'CREATE TABLE dataroom_settings (\n  key TEXT PRIMARY KEY,\n  value TEXT DEFAULT \'\'\n);\n\n' +
+                        'ALTER TABLE ntp_tasks ENABLE ROW LEVEL SECURITY;\nALTER TABLE dataroom_documents ENABLE ROW LEVEL SECURITY;\nALTER TABLE dataroom_notes ENABLE ROW LEVEL SECURITY;\nALTER TABLE dataroom_settings ENABLE ROW LEVEL SECURITY;\n\n' +
+                        'CREATE POLICY "Allow all" ON ntp_tasks FOR ALL USING (true);\nCREATE POLICY "Allow all" ON dataroom_documents FOR ALL USING (true);\nCREATE POLICY "Allow all" ON dataroom_notes FOR ALL USING (true);\nCREATE POLICY "Allow all" ON dataroom_settings FOR ALL USING (true);</code>';
                     errorEl.style.display = 'block';
                     return;
                 }
@@ -1207,6 +1485,7 @@
         // ==================== DATA LOADING ====================
         async function loadAllData() {
             await Promise.all([loadTasks(), loadDocuments(), loadNotes(), loadSettings()]);
+            loadCustomVendors();
         }
 
         async function loadTasks() {
@@ -1230,6 +1509,18 @@
             if (result.data) {
                 result.data.forEach(function(s) { settings[s.key] = s.value; });
             }
+        }
+
+        function loadCustomVendors() {
+            try {
+                customVendors = JSON.parse(settings.custom_vendors || '[]');
+            } catch (e) {
+                customVendors = [];
+            }
+        }
+
+        function getAllVendors() {
+            return defaultVendors.concat(customVendors);
         }
 
         // ==================== RENDERING ====================
@@ -1267,6 +1558,7 @@
             });
 
             var html = '';
+            var allVendors = getAllVendors();
 
             ntpCategories.forEach(function(cat) {
                 var catTasks = filteredTasks.filter(function(t) { return t.category === cat.id; });
@@ -1279,28 +1571,28 @@
 
                 html += '<div class="category-section" data-category="' + cat.id + '">';
                 html += '<div class="category-header" onclick="toggleCategory(\'' + cat.id + '\')">';
-                html += '<h2>' + cat.icon + ' ' + cat.name + ' <span class="number">' + catTasks.length + '</span></h2>';
+                html += '<h2><svg class="icon"><use href="#' + cat.icon + '"/></svg> ' + cat.name + ' <span class="number">' + catTasks.length + '</span></h2>';
                 html += '<div class="category-progress"><div class="bar"><div class="fill" style="width:' + percent + '%"></div></div>';
                 html += '<span class="percent">' + percent + '%</span>';
-                html += '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div></div>';
+                html += '<svg class="icon chevron-icon"><use href="#icon-chevron-down"/></svg></div></div>';
                 html += '<div class="category-body"><table class="task-table"><thead><tr>';
                 html += '<th class="col-status">Status</th><th class="col-task">Task</th><th class="col-vendor">Vendor</th>';
                 html += '<th class="col-cost">Cost</th><th class="col-time">Time</th><th class="col-notes">Notes</th><th class="col-actions"></th></tr></thead><tbody>';
                 
                 catTasks.forEach(function(t) {
-                    html += renderTaskRow(t);
+                    html += renderTaskRow(t, allVendors);
                 });
                 
                 html += '</tbody></table><div class="add-task-row">';
                 html += '<input type="text" class="add-task-input" id="newTask-' + cat.id + '" placeholder="Add new task..." onkeypress="handleAddKeypress(event, \'' + cat.id + '\')">';
-                html += '<button class="add-task-btn" onclick="handleAddTask(\'' + cat.id + '\')">+ Add</button></div></div></div>';
+                html += '<button class="add-task-btn" onclick="handleAddTask(\'' + cat.id + '\')"><svg class="icon icon-sm"><use href="#icon-plus"/></svg> Add</button></div></div></div>';
             });
 
             container.innerHTML = html;
             document.getElementById('ntpCount').textContent = tasks.length;
         }
 
-        function renderTaskRow(t) {
+        function renderTaskRow(t, allVendors) {
             var sc = t.status || 'not_started';
             var html = '<tr class="' + (t.status === 'completed' ? 'completed' : '') + '">';
             html += '<td><select class="status-select ' + sc + '" onchange="handleStatusChange(\'' + t.id + '\', this.value)">';
@@ -1311,14 +1603,14 @@
             html += '<option value="waiting"' + (sc === 'waiting' ? ' selected' : '') + '>Waiting</option></select></td>';
             html += '<td><input type="text" class="editable task-name" value="' + esc(t.task) + '" onchange="handleFieldChange(\'' + t.id + '\', \'task\', this.value)"></td>';
             html += '<td><select class="vendor-select" onchange="handleFieldChange(\'' + t.id + '\', \'vendor\', this.value)"><option value="">Select...</option>';
-            vendors.forEach(function(v) {
+            allVendors.forEach(function(v) {
                 html += '<option value="' + v + '"' + (t.vendor === v ? ' selected' : '') + '>' + v + '</option>';
             });
             html += '</select></td>';
             html += '<td><input type="text" class="editable cost-input" value="' + esc(t.cost) + '" placeholder="$0" onchange="handleFieldChange(\'' + t.id + '\', \'cost\', this.value)"></td>';
             html += '<td><input type="text" class="editable time-input" value="' + esc(t.time) + '" placeholder="—" onchange="handleFieldChange(\'' + t.id + '\', \'time\', this.value)"></td>';
             html += '<td><input type="text" class="editable notes-input" value="' + esc(t.notes) + '" placeholder="Notes..." onchange="handleFieldChange(\'' + t.id + '\', \'notes\', this.value)"></td>';
-            html += '<td><button class="delete-btn" onclick="deleteTask(\'' + t.id + '\')">🗑️</button></td></tr>';
+            html += '<td><button class="delete-btn" onclick="deleteTask(\'' + t.id + '\')"><svg class="icon icon-sm"><use href="#icon-trash"/></svg></button></td></tr>';
             return html;
         }
 
@@ -1406,22 +1698,26 @@
         // ==================== DATA ROOM CONTROL ====================
         function renderDataroom() {
             var container = document.getElementById('dataroomContainer');
+            var showHidden = document.getElementById('showHiddenDocs').checked;
             var html = '';
 
             drSections.forEach(function(section) {
-                var sectionDocs = documents.filter(function(d) { return d.section === section.id; });
+                var sectionDocs = documents.filter(function(d) { 
+                    return d.section === section.id && (showHidden || !d.is_hidden);
+                });
                 var sectionNotes = notes.filter(function(n) { return n.section === section.id; });
+                var hiddenCount = documents.filter(function(d) { return d.section === section.id && d.is_hidden; }).length;
 
                 html += '<div class="dr-section" data-section="' + section.id + '">';
                 html += '<div class="dr-section-header" onclick="toggleDrSection(\'' + section.id + '\')">';
-                html += '<h3>' + section.icon + ' ' + section.name + ' <span class="doc-count">' + sectionDocs.length + ' docs</span></h3>';
-                html += '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div>';
+                html += '<h3><svg class="icon"><use href="#' + section.icon + '"/></svg> ' + section.name + ' <span class="doc-count">' + sectionDocs.length + (hiddenCount > 0 && !showHidden ? ' (+' + hiddenCount + ' hidden)' : '') + '</span></h3>';
+                html += '<svg class="icon chevron-icon"><use href="#icon-chevron-down"/></svg></div>';
                 html += '<div class="dr-section-body">';
 
                 // Documents table
                 html += '<h4 style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:0.75rem;">Documents</h4>';
                 html += '<table class="dr-doc-table"><thead><tr>';
-                html += '<th style="width:30%">Name</th><th style="width:80px">Type</th><th style="width:100px">Status</th><th>URL</th><th style="width:100px">Date</th><th style="width:40px"></th>';
+                html += '<th style="width:28%">Name</th><th style="width:70px">Type</th><th style="width:90px">Status</th><th>URL</th><th style="width:90px">Date</th><th style="width:70px">Visible</th><th style="width:40px"></th>';
                 html += '</tr></thead><tbody>';
 
                 sectionDocs.forEach(function(doc) {
@@ -1431,7 +1727,7 @@
                 html += '</tbody></table>';
                 html += '<div class="dr-add-row">';
                 html += '<input type="text" class="dr-input" id="newDoc-' + section.id + '" placeholder="Document name...">';
-                html += '<button class="btn btn-small btn-primary" onclick="addDocument(\'' + section.id + '\')">+ Add Doc</button></div>';
+                html += '<button class="btn btn-small btn-primary" onclick="addDocument(\'' + section.id + '\')"><svg class="icon icon-sm"><use href="#icon-plus"/></svg> Add</button></div>';
 
                 // Notes section
                 html += '<h4 style="font-size:0.85rem;color:var(--text-secondary);margin:1.5rem 0 0.75rem;">Notes & Updates</h4>';
@@ -1442,7 +1738,7 @@
                 });
 
                 html += '</div>';
-                html += '<button class="btn btn-small btn-secondary" style="margin-top:0.75rem;" onclick="addNote(\'' + section.id + '\')">+ Add Note</button>';
+                html += '<button class="btn btn-small btn-secondary" style="margin-top:0.75rem;" onclick="addNote(\'' + section.id + '\')"><svg class="icon icon-sm"><use href="#icon-plus"/></svg> Add Note</button>';
 
                 html += '</div></div>';
             });
@@ -1450,19 +1746,23 @@
             container.innerHTML = html;
 
             // Update stats
-            var uploaded = documents.filter(function(d) { return d.status === 'uploaded'; }).length;
-            var pending = documents.filter(function(d) { return d.status === 'pending'; }).length;
-            var missing = documents.filter(function(d) { return d.status === 'missing'; }).length;
+            var visibleDocs = documents.filter(function(d) { return !d.is_hidden; });
+            var uploaded = visibleDocs.filter(function(d) { return d.status === 'uploaded'; }).length;
+            var pending = visibleDocs.filter(function(d) { return d.status === 'pending'; }).length;
+            var missing = visibleDocs.filter(function(d) { return d.status === 'missing'; }).length;
+            var hidden = documents.filter(function(d) { return d.is_hidden; }).length;
 
-            document.getElementById('drTotalDocs').textContent = documents.length;
+            document.getElementById('drTotalDocs').textContent = visibleDocs.length;
             document.getElementById('drUploaded').textContent = uploaded;
             document.getElementById('drPending').textContent = pending;
             document.getElementById('drMissing').textContent = missing;
-            document.getElementById('drCount').textContent = documents.length;
+            document.getElementById('drHidden').textContent = hidden;
+            document.getElementById('drCount').textContent = visibleDocs.length;
         }
 
         function renderDocRow(doc) {
-            var html = '<tr>';
+            var isHidden = doc.is_hidden;
+            var html = '<tr class="' + (isHidden ? 'is-hidden' : '') + '">';
             html += '<td><input type="text" class="dr-input" value="' + esc(doc.name) + '" onchange="updateDocument(\'' + doc.id + '\', \'name\', this.value)"></td>';
             html += '<td><select class="dr-type-select" onchange="updateDocument(\'' + doc.id + '\', \'file_type\', this.value)">';
             ['pdf', 'xlsx', 'doc', 'dwg', 'img', 'audio', 'other'].forEach(function(type) {
@@ -1473,19 +1773,21 @@
             html += '<option value="uploaded"' + (doc.status === 'uploaded' ? ' selected' : '') + '>Uploaded</option>';
             html += '<option value="pending"' + (doc.status === 'pending' ? ' selected' : '') + '>Pending</option>';
             html += '<option value="missing"' + (doc.status === 'missing' ? ' selected' : '') + '>Missing</option></select></td>';
-            html += '<td><input type="text" class="dr-input url-input" value="' + esc(doc.url) + '" placeholder="https://drive.google.com/..." onchange="updateDocument(\'' + doc.id + '\', \'url\', this.value)"></td>';
-            html += '<td><input type="text" class="dr-input" value="' + esc(doc.date_added) + '" placeholder="Jan 2026" onchange="updateDocument(\'' + doc.id + '\', \'date_added\', this.value)" style="font-size:0.8rem;"></td>';
-            html += '<td><button class="delete-btn" style="opacity:1;" onclick="deleteDocument(\'' + doc.id + '\')">🗑️</button></td>';
+            html += '<td><input type="text" class="dr-input url-input" value="' + esc(doc.url) + '" placeholder="https://..." onchange="updateDocument(\'' + doc.id + '\', \'url\', this.value)"></td>';
+            html += '<td><input type="text" class="dr-input" value="' + esc(doc.date_added) + '" placeholder="Jan 2026" onchange="updateDocument(\'' + doc.id + '\', \'date_added\', this.value)" style="font-size:0.75rem;"></td>';
+            html += '<td><button class="visibility-toggle ' + (isHidden ? 'hidden-doc' : '') + '" onclick="toggleDocVisibility(\'' + doc.id + '\')" title="' + (isHidden ? 'Show in Data Room' : 'Hide from Data Room') + '">';
+            html += '<svg class="icon icon-sm"><use href="#' + (isHidden ? 'icon-eye-off' : 'icon-eye') + '"/></svg></button></td>';
+            html += '<td><button class="delete-btn" style="opacity:1;" onclick="deleteDocument(\'' + doc.id + '\')"><svg class="icon icon-sm"><use href="#icon-trash"/></svg></button></td>';
             html += '</tr>';
             return html;
         }
 
         function renderNoteItem(note) {
             var html = '<div class="dr-note-item' + (note.is_highlight ? ' highlight' : '') + '">';
-            html += '<button class="dr-note-delete" onclick="deleteNote(\'' + note.id + '\')">🗑️</button>';
+            html += '<button class="dr-note-delete" onclick="deleteNote(\'' + note.id + '\')"><svg class="icon icon-sm"><use href="#icon-x"/></svg></button>';
             html += '<div class="dr-note-header">';
             html += '<input type="text" class="dr-input" value="' + esc(note.author) + '" placeholder="Author" onchange="updateNote(\'' + note.id + '\', \'author\', this.value)">';
-            html += '<input type="text" class="dr-input" value="' + esc(note.date) + '" placeholder="Date" onchange="updateNote(\'' + note.id + '\', \'date\', this.value)" style="max-width:120px;">';
+            html += '<input type="text" class="dr-input" value="' + esc(note.date) + '" placeholder="Date" onchange="updateNote(\'' + note.id + '\', \'date\', this.value)" style="max-width:110px;">';
             html += '<label><input type="checkbox"' + (note.is_highlight ? ' checked' : '') + ' onchange="updateNote(\'' + note.id + '\', \'is_highlight\', this.checked)"> Highlight</label>';
             html += '</div>';
             html += '<textarea class="dr-input dr-note-content" placeholder="Note content..." onchange="updateNote(\'' + note.id + '\', \'content\', this.value)">' + esc(note.content) + '</textarea>';
@@ -1496,6 +1798,13 @@
         function toggleDrSection(id) {
             var el = document.querySelector('.dr-section[data-section="' + id + '"]');
             if (el) el.classList.toggle('collapsed');
+        }
+
+        async function toggleDocVisibility(id) {
+            var doc = documents.find(function(d) { return d.id === id; });
+            if (doc) {
+                await updateDocument(id, 'is_hidden', !doc.is_hidden);
+            }
         }
 
         async function updateDocument(id, field, value) {
@@ -1523,7 +1832,7 @@
             if (!name) return;
 
             showSaveIndicator('saving');
-            var newDoc = { section: section, name: name, file_type: 'pdf', url: '', status: 'missing', date_added: '' };
+            var newDoc = { section: section, name: name, file_type: 'pdf', url: '', status: 'missing', date_added: '', is_hidden: false };
             var result = await db.from('dataroom_documents').insert([newDoc]).select().single();
 
             if (result.error) {
@@ -1600,12 +1909,14 @@
 
         // ==================== SETTINGS ====================
         function renderSettings() {
-            // Populate settings fields
             document.getElementById('settingDrPassword').value = settings.dr_password || 'redew2026';
             document.getElementById('settingDrStatus').value = settings.dr_status || 'active';
             document.getElementById('settingProjectName').value = settings.project_name || 'ReDew Anson';
             document.getElementById('settingCapacity').value = settings.capacity || '300 MW';
             document.getElementById('settingTargetNtp').value = settings.target_ntp || 'Q1 2027';
+
+            // Vendor list
+            renderVendorList();
 
             // Progress editor
             var progressItems = [
@@ -1627,6 +1938,49 @@
                 progressHtml += '</div>';
             });
             document.getElementById('progressEditor').innerHTML = progressHtml;
+        }
+
+        function renderVendorList() {
+            var html = '';
+            
+            // Default vendors (can't be removed)
+            defaultVendors.forEach(function(v) {
+                html += '<span class="vendor-tag default">' + v + '</span>';
+            });
+            
+            // Custom vendors (can be removed)
+            customVendors.forEach(function(v, idx) {
+                html += '<span class="vendor-tag">' + v + ' <button onclick="removeVendor(' + idx + ')"><svg class="icon icon-sm"><use href="#icon-x"/></svg></button></span>';
+            });
+            
+            document.getElementById('vendorList').innerHTML = html;
+        }
+
+        async function addVendor() {
+            var inp = document.getElementById('newVendorInput');
+            var name = inp.value.trim();
+            if (!name) return;
+            
+            // Check for duplicates
+            var all = getAllVendors();
+            if (all.indexOf(name) !== -1) {
+                alert('Vendor already exists.');
+                return;
+            }
+            
+            customVendors.push(name);
+            await saveSetting('custom_vendors', JSON.stringify(customVendors));
+            inp.value = '';
+            renderVendorList();
+            renderTasks(); // Update vendor dropdowns
+        }
+
+        async function removeVendor(idx) {
+            if (!confirm('Remove this vendor?')) return;
+            customVendors.splice(idx, 1);
+            await saveSetting('custom_vendors', JSON.stringify(customVendors));
+            renderVendorList();
+            renderTasks();
         }
 
         function updateProgressPreview(key, value) {
@@ -1666,6 +2020,7 @@
 
             document.getElementById('statCompleted').textContent = completed;
             document.getElementById('statInProgress').textContent = inProgress;
+            document.getElementById('statTotal').textContent = tasks.length;
             document.getElementById('totalPercent').textContent = pct + '%';
             document.getElementById('totalBlocked').textContent = blocked;
             document.getElementById('totalCost').textContent = '$' + totalCost.toLocaleString();
@@ -1682,7 +2037,7 @@
 
             var catHtml = '<option value="all">All</option>';
             ntpCategories.forEach(function(c) {
-                catHtml += '<option value="' + c.id + '">' + c.icon + ' ' + c.name + '</option>';
+                catHtml += '<option value="' + c.id + '">' + c.name + '</option>';
             });
             document.getElementById('filterCategory').innerHTML = catHtml;
         }
@@ -1720,6 +2075,7 @@
 
         // ==================== INIT ====================
         document.addEventListener('DOMContentLoaded', function() {
+            loadTheme();
             if (localStorage.getItem('redew_admin_config')) {
                 goToLogin();
             }
@@ -1728,6 +2084,9 @@
             });
             document.getElementById('adminPassword').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') doSetup();
+            });
+            document.getElementById('newVendorInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') addVendor();
             });
         });
     </script>
