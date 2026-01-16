@@ -76,6 +76,25 @@
   let docSearchTerm = '';
 
   // ==========================================
+  // VISITOR ACTIVITY LOGGING
+  // ==========================================
+  async function logActivity(action, section = null, docName = null) {
+    if (!supabase || !visitorInfo) return;
+    try {
+      await supabase.from('visitor_logs').insert([{
+        session_id: sessionId,
+        visitor_name: visitorInfo.name,
+        visitor_company: visitorInfo.company,
+        action: action,
+        section: section,
+        document_name: docName
+      }]);
+    } catch (err) { 
+      console.error("Tracking error:", err); 
+    }
+  }
+
+  // ==========================================
   // SECTION DEFINITIONS
   // ==========================================
   const SECTIONS = [
@@ -817,6 +836,8 @@
         action: 'document_click',
         clicked_at: new Date().toISOString()
       });
+      // Also log to visitor_logs
+      logActivity('view_document', doc.section, doc.name);
     } catch (e) {}
   }
 
@@ -830,6 +851,8 @@
         action: 'section_view',
         clicked_at: new Date().toISOString()
       });
+      // Also log to visitor_logs
+      logActivity('view_section', sectionId, null);
     } catch (e) {}
   }
 
@@ -965,6 +988,9 @@ async function logout() {
   }
 
   function renderDashboard() {
+    // Track dashboard view
+    logActivity('view_dashboard', null, null);
+
     if (settings.project_name) {
       const t = $('#projectTitle');
       if (t) t.textContent = settings.project_name + ' — Project Dashboard';
