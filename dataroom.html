@@ -71,16 +71,19 @@
     .header {
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
       background: var(--bg-primary);
       border-bottom: 1px solid var(--border);
-      padding: 24px 30px;
+      /* Edit: Added env for mobile notch safety + kept your 24px/30px */
+      padding: calc(24px + env(safe-area-inset-top)) 30px 24px 30px;
       transition: background 0.3s ease;
     }
 
     .header-inner {
       display: flex;
       align-items: center;
+      /* Edit: ensure buttons stay pushed to far edges */
+      justify-content: space-between; 
       gap: 12px;
       max-width: 1200px;
       margin: 0 auto;
@@ -116,10 +119,18 @@
     }
 
     .header-right {
-      margin-left: auto;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 16px; /* Increases space between Refresh and Theme toggle */
+    }
+    
+    /* Add padding to the icons themselves so they have a larger 'hit box' */
+    .header-btn, .menu-toggle {
+      padding: 8px;
+      margin: -4px; /* Keeps the alignment but increases the clickable area */
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .theme-toggle {
@@ -1023,36 +1034,53 @@
       .stat-value { font-size: 18px; }
     }
 
-    /* ==================== DESKTOP SIDEBAR (FIXED) ==================== */
-    @media (min-width: 1024px) {
-      /* Use padding on body instead of margins on elements */
-      body {
-        padding-left: 280px;
-      }
-
-      /* Fix sidebar positioning */
-      .side-menu {
-        transform: translateX(0) !important;
-        width: 280px;
-        max-width: 280px;
-        box-shadow: none;
-        border-right: 1px solid var(--border);
-        z-index: 500;
-      }
-
-      /* Fix Header - remove left offset, let it flow naturally */
+   /* ==================== GLOBAL HEADER (Mobile & Desktop) ==================== */
       .header {
         position: sticky;
+        top: 0;
         left: 0;
         width: 100%;
-        margin-left: 0;
+        z-index: 1000;
+        background: var(--bg-primary);
+        border-bottom: 1px solid var(--border);
+        /* FIX: Pushes the refresh/burger/toggle down from the top edge */
+        padding-top: calc(16px + env(safe-area-inset-top)); 
+        padding-bottom: 16px;
       }
-
-      /* Header inner should align with main content */
+      
       .header-inner {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 0 24px;
+        /* FIX: Prevents icons from touching the side bezel */
+        padding: 0 24px; 
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 48px; /* Vertical centering anchor */
+      }
+      
+      /* ==================== DESKTOP SIDEBAR (FIXED) ==================== */
+      @media (min-width: 1024px) {
+        body {
+          padding-left: 280px; /* Moves content over so sidebar doesn't cover it */
+        }
+      
+        .side-menu {
+          transform: translateX(0) !important;
+          width: 280px;
+          position: fixed;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          border-right: 1px solid var(--border);
+          z-index: 1100; /* Stays above header if necessary */
+        }
+      
+        .header {
+          /* Ensures header stays inside the remaining screen space */
+          width: 100%; 
+          left: 0;
+        }
       }
 
       /* Fix Content Centering */
