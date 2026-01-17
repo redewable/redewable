@@ -20,10 +20,6 @@
   // ==========================================
   // SUPABASE CONFIGURATION
   // ==========================================
-  // This page expects credentials via query params:
-  //   ?sbUrl=<SUPABASE_URL>&sbKey=<SUPABASE_ANON_KEY>
-  // The Admin dashboard can generate this link.
-
   const FALLBACK_SUPABASE_URL = '';
   const FALLBACK_SUPABASE_ANON_KEY = '';
 
@@ -39,7 +35,6 @@
     const sbUrl = (getQueryParam('sbUrl') || '').trim();
     const sbKey = (getQueryParam('sbKey') || '').trim();
 
-    // Persist provided config for future loads
     try {
       if (sbUrl && sbKey) {
         localStorage.setItem('redew_dataroom_config', JSON.stringify({ url: sbUrl, key: sbKey }));
@@ -76,7 +71,7 @@
   let docSearchTerm = '';
 
   // ==========================================
-  // VISITOR ACTIVITY LOGGING
+  // VISITOR ACTIVITY LOGGING (single definition)
   // ==========================================
   async function logActivity(action, section = null, docName = null) {
     if (!supabase || !visitorInfo) return;
@@ -91,6 +86,21 @@
       }]);
     } catch (err) { 
       console.error("Tracking error:", err); 
+    }
+  }
+
+  async function trackVisitor(action, details = {}) {
+    if (!supabase || !visitorInfo) return;
+    try {
+      await supabase.from('visitor_logs').insert([{
+        visitor_name: visitorInfo.name,
+        visitor_company: visitorInfo.company,
+        action: action,
+        section: details.section || '',
+        document_name: details.doc || ''
+      }]);
+    } catch (e) {
+      console.error("Tracking error:", e);
     }
   }
 
@@ -202,7 +212,6 @@
       const tok = getLinkToken();
       if (pw) localStorage.removeItem(unlockKeyFor('password', pw));
       if (tok) localStorage.removeItem(unlockKeyFor('token', tok));
-      // Legacy keys
       localStorage.removeItem('redew_dataroom_unlocked_v1');
     } catch (e) {}
   }
@@ -220,7 +229,6 @@
         return localStorage.getItem(unlockKeyFor('token', tok)) === 'true';
       }
 
-      // Password mode: allow either a valid password unlock OR a valid token unlock.
       if (tok && localStorage.getItem(unlockKeyFor('token', tok)) === 'true') return true;
       if (pw && localStorage.getItem(unlockKeyFor('password', pw)) === 'true') return true;
       return false;
@@ -243,7 +251,6 @@
         return;
       }
 
-      // password (default)
       const pw = getPassword();
       if (pw) localStorage.setItem(unlockKeyFor('password', pw), 'true');
     } catch (e) {}
@@ -334,7 +341,6 @@
 
     let unlocked = false;
 
-    // Token unlock works even in password mode (convenience links).
     if (tok && tokenParam && tokenParam === tok) {
       setUnlocked(true, 'token');
       unlocked = true;
@@ -368,7 +374,6 @@
       return true;
     }
 
-    // Try auto-unlock links (pw/token) once settings are loaded.
     maybeAutoUnlockFromLink();
 
     if (mode === 'token') {
@@ -384,7 +389,6 @@
       return true;
     }
 
-    // password (default)
     if (pw && !isUnlocked()) {
       showAccessModal('Enter the investor access passcode to continue.', 'password');
       return false;
@@ -408,7 +412,6 @@
       const tok = getLinkToken();
       const entered = (inp.value || '').trim();
 
-      // Open mode should never show this modal, but just in case:
       if (mode === 'open') {
         hideAccessModal();
         await startApp();
@@ -436,7 +439,6 @@
         return;
       }
 
-      // Password mode: allow either password OR token.
       if (tok && entered === tok) {
         setUnlocked(true, 'token');
         hideAccessModal();
@@ -481,15 +483,12 @@
   // ==========================================
   // SUPABASE INIT + REALTIME
   // ==========================================
-// SUPABASE INIT + REALTIME
-  // ==========================================
   function initSupabase() {
     try {
       const cfg = getSupabaseConfig();
       if (cfg.url && cfg.key) {
         if (window.supabase && typeof window.supabase.createClient === 'function') {
           supabase = window.supabase.createClient(cfg.url, cfg.key);
-          // Hide sensitive query params after we store them
           cleanUrlParams(['sbUrl', 'sbKey']);
         }
       } else {
@@ -608,7 +607,6 @@
     }
 
     try {
-      // Load settings first so password/status can be enforced before documents are pulled.
       await loadSettings();
       maybeAutoUnlockFromLink();
 
@@ -638,7 +636,6 @@
       const allowed = await enforceAccessRules();
       if (!allowed) return;
 
-      // Re-render current view
       if (currentView === 'dashboard') {
         renderMenu();
         renderDashboard();
@@ -650,15 +647,11 @@
         renderDashboard();
       }
 
-      // Ensure bindings are in place
       setupEventListeners();
-
-      // Start background behaviors once
       startVisitorTracking();
       setupRealtimeSync();
       startPolling();
 
-      // Track dashboard view on refresh (optional) - no
       void reason;
     } catch (e) {
       console.error('Refresh failed:', e);
@@ -667,7 +660,6 @@
 
   function startPolling() {
     if (pollingTimer) return;
-    // Poll as a fallback for environments where Realtime is not enabled.
     pollingTimer = window.setInterval(async () => {
       await refreshAll('poll');
     }, 30000);
@@ -686,39 +678,6 @@
   // ==========================================
   // VISITOR IDENTIFICATION + TRACKING
   // ==========================================
-
-  // ADD THIS HERE:
-  async function logActivity(action, section = null, docName = null) {
-    if (!supabase || !visitorInfo) return;
-    try {
-      await supabase.from('visitor_logs').insert([{
-        session_id: sessionId,
-        visitor_name: visitorInfo.name,
-        visitor_company: visitorInfo.company,
-        action: action,
-        section: section,
-        document_name: docName
-      }]);
-    } catch (e) { 
-      console.error("Log error:", e); 
-    }
-  }
-
-  async function trackVisitor(action, details = {}) {
-    if (!supabase || !visitorInfo) return;
-    try {
-      await supabase.from('visitor_logs').insert([{
-        visitor_name: visitorInfo.name,
-        visitor_company: visitorInfo.company,
-        action: action,
-        section: details.section || '',
-        document_name: details.doc || ''
-      }]);
-    } catch (e) {
-      console.error("Tracking error:", e);
-    }
-  }
-  
   function getStoredVisitor() {
     try {
       const stored = localStorage.getItem('redew_visitor');
@@ -829,13 +788,10 @@
         screen_width: window.innerWidth,
         screen_height: window.innerHeight
       });
-    } catch (e) {
-      // Non-blocking
-    }
+    } catch (e) {}
 
     window.addEventListener('beforeunload', endVisitorSession);
 
-    // Track dashboard view once per session
     try {
       await supabase.from('visitor_clicks').insert({
         session_id: sessionId,
@@ -869,7 +825,6 @@
         action: 'document_click',
         clicked_at: new Date().toISOString()
       });
-      // Also log to visitor_logs
       logActivity('view_document', doc.section, doc.name);
     } catch (e) {}
   }
@@ -884,7 +839,6 @@
         action: 'section_view',
         clicked_at: new Date().toISOString()
       });
-      // Also log to visitor_logs
       logActivity('view_section', sectionId, null);
     } catch (e) {}
   }
@@ -892,20 +846,10 @@
   // ==========================================
   // UI: VISITOR DISPLAY + LOGOUT
   // ==========================================
-  function initials(name) {
-    const parts = (name || '').trim().split(/\s+/).filter(Boolean);
-    if (!parts.length) return '?';
-    const first = parts[0][0] || '';
-    const last = parts.length > 1 ? (parts[parts.length - 1][0] || '') : '';
-    return (first + last).toUpperCase() || '?';
-  }
-
   function renderVisitorUI() {
-    // Footer year
     const footerYear = $('#footerYear');
     if (footerYear) footerYear.textContent = String(new Date().getFullYear());
 
-    // Visitor-dependent UI
     const name = visitorInfo?.name || 'Visitor';
     const email = visitorInfo?.email || '';
     const company = visitorInfo?.company || '';
@@ -917,7 +861,6 @@
       .map(part => part[0].toUpperCase())
       .join('') || 'V';
 
-    // Header chip
     const userAvatar = $('#userAvatar');
     if (userAvatar) userAvatar.textContent = initials;
 
@@ -927,7 +870,6 @@
     const userDisplayEmail = $('#userDisplayEmail');
     if (userDisplayEmail) userDisplayEmail.textContent = email || '—';
 
-    // Dropdown
     const userDropdownName = $('#userDropdownName');
     if (userDropdownName) userDropdownName.textContent = name;
 
@@ -938,17 +880,15 @@
     if (userDropdownCompany) userDropdownCompany.textContent = company ? ('Company: ' + company) : '';
   }
 
-async function logout() {
+  async function logout() {
     try {
       await endVisitorSession();
     } catch (e) {}
 
-    // Clear identity + access unlock
     visitorInfo = null;
     clearVisitor();
     setUnlocked(false);
 
-    // Clean up
     sessionId = null;
     sessionStart = null;
     documents = [];
@@ -958,13 +898,11 @@ async function logout() {
     currentSection = null;
     docSearchTerm = '';
 
-    // Stop polling
     if (pollingTimer) {
       clearInterval(pollingTimer);
       pollingTimer = null;
     }
 
-    // Unsubscribe realtime
     try {
       if (supabase && realtimeSubscription) {
         supabase.removeChannel(realtimeSubscription);
@@ -972,7 +910,6 @@ async function logout() {
     } catch (e) {}
     realtimeSubscription = null;
 
-    // Reset UI and show visitor modal
     try {
       renderVisitorUI();
       showVisitorModal();
@@ -1020,6 +957,9 @@ async function logout() {
     });
   }
 
+  // ==========================================
+  // FIXED: renderDashboard - was split into two functions
+  // ==========================================
   function renderDashboard() {
     // 1. Track dashboard view
     trackVisitor('view_dashboard');
@@ -1047,11 +987,7 @@ async function logout() {
       if (target) target.textContent = 'Target NTP: ' + settings.target_ntp;
     }
 
-    // 3. IMPORTANT: This line actually draws the category folders on the screen
-    renderCategories();
-  }
-    
-    // Progress
+    // 3. Calculate and render progress
     const progressKeys = [
       'progress_executive',
       'progress_land',
@@ -1085,7 +1021,7 @@ async function logout() {
     if (prt) prt.textContent = avgProgress + '%';
     if (pr) pr.style.strokeDashoffset = String(offset);
 
-    // Breakdown
+    // 4. Render progress breakdown
     const breakdownItems = [
       { label: 'Executive', key: 'progress_executive' },
       { label: 'Land Control', key: 'progress_land' },
@@ -1099,7 +1035,6 @@ async function logout() {
       pb.innerHTML = breakdownItems
         .map((item) => {
           const val = escapeHtml(settings[item.key] || '0');
-          // CHANGED: Using progress-track instead of just labels
           return `
           <div class="progress-item">
             <span class="progress-item-label">${escapeHtml(item.label)}</span>
@@ -1113,6 +1048,7 @@ async function logout() {
         .join('');
     }
 
+    // 5. Render category cards
     renderCategories();
   }
 
@@ -1160,7 +1096,6 @@ async function logout() {
 
     trackVisitor('view_section', { section: sectionId });
 
-    // Reset doc search
     docSearchTerm = '';
     const searchInp = $('#docSearchInput');
     if (searchInp) searchInp.value = '';
@@ -1235,7 +1170,6 @@ async function logout() {
         const isInteractive = status === 'uploaded' && hasUrl;
 
         const metaParts = [];
-        // Friendly kind first, then optional date
         if (typeInfo.kind) metaParts.push(typeInfo.kind);
         if (doc.date_added) metaParts.push(doc.date_added);
         const meta = metaParts.join(' • ');
@@ -1300,25 +1234,25 @@ async function logout() {
   }
 
   function openDocument(doc) {
-      trackDocumentClick(doc);
-  
-      // This logs the specific document opening
-      trackVisitor('view_document', { 
-        section: doc.section || '', 
-        doc: doc.name || '' 
-      });
-  
-      const url = (doc.url || '').trim();
-      const status = (doc.status || '').toLowerCase();
-      
-      if (status === 'uploaded' && url) {
-        try {
-          window.open(url, '_blank', 'noopener');
-        } catch (e) {
-          window.location.href = url;
-        }
+    trackDocumentClick(doc);
+
+    trackVisitor('view_document', { 
+      section: doc.section || '', 
+      doc: doc.name || '' 
+    });
+
+    const url = (doc.url || '').trim();
+    const status = (doc.status || '').toLowerCase();
+    
+    if (status === 'uploaded' && url) {
+      try {
+        window.open(url, '_blank', 'noopener');
+      } catch (e) {
+        window.location.href = url;
       }
+    }
   }
+
   // ==========================================
   // NAV + UI
   // ==========================================
@@ -1460,7 +1394,6 @@ async function logout() {
     if (userChip && userChip.dataset.bound !== '1') {
       userChip.dataset.bound = '1';
       userChip.addEventListener('click', () => {
-        // On mobile, clicking the user chip opens the menu.
         openMenu();
       });
     }
@@ -1473,10 +1406,10 @@ async function logout() {
       });
     }
 
-    const footerLogout = $('#footerLogout');
-    if (footerLogout && footerLogout.dataset.bound !== '1') {
-      footerLogout.dataset.bound = '1';
-      footerLogout.addEventListener('click', async (e) => {
+    const footerLogoutBtn = $('#footerLogoutBtn');
+    if (footerLogoutBtn && footerLogoutBtn.dataset.bound !== '1') {
+      footerLogoutBtn.dataset.bound = '1';
+      footerLogoutBtn.addEventListener('click', async (e) => {
         e.preventDefault();
         await logout();
       });
@@ -1502,7 +1435,6 @@ async function logout() {
       });
     }
 
-    // Ensure menu isn't stuck open when resizing to desktop
     window.addEventListener('resize', () => {
       if (isDesktopSidebarPinned()) {
         $('#menuOverlay')?.classList.remove('open');
@@ -1527,7 +1459,6 @@ async function logout() {
     if (currentView === 'dashboard') {
       renderDashboard();
     } else if (currentSection) {
-      // Ensure the section view is visible
       openSection(currentSection.id, { track: false });
     } else {
       renderDashboard();
@@ -1536,7 +1467,6 @@ async function logout() {
     renderVisitorUI();
     setupEventListeners();
 
-    // Start background behaviors
     startVisitorTracking();
     setupRealtimeSync();
     startPolling();
