@@ -729,7 +729,12 @@
 
     .menu-header {
       padding: 20px;
+      padding-top: calc(16px + env(safe-area-inset-top));
+      min-height: calc(80px + env(safe-area-inset-top));
+      display: flex;
+      align-items: center;
       border-bottom: 1px solid var(--border);
+      box-sizing: border-box;
     }
 
     .menu-logo {
