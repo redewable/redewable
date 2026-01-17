@@ -852,7 +852,70 @@
         .analytics-list-item .name{font-weight:700;color:var(--text-primary);}
         .analytics-list-item .meta{font-size:0.82rem;color:var(--text-secondary);margin-top:0.1rem;}
         .analytics-list-item .count{font-family:'JetBrains Mono',monospace;font-weight:800;}
-
+        /* Progress Category Reorder */
+        .progress-category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.375rem;
+        }
+        
+        .progress-category-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.625rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            transition: all 0.15s;
+        }
+        
+        .progress-category-item:hover {
+            border-color: var(--brand-green-dim);
+        }
+        
+        .progress-category-item.disabled {
+            opacity: 0.5;
+            background: var(--bg-tertiary);
+        }
+        
+        .progress-category-item.disabled .drag-handle-cat {
+            visibility: hidden;
+        }
+        
+        .progress-category-item.dragging {
+            opacity: 0.4;
+            background: var(--brand-green-glow);
+        }
+        
+        .progress-category-item.drag-over-above {
+            border-top: 2px solid var(--brand-green);
+            margin-top: -1px;
+        }
+        
+        .progress-category-item.drag-over-below {
+            border-bottom: 2px solid var(--brand-green);
+            margin-bottom: -1px;
+        }
+        
+        .drag-handle-cat {
+            cursor: grab;
+            color: var(--text-muted);
+            padding: 0.25rem;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .drag-handle-cat:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+        }
+        
+        .drag-handle-cat:active {
+            cursor: grabbing;
+        }
     </style>
 </head>
 <body>
@@ -1762,18 +1825,45 @@
             
             var enabledKeys = getEnabledProgressCategories();
             
-            var html = defaultProgressCategories.map(function(cat) {
-                var isChecked = enabledKeys.indexOf(cat.key) !== -1;
-                return '<label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">' +
-                    '<input type="checkbox" ' + (isChecked ? 'checked' : '') +
-                     ' onchange="toggleProgressCategory(\'' + cat.key + '\', this.checked)" style="accent-color: var(--brand-green);">' +
-                    '<span style="font-size: 0.9rem;">' + cat.label + '</span>' +
-                '</label>';
-            }).join('');
+            // Build ordered list: enabled items first (in their saved order), then disabled items
+            var orderedCategories = [];
+            
+            // Add enabled categories in their saved order
+            enabledKeys.forEach(function(key) {
+                var cat = defaultProgressCategories.find(function(c) { return c.key === key; });
+                if (cat) orderedCategories.push({ key: cat.key, label: cat.label, enabled: true });
+            });
+            
+            // Add disabled categories at the end
+            defaultProgressCategories.forEach(function(cat) {
+                if (enabledKeys.indexOf(cat.key) === -1) {
+                    orderedCategories.push({ key: cat.key, label: cat.label, enabled: false });
+                }
+            });
+            
+            var html = '<div class="progress-category-list" id="progressCategoryList">';
+            
+            orderedCategories.forEach(function(cat) {
+                var isChecked = cat.enabled;
+                html += '<div class="progress-category-item' + (isChecked ? '' : ' disabled') + '" draggable="' + (isChecked ? 'true' : 'false') + '" data-key="' + cat.key + '">';
+                html += '<div class="drag-handle-cat" title="Drag to reorder"><svg class="icon icon-sm"><use href="#icon-grip"/></svg></div>';
+                html += '<label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; flex: 1;">';
+                html += '<input type="checkbox" ' + (isChecked ? 'checked' : '') +
+                         ' onchange="toggleProgressCategory(\'' + cat.key + '\', this.checked)" style="accent-color: var(--brand-green);">';
+                html += '<span style="font-size: 0.9rem;">' + cat.label + '</span>';
+                html += '</label>';
+                html += '</div>';
+            });
+            
+            html += '</div>';
+            html += '<p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem;">Drag enabled items to reorder. Order is saved automatically.</p>';
             
             container.innerHTML = html;
+            
+            // Initialize drag-and-drop
+            initProgressCategoryDragDrop();
         }
-
+        
         async function toggleProgressCategory(key, enabled) {
             var enabledKeys = getEnabledProgressCategories();
             
@@ -1786,7 +1876,86 @@
             await saveSetting('progress_categories', JSON.stringify(enabledKeys));
             renderSettings();
         }
+        
+        function initProgressCategoryDragDrop() {
+            var list = document.getElementById('progressCategoryList');
+            if (!list) return;
+            
+            var items = list.querySelectorAll('.progress-category-item[draggable="true"]');
+            var draggedItem = null;
+            
+            items.forEach(function(item) {
+                item.addEventListener('dragstart', function(e) {
+                    draggedItem = this;
+                    this.classList.add('dragging');
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('text/plain', this.dataset.key);
+                });
+                
+                item.addEventListener('dragend', function(e) {
+                    this.classList.remove('dragging');
+                    document.querySelectorAll('.progress-category-item').forEach(function(el) {
+                        el.classList.remove('drag-over-above', 'drag-over-below');
+                    });
+                    draggedItem = null;
+                });
+                
+                item.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    if (!draggedItem || draggedItem === this) return;
+                    
+                    var rect = this.getBoundingClientRect();
+                    var midY = rect.top + rect.height / 2;
+                    
+                    this.classList.remove('drag-over-above', 'drag-over-below');
+                    
+                    if (e.clientY < midY) {
+                        this.classList.add('drag-over-above');
+                    } else {
+                        this.classList.add('drag-over-below');
+                    }
+                });
+                
+                item.addEventListener('dragleave', function(e) {
+                    this.classList.remove('drag-over-above', 'drag-over-below');
+                });
+                
+                item.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    if (!draggedItem || draggedItem === this) return;
+                    
+                    var rect = this.getBoundingClientRect();
+                    var midY = rect.top + rect.height / 2;
+                    var insertBefore = e.clientY < midY;
+                    
+                    if (insertBefore) {
+                        list.insertBefore(draggedItem, this);
+                    } else {
+                        list.insertBefore(draggedItem, this.nextSibling);
+                    }
+                    
+                    this.classList.remove('drag-over-above', 'drag-over-below');
+                    saveProgressCategoryOrder();
+                });
+            });
+        }
+        
+        async function saveProgressCategoryOrder() {
+            var list = document.getElementById('progressCategoryList');
+            if (!list) return;
+            
+            var newOrder = [];
+            list.querySelectorAll('.progress-category-item[draggable="true"]').forEach(function(item) {
+                newOrder.push(item.dataset.key);
+            });
+            
+            if (newOrder.length > 0) {
+                await saveSetting('progress_categories', JSON.stringify(newOrder));
+                renderSettings();
+            }
+        }
 
+        / ==================== SETTINGS ====================
         function renderSettings() {
             updatePublicLinkUI();
             document.getElementById('settingDrPassword').value = settings.dr_password || 'redew2026';
@@ -1796,15 +1965,16 @@
             document.getElementById('settingProjectName').value = settings.project_name || 'ReDew Anson';
             document.getElementById('settingCapacity').value = settings.capacity || '300 MW';
             document.getElementById('settingTargetNtp').value = settings.target_ntp || 'Q1 2027';
-
+            
             renderVendorList();
-
-            // Progress editor - only show enabled categories (UPDATED)
+        
+            // Progress editor - use saved order from enabled categories
             var enabledKeys = getEnabledProgressCategories();
             var progressHtml = '';
-
-            defaultProgressCategories.forEach(function(item) {
-                if (enabledKeys.indexOf(item.key) === -1) return;
+        
+            enabledKeys.forEach(function(key) {
+                var item = defaultProgressCategories.find(function(c) { return c.key === key; });
+                if (!item) return;
                 var val = settings[item.key] || '0';
                 progressHtml += '<div class="progress-row">';
                 progressHtml += '<span class="label">' + item.label + '</span>';
@@ -1812,10 +1982,10 @@
                 progressHtml += '<span class="value" id="preview-' + item.key + '">' + val + '%</span>';
                 progressHtml += '</div>';
             });
-
+        
             document.getElementById('progressEditor').innerHTML = progressHtml;
-
-            // Render the category toggles (NEW)
+        
+            // Render the category toggles
             renderProgressCategoryToggles();
         }
 
