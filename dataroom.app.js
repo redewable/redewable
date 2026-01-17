@@ -121,6 +121,36 @@
     { id: 'team', name: 'Team & Partners', desc: 'Development team and partner information.', icon: 'users', progressKey: 'progress_financial' }
   ];
 
+  // ==========================================
+  // DYNAMIC PROGRESS CATEGORIES
+  // ==========================================
+  const PROGRESS_LABEL_MAP = {
+    'progress_executive': 'Executive',
+    'progress_land': 'Land Control',
+    'progress_interconnection': 'Interconnection',
+    'progress_permitting': 'Permitting',
+    'progress_engineering': 'Engineering',
+    'progress_financial': 'Financial',
+    'progress_epc': 'EPC'
+  };
+
+  function getEnabledProgressCategories() {
+    try {
+      const stored = JSON.parse(settings.progress_categories || 'null');
+      if (Array.isArray(stored) && stored.length > 0) {
+        return stored;
+      }
+    } catch (e) {}
+    // Default fallback (original 5 shown in breakdown)
+    return [
+      'progress_executive',
+      'progress_land', 
+      'progress_interconnection',
+      'progress_permitting',
+      'progress_engineering'
+    ];
+  }
+
   const ICONS = {
     'file-text': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
     'map-pin': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
@@ -987,16 +1017,8 @@
       if (target) target.textContent = 'Target NTP: ' + settings.target_ntp;
     }
 
-    // 3. Calculate and render progress
-    const progressKeys = [
-      'progress_executive',
-      'progress_land',
-      'progress_interconnection',
-      'progress_permitting',
-      'progress_engineering',
-      'progress_financial',
-      'progress_epc'
-    ];
+    // 3. Calculate and render progress (dynamic from admin settings)
+    const progressKeys = getEnabledProgressCategories();
 
     let sum = 0;
     let cnt = 0;
@@ -1021,14 +1043,11 @@
     if (prt) prt.textContent = avgProgress + '%';
     if (pr) pr.style.strokeDashoffset = String(offset);
 
-    // 4. Render progress breakdown
-    const breakdownItems = [
-      { label: 'Executive', key: 'progress_executive' },
-      { label: 'Land Control', key: 'progress_land' },
-      { label: 'Interconnection', key: 'progress_interconnection' },
-      { label: 'Permitting', key: 'progress_permitting' },
-      { label: 'Engineering', key: 'progress_engineering' }
-    ];
+    // 4. Render progress breakdown (dynamic from admin settings)
+    const breakdownItems = progressKeys.map(key => ({
+      label: PROGRESS_LABEL_MAP[key] || key.replace('progress_', '').replace(/_/g, ' '),
+      key: key
+    }));
 
     const pb = $('#progressBreakdown');
     if (pb) {
