@@ -686,6 +686,39 @@
   // ==========================================
   // VISITOR IDENTIFICATION + TRACKING
   // ==========================================
+
+  // ADD THIS HERE:
+  async function logActivity(action, section = null, docName = null) {
+    if (!supabase || !visitorInfo) return;
+    try {
+      await supabase.from('visitor_logs').insert([{
+        session_id: sessionId,
+        visitor_name: visitorInfo.name,
+        visitor_company: visitorInfo.company,
+        action: action,
+        section: section,
+        document_name: docName
+      }]);
+    } catch (e) { 
+      console.error("Log error:", e); 
+    }
+  }
+
+  async function trackVisitor(action, details = {}) {
+    if (!supabase || !visitorInfo) return;
+    try {
+      await supabase.from('visitor_logs').insert([{
+        visitor_name: visitorInfo.name,
+        visitor_company: visitorInfo.company,
+        action: action,
+        section: details.section || '',
+        document_name: details.doc || ''
+      }]);
+    } catch (e) {
+      console.error("Tracking error:", e);
+    }
+  }
+  
   function getStoredVisitor() {
     try {
       const stored = localStorage.getItem('redew_visitor');
@@ -988,9 +1021,10 @@ async function logout() {
   }
 
   function renderDashboard() {
-    // Track dashboard view
-    logActivity('view_dashboard', null, null);
+    // 1. Track dashboard view
+    trackVisitor('view_dashboard');
 
+    // 2. Update UI text from settings
     if (settings.project_name) {
       const t = $('#projectTitle');
       if (t) t.textContent = settings.project_name + ' — Project Dashboard';
@@ -1013,6 +1047,10 @@ async function logout() {
       if (target) target.textContent = 'Target NTP: ' + settings.target_ntp;
     }
 
+    // 3. IMPORTANT: This line actually draws the category folders on the screen
+    renderCategories();
+  }
+    
     // Progress
     const progressKeys = [
       'progress_executive',
@@ -1119,6 +1157,8 @@ async function logout() {
 
     currentView = 'section';
     currentSection = section;
+
+    trackVisitor('view_section', { section: sectionId });
 
     // Reset doc search
     docSearchTerm = '';
@@ -1260,19 +1300,25 @@ async function logout() {
   }
 
   function openDocument(doc) {
-    trackDocumentClick(doc);
-
-    const url = (doc.url || '').trim();
-    const status = (doc.status || '').toLowerCase();
-    if (status === 'uploaded' && url) {
-      try {
-        window.open(url, '_blank', 'noopener');
-      } catch (e) {
-        window.location.href = url;
+      trackDocumentClick(doc);
+  
+      // This logs the specific document opening
+      trackVisitor('view_document', { 
+        section: doc.section || '', 
+        doc: doc.name || '' 
+      });
+  
+      const url = (doc.url || '').trim();
+      const status = (doc.status || '').toLowerCase();
+      
+      if (status === 'uploaded' && url) {
+        try {
+          window.open(url, '_blank', 'noopener');
+        } catch (e) {
+          window.location.href = url;
+        }
       }
-    }
   }
-
   // ==========================================
   // NAV + UI
   // ==========================================
