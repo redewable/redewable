@@ -2637,11 +2637,11 @@ function renderSettings() {
                 clicksTbody.innerHTML = rows || '<tr><td colspan="5" style="color: var(--text-secondary);">No activity yet.</td></tr>';
             }
 
-            // Top docs
+            // Top docs - FIXED
             const topDocs = document.getElementById('topDocsList');
             if (topDocs) {
                 const counts = groupCounts(analyticsClicks.filter(c => c.action === 'document_click'), c => (c.document_name || '').trim());
-                topDocs.innerHTML = (counts.slice(0, 12).map((name,count) => `
+                topDocs.innerHTML = (counts.slice(0, 12).map(([name, count]) => `
                     <div class="analytics-list-item">
                         <div>
                             <div class="name">${name || 'Untitled'}</div>
@@ -2653,10 +2653,11 @@ function renderSettings() {
             }
 
             // Top sections
+            // Top sections - FIXED
             const topSections = document.getElementById('topSectionsList');
             if (topSections) {
                 const counts = groupCounts(analyticsClicks.filter(c => c.action === 'section_view'), c => (c.section || '').trim());
-                topSections.innerHTML = (counts.slice(0, 12).map((name,count) => `
+                topSections.innerHTML = (counts.slice(0, 12).map(([name, count]) => `
                     <div class="analytics-list-item">
                         <div>
                             <div class="name">${name || 'Unknown'}</div>
@@ -2700,7 +2701,7 @@ function renderSettings() {
                 ].join(','));
             });
 
-            const blob = new Blob([rows.join('n')], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
