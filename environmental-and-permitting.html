@@ -27,7 +27,6 @@
             --green-dark: #16a34a;
             --brand-green: #1a3d2f;
 
-            /* Theme variables - Light Mode Default */
             --bg-primary: var(--white);
             --bg-secondary: var(--gray-50);
             --bg-tertiary: var(--gray-100);
@@ -41,7 +40,6 @@
             --border: var(--gray-200);
         }
 
-        /* System preference: dark mode */
         @media (prefers-color-scheme: dark) {
             :root:not([data-theme="light"]) {
                 --bg-primary: #111111;
@@ -58,7 +56,6 @@
             }
         }
 
-        /* Manual theme overrides */
         [data-theme="dark"] {
             --bg-primary: #111111;
             --bg-secondary: #1a1a1a;
@@ -361,17 +358,12 @@
             color: var(--green);
         }
 
-        .status-minimal {
-            background: rgba(34, 197, 94, 0.15);
-            color: var(--green);
-        }
-
-        .status-standard {
+        .status-required {
             background: rgba(59, 130, 246, 0.15);
             color: #3b82f6;
         }
 
-        .status-pending {
+        .status-recommended {
             background: rgba(245, 158, 11, 0.15);
             color: #f59e0b;
         }
@@ -386,65 +378,100 @@
             color: var(--text-primary);
         }
 
-        /* Q&A Section */
-        .qa-section {
-            margin-bottom: 2rem;
-        }
-
-        .qa-block {
-            margin-bottom: 1.5rem;
-        }
-
-        .qa-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-        }
-
-        .qa-label.inquiry {
-            color: var(--accent);
-        }
-
-        .qa-label.response {
-            color: var(--text-muted);
-        }
-
-        .qa-label.insight {
-            color: #3b82f6;
-        }
-
-        .qa-content {
+        /* Insight Box */
+        .insight-box {
             background: var(--bg-secondary);
             border-radius: 12px;
             padding: 1.25rem 1.5rem;
             border-left: 4px solid var(--accent);
+            margin-bottom: 1.5rem;
         }
 
-        .qa-content.response {
+        .insight-box.highlight {
             background: var(--accent-glow);
             border-left-color: var(--green);
         }
 
-        .qa-content.insight {
-            background: rgba(59, 130, 246, 0.08);
-            border-left-color: #3b82f6;
+        .insight-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
         }
 
-        .qa-content p {
+        .insight-box p {
             margin: 0;
             color: var(--text-primary);
             line-height: 1.8;
         }
 
-        .qa-content strong {
+        .insight-box strong {
             color: var(--accent);
         }
 
-        .qa-content .highlight {
-            color: var(--green);
+        /* FEMA Map Section */
+        .map-section {
+            margin: 2rem 0;
+        }
+
+        .map-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .map-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .map-caption {
+            padding: 1rem 1.25rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+        }
+
+        .map-caption-title {
+            font-size: 0.9rem;
             font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .map-caption-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .map-caption-source {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .map-download-btn {
+            display: inline-block;
+            margin-top: 0.75rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--accent);
+            background: transparent;
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .map-download-btn:hover {
+            background: var(--accent);
+            color: var(--white);
         }
 
         /* Timeline Estimate */
@@ -550,10 +577,6 @@
             main {
                 padding: 1.5rem 1rem;
             }
-            
-            .qa-content {
-                padding: 1rem 1.25rem;
-            }
 
             .footer-inner {
                 flex-direction: column;
@@ -607,133 +630,83 @@
     <main>
         <div class="source-tags">
             <span class="source-tag">ESE Partners</span>
-            <span class="source-tag secondary">Tetra Tech</span>
+            <span class="source-tag secondary">Tier 1 Environmental Consultant</span>
         </div>
 
         <div class="summary-box">
             <h3>Executive Summary</h3>
-            <p>Based on preliminary desktop review and consultations with environmental firms, the ReDew Anson site presents a <strong>favorable environmental profile</strong>. The property is located directly adjacent to ENGIE's operational Anson Solar Farm, which has already undergone comprehensive environmental review. The site consists of agricultural land (cotton fields) in a drought-prone region with no apparent wetlands, flood zones, or sensitive habitats. Multiple consultants have characterized the site as unlikely to raise significant environmental concerns.</p>
+            <p>Based on preliminary desktop review and consultations with environmental firms, the ReDew Anson site presents a <strong>favorable environmental profile</strong>. The 45-acre property is located directly adjacent to ENGIE's operational Anson Solar Farm, which has already undergone comprehensive environmental review. The site consists of agricultural land in a drought-prone region with no apparent wetlands, flood zones, or sensitive habitats.</p>
         </div>
 
         <h2 class="section-header">Site Characteristics</h2>
 
-        <div class="qa-section">
-            <div class="qa-block">
-                <div class="qa-label insight">Engineering Consultant Assessment</div>
-                <div class="qa-content insight">
-                    <p>"Looking at the aerial, this—you're not going to have many issues. This is actually a <span class="highlight">very attractive parcel</span> for you and it is not going to raise red flags in any meaningful manner. Intuitively, the site is clean."</p>
-                </div>
-            </div>
-            
-            <div class="qa-block">
-                <div class="qa-label response">Environmental Consultant Assessment</div>
-                <div class="qa-content response">
-                    <p>"Since ENGIE is already building what you think they're building, this is probably <span class="highlight">cleared the pathway</span> of any issues that would have been uncovered at that point in time."</p>
+        <div class="insight-box highlight">
+            <div class="insight-label">Consultant Assessment</div>
+            <p>Preliminary aerial review indicates this is an <strong>attractive parcel unlikely to raise red flags</strong>. The adjacent ENGIE solar development has already cleared the environmental pathway for this area—any significant issues would have been identified during that process.</p>
+        </div>
+
+        <div class="map-section">
+            <div class="map-container">
+                <img src="/assets/fema-flood-map.png" alt="FEMA Flood Zone Map showing ReDew Anson property outside flood hazard areas" class="map-image">
+                <div class="map-caption">
+                    <div class="map-caption-title">Property Located Outside Flood Hazard Areas</div>
+                    <div class="map-caption-text">FEMA National Flood Hazard Layer confirms the project site is not within any designated flood zones.</div>
+                    <div class="map-caption-source">Source: FEMA Flood Map Service Center</div>
+                    <a href="/assets/fema-firm-original.tif" target="_blank" class="map-download-btn">View Original FIRM (TIFF)</a>
                 </div>
             </div>
         </div>
 
-        <h2 class="section-header">Required Studies & Assessments</h2>
+        <h2 class="section-header">Required Studies</h2>
 
         <div class="assessment-grid">
             <div class="assessment-card">
                 <div class="assessment-header">
                     <span class="assessment-title">Phase I ESA</span>
-                    <span class="assessment-status status-standard">Standard</span>
+                    <span class="assessment-status status-required">Required</span>
                 </div>
                 <div class="assessment-content">
-                    Required for financing and equity backers. Identifies any historic contamination or environmental liabilities. For 45 acres, estimated at <strong>~$5K</strong> boots-on-ground. Desktop version available at ~50% cost for initial screening.
-                </div>
-            </div>
-
-            <div class="assessment-card">
-                <div class="assessment-header">
-                    <span class="assessment-title">Critical Issues Analysis</span>
-                    <span class="assessment-status status-low">Low Risk</span>
-                </div>
-                <div class="assessment-content">
-                    Desktop review identifying any permitting concerns. Working document updated as studies complete. <strong>2-3 month turnaround</strong>. Given adjacent solar development, expected to confirm clear pathway.
-                </div>
-            </div>
-
-            <div class="assessment-card">
-                <div class="assessment-header">
-                    <span class="assessment-title">Wetlands Delineation</span>
-                    <span class="assessment-status status-minimal">Minimal Concern</span>
-                </div>
-                <div class="assessment-content">
-                    Site is agricultural land in drought conditions. <strong>No apparent wetlands</strong> visible on aerial review. Desktop study likely sufficient initially; boots-on-ground if required by equity backer.
-                </div>
-            </div>
-
-            <div class="assessment-card">
-                <div class="assessment-header">
-                    <span class="assessment-title">Threatened & Endangered Species</span>
-                    <span class="assessment-status status-minimal">Minimal Concern</span>
-                </div>
-                <div class="assessment-content">
-                    Active agricultural use and adjacent solar development indicate <strong>no sensitive habitats</strong>. Desktop review expected to confirm. Can be bundled with wetlands study for efficiency.
-                </div>
-            </div>
-
-            <div class="assessment-card">
-                <div class="assessment-header">
-                    <span class="assessment-title">Cultural Resources / Archaeology</span>
-                    <span class="assessment-status status-low">Low Risk</span>
-                </div>
-                <div class="assessment-content">
-                    Desktop Arc Review (~2 weeks). No known burial sites or Native American reservations in area. ENGIE's adjacent development would have already flagged any cultural resources.
+                    Standard requirement for financing and equity backers. Identifies any historic contamination or environmental liabilities. For 45 acres, estimated at <strong>~$5K</strong> with approximately 15 business day turnaround. Note: Reports are typically valid for <strong>6 months</strong> in the eyes of financiers.
                 </div>
             </div>
 
             <div class="assessment-card">
                 <div class="assessment-header">
                     <span class="assessment-title">ALTA Survey</span>
-                    <span class="assessment-status status-pending">Pending</span>
+                    <span class="assessment-status status-required">Required</span>
                 </div>
                 <div class="assessment-content">
-                    Required for title insurance and financing. Documents property boundaries, easements, and encumbrances. Standard deliverable for project sale.
+                    Required for title insurance, financing, and project sale. Documents property boundaries, easements, rights-of-way, and encumbrances. Standard deliverable for NTP-ready status. Approximately <strong>2–3 week</strong> turnaround.
                 </div>
             </div>
 
             <div class="assessment-card full-width">
                 <div class="assessment-header">
-                    <span class="assessment-title">Local Permitting</span>
-                    <span class="assessment-status status-low">Favorable</span>
+                    <span class="assessment-title">Desktop Critical Issues Analysis</span>
+                    <span class="assessment-status status-recommended">Recommended</span>
                 </div>
                 <div class="assessment-content">
-                    Jones County has hosted renewable energy development for 7+ years. ENGIE's Anson Solar 1 (operational since 2020) and Anson Solar 2 (under construction) demonstrate established permitting pathways. County is familiar with utility-scale energy projects and has existing SOPs for approvals. Permitting expected to be limited to <strong>stormwater permitting</strong> (notice-level) once environmental due diligence confirms clean site.
+                    Comprehensive desktop review covering wetlands, threatened/endangered species, cultural resources, and permitting pathway. Confirms no federal nexus issues (Clean Water Act, Endangered Species Act, National Historic Preservation Act). Given the site characteristics—active agricultural land, drought conditions, location outside FEMA flood zones, and adjacent solar development that has already undergone environmental review—<strong>formal field delineations and species surveys are not anticipated to be required</strong>. Desktop-level analysis is expected to sufficiently demonstrate a clear permitting pathway. Supplemental boots-on-ground studies can be conducted if specifically requested by an equity backer. Estimated <strong>2–3 weeks</strong> for initial desktop; <strong>4–6 weeks</strong> for full CIA report.
                 </div>
             </div>
         </div>
 
-        <h2 class="section-header">Strategic Advantages</h2>
+        <h2 class="section-header">Permitting Pathway</h2>
 
-        <div class="qa-section">
-            <div class="qa-block">
-                <div class="qa-label inquiry">ReDewable Inquiry</div>
-                <div class="qa-content">
-                    <p>Since all properties in our pipeline are adjacent to existing solar farms, I'm assuming feasibility assessments have already been executed—environmental and permitting has been done for the solar farms to take place.</p>
-                </div>
-            </div>
-            
-            <div class="qa-block">
-                <div class="qa-label response">Consultant Response</div>
-                <div class="qa-content response">
-                    <p>"If the studies are out there and they're current—I'm assuming that with Anson operational and Anson 2 coming online—I think you can have confidence that there is a <span class="highlight">pretty relevant data set out there</span> that you would be able to rely on."</p>
-                </div>
-            </div>
+        <div class="insight-box">
+            <div class="insight-label">Local Permitting</div>
+            <p>Jones County has hosted renewable energy development for over 7 years. ENGIE's Anson Solar 1 has been operational since 2020, with Anson Solar 2 currently under construction. The county is familiar with utility-scale energy projects and has established processes for approvals. Permitting is expected to be limited to <strong>stormwater permitting</strong> (notice-level) once environmental due diligence confirms a clean site.</p>
         </div>
 
         <div class="timeline-box">
-            <h4>Estimated Timeline to Completion</h4>
+            <h4>Estimated Timeline</h4>
             <div class="timeline-items">
                 <div class="timeline-item">
-                    <span class="timeline-item-name">Desktop CIA + Species/Wetlands Review</span>
+                    <span class="timeline-item-name">Desktop CIA (Wetlands, Species, Cultural)</span>
                     <span class="timeline-item-duration">2–3 weeks</span>
                 </div>
                 <div class="timeline-item">
-                    <span class="timeline-item-name">Phase I ESA (Boots on Ground)</span>
+                    <span class="timeline-item-name">Phase I ESA</span>
                     <span class="timeline-item-duration">15 business days</span>
                 </div>
                 <div class="timeline-item">
@@ -741,43 +714,21 @@
                     <span class="timeline-item-duration">2–3 weeks</span>
                 </div>
                 <div class="timeline-item">
-                    <span class="timeline-item-name">Full CIA Report</span>
-                    <span class="timeline-item-duration">4–6 weeks</span>
-                </div>
-                <div class="timeline-item">
-                    <span class="timeline-item-name">Local Permitting Approvals</span>
-                    <span class="timeline-item-duration">TBD (County dependent)</span>
+                    <span class="timeline-item-name">Local Permitting</span>
+                    <span class="timeline-item-duration">County dependent</span>
                 </div>
             </div>
         </div>
 
         <h2 class="section-header">Financing Considerations</h2>
 
-        <div class="qa-section">
-            <div class="qa-block">
-                <div class="qa-label inquiry">ReDewable Inquiry</div>
-                <div class="qa-content">
-                    <p>Regarding the studies being redone every six months—is that prior to submitting the application or all the way to NTP?</p>
-                </div>
-            </div>
-            
-            <div class="qa-block">
-                <div class="qa-label response">ESE Partners Response</div>
-                <div class="qa-content response">
-                    <p>"In the eyes of an equity backer, financier, or investment bank, they look at Phase I reports as good for <strong>only six months</strong>. If there's a lot of activity, they want reports updated—it's really just a check-the-box item. Sometimes we do the same Phase I four times over and nothing's changed, but that's their requirement. As soon as it hits that six-month threshold, they need it reactivated."</p>
-                </div>
-            </div>
-
-            <div class="qa-block">
-                <div class="qa-label insight">Key Takeaway</div>
-                <div class="qa-content insight">
-                    <p>For a develop-and-sell strategy targeting NTP sale, timing of Phase I completion should align with anticipated buyer due diligence window. Desktop studies and CIA can be completed earlier; full Phase I ESA should be timed to remain current through sale process.</p>
-                </div>
-            </div>
+        <div class="insight-box">
+            <div class="insight-label">Phase I Refresh Requirement</div>
+            <p>Equity backers, financiers, and investment banks typically consider Phase I reports valid for <strong>6 months</strong>. After that threshold, they require a refresh—even if nothing has changed. For a develop-and-sell strategy, Phase I timing should align with anticipated buyer due diligence window. Desktop studies and CIA can be completed earlier; the full Phase I ESA should be timed to remain current through the sale process.</p>
         </div>
 
         <div class="footer-note">
-            This assessment is based on preliminary consultations and desktop review. Final determinations will be made upon completion of formal studies. Environmental conditions are subject to change based on field verification.
+            This assessment is based on preliminary consultations and desktop review. Final determinations will be made upon completion of formal studies. Environmental conditions are subject to verification.
         </div>
     </main>
 
@@ -813,10 +764,8 @@
 
         function updateThemeIcons(theme) {
             const isDark = theme === 'dark';
-            // Desktop icons
             document.querySelector('.sun-icon').style.display = isDark ? 'block' : 'none';
             document.querySelector('.moon-icon').style.display = isDark ? 'none' : 'block';
-            // Mobile icons
             document.querySelector('.sun-icon-mobile').style.display = isDark ? 'block' : 'none';
             document.querySelector('.moon-icon-mobile').style.display = isDark ? 'none' : 'block';
         }
@@ -837,18 +786,15 @@
             }
         }
 
-        // Listen for system theme changes
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
             if (!localStorage.getItem('theme')) {
                 updateThemeIcons(e.matches ? 'dark' : 'light');
             }
         });
 
-        // Theme toggle event listeners
         document.getElementById('themeToggle').addEventListener('click', toggleTheme);
         document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', initTheme);
     </script>
 </body>
