@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transmission Upgrade Analysis | ReDewable Energy</title>
-    <meta name="description" content="Technical correspondence regarding transmission upgrade requirements for ReDew Anson battery storage project.">
+    <title>Interconnection | ReDewable Energy</title>
+    <meta name="description" content="Grid interconnection status and technical assessment for ReDew Anson battery storage project.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
@@ -27,7 +27,6 @@
             --green-dark: #16a34a;
             --brand-green: #1a3d2f;
 
-            /* Theme variables - Light Mode Default */
             --bg-primary: var(--white);
             --bg-secondary: var(--gray-50);
             --bg-tertiary: var(--gray-100);
@@ -41,7 +40,6 @@
             --border: var(--gray-200);
         }
 
-        /* System preference: dark mode */
         @media (prefers-color-scheme: dark) {
             :root:not([data-theme="light"]) {
                 --bg-primary: #111111;
@@ -58,7 +56,6 @@
             }
         }
 
-        /* Manual theme overrides */
         [data-theme="dark"] {
             --bg-primary: #111111;
             --bg-secondary: #1a1a1a;
@@ -238,13 +235,20 @@
 
         /* Main */
         main {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 2.5rem 2rem;
             flex: 1;
         }
 
-        /* Source tag */
+        /* Source tags */
+        .source-tags {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
         .source-tag {
             display: inline-block;
             background: var(--accent);
@@ -252,10 +256,113 @@
             font-size: 0.75rem;
             padding: 0.35rem 1rem;
             border-radius: 20px;
-            margin-bottom: 1.5rem;
             letter-spacing: 0.5px;
             font-weight: 700;
             text-transform: uppercase;
+        }
+
+        .source-tag.secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        /* Summary Box */
+        .summary-box {
+            background: var(--accent-glow);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-box h3 {
+            font-size: 1rem;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .summary-box p {
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        /* Status Card */
+        .status-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .status-card-content h4 {
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .status-card-content p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .status-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .status-complete {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--green);
+        }
+
+        /* Info Box */
+        .info-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-box p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .info-box strong {
+            color: var(--text-primary);
         }
 
         /* Q&A Section */
@@ -264,7 +371,7 @@
         }
 
         .qa-block {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .qa-label {
@@ -286,7 +393,7 @@
         .qa-content {
             background: var(--bg-secondary);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1.25rem 1.5rem;
             border-left: 4px solid var(--accent);
         }
 
@@ -303,6 +410,78 @@
 
         .qa-content strong {
             color: var(--accent);
+        }
+
+        /* Key Takeaway */
+        .takeaway-box {
+            background: var(--brand-green);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .takeaway-box h4 {
+            color: var(--green);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .takeaway-box p {
+            color: var(--white);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Documents Grid */
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .document-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .document-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .document-icon {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background: var(--accent-glow);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+        }
+
+        .document-content h5 {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .document-content p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin: 0;
         }
 
         /* Footer note */
@@ -369,7 +548,12 @@
             }
             
             .qa-content {
-                padding: 1.25rem;
+                padding: 1rem 1.25rem;
+            }
+
+            .status-card {
+                flex-direction: column;
+                align-items: flex-start;
             }
 
             .footer-inner {
@@ -416,14 +600,38 @@
 
     <!-- Cover -->
     <div class="cover">
-        <h1>Transmission Upgrade Analysis</h1>
+        <h1>Interconnection</h1>
         <div class="subtitle">ReDew Anson — Jones County, Texas</div>
-        <div class="meta">Technical Correspondence · January 2026</div>
+        <div class="meta">Phantom Hill 345 kV · January 2026</div>
     </div>
 
     <main>
-        <span class="source-tag">Enerzinx</span>
-        
+        <div class="source-tags">
+            <span class="source-tag">Enerzinx</span>
+            <span class="source-tag secondary">ERCOT</span>
+        </div>
+
+        <div class="summary-box">
+            <h3>Executive Summary</h3>
+            <p>Independent analysis confirms <strong>300 MW battery storage feasibility</strong> at the Phantom Hill 345 kV point of interconnection. The identified transmission upgrade profile is favorable—primarily conductor upgrades rather than substation modifications—representing the lower end of typical network upgrade costs for a project of this scale.</p>
+        </div>
+
+        <h2 class="section-header">Application Status</h2>
+
+        <div class="status-card">
+            <div class="status-card-content">
+                <h4>ERCOT Interconnection Application (GINR)</h4>
+                <p>Generation Interconnection or Change Request — Phantom Hill 345 kV POI</p>
+            </div>
+            <span class="status-badge status-pending">Pending</span>
+        </div>
+
+        <h2 class="section-header">Independent Injection Study</h2>
+
+        <div class="info-box">
+            <p><strong>Injection Study:</strong> Independent third-party analysis evaluating grid capacity, system stability, and required transmission upgrades at the proposed point of interconnection. Conducted by Enerzinx prior to formal ERCOT application to validate project feasibility and de-risk the interconnection pathway.</p>
+        </div>
+
         <div class="qa-section">
             <div class="qa-block">
                 <div class="qa-label inquiry">ReDewable Inquiry</div>
@@ -439,9 +647,63 @@
                 </div>
             </div>
         </div>
-        
+
+        <div class="takeaway-box">
+            <h4>Key Takeaway</h4>
+            <p>Conductor-based upgrades are favorable compared to substation modifications—typically faster to permit, less complex to construct, and representing the lower end of transmission network upgrade cost estimates ($30M–$80M range for a 300 MW project).</p>
+        </div>
+
+        <h2 class="section-header">Supporting Documents</h2>
+
+        <div class="documents-grid">
+            <a href="https://drive.google.com/file/d/1ydkVRYvrywvWFDm2Vg9jC7wIGJ8WY-HQ/view?usp=drive_link" target="_blank" rel="noopener" class="document-card">
+                <div class="document-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                    </svg>
+                </div>
+                <div class="document-content">
+                    <h5>Injection Study Report</h5>
+                    <p>Enerzinx · January 2026</p>
+                </div>
+            </a>
+
+            <a href="https://drive.google.com/file/d/1lHVosoLCeB8HQUCU1uW-JfR_kd8iJtX7/view?usp=drive_link" target="_blank" rel="noopener" class="document-card">
+                <div class="document-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                </div>
+                <div class="document-content">
+                    <h5>ERCOT GIS Report</h5>
+                    <p>December 2025</p>
+                </div>
+            </a>
+
+            <a href="https://docs.google.com/spreadsheets/d/1rbaG0wMPKtU_ocZk4hR_y0o7bnZ8w_8h/edit?usp=drive_link&ouid=107047806904710735304&rtpof=true&sd=true" target="_blank" rel="noopener" class="document-card">
+                <div class="document-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                        <line x1="3" y1="15" x2="21" y2="15"></line>
+                        <line x1="9" y1="3" x2="9" y2="21"></line>
+                        <line x1="15" y1="3" x2="15" y2="21"></line>
+                    </svg>
+                </div>
+                <div class="document-content">
+                    <h5>ERCOT Battery Identification Report</h5>
+                    <p>December 2025</p>
+                </div>
+            </a>
+        </div>
+
         <div class="footer-note">
-            This correspondence is provided for informational purposes and is subject to change as study parameters are refined.
+            This assessment is based on independent analysis and publicly available ERCOT data. Final interconnection requirements will be determined through the formal GINR study process.
         </div>
     </main>
 
@@ -477,10 +739,8 @@
 
         function updateThemeIcons(theme) {
             const isDark = theme === 'dark';
-            // Desktop icons
             document.querySelector('.sun-icon').style.display = isDark ? 'block' : 'none';
             document.querySelector('.moon-icon').style.display = isDark ? 'none' : 'block';
-            // Mobile icons
             document.querySelector('.sun-icon-mobile').style.display = isDark ? 'block' : 'none';
             document.querySelector('.moon-icon-mobile').style.display = isDark ? 'none' : 'block';
         }
@@ -501,18 +761,15 @@
             }
         }
 
-        // Listen for system theme changes
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
             if (!localStorage.getItem('theme')) {
                 updateThemeIcons(e.matches ? 'dark' : 'light');
             }
         });
 
-        // Theme toggle event listeners
         document.getElementById('themeToggle').addEventListener('click', toggleTheme);
         document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', initTheme);
     </script>
 </body>
