@@ -217,247 +217,165 @@
         }
 
         .cover h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            letter-spacing: -0.5px;
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
         }
 
         .cover .subtitle {
-            font-size: 1.125rem;
+            font-size: 1.1rem;
             opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
+            margin-bottom: 1rem;
         }
 
-        /* Main Content */
+        .cover .meta {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Main */
         main {
-            flex: 1;
             max-width: 1000px;
             margin: 0 auto;
-            padding: 3rem 2rem;
-            width: 100%;
-        }
-
-        .section-header {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-            letter-spacing: -0.25px;
-        }
-
-        .section-intro {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            line-height: 1.7;
-        }
-
-        /* Visual Chart */
-        .chart-container {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .chart-bars {
-            display: flex;
-            gap: 2rem;
-            align-items: flex-end;
-            justify-content: center;
-            height: 280px;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 1.5rem;
-        }
-
-        .chart-bar-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.75rem;
+            padding: 2.5rem 2rem;
             flex: 1;
-            max-width: 200px;
         }
 
-        .chart-bar {
-            width: 100%;
-            border-radius: 8px 8px 0 0;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            min-height: 60px;
-            transition: transform 0.2s ease;
+        /* Summary Box */
+        .summary-box {
+            background: var(--accent-glow);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
         }
 
-        .chart-bar:hover {
-            transform: translateY(-4px);
+        .summary-box h3 {
+            font-size: 1rem;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .chart-bar.lean {
-            height: 180px;
-            background: linear-gradient(180deg, var(--accent) 0%, var(--accent-dark) 100%);
+        .summary-box p {
+            color: var(--text-primary);
+            line-height: 1.8;
         }
 
-        .chart-bar.buffered {
-            height: 250px;
-            background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
-        }
-
-        .chart-bar-label {
-            position: absolute;
-            top: -2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            font-weight: 700;
+        /* Section Headers */
+        .section-header {
             font-size: 1.25rem;
-            color: var(--text-primary);
-            white-space: nowrap;
-        }
-
-        .chart-bar-name {
             font-weight: 700;
-            font-size: 0.875rem;
+            margin: 2.5rem 0 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border);
             color: var(--text-primary);
-            text-align: center;
         }
 
-        .chart-bar-desc {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-align: center;
-        }
-
-        .chart-legend {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .legend-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 3px;
-        }
-
-        .legend-dot.lean {
-            background: var(--accent);
-        }
-
-        .legend-dot.buffered {
-            background: #3b82f6;
-        }
-
-        /* Path Cards */
-        .path-cards {
+        /* Paths Grid */
+        .paths-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
             margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width: 700px) {
+            .paths-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .path-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 1.75rem;
             position: relative;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s ease;
         }
 
         .path-card:hover {
             border-color: var(--accent);
-            box-shadow: 0 4px 20px var(--accent-glow);
+            transform: translateY(-4px);
         }
 
         .path-card.recommended {
             border-color: var(--accent);
+            background: var(--accent-glow);
         }
 
-        .path-card.recommended::before {
-            content: 'RECOMMENDED';
+        .path-badge {
             position: absolute;
-            top: -10px;
-            left: 1.5rem;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
             background: var(--accent);
-            color: white;
-            font-size: 0.625rem;
+            color: var(--white);
+            font-size: 0.7rem;
             font-weight: 700;
-            padding: 0.25rem 0.75rem;
-            border-radius: 4px;
+            text-transform: uppercase;
             letter-spacing: 1px;
-        }
-
-        .path-card.comprehensive::before {
-            content: 'COMPREHENSIVE';
-            position: absolute;
-            top: -10px;
-            left: 1.5rem;
-            background: #3b82f6;
-            color: white;
-            font-size: 0.625rem;
-            font-weight: 700;
-            padding: 0.25rem 0.75rem;
-            border-radius: 4px;
-            letter-spacing: 1px;
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            white-space: nowrap;
         }
 
         .path-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 1.25rem;
-            padding-bottom: 1rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
             border-bottom: 1px solid var(--border);
         }
 
         .path-name {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--text-primary);
+            margin-bottom: 0.5rem;
         }
 
         .path-total {
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: 700;
             color: var(--accent);
-        }
-
-        .path-card.comprehensive .path-total {
-            color: #3b82f6;
         }
 
         .path-items {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
 
         .path-item {
             display: flex;
             justify-content: space-between;
-            font-size: 0.875rem;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        .path-item-name {
             color: var(--text-secondary);
         }
 
-        .path-item.added {
-            color: var(--accent);
+        .path-item-value {
+            color: var(--text-primary);
+            font-weight: 700;
         }
 
-        .path-card.comprehensive .path-item.added {
-            color: #3b82f6;
+        .path-item.added {
+            background: var(--accent-glow);
+            margin: 0 -1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+        }
+
+        .path-item.added .path-item-name {
+            color: var(--accent);
         }
 
         .path-divider {
@@ -466,39 +384,123 @@
             margin: 0.5rem 0;
         }
 
+        /* Visual Chart */
+        .chart-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .chart-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .chart-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .chart-bar-label {
+            width: 140px;
+            flex-shrink: 0;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-align: right;
+        }
+
+        .chart-bar-track {
+            flex: 1;
+            height: 40px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chart-bar-fill {
+            height: 100%;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 1rem;
+            transition: width 0.8s ease;
+        }
+
+        .chart-bar-fill.lean {
+            background: linear-gradient(90deg, var(--green-dark) 0%, var(--green) 100%);
+            width: 68%;
+        }
+
+        .chart-bar-fill.full {
+            background: linear-gradient(90deg, var(--green-dark) 0%, #8b5cf6 100%);
+            width: 100%;
+        }
+
+        .chart-bar-value {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--white);
+            white-space: nowrap;
+        }
+
+        .chart-scale {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.75rem;
+            padding-left: 156px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
         /* Line Items Table */
         .line-items {
-            background: var(--bg-card);
+            background: var(--bg-secondary);
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
             margin-bottom: 2rem;
         }
 
         .line-items-header {
             display: grid;
-            grid-template-columns: 1fr 100px 100px;
+            grid-template-columns: 1fr 120px 120px;
             gap: 1rem;
             padding: 1rem 1.5rem;
             background: var(--bg-tertiary);
-            font-weight: 700;
+            border-bottom: 1px solid var(--border);
             font-size: 0.75rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-muted);
         }
 
         .line-items-header span:not(:first-child) {
-            text-align: right;
+            text-align: center;
         }
 
         .line-item-row {
             display: grid;
-            grid-template-columns: 1fr 100px 100px;
+            grid-template-columns: 1fr 120px 120px;
             gap: 1rem;
             padding: 1rem 1.5rem;
             border-bottom: 1px solid var(--border);
-            align-items: center;
+            font-size: 0.9rem;
         }
 
         .line-item-row:last-child {
@@ -511,57 +513,68 @@
         }
 
         .line-item-row.optional {
-            background: var(--accent-glow);
+            background: rgba(139, 92, 246, 0.05);
         }
 
         .line-item-name {
-            display: flex;
-            flex-direction: column;
-            gap: 0.125rem;
+            color: var(--text-primary);
         }
 
         .line-item-name span {
-            font-size: 0.75rem;
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .line-item-check {
+            text-align: center;
+            color: var(--green);
+        }
+
+        .line-item-dash {
+            text-align: center;
             color: var(--text-muted);
         }
 
         .line-item-amount {
-            text-align: right;
-            font-weight: 600;
-            font-variant-numeric: tabular-nums;
+            text-align: center;
+            color: var(--text-primary);
         }
 
-        .line-item-dash {
-            text-align: right;
-            color: var(--text-muted);
-        }
-
-        @media (max-width: 600px) {
+        @media (max-width: 700px) {
             .line-items-header,
             .line-item-row {
                 grid-template-columns: 1fr 80px 80px;
-                gap: 0.5rem;
+                font-size: 0.8rem;
                 padding: 0.75rem 1rem;
-                font-size: 0.875rem;
+            }
+
+            .chart-bar-label {
+                width: 80px;
+                font-size: 0.75rem;
+            }
+
+            .chart-scale {
+                padding-left: 96px;
             }
         }
 
-        /* Footer Note */
+        /* Footer note */
         .footer-note {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.25rem;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
         }
 
         /* Footer */
         .footer {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border);
-            padding: 2rem;
+            background: #0d0d0d;
+            color: #737373;
+            padding: 32px 24px;
             margin-top: auto;
         }
 
@@ -572,34 +585,48 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 16px;
         }
 
         .footer-logo {
             font-weight: 700;
-            color: var(--text-primary);
+            color: #ffffff;
         }
 
         .footer-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 24px;
             align-items: center;
         }
 
         .footer-links a {
-            color: var(--text-secondary);
+            font-size: 0.9rem;
+            color: #737373;
             text-decoration: none;
-            font-size: 0.875rem;
-            transition: color 0.2s ease;
+            transition: color 0.2s;
         }
 
         .footer-links a:hover {
-            color: var(--accent);
+            color: #ffffff;
         }
 
         .footer-links span {
-            color: var(--text-muted);
-            font-size: 0.875rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .cover {
+                padding: 7rem 1.5rem 2.5rem;
+            }
+            
+            main {
+                padding: 1.5rem 1rem;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -607,123 +634,156 @@
     <!-- Header -->
     <header class="header">
         <div class="header-inner">
-            <a href="/" class="logo">
+            <a href="https://www.redewable.com" class="logo">
+                <img src="/assets/logo-mark.png" alt="ReDewable">
                 <span>ReDewable Energy</span>
             </a>
-            
+
             <nav class="nav-desktop">
-                <a href="/investment-brief.html" class="nav-link">Overview</a>
-                <a href="/devfunds.html" class="nav-link active">Funds</a>
-                <a href="/interconnection-assessment.html" class="nav-link">Grid</a>
-                <a href="/technical-engineering-assessment.html" class="nav-link">Technical</a>
+                <a href="https://www.redewable.com" class="nav-link">Home</a>
+                <a href="https://www.redewable.com/dataroom" class="nav-link">Data Room</a>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="moon-icon" style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
                 </button>
             </nav>
 
             <div class="mobile-controls">
                 <button class="theme-toggle" id="themeToggleMobile" aria-label="Toggle theme">
-                    <svg class="sun-icon-mobile" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-                    <svg class="moon-icon-mobile" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <svg class="sun-icon-mobile" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="moon-icon-mobile" style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
                 </button>
             </div>
         </div>
     </header>
 
     <!-- Cover -->
-    <section class="cover">
+    <div class="cover">
         <h1>Development Funds</h1>
-        <p class="subtitle">Capital allocation for ReDew Anson BESS project development through NTP-ready status</p>
-    </section>
+        <div class="subtitle">ReDew Anson — Use of Capital</div>
+        <div class="meta">Investment Pathways · January 2026</div>
+    </div>
 
-    <!-- Main Content -->
     <main>
-        <p class="section-intro">
-            Two investment pathways tailored to development objectives. The Lean path delivers NTP-ready status with all interconnection, environmental, and site control requirements. The Buffered path adds geotechnical studies and 30% engineering for buyers requiring advanced design packages.
-        </p>
+        <div class="summary-box">
+            <h3>Investment Strategy</h3>
+            <p>Capital deployment is structured around achieving <strong>shovel-ready (NTP) status</strong> with flexibility on engineering depth based on buyer requirements. Two pathways accommodate different risk profiles—lean execution for capital efficiency or full pre-development for maximum buyer readiness.</p>
+        </div>
 
         <!-- Visual Chart -->
         <div class="chart-container">
+            <div class="chart-title">Investment Pathways Comparison</div>
             <div class="chart-bars">
-                <div class="chart-bar-wrapper">
-                    <div class="chart-bar lean">
-                        <span class="chart-bar-label">$550K</span>
+                <div class="chart-bar-row">
+                    <div class="chart-bar-label">Lean</div>
+                    <div class="chart-bar-track">
+                        <div class="chart-bar-fill lean">
+                            <span class="chart-bar-value">$550K</span>
+                        </div>
                     </div>
-                    <div class="chart-bar-name">Lean</div>
-                    <div class="chart-bar-desc">NTP-Ready</div>
                 </div>
-                <div class="chart-bar-wrapper">
-                    <div class="chart-bar buffered">
-                        <span class="chart-bar-label">$763K</span>
+                <div class="chart-bar-row">
+                    <div class="chart-bar-label">Full</div>
+                    <div class="chart-bar-track">
+                        <div class="chart-bar-fill full">
+                            <span class="chart-bar-value">$813K</span>
+                        </div>
                     </div>
-                    <div class="chart-bar-name">Buffered</div>
-                    <div class="chart-bar-desc">+ Geotech & 30% Eng</div>
                 </div>
             </div>
-            <div class="chart-legend">
-                <div class="legend-item">
-                    <span class="legend-dot lean"></span>
-                    <span>Core Development</span>
-                </div>
-                <div class="legend-item">
-                    <span class="legend-dot buffered"></span>
-                    <span>Enhanced Engineering</span>
-                </div>
+            <div class="chart-scale">
+                <span>$0</span>
+                <span>$200K</span>
+                <span>$400K</span>
+                <span>$600K</span>
+                <span>$800K</span>
             </div>
         </div>
 
-        <!-- Path Cards -->
+        <!-- Three Paths -->
         <h2 class="section-header">Investment Pathways</h2>
 
-        <div class="path-cards">
+        <div class="paths-grid">
             <div class="path-card recommended">
+                <span class="path-badge">Recommended</span>
                 <div class="path-header">
                     <div class="path-name">Lean</div>
                     <div class="path-total">$550K</div>
                 </div>
                 <div class="path-items">
                     <div class="path-item">
-                        <span>Land Acquisition</span>
-                        <span>$225K</span>
+                        <span class="path-item-name">Land Acquisition</span>
+                        <span class="path-item-value">$225K</span>
                     </div>
                     <div class="path-item">
-                        <span>TSP / FIS Deposit</span>
-                        <span>$100K</span>
+                        <span class="path-item-name">TSP / FIS Deposit</span>
+                        <span class="path-item-value">$100K</span>
                     </div>
                     <div class="path-item">
-                        <span>Enerzinx (Interconnection)</span>
-                        <span>$65K</span>
+                        <span class="path-item-name">Enerzinx</span>
+                        <span class="path-item-value">$65K</span>
                     </div>
                     <div class="path-item">
-                        <span>Development Fee</span>
-                        <span>$60K</span>
+                        <span class="path-item-name">Development Fee</span>
+                        <span class="path-item-value">$60K</span>
                     </div>
                     <div class="path-item">
-                        <span>Contingency & Other</span>
-                        <span>$100K</span>
+                        <span class="path-item-name">Contingency</span>
+                        <span class="path-item-value">$30K</span>
+                    </div>
+                    <div class="path-item">
+                        <span class="path-item-name">Financing Package Prep</span>
+                        <span class="path-item-value">$25K</span>
+                    </div>
+                    <div class="path-item">
+                        <span class="path-item-name">ERCOT Fees</span>
+                        <span class="path-item-value">$17K</span>
+                    </div>
+                    <div class="path-item">
+                        <span class="path-item-name">Optimum EPC</span>
+                        <span class="path-item-value">$15K</span>
+                    </div>
+                    <div class="path-item">
+                        <span class="path-item-name">ESE Partners</span>
+                        <span class="path-item-value">$8K</span>
+                    </div>
+                    <div class="path-item">
+                        <span class="path-item-name">Fiber Connectivity</span>
+                        <span class="path-item-value">$5K</span>
                     </div>
                 </div>
             </div>
 
-            <div class="path-card comprehensive">
+            <div class="path-card">
                 <div class="path-header">
-                    <div class="path-name">Buffered</div>
-                    <div class="path-total">$763K</div>
+                    <div class="path-name">Full</div>
+                    <div class="path-total">$813K</div>
                 </div>
                 <div class="path-items">
                     <div class="path-item">
-                        <span>Lean Path Base</span>
-                        <span>$550K</span>
+                        <span class="path-item-name">Lean Base</span>
+                        <span class="path-item-value">$550K</span>
                     </div>
                     <div class="path-divider"></div>
                     <div class="path-item added">
-                        <span>Geotechnical Studies</span>
-                        <span>+$62K</span>
+                        <span class="path-item-name">30% Engineering</span>
+                        <span class="path-item-value">+$151K</span>
                     </div>
                     <div class="path-item added">
-                        <span>30% Engineering Design</span>
-                        <span>+$151K</span>
+                        <span class="path-item-name">Geotechnical (ANS)</span>
+                        <span class="path-item-value">+$62K</span>
+                    </div>
+                    <div class="path-item added">
+                        <span class="path-item-name">Additional Contingency</span>
+                        <span class="path-item-value">+$50K</span>
                     </div>
                 </div>
             </div>
@@ -736,7 +796,7 @@
             <div class="line-items-header">
                 <span>Line Item</span>
                 <span>Lean</span>
-                <span>Buffered</span>
+                <span>Full</span>
             </div>
             
             <div class="line-item-row">
@@ -764,19 +824,19 @@
             </div>
             
             <div class="line-item-row">
-                <div class="line-item-name">Contingency<span>Unexpected costs, travel, legal</span></div>
+                <div class="line-item-name">Contingency<span>Miscellaneous, legal, travel</span></div>
                 <div class="line-item-amount">$30K</div>
-                <div class="line-item-amount">$30K</div>
+                <div class="line-item-amount">$80K</div>
             </div>
             
             <div class="line-item-row">
-                <div class="line-item-name">Financing Package Prep<span>Package transferable to buyer</span></div>
+                <div class="line-item-name">Financing Package Prep<span>Transferrable Financing Package</span></div>
                 <div class="line-item-amount">$25K</div>
                 <div class="line-item-amount">$25K</div>
             </div>
             
             <div class="line-item-row">
-                <div class="line-item-name">ERCOT Application Fees<span>$14K registration + $3K FIS application</span></div>
+                <div class="line-item-name">ERCOT Fees<span>$14K registration + $3K FIS application</span></div>
                 <div class="line-item-amount">$17K</div>
                 <div class="line-item-amount">$17K</div>
             </div>
@@ -802,30 +862,30 @@
             <div class="line-item-row subtotal">
                 <div class="line-item-name">Core Subtotal</div>
                 <div class="line-item-amount">$550K</div>
-                <div class="line-item-amount">$550K</div>
+                <div class="line-item-amount">$600K</div>
             </div>
             
             <div class="line-item-row optional">
-                <div class="line-item-name">Geotechnical Studies<span>Soil borings, foundation design basis</span></div>
-                <div class="line-item-dash">—</div>
-                <div class="line-item-amount">$62K</div>
-            </div>
-            
-            <div class="line-item-row optional">
-                <div class="line-item-name">30% Engineering Design<span>Preliminary design, equipment specs</span></div>
+                <div class="line-item-name">30% Engineering<span>Preliminary design package</span></div>
                 <div class="line-item-dash">—</div>
                 <div class="line-item-amount">$151K</div>
+            </div>
+            
+            <div class="line-item-row optional">
+                <div class="line-item-name">Geotechnical (ANS)<span>Site investigation</span></div>
+                <div class="line-item-dash">—</div>
+                <div class="line-item-amount">$62K</div>
             </div>
             
             <div class="line-item-row subtotal">
                 <div class="line-item-name">Total</div>
                 <div class="line-item-amount">$550K</div>
-                <div class="line-item-amount">$763K</div>
+                <div class="line-item-amount">$813K</div>
             </div>
         </div>
 
         <div class="footer-note">
-            <strong>Lean path</strong> delivers NTP-ready status with interconnection certainty, environmental clearances, and site control—the core requirements for strategic buyer due diligence. <strong>Buffered path</strong> adds geotechnical studies and 30% engineering for buyers requiring advanced design packages or accelerated construction timelines. Engineering scope can be adjusted based on buyer preferences and market conditions.
+            Geotechnical and detailed engineering can be executed pre-sale or deferred based on buyer preference. ERCOT fees based on June 2025 Fee Schedule ($14K generator registration ≥10MW + $3K FIS application).
         </div>
     </main>
 
