@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interconnection | ReDewable Energy</title>
+    <title>Interconnection Assessment | ReDewable Energy</title>
     <meta name="description" content="Grid interconnection status and technical assessment for ReDew Anson battery storage project.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -365,7 +365,461 @@
             color: var(--text-primary);
         }
 
-        /* Q&A Section */
+        /* Gantt Timeline */
+        .gantt-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .gantt-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .gantt-header {
+            display: grid;
+            grid-template-columns: 180px repeat(13, 1fr);
+            gap: 0;
+            margin-bottom: 0.5rem;
+            min-width: 900px;
+        }
+
+        .gantt-header-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .gantt-header-label:first-child {
+            text-align: left;
+        }
+
+        .gantt-header-label.current {
+            color: var(--accent);
+            background: var(--accent-glow);
+            border-radius: 4px 4px 0 0;
+        }
+
+        .gantt-rows {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            min-width: 900px;
+        }
+
+        .gantt-section {
+            margin-top: 0.75rem;
+        }
+
+        .gantt-section-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed var(--border);
+            margin-bottom: 0.25rem;
+        }
+
+        .gantt-row {
+            display: grid;
+            grid-template-columns: 180px repeat(13, 1fr);
+            gap: 0;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        .gantt-task {
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            padding-right: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .gantt-task.complete {
+            color: var(--text-muted);
+        }
+
+        .gantt-bar-container {
+            position: relative;
+            height: 24px;
+            display: flex;
+            align-items: center;
+        }
+
+        .gantt-bar {
+            height: 20px;
+            border-radius: 4px;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 6px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: white;
+            min-width: 20px;
+        }
+
+        .gantt-bar.complete {
+            background: var(--accent);
+        }
+
+        .gantt-bar.in-progress {
+            background: linear-gradient(90deg, var(--accent) 0%, #3b82f6 100%);
+        }
+
+        .gantt-bar.pending {
+            background: var(--border);
+            border: 1px dashed var(--text-muted);
+            color: var(--text-muted);
+        }
+
+        .gantt-bar.ercot {
+            background: linear-gradient(90deg, #8b5cf6 0%, #a855f7 100%);
+        }
+
+        .gantt-bar.milestone {
+            width: 20px !important;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--bg-secondary);
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+
+        .gantt-bar.milestone.pending {
+            background: var(--bg-secondary);
+            border: 3px solid var(--text-muted);
+            box-shadow: 0 0 0 2px var(--text-muted);
+        }
+
+        .gantt-legend {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .gantt-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .gantt-legend-bar {
+            width: 20px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .gantt-legend-bar.complete {
+            background: var(--accent);
+        }
+
+        .gantt-legend-bar.in-progress {
+            background: linear-gradient(90deg, var(--accent) 0%, #3b82f6 100%);
+        }
+
+        .gantt-legend-bar.ercot {
+            background: linear-gradient(90deg, #8b5cf6 0%, #a855f7 100%);
+        }
+
+        .gantt-legend-bar.milestone {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        /* Result Card */
+        .result-card {
+            background: var(--accent-glow);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .result-card .result-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-card .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.25rem;
+        }
+
+        .result-card .result-detail {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Chat Thread */
+        .chat-thread {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .chat-bubble {
+            max-width: 85%;
+            padding: 1rem 1.25rem;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .chat-bubble.outgoing {
+            align-self: flex-end;
+            background: var(--accent);
+            color: var(--white);
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-bubble.incoming {
+            align-self: flex-start;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-bubble strong {
+            color: inherit;
+        }
+
+        .chat-bubble.incoming strong {
+            color: var(--accent);
+        }
+
+        .chat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+            padding: 0 0.5rem;
+        }
+
+        .chat-label.outgoing {
+            text-align: right;
+            color: var(--text-muted);
+        }
+
+        .chat-label.incoming {
+            text-align: left;
+            color: var(--green);
+        }
+
+        .chat-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-group.outgoing {
+            align-items: flex-end;
+        }
+
+        .chat-group.incoming {
+            align-items: flex-start;
+        }
+
+        /* Reassessment Note */
+        .reassessment-note {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .reassessment-note svg {
+            flex-shrink: 0;
+            color: #3b82f6;
+            margin-top: 2px;
+        }
+
+        .reassessment-note p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .reassessment-note strong {
+            color: #3b82f6;
+        }
+
+        /* Gantt Chart */
+        .gantt-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .gantt-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .gantt-header {
+            display: grid;
+            grid-template-columns: 180px repeat(14, 1fr);
+            gap: 0;
+            margin-bottom: 0.5rem;
+            min-width: 900px;
+        }
+
+        .gantt-header-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 0.5rem 0.25rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .gantt-header-label:first-child {
+            text-align: left;
+        }
+
+        .gantt-section {
+            margin-bottom: 1rem;
+        }
+
+        .gantt-section-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            padding-left: 0.25rem;
+        }
+
+        .gantt-row {
+            display: grid;
+            grid-template-columns: 180px repeat(14, 1fr);
+            gap: 0;
+            align-items: center;
+            min-width: 900px;
+            margin-bottom: 0.35rem;
+        }
+
+        .gantt-task {
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            padding: 0.35rem 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .gantt-bar-container {
+            position: relative;
+            height: 24px;
+            display: flex;
+            align-items: center;
+        }
+
+        .gantt-bar {
+            position: absolute;
+            height: 20px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--white);
+            white-space: nowrap;
+            padding: 0 0.5rem;
+        }
+
+        .gantt-bar.complete {
+            background: var(--accent);
+        }
+
+        .gantt-bar.in-progress {
+            background: linear-gradient(90deg, var(--accent) 0%, #3b82f6 100%);
+        }
+
+        .gantt-bar.pending {
+            background: #3b82f6;
+        }
+
+        .gantt-bar.ercot {
+            background: linear-gradient(90deg, #8b5cf6 0%, #ec4899 100%);
+        }
+
+        .gantt-bar.milestone {
+            width: 20px !important;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 50%;
+            transform: rotate(45deg);
+        }
+
+        .gantt-bar.milestone span {
+            transform: rotate(-45deg);
+            font-size: 0.6rem;
+        }
+
+        .gantt-today {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #ef4444;
+            z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            .gantt-container {
+                padding: 1rem;
+            }
+            .gantt-task {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Q&A Section - legacy support */
         .qa-section {
             margin-bottom: 2rem;
         }
@@ -600,7 +1054,7 @@
 
     <!-- Cover -->
     <div class="cover">
-        <h1>Interconnection</h1>
+        <h1>Interconnection Assessment</h1>
         <div class="subtitle">ReDew Anson — Jones County, Texas</div>
         <div class="meta">Phantom Hill 345 kV · January 2026</div>
     </div>
@@ -613,7 +1067,151 @@
 
         <div class="summary-box">
             <h3>Executive Summary</h3>
-            <p>Independent analysis confirms <strong>300 MW battery storage feasibility</strong> at the Phantom Hill 345 kV point of interconnection. The identified transmission upgrade profile is favorable—primarily conductor upgrades rather than substation modifications—representing the lower end of typical network upgrade costs for a project of this scale.</p>
+            <p>Independent analysis confirms <strong>300–400 MW battery storage feasibility</strong> at the Phantom Hill 345 kV point of interconnection. The identified transmission upgrade profile is favorable—primarily conductor upgrades rather than substation modifications—representing the lower end of typical network upgrade costs for a project of this scale.</p>
+        </div>
+
+        <h2 class="section-header">Development Timeline</h2>
+
+        <div class="gantt-container">
+            <div class="gantt-title">Path to NTP — All Workstreams</div>
+            
+            <div class="gantt-header">
+                <div class="gantt-header-label">Deliverable</div>
+                <div class="gantt-header-label">Q2 '25</div>
+                <div class="gantt-header-label">Q3</div>
+                <div class="gantt-header-label">Q4</div>
+                <div class="gantt-header-label">Jan '26</div>
+                <div class="gantt-header-label current">Feb</div>
+                <div class="gantt-header-label">Mar</div>
+                <div class="gantt-header-label">Q2</div>
+                <div class="gantt-header-label">Q3</div>
+                <div class="gantt-header-label">Q4</div>
+                <div class="gantt-header-label">Q1 '27</div>
+            </div>
+
+            <div class="gantt-rows">
+                <!-- Land & Site Control -->
+                <div class="gantt-section">
+                    <div class="gantt-section-label">Land & Site Control</div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-task complete">Land Closing</div>
+                    <div class="gantt-bar-container" style="grid-column: 2;">
+                        <div class="gantt-bar milestone complete" title="4/11/2025"></div>
+                    </div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-task complete">ALTA Survey</div>
+                    <div class="gantt-bar-container" style="grid-column: 5 / 6;">
+                        <div class="gantt-bar complete" style="width: 100%;">2/2</div>
+                    </div>
+                </div>
+
+                <!-- Environmental -->
+                <div class="gantt-section">
+                    <div class="gantt-section-label">Environmental & Permitting</div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-task">Phase I ESA</div>
+                    <div class="gantt-bar-container" style="grid-column: 5 / 6;">
+                        <div class="gantt-bar in-progress" style="width: 100%;">2/20</div>
+                    </div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-task">Desktop CIA + Permits</div>
+                    <div class="gantt-bar-container" style="grid-column: 5 / 6;">
+                        <div class="gantt-bar in-progress" style="width: 100%;">2/27</div>
+                    </div>
+                </div>
+
+                <!-- Site Engineering -->
+                <div class="gantt-section">
+                    <div class="gantt-section-label">Site Engineering</div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-task complete">OEM Selection (CATL)</div>
+                    <div class="gantt-bar-container" style="grid-column: 4 / 5;">
+                        <div class="gantt-bar complete" style="width: 100%;">1/29</div>
+                    </div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-task">Site Layout + SLD</div>
+                    <div class="gantt-bar-container" style="grid-column: 4 / 6;">
+                        <div class="gantt-bar in-progress" style="width: 100%;">2/13</div>
+                    </div>
+                </div>
+
+                <!-- Interconnection Studies -->
+                <div class="gantt-section">
+                    <div class="gantt-section-label">Interconnection Studies</div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-task complete">300 MW Injection Study</div>
+                    <div class="gantt-bar-container" style="grid-column: 4 / 5;">
+                        <div class="gantt-bar complete" style="width: 100%;">1/8</div>
+                    </div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-task">400 MW Injection Study</div>
+                    <div class="gantt-bar-container" style="grid-column: 4 / 6;">
+                        <div class="gantt-bar in-progress" style="width: 100%;">2/13</div>
+                    </div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-task">GINR Package Prep</div>
+                    <div class="gantt-bar-container" style="grid-column: 5 / 7;">
+                        <div class="gantt-bar in-progress" style="width: 100%;">3/27</div>
+                    </div>
+                </div>
+
+                <!-- ERCOT Process -->
+                <div class="gantt-section">
+                    <div class="gantt-section-label">ERCOT Process</div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-task">GINR Submission</div>
+                    <div class="gantt-bar-container" style="grid-column: 6;">
+                        <div class="gantt-bar milestone pending" title="3/27/2026"></div>
+                    </div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-task">Screening Study</div>
+                    <div class="gantt-bar-container" style="grid-column: 6 / 8;">
+                        <div class="gantt-bar pending ercot" style="width: 100%;">~Jun</div>
+                    </div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-task">Full Interconnection Study</div>
+                    <div class="gantt-bar-container" style="grid-column: 7 / 10;">
+                        <div class="gantt-bar pending ercot" style="width: 100%;">~Dec</div>
+                    </div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-task" style="font-weight: 700;">IA / NTP</div>
+                    <div class="gantt-bar-container" style="grid-column: 10;">
+                        <div class="gantt-bar milestone pending" title="Q1 2027"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gantt-legend">
+                <div class="gantt-legend-item">
+                    <div class="gantt-legend-bar complete"></div>
+                    <span>Complete</span>
+                </div>
+                <div class="gantt-legend-item">
+                    <div class="gantt-legend-bar in-progress"></div>
+                    <span>In Progress</span>
+                </div>
+                <div class="gantt-legend-item">
+                    <div class="gantt-legend-bar ercot"></div>
+                    <span>ERCOT Process</span>
+                </div>
+                <div class="gantt-legend-item">
+                    <div class="gantt-legend-bar milestone"></div>
+                    <span>Milestone</span>
+                </div>
+            </div>
         </div>
 
         <h2 class="section-header">Application Status</h2>
@@ -623,27 +1221,57 @@
                 <h4>ERCOT Interconnection Application (GINR)</h4>
                 <p>Generation Interconnection or Change Request — Phantom Hill 345 kV POI</p>
             </div>
-            <span class="status-badge status-pending">Pending</span>
+            <span class="status-badge status-pending">Pending Submission</span>
+        </div>
+
+        <h2 class="section-header">GINR Application Package</h2>
+
+        <div class="info-box">
+            <p>Enerzinx is preparing the complete GINR technical package required for ERCOT application submission. This scope builds on the completed injection study and delivers the modeling and compliance documentation required for interconnection approval.</p>
+        </div>
+
+        <div class="qa-section">
+            <div class="qa-block">
+                <div class="qa-label response">Package Deliverables</div>
+                <div class="qa-content response">
+                    <p><strong>PSS®E Steady-State Models</strong> — Load flow and short circuit models for ERCOT planning studies<br>
+                    <strong>PSCAD EMT Models</strong> — Electromagnetic transient models for stability analysis<br>
+                    <strong>Reactive Power Capability Study</strong> — Demonstrates compliance with ERCOT reactive requirements<br>
+                    <strong>RARF/RIOO Forms</strong> — Resource Asset Registration Form and Resource Integration documentation<br>
+                    <strong>MQT Compliance</strong> — Model Quality Test validation for submitted models</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="takeaway-box">
+            <h4>Timeline</h4>
+            <p>GINR package preparation: <strong>6–7 weeks</strong> from OEM data receipt. Application submission triggers ERCOT's 15-month minimum study process leading to Interconnection Agreement.</p>
         </div>
 
         <h2 class="section-header">Independent Injection Study</h2>
 
         <div class="info-box">
-            <p><strong>Injection Study:</strong> Independent third-party analysis evaluating grid capacity, system stability, and required transmission upgrades at the proposed point of interconnection. Conducted by Enerzinx prior to formal ERCOT application to validate project feasibility and de-risk the interconnection pathway.</p>
+            <p><strong>Injection Study: ✓ Complete</strong> — Independent third-party analysis evaluating grid capacity, system stability, and required transmission upgrades at the proposed point of interconnection. Conducted by Enerzinx to validate project feasibility and de-risk the interconnection pathway prior to formal ERCOT application.</p>
         </div>
 
-        <div class="qa-section">
-            <div class="qa-block">
-                <div class="qa-label inquiry">ReDewable Inquiry</div>
-                <div class="qa-content">
-                    <p>Based on the limiting elements identified in the injection study, are you able—at a high level—to indicate the types of upgrades typically required in similar situations (e.g., reconductoring vs. substation work), and comment on whether the upgrade profile appears typical for a project of this size and POI?</p>
+        <div class="result-card">
+            <div class="result-label">Study Result</div>
+            <div class="result-value">Conductor Upgrades Only</div>
+            <div class="result-detail">No substation modifications required at 300 MW</div>
+        </div>
+
+        <div class="chat-thread">
+            <div class="chat-group outgoing">
+                <div class="chat-label outgoing">ReDewable</div>
+                <div class="chat-bubble outgoing">
+                    Based on the limiting elements identified in the injection study, are you able—at a high level—to indicate the types of upgrades typically required in similar situations (e.g., reconductoring vs. substation work), and comment on whether the upgrade profile appears typical for a project of this size and POI?
                 </div>
             </div>
             
-            <div class="qa-block">
-                <div class="qa-label response">Enerzinx Response</div>
-                <div class="qa-content response">
-                    <p>Based on the current study updates, the identified upgrade requirement is primarily <strong>Conductor upgrades</strong>. However, these results are sensitive to key assumptions, including system conditions and the assumed COD year and POI location, or system conditions are refined in subsequent study stages.</p>
+            <div class="chat-group incoming">
+                <div class="chat-label incoming">Enerzinx</div>
+                <div class="chat-bubble incoming">
+                    Based on the current study updates, the identified upgrade requirement is primarily <strong>Conductor upgrades</strong>. However, these results are sensitive to key assumptions, including system conditions and the assumed COD year and POI location, or system conditions are refined in subsequent study stages.
                 </div>
             </div>
         </div>
@@ -651,6 +1279,15 @@
         <div class="takeaway-box">
             <h4>Key Takeaway</h4>
             <p>Conductor-based upgrades are favorable compared to substation modifications—typically faster to permit, less complex to construct, and representing the lower end of transmission network upgrade cost estimates ($30M–$80M range for a 300 MW project).</p>
+        </div>
+
+        <div class="reassessment-note">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <p><strong>400 MW Reassessment In Progress</strong> — Enerzinx is currently re-running the injection study at 400 MW capacity with specific OEM equipment parameters to evaluate expanded project potential.</p>
         </div>
 
         <h2 class="section-header">Supporting Documents</h2>
@@ -703,7 +1340,7 @@
         </div>
 
         <div class="footer-note">
-            This assessment is based on independent analysis and publicly available ERCOT data. Final interconnection requirements will be determined through the formal GINR study process.
+            Injection study complete January 2026. GINR application package in preparation. Final interconnection requirements will be determined through ERCOT's formal study process following application submission.
         </div>
     </main>
 
