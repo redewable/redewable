@@ -368,6 +368,17 @@
             color: #f59e0b;
         }
 
+        .status-in-progress {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
         .assessment-content {
             color: var(--text-secondary);
             font-size: 0.9rem;
@@ -631,11 +642,12 @@
         <div class="source-tags">
             <span class="source-tag">ESE Partners</span>
             <span class="source-tag secondary">Tier 1 Environmental Consultant</span>
+            <a href="https://drive.google.com/file/d/1RMHq69dYYN05eL8Q1UjUZWk2kutZ2cdr/view?usp=drive_link" target="_blank" rel="noopener" class="source-tag secondary" style="text-decoration: none;">View Proposal →</a>
         </div>
 
         <div class="summary-box">
             <h3>Executive Summary</h3>
-            <p>Based on preliminary desktop review and consultations with environmental firms, the ReDew Anson site presents a <strong>favorable environmental profile</strong>. The 45-acre property is located directly adjacent to ENGIE's operational Anson Solar Farm, which has already undergone comprehensive environmental review. The site consists of agricultural land in a drought-prone region with no apparent wetlands, flood zones, or sensitive habitats.</p>
+            <p>Environmental due diligence is <strong>underway</strong>. ESE Partners has been engaged to complete a Phase I ESA and Critical Issues Analysis with Permit Matrix. The 45-acre property is located directly adjacent to ENGIE's operational Anson Solar Farm, which has already undergone comprehensive environmental review. Preliminary assessment indicates a <strong>favorable environmental profile</strong>—agricultural land in a drought-prone region with no apparent wetlands, flood zones, or sensitive habitats.</p>
         </div>
 
         <h2 class="section-header">Site Characteristics</h2>
@@ -652,7 +664,7 @@
                     <div class="map-caption-title">Property Located Outside Flood Hazard Areas</div>
                     <div class="map-caption-text">FEMA National Flood Hazard Layer confirms the project site is not within any designated flood zones.</div>
                     <div class="map-caption-source">Source: FEMA Flood Map Service Center</div>
-                    <a href="https://www.dropbox.com/scl/fi/hku665n3emnubmn8r1cvr/fema-firm-original.tif?rlkey=ics2ydhq0qiry8032u1fsmp3a&st=6vt4ckjc&dl=0" target="_blank" rel="noopener" class="map-download-btn">View Original FIRM</a>
+                    <a href="https://drive.google.com/file/d/16g0Qp-yWG9B7d9ELJ7gwAjew5nkly20G/view?usp=drive_link" target="_blank" rel="noopener" class="map-download-btn">View Original FIRM</a>
                 </div>
             </div>
         </div>
@@ -663,30 +675,30 @@
             <div class="assessment-card">
                 <div class="assessment-header">
                     <span class="assessment-title">Phase I ESA</span>
-                    <span class="assessment-status status-required">Required</span>
+                    <span class="assessment-status status-in-progress">In Progress</span>
                 </div>
                 <div class="assessment-content">
-                    Standard requirement for financing and equity backers. Identifies any historic contamination or environmental liabilities. For 45 acres, estimated at <strong>~$5K</strong> with approximately 15 business day turnaround. Note: Reports are typically valid for <strong>6 months</strong> in the eyes of financiers.
+                    Standard requirement for financing and equity backers. Identifies any historic contamination or environmental liabilities. ESE Partners engaged at <strong>$3,000</strong> with 15 business day turnaround. Note: Reports are typically valid for <strong>6 months</strong> in the eyes of financiers.
                 </div>
             </div>
 
             <div class="assessment-card">
                 <div class="assessment-header">
                     <span class="assessment-title">ALTA Survey</span>
-                    <span class="assessment-status status-required">Required</span>
+                    <span class="assessment-status status-in-progress">In Progress</span>
                 </div>
                 <div class="assessment-content">
-                    Required for title insurance, financing, and project sale. Documents property boundaries, easements, rights-of-way, and encumbrances. Standard deliverable for NTP-ready status. Approximately <strong>2–3 week</strong> turnaround.
+                    Required for title insurance, financing, and project sale. Documents property boundaries, easements, rights-of-way, and encumbrances. Geotex Solutions engaged—<strong>expected delivery 2/2/2026</strong>.
                 </div>
             </div>
 
             <div class="assessment-card full-width">
                 <div class="assessment-header">
-                    <span class="assessment-title">Desktop Critical Issues Analysis</span>
-                    <span class="assessment-status status-recommended">Recommended</span>
+                    <span class="assessment-title">Critical Issues Analysis + Permit Matrix</span>
+                    <span class="assessment-status status-in-progress">In Progress</span>
                 </div>
                 <div class="assessment-content">
-                    Comprehensive desktop review covering wetlands, threatened/endangered species, cultural resources, and permitting pathway. Confirms no federal nexus issues (Clean Water Act, Endangered Species Act, National Historic Preservation Act). Given the site characteristics—active agricultural land, drought conditions, location outside FEMA flood zones, and adjacent solar development that has already undergone environmental review—<strong>formal field delineations and species surveys are not anticipated to be required</strong>. Desktop-level analysis is expected to sufficiently demonstrate a clear permitting pathway. Supplemental boots-on-ground studies can be conducted if specifically requested by an equity backer. Estimated <strong>2–3 weeks</strong> for initial desktop; <strong>4–6 weeks</strong> for full CIA report.
+                    Comprehensive desktop review covering wetlands, threatened/endangered species, cultural resources, FEMA flood hazards, airport/military conflicts, seismicity, conservation easements, and permitting pathway. Includes USFWS IPaC database review for MBTA and BGEPA compliance. ESE Partners engaged at <strong>$5,000</strong> with 20 business day turnaround. Given the site characteristics—active agricultural land, drought conditions, location outside FEMA flood zones, and adjacent solar development that has already undergone environmental review—<strong>formal field delineations and species surveys are not anticipated to be required</strong>.
                 </div>
             </div>
         </div>
@@ -699,23 +711,23 @@
         </div>
 
         <div class="timeline-box">
-            <h4>Estimated Timeline</h4>
+            <h4>Current Status</h4>
             <div class="timeline-items">
                 <div class="timeline-item">
-                    <span class="timeline-item-name">Desktop CIA (Wetlands, Species, Cultural)</span>
-                    <span class="timeline-item-duration">2–3 weeks</span>
+                    <span class="timeline-item-name">Critical Issues Analysis + Permit Matrix</span>
+                    <span class="timeline-item-duration" style="color: var(--green);">● In Progress — est. 2/27/2026</span>
                 </div>
                 <div class="timeline-item">
                     <span class="timeline-item-name">Phase I ESA</span>
-                    <span class="timeline-item-duration">15 business days</span>
+                    <span class="timeline-item-duration" style="color: var(--green);">● In Progress — est. 2/20/2026</span>
                 </div>
                 <div class="timeline-item">
                     <span class="timeline-item-name">ALTA Survey</span>
-                    <span class="timeline-item-duration">2–3 weeks</span>
+                    <span class="timeline-item-duration" style="color: var(--green);">● Receiving 2/2/2026</span>
                 </div>
                 <div class="timeline-item">
                     <span class="timeline-item-name">Local Permitting</span>
-                    <span class="timeline-item-duration">County dependent</span>
+                    <span class="timeline-item-duration">Pending — County dependent</span>
                 </div>
             </div>
         </div>
@@ -728,7 +740,7 @@
         </div>
 
         <div class="footer-note">
-            This assessment is based on preliminary consultations and desktop review. Final determinations will be made upon completion of formal studies. Environmental conditions are subject to verification.
+            ESE Partners engaged January 2026. Combined scope: $8,000 (Phase I ESA $3K + CIA with Permit Matrix $5K). ALTA Survey by Geotex Solutions. Environmental conditions subject to verification upon completion of formal studies.
         </div>
     </main>
 
