@@ -365,189 +365,235 @@
             color: var(--text-primary);
         }
 
-        /* Gantt Timeline */
-        .gantt-container {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
+        /* Vertical Timeline */
+        .timeline-container {
+            position: relative;
+            padding-left: 2rem;
             margin-bottom: 2rem;
-            overflow-x: auto;
         }
 
-        .gantt-title {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 1.25rem;
-            color: var(--text-primary);
+        .timeline-line {
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), var(--border) 40%, var(--border));
         }
 
-        .gantt-header {
-            display: grid;
-            grid-template-columns: 180px repeat(13, 1fr);
-            gap: 0;
-            margin-bottom: 0.5rem;
-            min-width: 900px;
+        .timeline-phase {
+            position: relative;
+            margin-bottom: 1.5rem;
         }
 
-        .gantt-header-label {
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            margin-left: -2rem;
+        }
+
+        .phase-marker {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 0.65rem;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-muted);
-            text-align: center;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
         }
 
-        .gantt-header-label:first-child {
-            text-align: left;
+        .phase-marker.complete {
+            background: var(--accent);
+            color: var(--white);
         }
 
-        .gantt-header-label.current {
-            color: var(--accent);
-            background: var(--accent-glow);
-            border-radius: 4px 4px 0 0;
+        .phase-marker.in-progress {
+            background: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+            animation: pulse-ring 2s infinite;
         }
 
-        .gantt-rows {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-            min-width: 900px;
+        .phase-marker.pending {
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border);
         }
 
-        .gantt-section {
-            margin-top: 0.75rem;
+        .phase-marker.milestone {
+            background: var(--accent);
+            color: var(--white);
+            font-size: 0.5rem;
         }
 
-        .gantt-section-label {
-            font-size: 0.7rem;
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(234, 179, 8, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(234, 179, 8, 0); }
+        }
+
+        .phase-title {
+            font-size: 0.8rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-muted);
-            padding: 0.5rem 0;
-            border-bottom: 1px dashed var(--border);
-            margin-bottom: 0.25rem;
         }
 
-        .gantt-row {
-            display: grid;
-            grid-template-columns: 180px repeat(13, 1fr);
-            gap: 0;
-            align-items: center;
-            min-height: 32px;
+        .timeline-phase.complete .phase-title {
+            color: var(--accent);
         }
 
-        .gantt-task {
-            font-size: 0.8rem;
+        .timeline-phase.in-progress .phase-title {
             color: var(--text-primary);
-            padding-right: 0.5rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
-        .gantt-task.complete {
-            color: var(--text-muted);
+        .timeline-phase.milestone .phase-title {
+            color: var(--accent);
         }
 
-        .gantt-bar-container {
-            position: relative;
-            height: 24px;
+        .phase-items {
             display: flex;
-            align-items: center;
-        }
-
-        .gantt-bar {
-            height: 20px;
-            border-radius: 4px;
-            position: absolute;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 6px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: white;
-            min-width: 20px;
-        }
-
-        .gantt-bar.complete {
-            background: var(--accent);
-        }
-
-        .gantt-bar.in-progress {
-            background: linear-gradient(90deg, var(--accent) 0%, #3b82f6 100%);
-        }
-
-        .gantt-bar.pending {
-            background: var(--border);
-            border: 1px dashed var(--text-muted);
-            color: var(--text-muted);
-        }
-
-        .gantt-bar.ercot {
-            background: linear-gradient(90deg, #8b5cf6 0%, #a855f7 100%);
-        }
-
-        .gantt-bar.milestone {
-            width: 20px !important;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--accent);
-            border: 3px solid var(--bg-secondary);
-            box-shadow: 0 0 0 2px var(--accent);
-        }
-
-        .gantt-bar.milestone.pending {
-            background: var(--bg-secondary);
-            border: 3px solid var(--text-muted);
-            box-shadow: 0 0 0 2px var(--text-muted);
-        }
-
-        .gantt-legend {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border);
-            flex-wrap: wrap;
-        }
-
-        .gantt-legend-item {
-            display: flex;
-            align-items: center;
+            flex-direction: column;
             gap: 0.5rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .timeline-item:hover {
+            border-color: var(--accent);
+        }
+
+        .timeline-item.complete {
+            opacity: 0.7;
+        }
+
+        .timeline-item.milestone {
+            background: var(--accent-glow);
+            border-color: var(--accent);
+        }
+
+        .timeline-item.milestone.final {
+            background: linear-gradient(135deg, var(--accent-glow) 0%, rgba(34, 197, 94, 0.1) 100%);
+            border-color: var(--green);
+        }
+
+        .timeline-item.pending {
+            border-style: dashed;
+            opacity: 0.8;
+        }
+
+        .item-date {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            min-width: 60px;
+            flex-shrink: 0;
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.15rem;
+        }
+
+        .item-vendor {
+            font-size: 0.75rem;
+            color: var(--accent);
+        }
+
+        .item-detail {
             font-size: 0.75rem;
             color: var(--text-muted);
         }
 
-        .gantt-legend-bar {
-            width: 20px;
-            height: 12px;
-            border-radius: 3px;
+        /* Now Marker */
+        .timeline-now {
+            position: relative;
+            margin: 1.5rem 0;
+            margin-left: -2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
-        .gantt-legend-bar.complete {
-            background: var(--accent);
-        }
-
-        .gantt-legend-bar.in-progress {
-            background: linear-gradient(90deg, var(--accent) 0%, #3b82f6 100%);
-        }
-
-        .gantt-legend-bar.ercot {
-            background: linear-gradient(90deg, #8b5cf6 0%, #a855f7 100%);
-        }
-
-        .gantt-legend-bar.milestone {
-            width: 12px;
-            height: 12px;
+        .timeline-now::before {
+            content: '';
+            width: 16px;
+            height: 16px;
+            background: #ef4444;
             border-radius: 50%;
+            flex-shrink: 0;
+            animation: pulse-now 1.5s infinite;
+        }
+
+        .timeline-now span {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ef4444;
+        }
+
+        .timeline-now::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, #ef4444, transparent);
+        }
+
+        @keyframes pulse-now {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.9); }
+        }
+
+        /* Year Marker */
+        .timeline-year {
+            position: relative;
+            margin: 2rem 0 1.5rem;
+            margin-left: -2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .timeline-year::before {
+            content: '';
+            width: 16px;
+            height: 4px;
             background: var(--accent);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .timeline-year span {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+
+        .timeline-year::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--accent), transparent 80%);
         }
 
         /* Result Card */
@@ -677,146 +723,6 @@
 
         .reassessment-note strong {
             color: #3b82f6;
-        }
-
-        /* Gantt Chart */
-        .gantt-container {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            overflow-x: auto;
-        }
-
-        .gantt-title {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .gantt-header {
-            display: grid;
-            grid-template-columns: 180px repeat(14, 1fr);
-            gap: 0;
-            margin-bottom: 0.5rem;
-            min-width: 900px;
-        }
-
-        .gantt-header-label {
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-muted);
-            text-align: center;
-            padding: 0.5rem 0.25rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .gantt-header-label:first-child {
-            text-align: left;
-        }
-
-        .gantt-section {
-            margin-bottom: 1rem;
-        }
-
-        .gantt-section-label {
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-            padding-left: 0.25rem;
-        }
-
-        .gantt-row {
-            display: grid;
-            grid-template-columns: 180px repeat(14, 1fr);
-            gap: 0;
-            align-items: center;
-            min-width: 900px;
-            margin-bottom: 0.35rem;
-        }
-
-        .gantt-task {
-            font-size: 0.8rem;
-            color: var(--text-primary);
-            padding: 0.35rem 0.25rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .gantt-bar-container {
-            position: relative;
-            height: 24px;
-            display: flex;
-            align-items: center;
-        }
-
-        .gantt-bar {
-            position: absolute;
-            height: 20px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: var(--white);
-            white-space: nowrap;
-            padding: 0 0.5rem;
-        }
-
-        .gantt-bar.complete {
-            background: var(--accent);
-        }
-
-        .gantt-bar.in-progress {
-            background: linear-gradient(90deg, var(--accent) 0%, #3b82f6 100%);
-        }
-
-        .gantt-bar.pending {
-            background: #3b82f6;
-        }
-
-        .gantt-bar.ercot {
-            background: linear-gradient(90deg, #8b5cf6 0%, #ec4899 100%);
-        }
-
-        .gantt-bar.milestone {
-            width: 20px !important;
-            height: 20px;
-            background: var(--accent);
-            border-radius: 50%;
-            transform: rotate(45deg);
-        }
-
-        .gantt-bar.milestone span {
-            transform: rotate(-45deg);
-            font-size: 0.6rem;
-        }
-
-        .gantt-today {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: #ef4444;
-            z-index: 10;
-        }
-
-        @media (max-width: 768px) {
-            .gantt-container {
-                padding: 1rem;
-            }
-            .gantt-task {
-                font-size: 0.7rem;
-            }
         }
 
         /* Q&A Section - legacy support */
@@ -1056,7 +962,7 @@
     <div class="cover">
         <h1>Interconnection Assessment</h1>
         <div class="subtitle">ReDew Anson — Jones County, Texas</div>
-        <div class="meta">Phantom Hill 345 kV · January 2026</div>
+        <div class="meta">Phantom Hill 345 kV · February 2026</div>
     </div>
 
     <main>
@@ -1072,144 +978,173 @@
 
         <h2 class="section-header">Development Timeline</h2>
 
-        <div class="gantt-container">
-            <div class="gantt-title">Path to NTP — All Workstreams</div>
+        <div class="timeline-container" id="timeline">
+            <div class="timeline-line"></div>
             
-            <div class="gantt-header">
-                <div class="gantt-header-label">Deliverable</div>
-                <div class="gantt-header-label">Q2 '25</div>
-                <div class="gantt-header-label">Q3</div>
-                <div class="gantt-header-label">Q4</div>
-                <div class="gantt-header-label">Jan '26</div>
-                <div class="gantt-header-label current">Feb</div>
-                <div class="gantt-header-label">Mar</div>
-                <div class="gantt-header-label">Q2</div>
-                <div class="gantt-header-label">Q3</div>
-                <div class="gantt-header-label">Q4</div>
-                <div class="gantt-header-label">Q1 '27</div>
-            </div>
-
-            <div class="gantt-rows">
-                <!-- Land & Site Control -->
-                <div class="gantt-section">
-                    <div class="gantt-section-label">Land & Site Control</div>
+            <!-- 2025 -->
+            <div class="timeline-phase complete">
+                <div class="phase-header">
+                    <span class="phase-marker complete">✓</span>
+                    <span class="phase-title">2025</span>
                 </div>
-                <div class="gantt-row">
-                    <div class="gantt-task complete">Land Closing</div>
-                    <div class="gantt-bar-container" style="grid-column: 2;">
-                        <div class="gantt-bar milestone complete" title="4/11/2025"></div>
-                    </div>
-                </div>
-                <div class="gantt-row">
-                    <div class="gantt-task complete">ALTA Survey</div>
-                    <div class="gantt-bar-container" style="grid-column: 5 / 6;">
-                        <div class="gantt-bar complete" style="width: 100%;">2/2</div>
-                    </div>
-                </div>
-
-                <!-- Environmental -->
-                <div class="gantt-section">
-                    <div class="gantt-section-label">Environmental & Permitting</div>
-                </div>
-                <div class="gantt-row">
-                    <div class="gantt-task">Phase I ESA</div>
-                    <div class="gantt-bar-container" style="grid-column: 5 / 6;">
-                        <div class="gantt-bar in-progress" style="width: 100%;">2/20</div>
-                    </div>
-                </div>
-                <div class="gantt-row">
-                    <div class="gantt-task">Desktop CIA + Permits</div>
-                    <div class="gantt-bar-container" style="grid-column: 5 / 6;">
-                        <div class="gantt-bar in-progress" style="width: 100%;">2/27</div>
-                    </div>
-                </div>
-
-                <!-- Site Engineering -->
-                <div class="gantt-section">
-                    <div class="gantt-section-label">Site Engineering</div>
-                </div>
-                <div class="gantt-row">
-                    <div class="gantt-task complete">OEM Selection (CATL)</div>
-                    <div class="gantt-bar-container" style="grid-column: 4 / 5;">
-                        <div class="gantt-bar complete" style="width: 100%;">1/29</div>
-                    </div>
-                </div>
-                <div class="gantt-row">
-                    <div class="gantt-task">Site Layout + SLD</div>
-                    <div class="gantt-bar-container" style="grid-column: 4 / 6;">
-                        <div class="gantt-bar in-progress" style="width: 100%;">2/13</div>
-                    </div>
-                </div>
-
-                <!-- Interconnection Studies -->
-                <div class="gantt-section">
-                    <div class="gantt-section-label">Interconnection Studies</div>
-                </div>
-                <div class="gantt-row">
-                    <div class="gantt-task complete">300 MW Injection Study</div>
-                    <div class="gantt-bar-container" style="grid-column: 4 / 5;">
-                        <div class="gantt-bar complete" style="width: 100%;">1/8</div>
-                    </div>
-                </div>
-                <div class="gantt-row">
-                    <div class="gantt-task">400 MW Injection Study</div>
-                    <div class="gantt-bar-container" style="grid-column: 4 / 6;">
-                        <div class="gantt-bar in-progress" style="width: 100%;">2/13</div>
-                    </div>
-                </div>
-                <div class="gantt-row">
-                    <div class="gantt-task">GINR Package Prep</div>
-                    <div class="gantt-bar-container" style="grid-column: 5 / 7;">
-                        <div class="gantt-bar in-progress" style="width: 100%;">3/27</div>
-                    </div>
-                </div>
-
-                <!-- ERCOT Process -->
-                <div class="gantt-section">
-                    <div class="gantt-section-label">ERCOT Process</div>
-                </div>
-                <div class="gantt-row">
-                    <div class="gantt-task">GINR Submission</div>
-                    <div class="gantt-bar-container" style="grid-column: 6;">
-                        <div class="gantt-bar milestone pending" title="3/27/2026"></div>
-                    </div>
-                </div>
-                <div class="gantt-row">
-                    <div class="gantt-task">Screening Study</div>
-                    <div class="gantt-bar-container" style="grid-column: 6 / 8;">
-                        <div class="gantt-bar pending ercot" style="width: 100%;">~Jun</div>
-                    </div>
-                </div>
-                <div class="gantt-row">
-                    <div class="gantt-task">Full Interconnection Study</div>
-                    <div class="gantt-bar-container" style="grid-column: 7 / 10;">
-                        <div class="gantt-bar pending ercot" style="width: 100%;">~Dec</div>
-                    </div>
-                </div>
-                <div class="gantt-row">
-                    <div class="gantt-task" style="font-weight: 700;">IA / NTP</div>
-                    <div class="gantt-bar-container" style="grid-column: 10;">
-                        <div class="gantt-bar milestone pending" title="Q1 2027"></div>
+                <div class="phase-items">
+                    <div class="timeline-item complete" data-date="2025-04-11">
+                        <div class="item-date">Apr 11</div>
+                        <div class="item-content">
+                            <div class="item-title">Land Closing</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="gantt-legend">
-                <div class="gantt-legend-item">
-                    <div class="gantt-legend-bar complete"></div>
-                    <span>Complete</span>
+            <!-- 2026 Year Marker -->
+            <div class="timeline-year">
+                <span>2026</span>
+            </div>
+
+            <!-- January 2026 -->
+            <div class="timeline-phase complete">
+                <div class="phase-header">
+                    <span class="phase-marker complete">✓</span>
+                    <span class="phase-title">January</span>
                 </div>
-                <div class="gantt-legend-item">
-                    <div class="gantt-legend-bar in-progress"></div>
-                    <span>In Progress</span>
+                <div class="phase-items">
+                    <div class="timeline-item complete" data-date="2026-01-08">
+                        <div class="item-date">Jan 8</div>
+                        <div class="item-content">
+                            <div class="item-title">300 MW Injection Study</div>
+                            <div class="item-vendor">Enerzinx</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item complete" data-date="2026-01-29">
+                        <div class="item-date">Jan 29</div>
+                        <div class="item-content">
+                            <div class="item-title">OEM Selection</div>
+                            <div class="item-vendor">CATL</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="gantt-legend-item">
-                    <div class="gantt-legend-bar ercot"></div>
-                    <span>ERCOT Process</span>
+            </div>
+
+            <!-- February 2026 -->
+            <div class="timeline-phase in-progress">
+                <div class="phase-header">
+                    <span class="phase-marker in-progress"></span>
+                    <span class="phase-title">February</span>
                 </div>
-                <div class="gantt-legend-item">
-                    <div class="gantt-legend-bar milestone"></div>
-                    <span>Milestone</span>
+                <div class="phase-items">
+                    <div class="timeline-item" data-date="2026-02-02">
+                        <div class="item-date">Feb 2</div>
+                        <div class="item-content">
+                            <div class="item-title">ALTA Survey</div>
+                            <div class="item-vendor">Geotex Solutions</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-date="2026-02-13">
+                        <div class="item-date">Feb 13</div>
+                        <div class="item-content">
+                            <div class="item-title">400 MW Injection Study</div>
+                            <div class="item-vendor">Enerzinx</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-date="2026-02-13">
+                        <div class="item-date">Feb 13</div>
+                        <div class="item-content">
+                            <div class="item-title">Site Layout + SLD</div>
+                            <div class="item-vendor">Optimum EPC</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-date="2026-02-20">
+                        <div class="item-date">Feb 20</div>
+                        <div class="item-content">
+                            <div class="item-title">Phase I ESA</div>
+                            <div class="item-vendor">ESE Partners</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-date="2026-02-27">
+                        <div class="item-date">Feb 27</div>
+                        <div class="item-content">
+                            <div class="item-title">Critical Issues Analysis + Permit Matrix</div>
+                            <div class="item-vendor">ESE Partners</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GINR Submission -->
+            <div class="timeline-phase milestone" data-date="2026-03-27">
+                <div class="phase-header">
+                    <span class="phase-marker milestone">◆</span>
+                    <span class="phase-title">March 27</span>
+                </div>
+                <div class="phase-items">
+                    <div class="timeline-item milestone">
+                        <div class="item-content">
+                            <div class="item-title">GINR Submission</div>
+                            <div class="item-detail">ERCOT application  ·  Queue position established</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ERCOT Process -->
+            <div class="timeline-phase pending">
+                <div class="phase-header">
+                    <span class="phase-marker pending"></span>
+                    <span class="phase-title">ERCOT Study Process</span>
+                </div>
+                <div class="phase-items">
+                    <div class="timeline-item pending" data-date="2026-06-15">
+                        <div class="item-date">~Jun</div>
+                        <div class="item-content">
+                            <div class="item-title">Screening Study Complete</div>
+                            <div class="item-detail">90-day limit from submission</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item pending" data-date="2026-12-15">
+                        <div class="item-date">~Dec</div>
+                        <div class="item-content">
+                            <div class="item-title">Full Interconnection Study</div>
+                            <div class="item-detail">Steady-state, fault, dynamic analysis</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2027 Year Marker -->
+            <div class="timeline-year">
+                <span>2027</span>
+            </div>
+
+            <!-- NTP -->
+            <div class="timeline-phase milestone final" data-date="2027-02-15">
+                <div class="phase-header">
+                    <span class="phase-marker milestone">◆</span>
+                    <span class="phase-title">Q1</span>
+                </div>
+                <div class="phase-items">
+                    <div class="timeline-item milestone final">
+                        <div class="item-content">
+                            <div class="item-title">Interconnection Agreement / NTP</div>
+                            <div class="item-detail">Shovel-ready  ·  Sale-ready asset</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COD -->
+            <div class="timeline-phase milestone" data-date="2027-11-15">
+                <div class="phase-header">
+                    <span class="phase-marker pending"></span>
+                    <span class="phase-title">Q4</span>
+                </div>
+                <div class="phase-items">
+                    <div class="timeline-item pending">
+                        <div class="item-content">
+                            <div class="item-title">Commercial Operation Date</div>
+                            <div class="item-detail">Buyer milestone  ·  Post-sale</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1245,7 +1180,7 @@
 
         <div class="takeaway-box">
             <h4>Timeline</h4>
-            <p>GINR package preparation: <strong>6–7 weeks</strong> from OEM data receipt. Application submission triggers ERCOT's 15-month minimum study process leading to Interconnection Agreement.</p>
+            <p>GINR package preparation: <strong>6–7 weeks</strong> from OEM data receipt. Application submission targets <strong>Q1 2027 IA</strong> based on typical 10–12 month study timelines for straightforward interconnections.</p>
         </div>
 
         <h2 class="section-header">Independent Injection Study</h2>
@@ -1257,7 +1192,7 @@
         <div class="result-card">
             <div class="result-label">Study Result</div>
             <div class="result-value">Conductor Upgrades Only</div>
-            <div class="result-detail">No substation modifications required at 300 MW</div>
+            <div class="result-detail">No substation modifications required at 300 MW · 400 MW study in progress</div>
         </div>
 
         <div class="chat-thread">
@@ -1287,7 +1222,7 @@
                 <line x1="12" y1="16" x2="12" y2="12"></line>
                 <line x1="12" y1="8" x2="12.01" y2="8"></line>
             </svg>
-            <p><strong>400 MW Reassessment In Progress</strong> — Enerzinx is currently re-running the injection study at 400 MW capacity with specific OEM equipment parameters to evaluate expanded project potential.</p>
+            <p><strong>400 MW Reassessment In Progress</strong> — Enerzinx is currently re-running the injection study at 400 MW capacity with CATL equipment parameters to evaluate expanded project potential.</p>
         </div>
 
         <h2 class="section-header">Supporting Documents</h2>
@@ -1408,6 +1343,80 @@
         document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
 
         document.addEventListener('DOMContentLoaded', initTheme);
+    </script>
+    <script>
+    (function() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        // Collect all dated elements (items and phases)
+        const timeline = document.getElementById('timeline');
+        const allDated = [];
+        
+        // Get items with dates
+        timeline.querySelectorAll('[data-date]').forEach(el => {
+            const date = new Date(el.dataset.date + 'T00:00:00');
+            allDated.push({ el, date, type: el.classList.contains('timeline-phase') ? 'phase' : 'item' });
+        });
+        
+        // Sort by date
+        allDated.sort((a, b) => a.date - b.date);
+        
+        // Find first future item and mark past items
+        let insertBefore = null;
+        
+        allDated.forEach(({ el, date, type }) => {
+            if (date <= today) {
+                // Mark as complete
+                if (type === 'item' && !el.classList.contains('milestone')) {
+                    el.classList.add('complete');
+                }
+            } else if (!insertBefore) {
+                // First future item
+                insertBefore = el;
+            }
+        });
+        
+        // Create Now marker
+        const nowMarker = document.createElement('div');
+        nowMarker.className = 'timeline-now';
+        nowMarker.innerHTML = '<span>Today</span>';
+        
+        // Insert before first future item, or at end if all complete
+        if (insertBefore) {
+            // If it's an item inside a phase, insert inside the phase-items container
+            if (insertBefore.classList.contains('timeline-item')) {
+                insertBefore.parentNode.insertBefore(nowMarker, insertBefore);
+            } else {
+                // It's a phase - insert before the phase
+                insertBefore.parentNode.insertBefore(nowMarker, insertBefore);
+            }
+        } else {
+            // All items in the past - append at end
+            timeline.appendChild(nowMarker);
+        }
+        
+        // Update phase markers based on item status
+        timeline.querySelectorAll('.timeline-phase').forEach(phase => {
+            const items = phase.querySelectorAll('.timeline-item');
+            const allComplete = Array.from(items).every(item => item.classList.contains('complete'));
+            const someComplete = Array.from(items).some(item => item.classList.contains('complete'));
+            
+            if (allComplete && items.length > 0) {
+                phase.classList.add('complete');
+                phase.classList.remove('in-progress', 'pending');
+                const marker = phase.querySelector('.phase-marker');
+                if (marker && !marker.classList.contains('milestone')) {
+                    marker.classList.add('complete');
+                    marker.classList.remove('in-progress', 'pending');
+                    marker.textContent = '✓';
+                }
+            } else if (someComplete) {
+                phase.classList.add('in-progress');
+                phase.classList.remove('complete', 'pending');
+            }
+        });
+    })();
     </script>
 </body>
 </html>
