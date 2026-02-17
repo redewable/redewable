@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ReDewable Energy Co - Utility-scale battery storage development in Texas. Fresh perspective, proven strategy, bankable storage.">
+  
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="ReDewable Energy Co">
+  <meta property="og:title" content="ReDewable Energy Co">
+  <meta property="og:url" content="https://www.redewable.com">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="Accelerating Texas's energy future with utility-scale battery storage solutions.">
+  
+  <title>ReDewable Energy Co</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Gruppo&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ============================================
+       CSS RESET & BASE
+       ============================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    :root {
+      --color-white: #ffffff;
+      --color-light: #f5f5f5;
+      --color-dark: #1a1a1a;
+      --color-black: #000000;
+      --color-accent: #2d5a27;
+      --color-accent-light: #4a7c42;
+      --color-text: #333333;
+      --color-text-light: #666666;
+      --color-border: #e0e0e0;
+      
+      --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display: 'Gruppo', sans-serif;
+      
+      --max-width: 1400px;
+      --section-padding: 80px;
+      --header-height: 80px;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      font-family: var(--font-primary);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--color-text);
+      background: var(--color-white);
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    
+    ul {
+      list-style: none;
+    }
+    
+    /* ============================================
+       TYPOGRAPHY
+       ============================================ */
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--color-dark);
+    }
+    
+    h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+    h2 { font-size: clamp(2rem, 4vw, 3rem); }
+    h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+    h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
+    
+    .display-text {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+    
+    .large-text {
+      font-size: 1.125rem;
+      line-height: 1.7;
+    }
+    
+    /* ============================================
+       LAYOUT UTILITIES
+       ============================================ */
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    .section {
+      padding: var(--section-padding) 0;
+    }
+    
+    .section--dark {
+      background: var(--color-dark);
+      color: var(--color-white);
+    }
+    
+    .section--dark h2,
+    .section--dark h3,
+    .section--dark h4 {
+      color: var(--color-white);
+    }
+    
+    .section--light {
+      background: var(--color-light);
+    }
+    
+    .text-center { text-align: center; }
+    
+    /* ============================================
+       HEADER
+       ============================================ */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-height);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      transition: box-shadow 0.3s ease;
+    }
+    
+    .header.scrolled {
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    .header__logo {
+      height: 50px;
+      width: auto;
+    }
+    
+    .header__logo img {
+      height: 100%;
+      width: auto;
+    }
+    
+    .header__nav {
+      display: flex;
+      gap: 40px;
+    }
+    
+    .header__nav a {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--color-text);
+      transition: color 0.2s ease;
+      position: relative;
+    }
+    
+    .header__nav a:hover {
+      color: var(--color-accent);
+    }
+    
+    .header__nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--color-accent);
+      transition: width 0.2s ease;
+    }
+    
+    .header__nav a:hover::after {
+      width: 100%;
+    }
+    
+    /* Mobile Menu */
+    .header__menu-btn {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+    }
+    
+    .header__menu-btn span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--color-dark);
+      transition: all 0.3s ease;
+    }
+    
+    @media (max-width: 768px) {
+      .header__nav {
+        display: none;
+        position: absolute;
+        top: var(--header-height);
+        left: 0;
+        right: 0;
+        background: var(--color-white);
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      }
+      
+      .header__nav.active {
+        display: flex;
+      }
+      
+      .header__menu-btn {
+        display: flex;
+      }
+    }
+    
+    /* ============================================
+       HERO SECTION
+       ============================================ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: calc(var(--header-height) + 40px) 24px 60px;
+      background: linear-gradient(135deg, var(--color-light) 0%, var(--color-white) 50%, #e8f5e9 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(45, 90, 39, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(74, 124, 66, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    
+    .hero__content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+    }
+    
+    .hero__equation {
+      margin-bottom: 40px;
+    }
+    
+    .hero__equation h3 {
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 600;
+      margin: 10px 0;
+      color: var(--color-dark);
+    }
+    
+    .hero__equation .plus,
+    .hero__equation .equals {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--color-accent);
+      font-weight: 300;
+    }
+    
+    .hero__tagline {
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+      color: var(--color-text-light);
+      margin-bottom: 30px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .hero__brand {
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 10vw, 8rem);
+      color: var(--color-dark);
+      letter-spacing: 0.05em;
+      margin-bottom: 40px;
+    }
+    
+    .hero__buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    /* ============================================
+       BUTTONS
+       ============================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 32px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 50px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .btn--primary {
+      background: var(--color-dark);
+      color: var(--color-white);
+      border-color: var(--color-dark);
+    }
+    
+    .btn--primary:hover {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      transform: translateY(-2px);
+    }
+    
+    .btn--outline {
+      background: transparent;
+      color: var(--color-dark);
+      border-color: var(--color-dark);
+    }
+    
+    .btn--outline:hover {
+      background: var(--color-dark);
+      color: var(--color-white);
+      transform: translateY(-2px);
+    }
+    
+    .btn--small {
+      padding: 10px 24px;
+      font-size: 0.85rem;
+    }
+    
+    /* ============================================
+       WHAT WE DO SECTION
+       ============================================ */
+    .what-we-do {
+      position: relative;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                  url('https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1920&q=80') center/cover no-repeat;
+      color: var(--color-white);
+      padding: 100px 0;
+    }
+    
+    .what-we-do h2,
+    .what-we-do h4 {
+      color: var(--color-white);
+    }
+    
+    .what-we-do__content {
+      max-width: 800px;
+    }
+    
+    .what-we-do h2 {
+      margin-bottom: 24px;
+    }
+    
+    .what-we-do h4 {
+      font-weight: 400;
+      margin-bottom: 30px;
+      opacity: 0.95;
+    }
+    
+    .what-we-do__list {
+      margin: 30px 0;
+    }
+    
+    .what-we-do__list li {
+      font-size: 1.1rem;
+      padding: 10px 0;
+      padding-left: 30px;
+      position: relative;
+    }
+    
+    .what-we-do__list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--color-accent-light);
+      font-weight: bold;
+    }
+    
+    /* ============================================
+       AUDIENCE SECTIONS
+       ============================================ */
+    .audiences {
+      padding: 100px 0;
+      background: var(--color-white);
+    }
+    
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 60px;
+      margin-top: 60px;
+    }
+    
+    .audience-card {
+      padding: 40px;
+      background: var(--color-light);
+      border-radius: 12px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .audience-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    
+    .audience-card__label {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-accent);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--color-accent);
+    }
+    
+    .audience-card h3 {
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+    
+    .audience-card p {
+      color: var(--color-text-light);
+      margin-bottom: 15px;
+      line-height: 1.7;
+    }
+    
+    .audience-card ul {
+      margin: 20px 0;
+    }
+    
+    .audience-card ul li {
+      padding: 8px 0 8px 24px;
+      position: relative;
+      color: var(--color-text-light);
+    }
+    
+    .audience-card ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--color-accent);
+    }
+    
+    .audience-card .btn {
+      margin-top: 20px;
+    }
+    
+    /* ============================================
+       WHY WE EXIST
+       ============================================ */
+    .why-exist {
+      padding: 100px 0;
+      background: var(--color-light);
+    }
+    
+    .why-exist__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    
+    @media (max-width: 900px) {
+      .why-exist__grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+    
+    .why-exist__content h2 {
+      margin-bottom: 30px;
+    }
+    
+    .why-exist__content h4 {
+      font-weight: 400;
+      color: var(--color-text);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    
+    .why-exist__image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .why-exist__image img {
+      max-width: 400px;
+      width: 100%;
+      border-radius: 12px;
+    }
+    
+    /* ============================================
+       MARQUEE
+       ============================================ */
+    .marquee-section {
+      padding: 60px 0;
+      background: var(--color-white);
+      overflow: hidden;
+    }
+    
+    .marquee {
+      display: flex;
+      animation: marquee 20s linear infinite;
+    }
+    
+    .marquee__content {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+    
+    .marquee__item {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 4rem);
+      color: var(--color-dark);
+      padding: 0 30px;
+      opacity: 0.8;
+    }
+    
+    .marquee__item--dot {
+      opacity: 0.3;
+    }
+    
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    /* ============================================
+       FOOTER
+       ============================================ */
+    .footer {
+      padding: 80px 0 40px;
+      background: var(--color-white);
+      border-top: 1px solid var(--color-border);
+    }
+    
+    .footer__grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+    
+    @media (max-width: 768px) {
+      .footer__grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+    
+    .footer__newsletter h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    
+    .footer__newsletter p {
+      color: var(--color-text-light);
+      margin-bottom: 20px;
+    }
+    
+    .footer__form {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    
+    .footer__form input {
+      flex: 1;
+      min-width: 250px;
+      padding: 14px 20px;
+      border: 1px solid var(--color-border);
+      border-radius: 50px;
+      font-size: 1rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    
+    .footer__form input:focus {
+      border-color: var(--color-accent);
+    }
+    
+    .footer__form button {
+      padding: 14px 32px;
+    }
+    
+    .footer__privacy {
+      font-size: 0.85rem;
+      color: var(--color-text-light);
+      margin-top: 15px;
+    }
+    
+    .footer__connect h4 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+    }
+    
+    .footer__social a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border: 1px solid var(--color-border);
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+    
+    .footer__social a:hover {
+      background: var(--color-dark);
+      border-color: var(--color-dark);
+      color: var(--color-white);
+    }
+    
+    .footer__social svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .footer__bottom {
+      padding-top: 40px;
+      border-top: 1px solid var(--color-border);
+      text-align: center;
+    }
+    
+    .footer__brand {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 5rem);
+      color: var(--color-dark);
+      letter-spacing: 0.05em;
+    }
+    
+    .footer__copyright {
+      font-size: 0.85rem;
+      color: var(--color-text-light);
+      margin-top: 20px;
+    }
+    
+    /* ============================================
+       ANIMATIONS
+       ============================================ */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* ============================================
+       RESPONSIVE ADJUSTMENTS
+       ============================================ */
+    @media (max-width: 600px) {
+      :root {
+        --section-padding: 60px;
+      }
+      
+      .hero__buttons {
+        flex-direction: column;
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+      
+      .audience-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ============================================
+       HEADER
+       ============================================ -->
+  <header class="header" id="header">
+    <div class="header__inner">
+      <a href="/" class="header__logo">
+        <img src="https://images.squarespace-cdn.com/content/v1/680017be4367003ed79c598a/4461b2b7-56f2-4490-b298-769f2ec7ad24/7CC892BC-16EB-4D36-A664-7B5FEBAA67E4.png?format=500w" alt="ReDewable Energy Co">
+      </a>
+      
+      <nav class="header__nav" id="nav">
+        <a href="#home">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Plug In</a>
+      </nav>
+      
+      <button class="header__menu-btn" id="menuBtn" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================================
+       HERO SECTION
+       ============================================ -->
+  <section class="hero" id="home">
+    <div class="hero__content">
+      <div class="hero__equation fade-in">
+        <h3>Fresh Perspective</h3>
+        <div class="plus">+</div>
+        <h3>Proven Strategy</h3>
+        <div class="equals">=</div>
+        <h3>Bankable Storage</h3>
+      </div>
+      
+      <p class="hero__tagline fade-in">
+        Accelerating Texas's energy future with utility-scale battery storage solutions tailored for real-world demand.
+      </p>
+      
+      <div class="hero__brand fade-in">ReDewable</div>
+      
+      <div class="hero__buttons fade-in">
+        <a href="#investors" class="btn btn--primary">Investors</a>
+        <a href="#projects" class="btn btn--outline">Project Overview</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       WHAT WE DO SECTION
+       ============================================ -->
+  <section class="what-we-do" id="projects">
+    <div class="container">
+      <div class="what-we-do__content fade-in">
+        <h2>What ReDew</h2>
+        <h4>We develop high-value battery storage assets — engineered for performance and positioned for exit.</h4>
+        
+        <p class="large-text">Every ReDewable project is:</p>
+        
+        <ul class="what-we-do__list">
+          <li>Sited near substations or generation assets</li>
+          <li>Structured for clean equity participation</li>
+          <li>Engineered by expert, tenured teams</li>
+        </ul>
+        
+        <p class="large-text">We turn raw land into shovel-ready, income-generating infrastructure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       AUDIENCE SECTIONS
+       ============================================ -->
+  <section class="audiences" id="investors">
+    <div class="container">
+      <div class="audience-grid">
+        
+        <!-- For Investors -->
+        <div class="audience-card fade-in">
+          <span class="audience-card__label">For Investors</span>
+          <h3>Looking to invest in the energy transition? Let's talk ownership.</h3>
+          <p>We offer accredited and sophisticated investors equity participation in our projects — with clear strategy, full transparency, and clean exits.</p>
+          
+          <ul>
+            <li>Capital raise underway for ReDew Anson — a 200 MW BESS</li>
+            <li>Site control secured — high capacity substation nearby</li>
+            <li>Adjacent to a 2,000 acre solar farm</li>
+            <li>Clean capital structure, legal docs ready</li>
+          </ul>
+          
+          <a href="mailto:invest@redewable.com?subject=Investor%20Brief%20Request" class="btn btn--primary btn--small">Request Investor Brief</a>
+        </div>
+        
+        <!-- For Power Producers -->
+        <div class="audience-card fade-in">
+          <span class="audience-card__label">For Power Producers</span>
+          <h3>Looking for your next BESS acquisition?</h3>
+          <p>We bring generation-adjacent siting, clean permitting pathways, active interconnection studies, and engineering by proven partnerships.</p>
+          <p>Let's start a conversation early. We're here to deliver real assets — not pitch decks.</p>
+          
+          <a href="mailto:power@redewable.com?subject=Acquisition%20Interest" class="btn btn--primary btn--small">Acquisitions</a>
+        </div>
+        
+        <!-- For Power Consumers -->
+        <div class="audience-card fade-in">
+          <span class="audience-card__label">For Power Consumers</span>
+          <h3>Looking to secure scalable, flexible, clean power?</h3>
+          <p>We work with AI and data center developers, crypto mining operations, manufacturers with peak-load demands, Fortune 500s with ESG commitments, and sustainability-focused enterprises.</p>
+          
+          <ul>
+            <li>Load-adjacent siting for grid reliability</li>
+            <li>Carbon-neutral capacity for Scope 2 targets</li>
+            <li>Flexible partnership terms and PPA structuring</li>
+            <li>ERCOT market access without development headaches</li>
+          </ul>
+          
+          <a href="mailto:power@redewable.com?subject=Power%20Partnership%20Inquiry" class="btn btn--primary btn--small">Let's Connect</a>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       WHY WE EXIST
+       ============================================ -->
+  <section class="why-exist">
+    <div class="container">
+      <div class="why-exist__grid">
+        <div class="why-exist__content fade-in">
+          <h2>Why ReExist</h2>
+          <h4>ReDewable is a Texas-based storage-first developer.</h4>
+          <h4>We're here to build infrastructure that matters — with integrity, speed, and strategy.</h4>
+          <h4>Our mission is to simplify the development path for storage by securing the right sites, building the right team, and making it easy for investors, partners, and energy users to plug in.</h4>
+        </div>
+        <div class="why-exist__image fade-in">
+          <img src="https://images.squarespace-cdn.com/content/v1/680017be4367003ed79c598a/4461b2b7-56f2-4490-b298-769f2ec7ad24/7CC892BC-16EB-4D36-A664-7B5FEBAA67E4.png?format=750w" alt="ReDewable Energy Co">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       MARQUEE
+       ============================================ -->
+  <section class="marquee-section">
+    <div class="marquee">
+      <div class="marquee__content">
+        <span class="marquee__item">Fresh</span>
+        <span class="marquee__item marquee__item--dot">·</span>
+        <span class="marquee__item">ReDewable</span>
+        <span class="marquee__item marquee__item--dot">·</span>
+        <span class="marquee__item">Bold</span>
+        <span class="marquee__item marquee__item--dot">·</span>
+        <span class="marquee__item">ReDewable</span>
+        <span class="marquee__item marquee__item--dot">·</span>
+        <span class="marquee__item">Fast</span>
+        <span class="marquee__item marquee__item--dot">·</span>
+        <span class="marquee__item">ReDewable</span>
+        <span class="marquee__item marquee__item--dot">·</span>
+        <span class="marquee__item">Bankable</span>
+        <span class="marquee__item marquee__item--dot">·</span>
+        <span class="marquee__item">ReDewable</span>
+        <span class="marquee__item marquee__item--dot">·</span>
+      </div>
+      <!-- Duplicate for seamless loop -->
+      <div class="marquee__content">
+        <span class="marquee__item">Fresh</span>
+        <span class="marquee__item marquee__item--dot">·</span>
+        <span class="marquee__item">ReDewable</span>
+        <span class="marquee__item marquee__item--dot">·</span>
+        <span class="marquee__item">Bold</span>
+        <span class="marquee__item marquee__item--dot">·</span>
+        <span class="marquee__item">ReDewable</span>
+        <span class="marquee__item marquee__item--dot">·</span>
+        <span class="marquee__item">Fast</span>
+        <span class="marquee__item marquee__item--dot">·</span>
+        <span class="marquee__item">ReDewable</span>
+        <span class="marquee__item marquee__item--dot">·</span>
+        <span class="marquee__item">Bankable</span>
+        <span class="marquee__item marquee__item--dot">·</span>
+        <span class="marquee__item">ReDewable</span>
+        <span class="marquee__item marquee__item--dot">·</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       FOOTER
+       ============================================ -->
+  <footer class="footer" id="contact">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__newsletter">
+          <h3>Let's Stay Connected 🔋</h3>
+          <p>Subscribe to stay informed of upcoming projects and developments!</p>
+          
+          <form class="footer__form" action="#" method="POST">
+            <input type="email" name="email" placeholder="Email Address" required>
+            <button type="submit" class="btn btn--primary">Plug-In</button>
+          </form>
+          
+          <p class="footer__privacy">We value and respect your privacy. Your information will not be shared or sold to third party advertisers.</p>
+        </div>
+        
+        <div class="footer__connect">
+          <h4>Connect</h4>
+          <div class="footer__social">
+            <a href="https://www.linkedin.com/company/redewable" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer__bottom">
+        <div class="footer__brand">ReDewable</div>
+        <p class="footer__copyright">© 2025 ReDewable Energy Company, LLC. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================
+       JAVASCRIPT
+       ============================================ -->
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const nav = document.getElementById('nav');
+    
+    menuBtn.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
+    
+    // Header scroll effect
+    const header = document.getElementById('header');
+    
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+    
+    // Fade in on scroll
+    const fadeElements = document.querySelectorAll('.fade-in');
+    
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+    
+    fadeElements.forEach(el => observer.observe(el));
+    
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const headerOffset = 80;
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+          
+          // Close mobile menu if open
+          nav.classList.remove('active');
+        }
+      });
+    });
+    
+    // Newsletter form (placeholder - connect to your backend)
+    const newsletterForm = document.querySelector('.footer__form');
+    if (newsletterForm) {
+      newsletterForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = newsletterForm.querySelector('input[type="email"]').value;
+        // TODO: Connect to your email service (Mailchimp, ConvertKit, etc.)
+        alert('Thanks for subscribing! We\'ll keep you posted.');
+        newsletterForm.reset();
+      });
+    }
+  </script>
+</body>
+</html>

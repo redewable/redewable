@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Technical & Engineering Assessment | ReDewable Energy</title>
+    <meta name="description" content="Technical engineering status and interconnection requirements for ReDew Anson battery storage project.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #ffffff;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-300: #d4d4d4;
+            --gray-400: #a3a3a3;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+            --gray-800: #262626;
+            --gray-900: #171717;
+            --green: #22c55e;
+            --green-dark: #16a34a;
+            --brand-green: #1a3d2f;
+
+            --bg-primary: var(--white);
+            --bg-secondary: var(--gray-50);
+            --bg-tertiary: var(--gray-100);
+            --bg-card: var(--white);
+            --text-primary: var(--gray-900);
+            --text-secondary: var(--gray-600);
+            --text-muted: var(--gray-500);
+            --accent: var(--green-dark);
+            --accent-dark: var(--brand-green);
+            --accent-glow: rgba(22, 163, 74, 0.08);
+            --border: var(--gray-200);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg-primary: #111111;
+                --bg-secondary: #1a1a1a;
+                --bg-tertiary: #222222;
+                --bg-card: #1a1a1a;
+                --text-primary: #f5f5f5;
+                --text-secondary: #a3a3a3;
+                --text-muted: #737373;
+                --accent: var(--green);
+                --accent-dark: var(--green-dark);
+                --accent-glow: rgba(34, 197, 94, 0.12);
+                --border: #2a2a2a;
+            }
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #111111;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #222222;
+            --bg-card: #1a1a1a;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            --accent: var(--green);
+            --accent-dark: var(--green-dark);
+            --accent-glow: rgba(34, 197, 94, 0.12);
+            --border: #2a2a2a;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: var(--white);
+            --bg-secondary: var(--gray-50);
+            --bg-tertiary: var(--gray-100);
+            --bg-card: var(--white);
+            --text-primary: var(--gray-900);
+            --text-secondary: var(--gray-600);
+            --text-muted: var(--gray-500);
+            --accent: var(--green-dark);
+            --accent-dark: var(--brand-green);
+            --accent-glow: rgba(22, 163, 74, 0.08);
+            --border: var(--gray-200);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Play', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background 0.3s ease, color 0.3s ease;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: var(--bg-primary);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s ease;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .logo img {
+            height: 32px;
+            width: auto;
+        }
+
+        .nav-desktop {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 700;
+            font-family: inherit;
+            transition: color 0.2s ease;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent);
+        }
+
+        .theme-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .mobile-controls {
+            display: none;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-desktop {
+                display: none;
+            }
+            .mobile-controls {
+                display: flex;
+            }
+        }
+
+        /* Cover */
+        .cover {
+            background: linear-gradient(135deg, var(--brand-green) 0%, #2a5a45 100%);
+            color: var(--white);
+            padding: 8rem 2rem 3rem;
+            text-align: center;
+            margin-top: 73px;
+        }
+
+        .cover h1 {
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .cover .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .cover .meta {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Main */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem;
+            flex: 1;
+        }
+
+        /* Source tags */
+        .source-tags {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .source-tag {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--white);
+            font-size: 0.75rem;
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .source-tag.secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        /* Summary Box */
+        .summary-box {
+            background: var(--accent-glow);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-box h3 {
+            font-size: 1rem;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .summary-box p {
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        /* Info Box */
+        .info-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-box p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .info-box a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .info-box a:hover {
+            text-decoration: underline;
+        }
+
+        /* Timeline */
+        .timeline-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .timeline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 600px;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--border);
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        .timeline-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border);
+            margin-bottom: 0.75rem;
+        }
+
+        .timeline-step.complete .timeline-dot {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .timeline-step.active .timeline-dot {
+            background: var(--white);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow), 0 0 0 6px var(--accent);
+        }
+
+        .timeline-step.active .timeline-dot::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .timeline-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 100px;
+        }
+
+        .timeline-step.complete .timeline-label,
+        .timeline-step.active .timeline-label {
+            color: var(--accent);
+        }
+
+        .timeline-step.active .timeline-label {
+            font-weight: 700;
+        }
+
+        /* Cross-reference box */
+        .cross-ref-box {
+            background: var(--accent-glow);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cross-ref-icon {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+        }
+
+        .cross-ref-content {
+            flex: 1;
+        }
+
+        .cross-ref-content p {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .cross-ref-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            color: var(--accent);
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .cross-ref-link:hover {
+            text-decoration: underline;
+        }
+
+        .cross-ref-link svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* POI Callout */
+        .poi-callout {
+            background: var(--brand-green);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .poi-callout-icon {
+            flex-shrink: 0;
+            color: var(--green);
+        }
+
+        .poi-callout p {
+            color: var(--white);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .poi-callout strong {
+            color: var(--green);
+        }
+
+        /* Assessment Grid */
+        .assessment-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            .assessment-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .assessment-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .assessment-card:hover {
+            border-color: var(--accent);
+        }
+
+        .assessment-card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .assessment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            gap: 1rem;
+        }
+
+        .assessment-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .assessment-status {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .status-progress {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .status-complete {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--green);
+        }
+
+        .status-deferred {
+            background: rgba(139, 92, 246, 0.15);
+            color: #8b5cf6;
+        }
+
+        .assessment-content {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .assessment-content strong {
+            color: var(--text-primary);
+        }
+
+        .assessment-partner {
+            display: inline-block;
+            margin-top: 0.75rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .assessment-partner a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .assessment-partner a:hover {
+            text-decoration: underline;
+        }
+
+        /* Insight Box */
+        .insight-box {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            border-left: 4px solid var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .insight-box.highlight {
+            background: var(--accent-glow);
+            border-left-color: var(--green);
+        }
+
+        .insight-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        .insight-box p {
+            margin: 0;
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        .insight-box strong {
+            color: var(--accent);
+        }
+
+        /* Footer note */
+        .footer-note {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Footer */
+        .footer {
+            background: #0d0d0d;
+            color: #737373;
+            padding: 32px 24px;
+            margin-top: auto;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-logo {
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .footer-links a {
+            font-size: 0.9rem;
+            color: #737373;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+        }
+
+        .footer-links span {
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .cover {
+                padding: 7rem 1.5rem 2.5rem;
+            }
+            
+            main {
+                padding: 1.5rem 1rem;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="https://www.redewable.com" class="logo">
+                <img src="/assets/logo-mark.png" alt="ReDewable">
+                <span>ReDewable Energy</span>
+            </a>
+
+            <nav class="nav-desktop">
+                <a href="https://www.redewable.com" class="nav-link">Home</a>
+                <a href="https://www.redewable.com/dataroom" class="nav-link">Data Room</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="moon-icon" style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+            </nav>
+
+            <div class="mobile-controls">
+                <button class="theme-toggle" id="themeToggleMobile" aria-label="Toggle theme">
+                    <svg class="sun-icon-mobile" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="moon-icon-mobile" style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cover -->
+    <div class="cover">
+        <h1>Technical & Engineering Assessment</h1>
+        <div class="subtitle">ReDew Anson — Jones County, Texas</div>
+        <div class="meta">Development Status · February 2026</div>
+    </div>
+
+    <main>
+        <div class="source-tags">
+            <span class="source-tag">Optimum EPC</span>
+            <span class="source-tag secondary">ANS Engineering</span>
+        </div>
+
+        <div class="summary-box">
+            <h3>Executive Summary</h3>
+            <p>Site engineering scope supports <strong>GINR application and buyer due diligence</strong>—delivering layout, electrical design, and optional geotechnical studies while preserving flexibility for the buyer on detailed design, EPC selection, and equipment procurement.</p>
+        </div>
+
+        <h2 class="section-header">Site Engineering</h2>
+
+        <div class="cross-ref-box">
+            <div class="cross-ref-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+            </div>
+            <div class="cross-ref-content">
+                <p>Grid interconnection and ERCOT application managed by Enerzinx. Injection study confirmed <strong>300–400 MW feasibility</strong> at Phantom Hill 345 kV with favorable conductor-based upgrade profile.</p>
+                <a href="https://www.redewable.com/interconnection-assessment.html" class="cross-ref-link">
+                    View Interconnection Status
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="assessment-grid">
+            <div class="assessment-card">
+                <div class="assessment-header">
+                    <span class="assessment-title">Preliminary Site Layout</span>
+                    <span class="assessment-status status-progress">In Progress</span>
+                </div>
+                <div class="assessment-content">
+                    Conceptual arrangement of battery enclosures, inverters, transformers, and balance-of-plant equipment. Supports GINR application and demonstrates site feasibility.
+                </div>
+                <span class="assessment-partner">Partner: Optimum EPC</span>
+            </div>
+
+            <div class="assessment-card">
+                <div class="assessment-header">
+                    <span class="assessment-title">Single-Line Diagram</span>
+                    <span class="assessment-status status-progress">In Progress</span>
+                </div>
+                <div class="assessment-content">
+                    Electrical one-line showing interconnection configuration, collector system, and point of interconnection at Phantom Hill 345 kV.
+                </div>
+                <span class="assessment-partner">Partner: Optimum EPC</span>
+            </div>
+
+            <div class="assessment-card full-width">
+                <div class="assessment-header">
+                    <span class="assessment-title">OEM Equipment Specifications</span>
+                    <span class="assessment-status status-complete">Complete</span>
+                </div>
+                <div class="assessment-content">
+                    Battery energy storage system specifications including capacity, reactive capability, and performance characteristics. <strong>CATL selected</strong> as OEM partner (January 2026).
+                </div>
+                <span class="assessment-partner">Partner: Optimum EPC · Combined scope: <strong>$15K</strong></span>
+            </div>
+        </div>
+
+        <h2 class="section-header">Optional Scopes</h2>
+
+        <div class="insight-box">
+            <div class="insight-label">Buyer Flexibility</div>
+            <p>The following scopes can be executed pre-sale to enhance buyer readiness, or deferred to buyer preference depending on their EPC relationships and due diligence requirements.</p>
+        </div>
+
+        <div class="assessment-grid">
+            <div class="assessment-card">
+                <div class="assessment-header">
+                    <span class="assessment-title">Geotechnical Investigation</span>
+                    <span class="assessment-status status-deferred">Optional</span>
+                </div>
+                <div class="assessment-content">
+                    Subsurface exploration and soil analysis to inform foundation design and site preparation requirements. Typically 8–12 borings across the 45-acre site.
+                </div>
+                <span class="assessment-partner">Partner: ANS Engineering · <strong>$62K</strong></span>
+            </div>
+
+            <div class="assessment-card">
+                <div class="assessment-header">
+                    <span class="assessment-title">30% Engineering Design</span>
+                    <span class="assessment-status status-deferred">Optional</span>
+                </div>
+                <div class="assessment-content">
+                    Preliminary design package including civil, structural, and electrical engineering. Supports construction financing and EPC mobilization.
+                </div>
+                <span class="assessment-partner">Partner: ANS Engineering · <strong>$151K</strong></span>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            Optimum EPC scope ($15K) in progress. Optional ANS Engineering scopes available upon request. Most strategic buyers prefer to execute detailed engineering through their own EPC relationships.
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-logo">ReDewable Energy Company</div>
+            <div class="footer-links">
+                <a href="https://www.linkedin.com/company/redewable" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="https://www.redewable.com/privacy">Privacy</a>
+                <span>© 2026</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Management
+        function getSystemTheme() {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function getCurrentTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) return savedTheme;
+            return getSystemTheme();
+        }
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            updateThemeIcons(theme);
+            localStorage.setItem('theme', theme);
+        }
+
+        function updateThemeIcons(theme) {
+            const isDark = theme === 'dark';
+            document.querySelector('.sun-icon').style.display = isDark ? 'block' : 'none';
+            document.querySelector('.moon-icon').style.display = isDark ? 'none' : 'block';
+            document.querySelector('.sun-icon-mobile').style.display = isDark ? 'block' : 'none';
+            document.querySelector('.moon-icon-mobile').style.display = isDark ? 'none' : 'block';
+        }
+
+        function toggleTheme() {
+            const current = getCurrentTheme();
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else {
+                const systemTheme = getSystemTheme();
+                updateThemeIcons(systemTheme);
+            }
+        }
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                updateThemeIcons(e.matches ? 'dark' : 'light');
+            }
+        });
+
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
+
+        document.addEventListener('DOMContentLoaded', initTheme);
+    </script>
+    <script src="/investor-gate.js" defer></script>
+</body>
+</html>

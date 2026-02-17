@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Environmental & Permitting Assessment | ReDewable Energy</title>
+    <meta name="description" content="Environmental due diligence and permitting pathway assessment for ReDew Anson battery storage project.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #ffffff;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-300: #d4d4d4;
+            --gray-400: #a3a3a3;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+            --gray-800: #262626;
+            --gray-900: #171717;
+            --green: #22c55e;
+            --green-dark: #16a34a;
+            --brand-green: #1a3d2f;
+
+            --bg-primary: var(--white);
+            --bg-secondary: var(--gray-50);
+            --bg-tertiary: var(--gray-100);
+            --bg-card: var(--white);
+            --text-primary: var(--gray-900);
+            --text-secondary: var(--gray-600);
+            --text-muted: var(--gray-500);
+            --accent: var(--green-dark);
+            --accent-dark: var(--brand-green);
+            --accent-glow: rgba(22, 163, 74, 0.08);
+            --border: var(--gray-200);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg-primary: #111111;
+                --bg-secondary: #1a1a1a;
+                --bg-tertiary: #222222;
+                --bg-card: #1a1a1a;
+                --text-primary: #f5f5f5;
+                --text-secondary: #a3a3a3;
+                --text-muted: #737373;
+                --accent: var(--green);
+                --accent-dark: var(--green-dark);
+                --accent-glow: rgba(34, 197, 94, 0.12);
+                --border: #2a2a2a;
+            }
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #111111;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #222222;
+            --bg-card: #1a1a1a;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            --accent: var(--green);
+            --accent-dark: var(--green-dark);
+            --accent-glow: rgba(34, 197, 94, 0.12);
+            --border: #2a2a2a;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: var(--white);
+            --bg-secondary: var(--gray-50);
+            --bg-tertiary: var(--gray-100);
+            --bg-card: var(--white);
+            --text-primary: var(--gray-900);
+            --text-secondary: var(--gray-600);
+            --text-muted: var(--gray-500);
+            --accent: var(--green-dark);
+            --accent-dark: var(--brand-green);
+            --accent-glow: rgba(22, 163, 74, 0.08);
+            --border: var(--gray-200);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Play', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background 0.3s ease, color 0.3s ease;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: var(--bg-primary);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s ease;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .logo img {
+            height: 32px;
+            width: auto;
+        }
+
+        .nav-desktop {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 700;
+            font-family: inherit;
+            transition: color 0.2s ease;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent);
+        }
+
+        .theme-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .mobile-controls {
+            display: none;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-desktop {
+                display: none;
+            }
+            .mobile-controls {
+                display: flex;
+            }
+        }
+
+        /* Cover */
+        .cover {
+            background: linear-gradient(135deg, var(--brand-green) 0%, #2a5a45 100%);
+            color: var(--white);
+            padding: 8rem 2rem 3rem;
+            text-align: center;
+            margin-top: 73px;
+        }
+
+        .cover h1 {
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .cover .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .cover .meta {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Main */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem;
+            flex: 1;
+        }
+
+        /* Source tags */
+        .source-tags {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .source-tag {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--white);
+            font-size: 0.75rem;
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .source-tag.secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        /* Summary Box */
+        .summary-box {
+            background: var(--accent-glow);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-box h3 {
+            font-size: 1rem;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .summary-box p {
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        /* Assessment Grid */
+        .assessment-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            .assessment-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .assessment-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .assessment-card:hover {
+            border-color: var(--accent);
+        }
+
+        .assessment-card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .assessment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            gap: 1rem;
+        }
+
+        .assessment-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .assessment-status {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .status-low {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--green);
+        }
+
+        .status-required {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+
+        .status-recommended {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .status-in-progress {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .assessment-content {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .assessment-content strong {
+            color: var(--text-primary);
+        }
+
+        /* Insight Box */
+        .insight-box {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            border-left: 4px solid var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .insight-box.highlight {
+            background: var(--accent-glow);
+            border-left-color: var(--green);
+        }
+
+        .insight-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        .insight-box p {
+            margin: 0;
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        .insight-box strong {
+            color: var(--accent);
+        }
+
+        /* FEMA Map Section */
+        .map-section {
+            margin: 2rem 0;
+        }
+
+        .map-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .map-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .map-caption {
+            padding: 1rem 1.25rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+        }
+
+        .map-caption-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .map-caption-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .map-caption-source {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .map-download-btn {
+            display: inline-block;
+            margin-top: 0.75rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--accent);
+            background: transparent;
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .map-download-btn:hover {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        /* Timeline Estimate */
+        .timeline-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .timeline-box h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .timeline-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+        }
+
+        .timeline-item-name {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .timeline-item-duration {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Footer note */
+        .footer-note {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Footer */
+        .footer {
+            background: #0d0d0d;
+            color: #737373;
+            padding: 32px 24px;
+            margin-top: auto;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-logo {
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .footer-links a {
+            font-size: 0.9rem;
+            color: #737373;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+        }
+
+        .footer-links span {
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .cover {
+                padding: 7rem 1.5rem 2.5rem;
+            }
+            
+            main {
+                padding: 1.5rem 1rem;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="https://www.redewable.com" class="logo">
+                <img src="/assets/logo-mark.png" alt="ReDewable">
+                <span>ReDewable Energy</span>
+            </a>
+
+            <nav class="nav-desktop">
+                <a href="https://www.redewable.com" class="nav-link">Home</a>
+                <a href="https://www.redewable.com/dataroom" class="nav-link">Data Room</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="moon-icon" style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+            </nav>
+
+            <div class="mobile-controls">
+                <button class="theme-toggle" id="themeToggleMobile" aria-label="Toggle theme">
+                    <svg class="sun-icon-mobile" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="moon-icon-mobile" style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cover -->
+    <div class="cover">
+        <h1>Environmental & Permitting Assessment</h1>
+        <div class="subtitle">ReDew Anson — Jones County, Texas</div>
+        <div class="meta">Due Diligence Summary · February 2026</div>
+    </div>
+
+    <main>
+        <div class="source-tags">
+            <span class="source-tag">ESE Partners</span>
+            <span class="source-tag secondary">Tier 1 Environmental Consultant</span>
+            <a href="https://drive.google.com/file/d/1RMHq69dYYN05eL8Q1UjUZWk2kutZ2cdr/view?usp=drive_link" target="_blank" rel="noopener" class="source-tag secondary" style="text-decoration: none;">View Proposal →</a>
+        </div>
+
+        <div class="summary-box">
+            <h3>Executive Summary</h3>
+            <p>Environmental due diligence is <strong>underway</strong>. ESE Partners has been engaged to complete a Phase I ESA and Critical Issues Analysis with Permit Matrix. The 45-acre property is located directly adjacent to ENGIE's operational Anson Solar Farm, which has already undergone comprehensive environmental review. Preliminary assessment indicates a <strong>favorable environmental profile</strong>—agricultural land in a drought-prone region with no apparent wetlands, flood zones, or sensitive habitats.</p>
+        </div>
+
+        <h2 class="section-header">Site Characteristics</h2>
+
+        <div class="insight-box highlight">
+            <div class="insight-label">Consultant Assessment</div>
+            <p>Preliminary aerial review indicates this is an <strong>attractive parcel unlikely to raise red flags</strong>. The adjacent ENGIE solar development has already cleared the environmental pathway for this area—any significant issues would have been identified during that process.</p>
+        </div>
+
+        <div class="map-section">
+            <div class="map-container">
+                <img src="/assets/fema-flood-map.png" alt="FEMA Flood Zone Map showing ReDew Anson property outside flood hazard areas" class="map-image">
+                <div class="map-caption">
+                    <div class="map-caption-title">Property Located Outside Flood Hazard Areas</div>
+                    <div class="map-caption-text">FEMA National Flood Hazard Layer confirms the project site is not within any designated flood zones.</div>
+                    <div class="map-caption-source">Source: FEMA Flood Map Service Center</div>
+                    <a href="https://drive.google.com/file/d/16g0Qp-yWG9B7d9ELJ7gwAjew5nkly20G/view?usp=drive_link" target="_blank" rel="noopener" class="map-download-btn">View Original FIRM</a>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-header">Required Studies</h2>
+
+        <div class="assessment-grid">
+            <div class="assessment-card">
+                <div class="assessment-header">
+                    <span class="assessment-title">Phase I ESA</span>
+                    <span class="assessment-status status-in-progress">In Progress</span>
+                </div>
+                <div class="assessment-content">
+                    Standard requirement for financing and equity backers. Identifies any historic contamination or environmental liabilities. ESE Partners engaged at <strong>$3,000</strong> with 15 business day turnaround. Note: Reports are typically valid for <strong>6 months</strong> in the eyes of financiers.
+                </div>
+            </div>
+
+            <div class="assessment-card">
+                <div class="assessment-header">
+                    <span class="assessment-title">ALTA Survey</span>
+                    <span class="assessment-status status-in-progress">In Progress</span>
+                </div>
+                <div class="assessment-content">
+                    Required for title insurance, financing, and project sale. Documents property boundaries, easements, rights-of-way, and encumbrances. Geotex Solutions engaged—<strong>expected delivery 2/2/2026</strong>.
+                </div>
+            </div>
+
+            <div class="assessment-card full-width">
+                <div class="assessment-header">
+                    <span class="assessment-title">Critical Issues Analysis + Permit Matrix</span>
+                    <span class="assessment-status status-in-progress">In Progress</span>
+                </div>
+                <div class="assessment-content">
+                    Comprehensive desktop review covering wetlands, threatened/endangered species, cultural resources, FEMA flood hazards, airport/military conflicts, seismicity, conservation easements, and permitting pathway. Includes USFWS IPaC database review for MBTA and BGEPA compliance. ESE Partners engaged at <strong>$5,000</strong> with 20 business day turnaround. Given the site characteristics—active agricultural land, drought conditions, location outside FEMA flood zones, and adjacent solar development that has already undergone environmental review—<strong>formal field delineations and species surveys are not anticipated to be required</strong>.
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-header">Permitting Pathway</h2>
+
+        <div class="insight-box">
+            <div class="insight-label">Local Permitting</div>
+            <p>Jones County has hosted renewable energy development for over 7 years. ENGIE's Anson Solar 1 has been operational since 2020, with Anson Solar 2 currently under construction. The county is familiar with utility-scale energy projects and has established processes for approvals. Permitting is expected to be limited to <strong>stormwater permitting</strong> (notice-level) once environmental due diligence confirms a clean site.</p>
+        </div>
+
+        <div class="timeline-box">
+            <h4>Current Status</h4>
+            <div class="timeline-items">
+                <div class="timeline-item">
+                    <span class="timeline-item-name">Critical Issues Analysis + Permit Matrix</span>
+                    <span class="timeline-item-duration" style="color: var(--green);">● In Progress — est. 2/27/2026</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-item-name">Phase I ESA</span>
+                    <span class="timeline-item-duration" style="color: var(--green);">● In Progress — est. 2/20/2026</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-item-name">ALTA Survey</span>
+                    <span class="timeline-item-duration" style="color: var(--green);">● Receiving 2/2/2026</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-item-name">Local Permitting</span>
+                    <span class="timeline-item-duration">Pending — County dependent</span>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-header">Financing Considerations</h2>
+
+        <div class="insight-box">
+            <div class="insight-label">Phase I Refresh Requirement</div>
+            <p>Equity backers, financiers, and investment banks typically consider Phase I reports valid for <strong>6 months</strong>. After that threshold, they require a refresh—even if nothing has changed. For a develop-and-sell strategy, Phase I timing should align with anticipated buyer due diligence window. Desktop studies and CIA can be completed earlier; the full Phase I ESA should be timed to remain current through the sale process.</p>
+        </div>
+
+        <div class="footer-note">
+            ESE Partners engaged January 2026. Combined scope: $8,000 (Phase I ESA $3K + CIA with Permit Matrix $5K). ALTA Survey by Geotex Solutions. Environmental conditions subject to verification upon completion of formal studies.
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-logo">ReDewable Energy Company</div>
+            <div class="footer-links">
+                <a href="https://www.linkedin.com/company/redewable" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="https://www.redewable.com/privacy">Privacy</a>
+                <span>© 2026</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Management
+        function getSystemTheme() {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function getCurrentTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) return savedTheme;
+            return getSystemTheme();
+        }
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            updateThemeIcons(theme);
+            localStorage.setItem('theme', theme);
+        }
+
+        function updateThemeIcons(theme) {
+            const isDark = theme === 'dark';
+            document.querySelector('.sun-icon').style.display = isDark ? 'block' : 'none';
+            document.querySelector('.moon-icon').style.display = isDark ? 'none' : 'block';
+            document.querySelector('.sun-icon-mobile').style.display = isDark ? 'block' : 'none';
+            document.querySelector('.moon-icon-mobile').style.display = isDark ? 'none' : 'block';
+        }
+
+        function toggleTheme() {
+            const current = getCurrentTheme();
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else {
+                const systemTheme = getSystemTheme();
+                updateThemeIcons(systemTheme);
+            }
+        }
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                updateThemeIcons(e.matches ? 'dark' : 'light');
+            }
+        });
+
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
+
+        document.addEventListener('DOMContentLoaded', initTheme);
+    </script>
+    <script src="/investor-gate.js" defer></script>
+</body>
+</html>

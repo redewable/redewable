@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ReDewable Energy Company Privacy Policy">
+  
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/favicon.png">
+  
+  <title>Privacy Policy | ReDewable Energy Company</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    :root {
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --gray-50: #fafafa;
+      --gray-100: #f5f5f5;
+      --gray-200: #e5e5e5;
+      --gray-300: #d4d4d4;
+      --gray-400: #a3a3a3;
+      --gray-500: #737373;
+      --gray-600: #525252;
+      --gray-700: #404040;
+      --gray-800: #262626;
+      --gray-900: #171717;
+      --brand-green: #1a3d2f;
+      
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --max-width: 800px; /* Kept narrow for privacy text readability */
+      --header-width: 1200px; /* Standard width for header alignment */
+      
+      --bg-primary: var(--white);
+      --text-primary: var(--gray-800);
+      --text-secondary: var(--gray-600);
+      --text-muted: var(--gray-500);
+      --border-color: var(--gray-200);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-primary: #0a0a0a;
+        --text-primary: #f5f5f5;
+        --text-secondary: #a3a3a3;
+        --text-muted: #737373;
+        --border-color: #262626;
+        --gray-200: #262626;
+        --gray-800: #e5e5e5;
+      }
+    }
+    
+    html { 
+      scroll-behavior: smooth; 
+      overflow-x: hidden; /* Added per request */
+    }
+    
+    body {
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden; /* Added per request */
+    }
+    
+    ::selection {
+      background: var(--brand-green);
+      color: #ffffff;
+    }
+    
+    a { color: inherit; text-decoration: none; }
+    
+    /* HEADER */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      .header {
+        background: rgba(10,10,10,0.95);
+      }
+    }
+    
+    .header__inner {
+      max-width: var(--header-width);
+      margin: 0 auto;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .header__logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+    
+    .header__logo img {
+      height: 28px;
+      width: auto;
+    }
+    
+    .header__nav {
+      display: flex;
+      gap: 32px;
+    }
+    
+    .header__nav a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
+    
+    .header__nav a:hover { color: var(--text-primary); }
+    
+    /* Burger Menu Styles */
+    .header__burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      z-index: 110;
+    }
+    
+    .header__burger span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    
+    .header__burger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .header__burger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .header__burger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+    
+    /* Mobile Menu Styles */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-primary);
+      z-index: 99;
+      padding: 120px 24px 40px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 32px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .mobile-menu.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .mobile-menu a {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: color 0.2s;
+    }
+    
+    .mobile-menu a:hover {
+      color: var(--brand-green);
+    }
+    
+    /* Responsive Triggers */
+    @media (max-width: 768px) {
+      .header__nav {
+        display: none;
+      }
+      
+      .header__burger {
+        display: flex;
+      }
+      
+      .mobile-menu {
+        display: flex;
+      }
+    }
+    
+    /* CONTENT */
+    .content {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 160px 24px 100px;
+    }
+    
+    .content__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      transition: color 0.2s;
+    }
+    
+    .content__back:hover { color: var(--text-primary); }
+    
+    .content__title {
+      font-size: clamp(2rem, 4vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    
+    .content__date {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+    }
+    
+    .content__body h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-top: 40px;
+      margin-bottom: 16px;
+    }
+    
+    .content__body h2:first-child {
+      margin-top: 0;
+    }
+    
+    .content__body p {
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+    
+    .content__body ul {
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      padding-left: 24px;
+    }
+    
+    .content__body li {
+      margin-bottom: 8px;
+      line-height: 1.7;
+    }
+    
+    .content__body a {
+      color: var(--text-primary);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    
+    .content__body a:hover {
+      color: var(--text-secondary);
+    }
+    
+    /* FOOTER */
+    .footer {
+      background: #0a0a0a;
+      color: #737373;
+      padding: 40px 24px;
+    }
+    
+    .footer__inner {
+      max-width: var(--header-width);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    
+    .footer__logo {
+      font-weight: 700;
+      color: #ffffff;
+    }
+    
+    .footer__links {
+      display: flex;
+      gap: 24px;
+    }
+    
+    .footer__links a {
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    
+    .footer__links a:hover { color: #ffffff; }
+  </style>
+</head>
+<body>
+  
+  <header class="header">
+    <div class="header__inner">
+      <a href="/" class="header__logo">
+        <img src="/assets/favicon.png" alt="ReDewable">
+        ReDewable
+      </a>
+      <nav class="header__nav">
+        <a href="/#project">Project</a>
+        <a href="/#approach">Approach</a>
+        <a href="/team.html">Team</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <div class="header__burger" id="burger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+  
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="/#project">Project</a>
+    <a href="/#approach">Approach</a>
+    <a href="/team.html">Team</a>
+    <a href="/#contact">Contact</a>
+  </nav>
+  
+  <main class="content">
+    <a href="/" class="content__back">← Back to Home</a>
+    
+    <h1 class="content__title">Privacy Policy</h1>
+    <p class="content__date">Last updated: December 2025</p>
+    
+    <div class="content__body">
+      <h2>Overview</h2>
+      <p>
+        ReDewable Energy Company LLC ("ReDewable," "we," "us," or "our") respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard information when you visit our website or interact with our business.
+      </p>
+      
+      <h2>Information We Collect</h2>
+      <p>We may collect information you provide directly to us, including:</p>
+      <ul>
+        <li>Name and contact information (email address, phone number)</li>
+        <li>Company name and title</li>
+        <li>Information you provide when contacting us via email or other communication channels</li>
+      </ul>
+      <p>
+        We may also automatically collect certain information when you visit our website, including your IP address, browser type, and pages visited. We use this information to analyze website traffic and improve our services.
+      </p>
+      
+      <h2>How We Use Your Information</h2>
+      <p>We use the information we collect to:</p>
+      <ul>
+        <li>Respond to your inquiries and communicate with you</li>
+        <li>Provide information about our projects and services</li>
+        <li>Improve our website and business operations</li>
+        <li>Comply with legal obligations</li>
+      </ul>
+      
+      <h2>Information Sharing</h2>
+      <p>
+        We do not sell, trade, or otherwise transfer your personal information to outside parties except as described in this policy. We may share information with trusted service providers who assist us in operating our website and conducting our business, provided they agree to keep this information confidential.
+      </p>
+      
+      <h2>Data Security</h2>
+      <p>
+        We implement reasonable security measures to protect your personal information. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
+      </p>
+      
+      <h2>Third-Party Links</h2>
+      <p>
+        Our website may contain links to third-party websites. We are not responsible for the privacy practices or content of these external sites. We encourage you to review the privacy policies of any third-party sites you visit.
+      </p>
+      
+      <h2>Changes to This Policy</h2>
+      <p>
+        We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date.
+      </p>
+      
+      <h2>Contact Us</h2>
+      <p>
+        If you have questions about this Privacy Policy or our privacy practices, please contact us at <a href="mailto:tb@redewable.com">tb@redewable.com</a>.
+      </p>
+    </div>
+  </main>
+  
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__logo">ReDewable Energy Company</div>
+      <div class="footer__links">
+        <a href="https://www.linkedin.com/company/redewable" target="_blank" rel="noopener">LinkedIn</a>
+        <span>© 2026</span>
+      </div>
+    </div>
+  </footer>
+  
+  <script>
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+    
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        burger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
+</body>
+</html>

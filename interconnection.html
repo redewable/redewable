@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Interconnection Assessment | ReDewable Energy</title>
+    <meta name="description" content="Grid interconnection status and technical assessment for ReDew Anson battery storage project.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #ffffff;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-300: #d4d4d4;
+            --gray-400: #a3a3a3;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+            --gray-800: #262626;
+            --gray-900: #171717;
+            --green: #22c55e;
+            --green-dark: #16a34a;
+            --brand-green: #1a3d2f;
+
+            --bg-primary: var(--white);
+            --bg-secondary: var(--gray-50);
+            --bg-tertiary: var(--gray-100);
+            --bg-card: var(--white);
+            --text-primary: var(--gray-900);
+            --text-secondary: var(--gray-600);
+            --text-muted: var(--gray-500);
+            --accent: var(--green-dark);
+            --accent-dark: var(--brand-green);
+            --accent-glow: rgba(22, 163, 74, 0.08);
+            --border: var(--gray-200);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg-primary: #111111;
+                --bg-secondary: #1a1a1a;
+                --bg-tertiary: #222222;
+                --bg-card: #1a1a1a;
+                --text-primary: #f5f5f5;
+                --text-secondary: #a3a3a3;
+                --text-muted: #737373;
+                --accent: var(--green);
+                --accent-dark: var(--green-dark);
+                --accent-glow: rgba(34, 197, 94, 0.12);
+                --border: #2a2a2a;
+            }
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #111111;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #222222;
+            --bg-card: #1a1a1a;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            --accent: var(--green);
+            --accent-dark: var(--green-dark);
+            --accent-glow: rgba(34, 197, 94, 0.12);
+            --border: #2a2a2a;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: var(--white);
+            --bg-secondary: var(--gray-50);
+            --bg-tertiary: var(--gray-100);
+            --bg-card: var(--white);
+            --text-primary: var(--gray-900);
+            --text-secondary: var(--gray-600);
+            --text-muted: var(--gray-500);
+            --accent: var(--green-dark);
+            --accent-dark: var(--brand-green);
+            --accent-glow: rgba(22, 163, 74, 0.08);
+            --border: var(--gray-200);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Play', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background 0.3s ease, color 0.3s ease;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: var(--bg-primary);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s ease;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .logo img {
+            height: 32px;
+            width: auto;
+        }
+
+        .nav-desktop {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 700;
+            font-family: inherit;
+            transition: color 0.2s ease;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent);
+        }
+
+        .theme-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .mobile-controls {
+            display: none;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-desktop {
+                display: none;
+            }
+            .mobile-controls {
+                display: flex;
+            }
+        }
+
+        /* Cover */
+        .cover {
+            background: linear-gradient(135deg, var(--brand-green) 0%, #2a5a45 100%);
+            color: var(--white);
+            padding: 8rem 2rem 3rem;
+            text-align: center;
+            margin-top: 73px;
+        }
+
+        .cover h1 {
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .cover .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .cover .meta {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Main */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem;
+            flex: 1;
+        }
+
+        /* Source tags */
+        .source-tags {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .source-tag {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--white);
+            font-size: 0.75rem;
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .source-tag.secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        /* Summary Box */
+        .summary-box {
+            background: var(--accent-glow);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-box h3 {
+            font-size: 1rem;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .summary-box p {
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        /* Status Card */
+        .status-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .status-card-content h4 {
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .status-card-content p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .status-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .status-complete {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--green);
+        }
+
+        /* Info Box */
+        .info-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-box p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .info-box strong {
+            color: var(--text-primary);
+        }
+
+        /* Vertical Timeline */
+        .timeline-container {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), var(--border) 40%, var(--border));
+        }
+
+        .timeline-phase {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            margin-left: -2rem;
+        }
+
+        .phase-marker {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .phase-marker.complete {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .phase-marker.in-progress {
+            background: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+            animation: pulse-ring 2s infinite;
+        }
+
+        .phase-marker.pending {
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border);
+        }
+
+        .phase-marker.milestone {
+            background: var(--accent);
+            color: var(--white);
+            font-size: 0.5rem;
+        }
+
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(234, 179, 8, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(234, 179, 8, 0); }
+        }
+
+        .phase-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .timeline-phase.complete .phase-title {
+            color: var(--accent);
+        }
+
+        .timeline-phase.in-progress .phase-title {
+            color: var(--text-primary);
+        }
+
+        .timeline-phase.milestone .phase-title {
+            color: var(--accent);
+        }
+
+        .phase-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .timeline-item:hover {
+            border-color: var(--accent);
+        }
+
+        .timeline-item.complete {
+            opacity: 0.7;
+        }
+
+        .timeline-item.milestone {
+            background: var(--accent-glow);
+            border-color: var(--accent);
+        }
+
+        .timeline-item.milestone.final {
+            background: linear-gradient(135deg, var(--accent-glow) 0%, rgba(34, 197, 94, 0.1) 100%);
+            border-color: var(--green);
+        }
+
+        .timeline-item.pending {
+            border-style: dashed;
+            opacity: 0.8;
+        }
+
+        .item-date {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            min-width: 60px;
+            flex-shrink: 0;
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.15rem;
+        }
+
+        .item-vendor {
+            font-size: 0.75rem;
+            color: var(--accent);
+        }
+
+        .item-detail {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Now Marker */
+        .timeline-now {
+            position: relative;
+            margin: 1.5rem 0;
+            margin-left: -2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .timeline-now::before {
+            content: '';
+            width: 16px;
+            height: 16px;
+            background: #ef4444;
+            border-radius: 50%;
+            flex-shrink: 0;
+            animation: pulse-now 1.5s infinite;
+        }
+
+        .timeline-now span {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ef4444;
+        }
+
+        .timeline-now::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, #ef4444, transparent);
+        }
+
+        @keyframes pulse-now {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.9); }
+        }
+
+        /* Year Marker */
+        .timeline-year {
+            position: relative;
+            margin: 2rem 0 1.5rem;
+            margin-left: -2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .timeline-year::before {
+            content: '';
+            width: 16px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .timeline-year span {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+
+        .timeline-year::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--accent), transparent 80%);
+        }
+
+        /* Result Card */
+        .result-card {
+            background: var(--accent-glow);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .result-card .result-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-card .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.25rem;
+        }
+
+        .result-card .result-detail {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Chat Thread */
+        .chat-thread {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .chat-bubble {
+            max-width: 85%;
+            padding: 1rem 1.25rem;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .chat-bubble.outgoing {
+            align-self: flex-end;
+            background: var(--accent);
+            color: var(--white);
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-bubble.incoming {
+            align-self: flex-start;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-bubble strong {
+            color: inherit;
+        }
+
+        .chat-bubble.incoming strong {
+            color: var(--accent);
+        }
+
+        .chat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+            padding: 0 0.5rem;
+        }
+
+        .chat-label.outgoing {
+            text-align: right;
+            color: var(--text-muted);
+        }
+
+        .chat-label.incoming {
+            text-align: left;
+            color: var(--green);
+        }
+
+        .chat-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-group.outgoing {
+            align-items: flex-end;
+        }
+
+        .chat-group.incoming {
+            align-items: flex-start;
+        }
+
+        /* Reassessment Note */
+        .reassessment-note {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .reassessment-note svg {
+            flex-shrink: 0;
+            color: #3b82f6;
+            margin-top: 2px;
+        }
+
+        .reassessment-note p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .reassessment-note strong {
+            color: #3b82f6;
+        }
+
+        /* Q&A Section - legacy support */
+        .qa-section {
+            margin-bottom: 2rem;
+        }
+
+        .qa-block {
+            margin-bottom: 1.5rem;
+        }
+
+        .qa-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .qa-label.inquiry {
+            color: var(--accent);
+        }
+
+        .qa-label.response {
+            color: var(--text-muted);
+        }
+
+        .qa-content {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .qa-content.response {
+            background: var(--accent-glow);
+            border-left-color: var(--green);
+        }
+
+        .qa-content p {
+            margin: 0;
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        .qa-content strong {
+            color: var(--accent);
+        }
+
+        /* Key Takeaway */
+        .takeaway-box {
+            background: var(--brand-green);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .takeaway-box h4 {
+            color: var(--green);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .takeaway-box p {
+            color: var(--white);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Documents Grid */
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .document-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .document-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .document-icon {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background: var(--accent-glow);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+        }
+
+        .document-content h5 {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .document-content p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Footer note */
+        .footer-note {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Footer */
+        .footer {
+            background: #0d0d0d;
+            color: #737373;
+            padding: 32px 24px;
+            margin-top: auto;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-logo {
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .footer-links a {
+            font-size: 0.9rem;
+            color: #737373;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+        }
+
+        .footer-links span {
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .cover {
+                padding: 7rem 1.5rem 2.5rem;
+            }
+            
+            main {
+                padding: 1.5rem 1rem;
+            }
+            
+            .qa-content {
+                padding: 1rem 1.25rem;
+            }
+
+            .status-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="https://www.redewable.com" class="logo">
+                <img src="/assets/logo-mark.png" alt="ReDewable">
+                <span>ReDewable Energy</span>
+            </a>
+
+            <nav class="nav-desktop">
+                <a href="https://www.redewable.com" class="nav-link">Home</a>
+                <a href="https://www.redewable.com/dataroom" class="nav-link">Data Room</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="moon-icon" style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+            </nav>
+
+            <div class="mobile-controls">
+                <button class="theme-toggle" id="themeToggleMobile" aria-label="Toggle theme">
+                    <svg class="sun-icon-mobile" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="moon-icon-mobile" style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cover -->
+    <div class="cover">
+        <h1>Interconnection Assessment</h1>
+        <div class="subtitle">ReDew Anson — Jones County, Texas</div>
+        <div class="meta">Phantom Hill 345 kV · February 2026</div>
+    </div>
+
+    <main>
+        <div class="source-tags">
+            <span class="source-tag">Enerzinx</span>
+            <span class="source-tag secondary">ERCOT</span>
+        </div>
+
+        <div class="summary-box">
+            <h3>Executive Summary</h3>
+            <p>Independent analysis confirms <strong>300–400 MW battery storage feasibility</strong> at the Phantom Hill 345 kV point of interconnection. The identified transmission upgrade profile is favorable—primarily conductor upgrades rather than substation modifications—representing the lower end of typical network upgrade costs for a project of this scale.</p>
+        </div>
+
+        <h2 class="section-header">Development Timeline</h2>
+
+        <div class="timeline-container" id="timeline">
+            <div class="timeline-line"></div>
+            
+            <!-- 2025 -->
+            <div class="timeline-phase complete">
+                <div class="phase-header">
+                    <span class="phase-marker complete">✓</span>
+                    <span class="phase-title">2025</span>
+                </div>
+                <div class="phase-items">
+                    <div class="timeline-item complete" data-date="2025-04-11">
+                        <div class="item-date">Apr 11</div>
+                        <div class="item-content">
+                            <div class="item-title">Land Closing</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2026 Year Marker -->
+            <div class="timeline-year">
+                <span>2026</span>
+            </div>
+
+            <!-- January 2026 -->
+            <div class="timeline-phase complete">
+                <div class="phase-header">
+                    <span class="phase-marker complete">✓</span>
+                    <span class="phase-title">January</span>
+                </div>
+                <div class="phase-items">
+                    <div class="timeline-item complete" data-date="2026-01-08">
+                        <div class="item-date">Jan 8</div>
+                        <div class="item-content">
+                            <div class="item-title">300 MW Injection Study</div>
+                            <div class="item-vendor">Enerzinx</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item complete" data-date="2026-01-29">
+                        <div class="item-date">Jan 29</div>
+                        <div class="item-content">
+                            <div class="item-title">OEM Selection</div>
+                            <div class="item-vendor">CATL</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- February 2026 -->
+            <div class="timeline-phase in-progress">
+                <div class="phase-header">
+                    <span class="phase-marker in-progress"></span>
+                    <span class="phase-title">February</span>
+                </div>
+                <div class="phase-items">
+                    <div class="timeline-item" data-date="2026-02-02">
+                        <div class="item-date">Feb 2</div>
+                        <div class="item-content">
+                            <div class="item-title">ALTA Survey</div>
+                            <div class="item-vendor">Geotex Solutions</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-date="2026-02-13">
+                        <div class="item-date">Feb 13</div>
+                        <div class="item-content">
+                            <div class="item-title">400 MW Injection Study</div>
+                            <div class="item-vendor">Enerzinx</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-date="2026-02-13">
+                        <div class="item-date">Feb 13</div>
+                        <div class="item-content">
+                            <div class="item-title">Site Layout + SLD</div>
+                            <div class="item-vendor">Optimum EPC</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-date="2026-02-20">
+                        <div class="item-date">Feb 20</div>
+                        <div class="item-content">
+                            <div class="item-title">Phase I ESA</div>
+                            <div class="item-vendor">ESE Partners</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-date="2026-02-27">
+                        <div class="item-date">Feb 27</div>
+                        <div class="item-content">
+                            <div class="item-title">Critical Issues Analysis + Permit Matrix</div>
+                            <div class="item-vendor">ESE Partners</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GINR Submission -->
+            <div class="timeline-phase milestone" data-date="2026-03-27">
+                <div class="phase-header">
+                    <span class="phase-marker milestone">◆</span>
+                    <span class="phase-title">March 27</span>
+                </div>
+                <div class="phase-items">
+                    <div class="timeline-item milestone">
+                        <div class="item-content">
+                            <div class="item-title">GINR Submission</div>
+                            <div class="item-detail">ERCOT application  ·  Queue position established</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ERCOT Process -->
+            <div class="timeline-phase pending">
+                <div class="phase-header">
+                    <span class="phase-marker pending"></span>
+                    <span class="phase-title">ERCOT Study Process</span>
+                </div>
+                <div class="phase-items">
+                    <div class="timeline-item pending" data-date="2026-06-15">
+                        <div class="item-date">~Jun</div>
+                        <div class="item-content">
+                            <div class="item-title">Screening Study Complete</div>
+                            <div class="item-detail">90-day limit from submission</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item pending" data-date="2026-12-15">
+                        <div class="item-date">~Dec</div>
+                        <div class="item-content">
+                            <div class="item-title">Full Interconnection Study</div>
+                            <div class="item-detail">Steady-state, fault, dynamic analysis</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2027 Year Marker -->
+            <div class="timeline-year">
+                <span>2027</span>
+            </div>
+
+            <!-- NTP -->
+            <div class="timeline-phase milestone final" data-date="2027-02-15">
+                <div class="phase-header">
+                    <span class="phase-marker milestone">◆</span>
+                    <span class="phase-title">Q1</span>
+                </div>
+                <div class="phase-items">
+                    <div class="timeline-item milestone final">
+                        <div class="item-content">
+                            <div class="item-title">Interconnection Agreement / NTP</div>
+                            <div class="item-detail">Shovel-ready  ·  Sale-ready asset</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COD -->
+            <div class="timeline-phase milestone" data-date="2027-11-15">
+                <div class="phase-header">
+                    <span class="phase-marker pending"></span>
+                    <span class="phase-title">Q4</span>
+                </div>
+                <div class="phase-items">
+                    <div class="timeline-item pending">
+                        <div class="item-content">
+                            <div class="item-title">Commercial Operation Date</div>
+                            <div class="item-detail">Buyer milestone  ·  Post-sale</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-header">Application Status</h2>
+
+        <div class="status-card">
+            <div class="status-card-content">
+                <h4>ERCOT Interconnection Application (GINR)</h4>
+                <p>Generation Interconnection or Change Request — Phantom Hill 345 kV POI</p>
+            </div>
+            <span class="status-badge status-pending">Pending Submission</span>
+        </div>
+
+        <h2 class="section-header">GINR Application Package</h2>
+
+        <div class="info-box">
+            <p>Enerzinx is preparing the complete GINR technical package required for ERCOT application submission. This scope builds on the completed injection study and delivers the modeling and compliance documentation required for interconnection approval.</p>
+        </div>
+
+        <div class="qa-section">
+            <div class="qa-block">
+                <div class="qa-label response">Package Deliverables</div>
+                <div class="qa-content response">
+                    <p><strong>PSS®E Steady-State Models</strong> — Load flow and short circuit models for ERCOT planning studies<br>
+                    <strong>PSCAD EMT Models</strong> — Electromagnetic transient models for stability analysis<br>
+                    <strong>Reactive Power Capability Study</strong> — Demonstrates compliance with ERCOT reactive requirements<br>
+                    <strong>RARF/RIOO Forms</strong> — Resource Asset Registration Form and Resource Integration documentation<br>
+                    <strong>MQT Compliance</strong> — Model Quality Test validation for submitted models</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="takeaway-box">
+            <h4>Timeline</h4>
+            <p>GINR package preparation: <strong>6–7 weeks</strong> from OEM data receipt. Application submission targets <strong>Q1 2027 IA</strong> based on typical 10–12 month study timelines for straightforward interconnections.</p>
+        </div>
+
+        <h2 class="section-header">Independent Injection Study</h2>
+
+        <div class="info-box">
+            <p><strong>Injection Study: ✓ Complete</strong> — Independent third-party analysis evaluating grid capacity, system stability, and required transmission upgrades at the proposed point of interconnection. Conducted by Enerzinx to validate project feasibility and de-risk the interconnection pathway prior to formal ERCOT application.</p>
+        </div>
+
+        <div class="result-card">
+            <div class="result-label">Study Result</div>
+            <div class="result-value">Conductor Upgrades Only</div>
+            <div class="result-detail">No substation modifications required at 300 MW · 400 MW study in progress</div>
+        </div>
+
+        <div class="chat-thread">
+            <div class="chat-group outgoing">
+                <div class="chat-label outgoing">ReDewable</div>
+                <div class="chat-bubble outgoing">
+                    Based on the limiting elements identified in the injection study, are you able—at a high level—to indicate the types of upgrades typically required in similar situations (e.g., reconductoring vs. substation work), and comment on whether the upgrade profile appears typical for a project of this size and POI?
+                </div>
+            </div>
+            
+            <div class="chat-group incoming">
+                <div class="chat-label incoming">Enerzinx</div>
+                <div class="chat-bubble incoming">
+                    Based on the current study updates, the identified upgrade requirement is primarily <strong>Conductor upgrades</strong>. However, these results are sensitive to key assumptions, including system conditions and the assumed COD year and POI location, or system conditions are refined in subsequent study stages.
+                </div>
+            </div>
+        </div>
+
+        <div class="takeaway-box">
+            <h4>Key Takeaway</h4>
+            <p>Conductor-based upgrades are favorable compared to substation modifications—typically faster to permit, less complex to construct, and representing the lower end of transmission network upgrade cost estimates ($30M–$80M range for a 300 MW project).</p>
+        </div>
+
+        <div class="reassessment-note">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <p><strong>400 MW Reassessment In Progress</strong> — Enerzinx is currently re-running the injection study at 400 MW capacity with CATL equipment parameters to evaluate expanded project potential.</p>
+        </div>
+
+        <h2 class="section-header">Supporting Documents</h2>
+
+        <div class="documents-grid">
+            <a href="https://drive.google.com/file/d/1ydkVRYvrywvWFDm2Vg9jC7wIGJ8WY-HQ/view?usp=drive_link" target="_blank" rel="noopener" class="document-card">
+                <div class="document-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                    </svg>
+                </div>
+                <div class="document-content">
+                    <h5>Injection Study Report</h5>
+                    <p>Enerzinx · January 2026</p>
+                </div>
+            </a>
+
+            <a href="https://drive.google.com/file/d/1lHVosoLCeB8HQUCU1uW-JfR_kd8iJtX7/view?usp=drive_link" target="_blank" rel="noopener" class="document-card">
+                <div class="document-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                </div>
+                <div class="document-content">
+                    <h5>ERCOT GIS Report</h5>
+                    <p>December 2025</p>
+                </div>
+            </a>
+
+            <a href="https://docs.google.com/spreadsheets/d/1rbaG0wMPKtU_ocZk4hR_y0o7bnZ8w_8h/edit?usp=drive_link&ouid=107047806904710735304&rtpof=true&sd=true" target="_blank" rel="noopener" class="document-card">
+                <div class="document-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                        <line x1="3" y1="15" x2="21" y2="15"></line>
+                        <line x1="9" y1="3" x2="9" y2="21"></line>
+                        <line x1="15" y1="3" x2="15" y2="21"></line>
+                    </svg>
+                </div>
+                <div class="document-content">
+                    <h5>ERCOT Battery Identification Report</h5>
+                    <p>December 2025</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="footer-note">
+            Injection study complete January 2026. GINR application package in preparation. Final interconnection requirements will be determined through ERCOT's formal study process following application submission.
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-logo">ReDewable Energy Company</div>
+            <div class="footer-links">
+                <a href="https://www.linkedin.com/company/redewable" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="https://www.redewable.com/privacy">Privacy</a>
+                <span>© 2026</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Management
+        function getSystemTheme() {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function getCurrentTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) return savedTheme;
+            return getSystemTheme();
+        }
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            updateThemeIcons(theme);
+            localStorage.setItem('theme', theme);
+        }
+
+        function updateThemeIcons(theme) {
+            const isDark = theme === 'dark';
+            document.querySelector('.sun-icon').style.display = isDark ? 'block' : 'none';
+            document.querySelector('.moon-icon').style.display = isDark ? 'none' : 'block';
+            document.querySelector('.sun-icon-mobile').style.display = isDark ? 'block' : 'none';
+            document.querySelector('.moon-icon-mobile').style.display = isDark ? 'none' : 'block';
+        }
+
+        function toggleTheme() {
+            const current = getCurrentTheme();
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else {
+                const systemTheme = getSystemTheme();
+                updateThemeIcons(systemTheme);
+            }
+        }
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                updateThemeIcons(e.matches ? 'dark' : 'light');
+            }
+        });
+
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
+
+        document.addEventListener('DOMContentLoaded', initTheme);
+    </script>
+    <script>
+    (function() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        // Collect all dated elements (items and phases)
+        const timeline = document.getElementById('timeline');
+        const allDated = [];
+        
+        // Get items with dates
+        timeline.querySelectorAll('[data-date]').forEach(el => {
+            const date = new Date(el.dataset.date + 'T00:00:00');
+            allDated.push({ el, date, type: el.classList.contains('timeline-phase') ? 'phase' : 'item' });
+        });
+        
+        // Sort by date
+        allDated.sort((a, b) => a.date - b.date);
+        
+        // Find first future item and mark past items
+        let insertBefore = null;
+        
+        allDated.forEach(({ el, date, type }) => {
+            if (date <= today) {
+                // Mark as complete
+                if (type === 'item' && !el.classList.contains('milestone')) {
+                    el.classList.add('complete');
+                }
+            } else if (!insertBefore) {
+                // First future item
+                insertBefore = el;
+            }
+        });
+        
+        // Create Now marker
+        const nowMarker = document.createElement('div');
+        nowMarker.className = 'timeline-now';
+        nowMarker.innerHTML = '<span>Today</span>';
+        
+        // Insert before first future item, or at end if all complete
+        if (insertBefore) {
+            // If it's an item inside a phase, insert inside the phase-items container
+            if (insertBefore.classList.contains('timeline-item')) {
+                insertBefore.parentNode.insertBefore(nowMarker, insertBefore);
+            } else {
+                // It's a phase - insert before the phase
+                insertBefore.parentNode.insertBefore(nowMarker, insertBefore);
+            }
+        } else {
+            // All items in the past - append at end
+            timeline.appendChild(nowMarker);
+        }
+        
+        // Update phase markers based on item status
+        timeline.querySelectorAll('.timeline-phase').forEach(phase => {
+            const items = phase.querySelectorAll('.timeline-item');
+            const allComplete = Array.from(items).every(item => item.classList.contains('complete'));
+            const someComplete = Array.from(items).some(item => item.classList.contains('complete'));
+            
+            if (allComplete && items.length > 0) {
+                phase.classList.add('complete');
+                phase.classList.remove('in-progress', 'pending');
+                const marker = phase.querySelector('.phase-marker');
+                if (marker && !marker.classList.contains('milestone')) {
+                    marker.classList.add('complete');
+                    marker.classList.remove('in-progress', 'pending');
+                    marker.textContent = '✓';
+                }
+            } else if (someComplete) {
+                phase.classList.add('in-progress');
+                phase.classList.remove('complete', 'pending');
+            }
+        });
+    })();
+    </script>
+    <script src="/investor-gate.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ReDew Anson - 300MW battery energy storage system in Jones County, Texas. ERCOT West.">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/favicon.png">
+  <meta property="og:title" content="ReDew Anson | ReDewable Energy Company">
+  <meta property="og:description" content="300MW battery energy storage system in Jones County, Texas. ERCOT West.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.redewable.com/assets/og-image.png">
+  <title>ReDew Anson | ReDewable Energy Company</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--black:#0a0a0a;--white:#fff;--gray-50:#fafafa;--gray-100:#f5f5f5;--gray-200:#e5e5e5;--gray-300:#d4d4d4;--gray-400:#a3a3a3;--gray-500:#737373;--gray-600:#525252;--gray-700:#404040;--gray-800:#262626;--gray-900:#171717;--green:#22c55e;--yellow:#f59e0b;--brand-green:#1a3d2f;--font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;--max-width:1200px;--bg-primary:var(--white);--bg-secondary:var(--gray-50);--text-primary:var(--gray-800);--text-secondary:var(--gray-600);--text-muted:var(--gray-500);--border-color:var(--gray-200)}
+    @media(prefers-color-scheme:dark){:root{--bg-primary:#0a0a0a;--bg-secondary:#141414;--text-primary:#f5f5f5;--text-secondary:#a3a3a3;--text-muted:#737373;--border-color:#262626;--gray-50:#141414;--gray-200:#262626;--gray-800:#e5e5e5}}
+    html{scroll-behavior:smooth;overflow-x:hidden}
+    body{font-family:var(--font);font-size:16px;line-height:1.6;color:var(--text-primary);background:var(--bg-primary);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    ::selection{background:var(--brand-green);color:#fff}a{color:inherit;text-decoration:none}
+    
+    /* Header */
+    .header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border-color)}
+    @media(prefers-color-scheme:dark){.header{background:rgba(10,10,10,.95)}}
+    .header__inner{max-width:var(--max-width);margin:0 auto;padding:20px 24px;display:flex;justify-content:space-between;align-items:center}
+    .header__logo{display:flex;align-items:center;gap:10px;font-size:1.25rem;font-weight:700;letter-spacing:-.02em;color:var(--text-primary)}.header__logo img{height:28px;width:auto}
+    .header__nav{display:flex;gap:32px}.header__nav a{font-size:.9rem;font-weight:500;color:var(--text-secondary);transition:color .2s}.header__nav a:hover{color:var(--text-primary)}
+    
+    /* Burger Menu */
+    .header__burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:28px;height:28px;cursor:pointer;z-index:110}
+    .header__burger span{display:block;width:100%;height:2px;background:var(--text-primary);border-radius:2px;transition:all .3s ease}
+    .header__burger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+    .header__burger.active span:nth-child(2){opacity:0}
+    .header__burger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+    
+    /* Mobile Menu */
+    .mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg-primary);z-index:99;padding:120px 24px 40px;flex-direction:column;align-items:center;justify-content:flex-start;gap:32px;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease}
+    .mobile-menu.active{opacity:1;visibility:visible}
+    .mobile-menu a{font-size:1.5rem;font-weight:600;color:var(--text-primary);transition:color .2s}
+    .mobile-menu a:hover{color:var(--brand-green)}
+    
+    @media(max-width:768px){
+      .header__nav{display:none}
+      .header__burger{display:flex}
+      .mobile-menu{display:flex}
+    }
+    
+    /* Project Hero */
+    .project-hero{padding:160px 24px 80px;max-width:var(--max-width);margin:0 auto}
+    .project-hero__back{display:inline-flex;align-items:center;gap:8px;font-size:.9rem;font-weight:500;color:var(--text-muted);margin-bottom:32px;transition:color .2s}.project-hero__back:hover{color:var(--text-primary)}
+    .project-hero__header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;margin-bottom:24px}
+    .project-hero__title{font-size:clamp(2.5rem,6vw,4rem);font-weight:700;letter-spacing:-.03em;color:var(--text-primary)}
+    .project-hero__capacity{text-align:right}.project-hero__capacity-number{font-size:clamp(3rem,7vw,5rem);font-weight:700;color:var(--text-primary);line-height:1}.project-hero__capacity-unit{font-size:1rem;color:var(--text-muted);margin-top:4px}
+    .project-hero__location{font-size:1.25rem;color:var(--text-secondary)}
+    
+    /* Site Image */
+    .site-image{padding:0 24px 80px;max-width:var(--max-width);margin:0 auto}.site-image__container{border-radius:12px;overflow:hidden;border:1px solid var(--border-color)}.site-image__img{width:100%;height:auto;display:block}.site-image__caption{padding:16px 20px;background:var(--bg-secondary);font-size:.9rem;color:var(--text-muted)}
+    
+    /* Status Section */
+    .status-section{padding:0 24px 80px;max-width:var(--max-width);margin:0 auto}
+    .status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--border-color);border:1px solid var(--border-color);border-radius:12px;overflow:hidden}
+    .status-item{background:var(--bg-secondary);padding:28px 24px}.status-item__label{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:8px}.status-item__value{font-size:1.1rem;font-weight:600;color:var(--text-primary);display:flex;align-items:center;gap:10px}
+    .status-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}.status-dot--complete{background:var(--green)}.status-dot--progress{background:var(--yellow)}.status-dot--pending{background:var(--gray-300)}
+    
+    /* Details */
+    .details{background:var(--brand-green);color:#fff;padding:80px 24px}.details__inner{max-width:var(--max-width);margin:0 auto}.details__label{font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.6);margin-bottom:16px}.details__title{font-size:clamp(1.5rem,3vw,2rem);font-weight:700;margin-bottom:48px}
+    .details__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:48px}.details__group h3{font-size:.85rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.6);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.2)}
+    .details__list{list-style:none}.details__list li{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)}.details__list li:last-child{border-bottom:none}.details__list-label{color:rgba(255,255,255,.6)}.details__list-value{font-weight:600;text-align:right}
+    
+    /* Partners */
+    .partners{padding:80px 24px;max-width:var(--max-width);margin:0 auto}.partners__label{font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted);margin-bottom:16px}.partners__title{font-size:clamp(1.5rem,3vw,2rem);font-weight:700;margin-bottom:40px;color:var(--text-primary)}
+    .partners__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px}.partner-card{background:var(--bg-secondary);border:1px solid var(--border-color);border-radius:12px;padding:28px 24px}.partner-card__role{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:8px}.partner-card__name{font-size:1.1rem;font-weight:700;color:var(--text-primary)}
+    
+    /* CTA */
+    .cta{background:var(--bg-secondary);border-top:1px solid var(--border-color);padding:80px 24px}.cta__inner{max-width:var(--max-width);margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:32px}.cta__text h2{font-size:1.5rem;font-weight:700;margin-bottom:8px;color:var(--text-primary)}.cta__text p{color:var(--text-secondary)}.cta__buttons{display:flex;gap:16px;flex-wrap:wrap}
+    
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;font-size:.95rem;font-weight:600;border-radius:6px;transition:all .2s;cursor:pointer;border:none}.btn--primary{background:var(--brand-green);color:#fff}.btn--primary:hover{background:#152f24;transform:translateY(-1px)}.btn--secondary{background:var(--bg-primary);color:var(--text-primary);border:1px solid var(--border-color)}.btn--secondary:hover{background:var(--border-color)}.btn__arrow{transition:transform .2s}.btn:hover .btn__arrow{transform:translateX(3px)}
+    
+    /* Footer */
+    .footer{background:#0a0a0a;color:#737373;padding:40px 24px}.footer__inner{max-width:var(--max-width);margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}.footer__logo{font-weight:700;color:#fff}.footer__links{display:flex;gap:24px}.footer__links a{font-size:.9rem;transition:color .2s}.footer__links a:hover{color:#fff}
+    
+    /* Animations */
+    .fade-up{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}.fade-up.visible{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="/" class="header__logo">
+        <img src="/assets/favicon.png" alt="ReDewable">
+        ReDewable
+      </a>
+      <nav class="header__nav">
+        <a href="/#project">Project</a>
+        <a href="/#approach">Approach</a>
+        <a href="/team.html">Team</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <div class="header__burger" id="burger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Mobile Menu -->
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="/#project">Project</a>
+    <a href="/#approach">Approach</a>
+    <a href="/team.html">Team</a>
+    <a href="/#contact">Contact</a>
+  </nav>
+
+  <!-- Project Hero -->
+  <section class="project-hero">
+    <a href="/" class="project-hero__back">← Back to Home</a>
+    <div class="project-hero__header fade-up">
+      <div>
+        <h1 class="project-hero__title">ReDew Anson</h1>
+        <p class="project-hero__location">Jones County, Texas · ERCOT West</p>
+      </div>
+      <div class="project-hero__capacity">
+        <div class="project-hero__capacity-number">300</div>
+        <div class="project-hero__capacity-unit">MW Capacity</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Site Image -->
+  <section class="site-image">
+    <div class="site-image__container fade-up">
+      <img src="/assets/site-aerial.jpg" alt="ReDew Anson project site aerial view" class="site-image__img">
+      <p class="site-image__caption">Project site adjacent to 420 MW solar installation · Jones County, Texas</p>
+    </div>
+  </section>
+
+  <!-- Status Grid -->
+  <section class="status-section">
+    <div class="status-grid fade-up">
+      <div class="status-item">
+        <div class="status-item__label">Land Control</div>
+        <div class="status-item__value"><span class="status-dot status-dot--complete"></span>Secured</div>
+      </div>
+      <div class="status-item">
+        <div class="status-item__label">Environmental</div>
+        <div class="status-item__value"><span class="status-dot status-dot--complete"></span>Clear Pathway</div>
+      </div>
+      <div class="status-item">
+        <div class="status-item__label">Interconnection</div>
+        <div class="status-item__value"><span class="status-dot status-dot--progress"></span>In Progress</div>
+      </div>
+      <div class="status-item">
+        <div class="status-item__label">Engineering</div>
+        <div class="status-item__value"><span class="status-dot status-dot--progress"></span>In Progress</div>
+      </div>
+      <div class="status-item">
+        <div class="status-item__label">Target NTP</div>
+        <div class="status-item__value">Q1 2027</div>
+      </div>
+      <div class="status-item">
+        <div class="status-item__label">Status</div>
+        <div class="status-item__value"><span class="status-dot status-dot--progress"></span>Active Development</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project Details -->
+  <section class="details">
+    <div class="details__inner fade-up">
+      <p class="details__label">Project Specifications</p>
+      <h2 class="details__title">Built for ERCOT. Built for scale.</h2>
+      <div class="details__grid">
+        <div class="details__group">
+          <h3>Technical</h3>
+          <ul class="details__list">
+            <li><span class="details__list-label">Capacity</span><span class="details__list-value">300 MW</span></li>
+            <li><span class="details__list-label">Technology</span><span class="details__list-value">Tesla Megapack</span></li>
+            <li><span class="details__list-label">ISO Region</span><span class="details__list-value">ERCOT West</span></li>
+          </ul>
+        </div>
+        <div class="details__group">
+          <h3>Location</h3>
+          <ul class="details__list">
+            <li><span class="details__list-label">County</span><span class="details__list-value">Jones County, TX</span></li>
+            <li><span class="details__list-label">Adjacent Generation</span><span class="details__list-value">420 MW Solar</span></li>
+          </ul>
+        </div>
+        <div class="details__group">
+          <h3>Timeline</h3>
+          <ul class="details__list">
+            <li><span class="details__list-label">Development Start</span><span class="details__list-value">2025</span></li>
+            <li><span class="details__list-label">Target NTP</span><span class="details__list-value">Q1 2027</span></li>
+            <li><span class="details__list-label">Target COD</span><span class="details__list-value">2028</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partners -->
+  <section class="partners">
+    <div class="fade-up">
+      <p class="partners__label">Project Partners</p>
+      <h2 class="partners__title">Proven teams. Established relationships.</h2>
+      <div class="partners__grid">
+        <div class="partner-card">
+          <p class="partner-card__role">Engineering</p>
+          <p class="partner-card__name">ANS Engineering</p>
+        </div>
+        <div class="partner-card">
+          <p class="partner-card__role">Interconnection</p>
+          <p class="partner-card__name">Enerzinx</p>
+        </div>
+        <div class="partner-card">
+          <p class="partner-card__role">EPC</p>
+          <p class="partner-card__name">Selection Pending</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta__inner">
+      <div class="cta__text">
+        <h2>Interested in ReDew Anson?</h2>
+        <p>We're open to conversations about acquisition, partnership, and investment.</p>
+      </div>
+      <div class="cta__buttons">
+        <a href="mailto:tb@redewable.com?subject=ReDew%20Anson%20-%20Details%20Request" class="btn btn--primary">Request Details<span class="btn__arrow">→</span></a>
+        <a href="mailto:tb@redewable.com?subject=ReDew%20Anson%20-%20Investor%20Inquiry" class="btn btn--secondary">Investor Inquiries</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__logo">ReDewable Energy Company</div>
+      <div class="footer__links">
+        <a href="https://www.linkedin.com/company/redewable" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="/privacy.html">Privacy</a>
+        <span>© 2026</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Burger Menu
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+    
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        burger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+    
+    // Fade animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

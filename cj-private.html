@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta property="og:title" content="ReDewable Energy — Seed Investment Proposal">
+    <meta property="og:description" content="400MW Battery Energy Storage System — Confidential Investment Opportunity">
+    <meta property="og:image" content="assets/og-image.png">
+    <meta property="og:type" content="website">
+    <title>ReDewable Energy — Confidential</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <style>
+        :root {
+            --brand-green: #1a3d2f;
+            --brand-green-light: #2a5a45;
+            --black: #111111;
+            --gray: #666666;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+            --border: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.7;
+        }
+        
+        /* Password Screen */
+        .password-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--brand-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .password-box {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .password-box img {
+            width: 80px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .password-box h2 {
+            color: var(--brand-green);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .password-box p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .password-box input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        
+        .password-box input:focus {
+            outline: none;
+            border-color: var(--brand-green);
+        }
+        
+        .password-box button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--brand-green);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .password-box button:hover {
+            background: var(--brand-green-light);
+        }
+        
+        .password-error {
+            color: #c0392b;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        /* Main Content */
+        .content {
+            display: none;
+        }
+        
+        .content.visible {
+            display: block;
+        }
+        
+        /* Header */
+        header {
+            background: var(--brand-green);
+            color: var(--white);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .header-brand img {
+            height: 36px;
+        }
+        
+        .header-brand span {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .header-actions button {
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.15);
+            color: var(--white);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .header-actions button:hover {
+            background: rgba(255,255,255,0.25);
+        }
+        
+        /* Cover */
+        .cover {
+            background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-green-light) 100%);
+            color: var(--white);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .cover h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+        
+        .cover .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .cover .meta {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+        
+        .cover .confidential {
+            margin-top: 2rem;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 30px;
+            display: inline-block;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+        
+        .cover .target-date {
+            margin-top: 1.5rem;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        /* Site Image */
+        .site-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+        }
+        
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--brand-green-light);
+            z-index: 1001;
+            transition: width 0.1s ease-out;
+        }
+        
+        /* Table of Contents */
+        .toc {
+            background: var(--light-gray);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .toc h3 {
+            margin: 0 0 1rem 0;
+            font-size: 1rem;
+            color: var(--brand-green);
+        }
+        
+        .toc-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .toc-list li {
+            margin: 0;
+        }
+        
+        .toc-list a {
+            color: var(--black);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: block;
+            padding: 0.25rem 0;
+            border-bottom: 1px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        
+        .toc-list a:hover {
+            color: var(--brand-green);
+            border-bottom-color: var(--brand-green);
+        }
+        
+        /* Mobile Floating Actions */
+        .mobile-actions {
+            display: none;
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 100;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .mobile-actions button {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .mobile-actions button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* Main */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        section {
+            margin-bottom: 3rem;
+            page-break-inside: avoid;
+        }
+        
+        h2 {
+            color: var(--brand-green);
+            font-size: 1.75rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--brand-green);
+        }
+        
+        h3 {
+            color: var(--black);
+            font-size: 1.25rem;
+            margin: 1.75rem 0 1rem;
+        }
+        
+        h4 {
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin: 1.5rem 0 0.75rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            color: var(--black);
+        }
+        
+        ul, ol {
+            margin: 1rem 0 1.25rem 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.6rem;
+        }
+        
+        /* Summary Box */
+        .summary-box {
+            background: var(--light-gray);
+            border-left: 4px solid var(--brand-green);
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .summary-box .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.875rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .summary-box .row:last-child {
+            border-bottom: none;
+        }
+        
+        .summary-box .label {
+            font-weight: 600;
+            color: var(--brand-green);
+        }
+        
+        .summary-box .value {
+            font-weight: 500;
+            text-align: right;
+        }
+        
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+            page-break-inside: avoid;
+            min-width: 500px;
+        }
+        
+        th, td {
+            padding: 1rem 1.25rem;
+            text-align: left;
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+        
+        th {
+            background: var(--light-gray);
+            font-weight: 600;
+            color: var(--brand-green);
+        }
+        
+        tr:nth-child(even) {
+            background: #fafafa;
+        }
+        
+        .table-total td {
+            font-weight: 600;
+            background: var(--light-gray);
+        }
+        
+        /* View Doc Button */
+        .view-doc-btn {
+            display: inline-block;
+            padding: 0.4rem 0.75rem;
+            background: var(--brand-green);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        
+        .view-doc-btn:hover {
+            background: var(--brand-green-light);
+        }
+        
+        .view-doc-btn.coming-soon {
+            background: var(--gray);
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        /* Callout */
+        .callout {
+            background: linear-gradient(135deg, rgba(26, 61, 47, 0.8) 0%, rgba(42, 90, 69, 0.8) 100%);
+            color: var(--white);
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            margin: 2.5rem 0;
+            text-align: center;
+        }
+        
+        .callout h3 {
+            color: var(--white);
+            font-size: 1.25rem;
+            margin: 0 0 0.5rem 0;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+        
+        .callout .big-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin: 0.75rem 0;
+            line-height: 1.1;
+        }
+        
+        .callout .caption {
+            opacity: 0.85;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .callout .multiple {
+            margin-top: 1.25rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        /* Entity Structure Diagram */
+        .entity-diagram {
+            margin: 2rem 0;
+        }
+        
+        .entity-box {
+            border: 2px solid var(--brand-green);
+            border-radius: 12px;
+            padding: 1.5rem;
+            background: var(--white);
+        }
+        
+        .entity-box.foundation {
+            background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-green-light) 100%);
+            color: var(--white);
+        }
+        
+        .entity-box.foundation h4 {
+            color: var(--white);
+            opacity: 0.9;
+        }
+        
+        .entity-box h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 0 0.25rem 0;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        .entity-box h3 {
+            margin: 0 0 1rem 0;
+            font-size: 1.25rem;
+        }
+        
+        .entity-box.foundation h3 {
+            color: var(--white);
+        }
+        
+        .entity-box ul {
+            margin: 0;
+            padding-left: 1.25rem;
+        }
+        
+        .entity-box li {
+            margin-bottom: 0.4rem;
+            font-size: 0.95rem;
+        }
+        
+        .entity-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        /* Arrow connectors */
+        .connector-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+        }
+        
+        .connector-split .connector-branch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .connector-split .connector-branch .arrow {
+            font-size: 1.75rem;
+            color: var(--brand-green);
+            line-height: 1;
+        }
+        
+        .connector-split .connector-branch .label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 0.25rem;
+        }
+        
+        .connector-single {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+        
+        .connector-single .arrow {
+            font-size: 1.75rem;
+            color: var(--brand-green);
+            line-height: 1;
+        }
+        
+        .connector-single .label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 0.25rem;
+        }
+        
+        /* Info Box */
+        .info-box {
+            background: #e8f4f0;
+            border: 1px solid #b8d4c8;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .info-box h4 {
+            color: var(--brand-green);
+            margin: 0 0 0.75rem 0;
+            font-size: 1rem;
+        }
+        
+        .info-box p {
+            margin: 0;
+            font-size: 0.95rem;
+        }
+        
+        /* Risk Table */
+        .risk-table td:first-child {
+            width: 30%;
+            font-weight: 500;
+        }
+        
+        /* Contact */
+        .contact-section {
+            background: var(--light-gray);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .contact-section h3 {
+            color: var(--brand-green);
+            margin-bottom: 1rem;
+        }
+        
+        .contact-section p {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Disclaimer */
+        .disclaimer {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: #fff9e6;
+            border: 1px solid #f0e6cc;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--gray);
+            font-style: italic;
+        }
+        
+        /* Print Styles */
+        @media print {
+            .password-screen {
+                display: none !important;
+            }
+            
+            .content {
+                display: block !important;
+            }
+            
+            .progress-bar {
+                display: none !important;
+            }
+            
+            .mobile-actions {
+                display: none !important;
+            }
+            
+            .toc {
+                display: none !important;
+            }
+            
+            header {
+                position: relative;
+                background: var(--brand-green) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .header-actions {
+                display: none;
+            }
+            
+            .cover {
+                background: var(--brand-green) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            section {
+                page-break-inside: avoid;
+            }
+            
+            table {
+                page-break-inside: avoid;
+            }
+            
+            h2, h3, h4 {
+                page-break-after: avoid;
+            }
+            
+            .callout {
+                background: var(--brand-green) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .entity-box.foundation {
+                background: var(--brand-green) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            html, body {
+                overflow-x: hidden;
+            }
+            
+            .cover h1 {
+                font-size: 1.75rem;
+            }
+            
+            .cover .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            main {
+                padding: 1rem;
+            }
+            
+            table {
+                font-size: 0.85rem;
+                min-width: 100%;
+            }
+            
+            th, td {
+                padding: 0.75rem;
+            }
+            
+            .header-actions {
+                display: none;
+            }
+            
+            .summary-box .row {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+            
+            .summary-box .value {
+                text-align: left;
+            }
+            
+            /* Show mobile floating actions */
+            .mobile-actions {
+                display: flex;
+            }
+            
+            /* TOC single column on mobile */
+            .toc-list {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Mobile Entity Diagram */
+            .entity-diagram {
+                margin: 1.5rem 0;
+            }
+            
+            .connector-split {
+                padding: 1rem 0;
+            }
+            
+            .connector-split .connector-branch .arrow {
+                font-size: 1.25rem;
+            }
+            
+            .connector-split .connector-branch .label {
+                font-size: 0.7rem;
+            }
+            
+            .connector-single {
+                padding: 1rem 0;
+            }
+            
+            .entity-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.5rem;
+                position: relative;
+            }
+            
+            .entity-box {
+                padding: 1rem;
+                cursor: pointer;
+                position: relative;
+            }
+            
+            .entity-box h4 {
+                font-size: 0.6rem;
+                margin-bottom: 0.15rem;
+            }
+            
+            .entity-box h3 {
+                font-size: 0.85rem;
+                margin-bottom: 0;
+                padding-right: 1.25rem;
+            }
+            
+            .entity-box ul {
+                display: none;
+            }
+            
+            .entity-box::after {
+                content: '+';
+                position: absolute;
+                right: 0.75rem;
+                top: 0.75rem;
+                font-size: 1.25rem;
+                color: var(--brand-green);
+                font-weight: 300;
+                line-height: 1;
+            }
+            
+            .entity-box.foundation::after {
+                color: rgba(255,255,255,0.7);
+            }
+            
+            .entity-box.expanded::after {
+                content: '−';
+            }
+            
+            .entity-box li {
+                font-size: 0.8rem;
+                margin-bottom: 0.3rem;
+            }
+            
+            /* Expanded state - full width overlay */
+            .entity-row .entity-box.expanded {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                z-index: 10;
+                background: var(--white);
+                border-radius: 12px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            }
+            
+            .entity-row .entity-box.expanded h3 {
+                font-size: 1rem;
+            }
+            
+            .entity-row .entity-box.expanded ul {
+                display: block;
+                margin-top: 0.75rem;
+            }
+            
+            /* Blur overlay when expanded */
+            .entity-diagram.has-expanded::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(255, 255, 255, 0.7);
+                backdrop-filter: blur(3px);
+                -webkit-backdrop-filter: blur(3px);
+                z-index: 5;
+                pointer-events: none;
+            }
+            
+            .entity-diagram.has-expanded .entity-box.expanded {
+                z-index: 15;
+            }
+            
+            /* Keep row height when one is expanded */
+            .entity-row {
+                min-height: 80px;
+            }
+            
+            /* Foundation box (not in row) */
+            .entity-diagram > .entity-box.foundation {
+                position: relative;
+            }
+            
+            .entity-diagram > .entity-box.foundation.expanded ul {
+                display: block;
+                margin-top: 0.75rem;
+            }
+            
+            /* Bottom SPV box (not in row) */
+            .entity-diagram > .entity-box:last-child {
+                position: relative;
+            }
+            
+            .entity-diagram > .entity-box:last-child.expanded ul {
+                display: block;
+                margin-top: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Screen -->
+    <div class="password-screen" id="passwordScreen">
+        <div class="password-box">
+            <img src="assets/logo-mark.png" alt="ReDewable">
+            <h2>Confidential Document</h2>
+            <p>Enter the access code to view this proposal</p>
+            <input type="password" id="passwordInput" placeholder="Access Code" autocomplete="off">
+            <button onclick="checkPassword()">Access Document</button>
+            <p class="password-error" id="passwordError">Incorrect access code</p>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="content" id="mainContent">
+        <!-- Progress Bar -->
+        <div class="progress-bar" id="progressBar"></div>
+        
+        <!-- Mobile Floating Actions -->
+        <div class="mobile-actions" id="mobileActions">
+            <button onclick="window.print()" title="Print">🖨️</button>
+        </div>
+        
+        <header>
+            <div class="header-brand">
+                <img src="assets/logo-mark.png" alt="ReDewable">
+                <span>ReDewable Energy</span>
+            </div>
+            <div class="header-actions">
+                <button onclick="window.print()">🖨️ Print</button>
+                <button onclick="saveAsPDF()">💾 Save PDF</button>
+            </div>
+        </header>
+        
+        <!-- Cover -->
+        <div class="cover">
+            <h1>REDEWABLE ENERGY</h1>
+            <div class="subtitle">Seed Investment Proposal</div>
+            <div class="meta">
+                400MW Battery Energy Storage System<br>
+                Jones County, Texas — ERCOT West
+            </div>
+            <div class="target-date"><strong>Target Launch:</strong> January 1, 2026</div>
+            <div class="confidential">CONFIDENTIAL — DECEMBER 2025</div>
+        </div>
+        
+        <!-- Site Image -->
+        <img src="assets/site-aerial.jpg" alt="ReDew Anson Site — Jones County, Texas" class="site-image">
+        
+        <main>
+            <!-- Table of Contents -->
+            <nav class="toc">
+                <h3>Contents</h3>
+                <ul class="toc-list">
+                    <li><a href="#executive-summary">Executive Summary</a></li>
+                    <li><a href="#the-asset">The Asset</a></li>
+                    <li><a href="#legal-structure">Legal & Entity Structure</a></li>
+                    <li><a href="#your-investment">Your Investment</a></li>
+                    <li><a href="#fund-flow">Fund Flow & Budget</a></li>
+                    <li><a href="#exit-waterfall">Exit Waterfall</a></li>
+                    <li><a href="#regulatory">Regulatory Compliance</a></li>
+                    <li><a href="#protections">Investor Protections</a></li>
+                    <li><a href="#risks">Risk Factors</a></li>
+                    <li><a href="#timeline">Timeline</a></li>
+                    <li><a href="#contracts">Existing Contracts</a></li>
+                    <li><a href="#the-ask">The Ask</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Executive Summary -->
+            <section id="executive-summary">
+                <h2>Executive Summary</h2>
+                <p>ReDewable Energy is raising seed capital to fund the legal infrastructure and development of a 400MW utility-scale battery energy storage system in ERCOT, Texas.</p>
+                
+                <div class="summary-box">
+                    <div class="row">
+                        <span class="label">Investment Amount</span>
+                        <span class="value">$200,000</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Your Equity</span>
+                        <span class="value">15% net exit equity in ReDew Anson, LLC</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Token Allocation</span>
+                        <span class="value">2% of $RDW total supply</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Governance</span>
+                        <span class="value">Seat on Foundation Treasury Council (1 of 5)</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Projected Exit</span>
+                        <span class="value">$40M+ at NTP — 12-18 months</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Your Projected Return</span>
+                        <span class="value">$6M+ (30x multiple)</span>
+                    </div>
+                </div>
+                
+                <p>Your seed capital funds the legal structure, NFT platform development, and operations required to raise $1M from the broader validator community. Upon successful NFT raise and project development, the project will be sold to an institutional buyer (ENGIE, NextEra, Intersect Power, etc.) at Notice to Proceed (NTP).</p>
+            </section>
+            
+            <!-- The Asset -->
+            <section id="the-asset">
+                <h2>The Asset</h2>
+                <h3>ReDew Anson — Jones County, Texas</h3>
+                
+                <table>
+                    <tr>
+                        <th>Specification</th>
+                        <th>Detail</th>
+                    </tr>
+                    <tr>
+                        <td>Capacity</td>
+                        <td>400 MW / 1,600 MWh</td>
+                    </tr>
+                    <tr>
+                        <td>Location</td>
+                        <td>Jones County, Texas</td>
+                    </tr>
+                    <tr>
+                        <td>ISO Region</td>
+                        <td>ERCOT West</td>
+                    </tr>
+                    <tr>
+                        <td>Technology</td>
+                        <td><a href="https://www.tesla.com/megapack" target="_blank" style="color: var(--brand-green);">Tesla Megapack</a></td>
+                    </tr>
+                    <tr>
+                        <td>Adjacent Infrastructure</td>
+                        <td>420 MW solar farm (ENGIE owned & operated)</td>
+                    </tr>
+                    <tr>
+                        <td>Land Status</td>
+                        <td>Under control agreement (45 acres)</td>
+                    </tr>
+                </table>
+                
+                <h4>Why This Site</h4>
+                <ul>
+                    <li><strong>Generation-adjacent:</strong> Co-located with ENGIE's 420MW operating solar farm</li>
+                    <li><strong>Grid access:</strong> Substation proximity enables efficient interconnection</li>
+                    <li><strong>ERCOT West:</strong> High-value congestion zone with strong arbitrage economics</li>
+                    <li><strong>Environmental:</strong> Clear pathway — no wetlands, endangered species, or cultural resources</li>
+                </ul>
+                
+                <h4>Current Project Status</h4>
+                <table>
+                    <tr>
+                        <th>Milestone</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td>Land Control</td>
+                        <td>✓ Secured (Clearleaf Hills, LTD)</td>
+                    </tr>
+                    <tr>
+                        <td>Technology</td>
+                        <td>✓ <a href="https://www.tesla.com/megapack" target="_blank" style="color: var(--brand-green);">Tesla Megapack</a></td>
+                    </tr>
+                    <tr>
+                        <td>Interconnection</td>
+                        <td>✓ Engaged (<a href="https://enerzinx.com/" target="_blank" style="color: var(--brand-green);">Enerzinx</a>)</td>
+                    </tr>
+                    <tr>
+                        <td>Engineering</td>
+                        <td>✓ Engaged (<a href="https://www.ans-team.com/" target="_blank" style="color: var(--brand-green);">ANS Engineering</a>, fka FastGrid)</td>
+                    </tr>
+                    <tr>
+                        <td>PACE Financing</td>
+                        <td>✓ Engaged (<a href="https://www.pacehouston.com/" target="_blank" style="color: var(--brand-green);">PACE Houston</a>)</td>
+                    </tr>
+                    <tr>
+                        <td>Environmental</td>
+                        <td>✓ Clear pathway</td>
+                    </tr>
+                    <tr>
+                        <td>Target NTP</td>
+                        <td>Q1 2027</td>
+                    </tr>
+                    <tr>
+                        <td>Target COD</td>
+                        <td>2028</td>
+                    </tr>
+                </table>
+            </section>
+            
+            <!-- Legal Structure -->
+            <section id="legal-structure">
+                <h2>Legal & Entity Structure</h2>
+                <p>We are implementing an industry-standard structure used by successful DePIN projects including Helium, Grass, Filecoin, and ENS. This structure provides regulatory clarity, investor protection, and institutional credibility.</p>
+                
+                <h3>Entity Architecture</h3>
+                
+                <div class="entity-diagram">
+                    <!-- Foundation -->
+                    <div class="entity-box foundation">
+                        <h4>Cayman Islands</h4>
+                        <h3>ReDewable Foundation Ltd.</h3>
+                        <ul>
+                            <li>Orphan structure (no shareholders)</li>
+                            <li>5-member board with independent directors</li>
+                            <li>Supervised by Cayman professional services firm</li>
+                            <li>Holds: Protocol IP, $RDW tokens, treasury, 40% project equity</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Split connectors -->
+                    <div class="connector-split">
+                        <div class="connector-branch">
+                            <span class="arrow">↓</span>
+                            <span class="label">100% owns</span>
+                        </div>
+                        <div class="connector-branch">
+                            <span class="arrow">↓</span>
+                            <span class="label">Service Agreement</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Middle Row -->
+                    <div class="entity-row">
+                        <div class="entity-box">
+                            <h4>British Virgin Islands</h4>
+                            <h3>ReDew NFT Ltd.</h3>
+                            <ul>
+                                <li>Issues Validator License NFTs</li>
+                                <li>Receives SOL proceeds</li>
+                                <li>Remits funds to Foundation</li>
+                            </ul>
+                        </div>
+                        <div class="entity-box">
+                            <h4>Delaware LLC</h4>
+                            <h3>ReDewable Energy Co. LLC</h3>
+                            <ul>
+                                <li>Service provider to Foundation</li>
+                                <li>Manages ReDew Anson LLC</li>
+                                <li>Holds 35% project equity</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Single connector -->
+                    <div class="connector-single">
+                        <span class="arrow">↓</span>
+                        <span class="label">Manager</span>
+                    </div>
+                    
+                    <!-- SPV -->
+                    <div class="entity-box">
+                        <h4>Texas SPV</h4>
+                        <h3>ReDew Anson, LLC</h3>
+                        <ul>
+                            <li>Holds: Land rights, project contracts, development assets</li>
+                            <li>Equity: Foundation 40% | ReDewable 35% | Seed Investors 25%</li>
+                            <li>Exit: Sale to institutional buyer at NTP</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3>Why This Structure</h3>
+                <table>
+                    <tr>
+                        <th>Element</th>
+                        <th>Purpose</th>
+                        <th>Your Protection</th>
+                    </tr>
+                    <tr>
+                        <td>Cayman Foundation</td>
+                        <td>Industry standard for DAOs; orphan structure</td>
+                        <td>Independent governance; not a shell</td>
+                    </tr>
+                    <tr>
+                        <td>BVI Issuer</td>
+                        <td>Conducts NFT sale outside Cayman VASP</td>
+                        <td>Faster, cheaper, regulatory clarity</td>
+                    </tr>
+                    <tr>
+                        <td>Independent Directors</td>
+                        <td>2+ non-founder directors on board</td>
+                        <td>Real governance, not founder-controlled</td>
+                    </tr>
+                    <tr>
+                        <td>Supervisor</td>
+                        <td>Ensures constitution is followed</td>
+                        <td>Additional oversight layer</td>
+                    </tr>
+                    <tr>
+                        <td>Texas/Delaware LLCs</td>
+                        <td>Your investment flows here</td>
+                        <td>US courts; familiar jurisdiction</td>
+                    </tr>
+                    <tr>
+                        <td>Service Agreements</td>
+                        <td>Arm's length contracts between entities</td>
+                        <td>Clean fund flows; defensible</td>
+                    </tr>
+                </table>
+            </section>
+            
+            <!-- Your Investment -->
+            <section id="your-investment">
+                <h2>Your Investment</h2>
+                
+                <h3>Seed Terms</h3>
+                <table>
+                    <tr>
+                        <th>Term</th>
+                        <th>Detail</th>
+                    </tr>
+                    <tr>
+                        <td>Investment Amount</td>
+                        <td>$200,000</td>
+                    </tr>
+                    <tr>
+                        <td>Equity Received</td>
+                        <td>15% of ReDew Anson, LLC (net exit equity)</td>
+                    </tr>
+                    <tr>
+                        <td>Token Allocation</td>
+                        <td>2% of $RDW total supply (24-month vest, 6-month cliff)</td>
+                    </tr>
+                    <tr>
+                        <td>Governance</td>
+                        <td>Seat on Foundation Treasury Council (1 of 5 board seats)</td>
+                    </tr>
+                    <tr>
+                        <td>Security Type</td>
+                        <td>LLC membership units — Reg D 506(c) exempt</td>
+                    </tr>
+                </table>
+                
+                <h4>What "Net Exit Equity" Means</h4>
+                <p>Your 15% is calculated on net proceeds after: (1) return of capital to all equity holders, (2) repayment of any project-level debt, and (3) transaction costs. On a $40M exit with minimal debt, net proceeds could be $38M+, making your 15% worth <strong>$5.7M+</strong>.</p>
+                
+                <h4>Token Allocation</h4>
+                <p>The $RDW token is the governance and utility token for the ReDewable protocol. Your 2% allocation vests over 24 months with a 6-month cliff. This is separate from your equity — additional upside beyond this single project if the protocol scales.</p>
+                
+                <h4>Treasury Council Seat</h4>
+                <p>As a seed investor, you receive one of five seats on the Foundation board. You will vote on treasury allocations >$50K, approve major protocol decisions, have visibility into all fund flows, and hold fiduciary duty to the Foundation.</p>
+            </section>
+            
+            <!-- Fund Flow -->
+            <section id="fund-flow">
+                <h2>Fund Flow & Budget</h2>
+                
+                <h3>Tranched Funding Structure</h3>
+                <p>Your capital is released in two tranches to protect your investment:</p>
+                
+                <h4>Tranche 1: $75,000</h4>
+                <p>Released upon signed term sheet. Used for legal foundation and early operations.</p>
+                
+                <table>
+                    <tr>
+                        <th>Use</th>
+                        <th>Amount</th>
+                    </tr>
+                    <tr>
+                        <td>Cayman Foundation setup (Ogier or equivalent)</td>
+                        <td>$30,000</td>
+                    </tr>
+                    <tr>
+                        <td>BVI Company setup</td>
+                        <td>$5,000</td>
+                    </tr>
+                    <tr>
+                        <td>US Securities Legal (Reg D package)</td>
+                        <td>$20,000</td>
+                    </tr>
+                    <tr>
+                        <td>Development Management Fee (Months 1-2)</td>
+                        <td>$20,000</td>
+                    </tr>
+                    <tr class="table-total">
+                        <td><strong>Tranche 1 Total</strong></td>
+                        <td><strong>$75,000</strong></td>
+                    </tr>
+                </table>
+                
+                <h4>Gate: Tranche 2 Release</h4>
+                <p>Tranche 2 releases when the following are complete:</p>
+                <ul>
+                    <li>Cayman Foundation registered and operational</li>
+                    <li>BVI company formed</li>
+                    <li>Service agreements executed</li>
+                    <li>Your board seat active</li>
+                    <li>Reg D documents ready for signature</li>
+                </ul>
+                
+                <h4>Tranche 2: $125,000</h4>
+                <p>Released upon legal structure completion. Used for build, launch, and operations.</p>
+                
+                <table>
+                    <tr>
+                        <th>Use</th>
+                        <th>Amount</th>
+                    </tr>
+                    <tr>
+                        <td>Development Management Fee (Months 3-6)</td>
+                        <td>$40,000</td>
+                    </tr>
+                    <tr>
+                        <td>NFT Development (smart contract, mint site, audit)</td>
+                        <td>$25,000</td>
+                    </tr>
+                    <tr>
+                        <td>Validator Backend (dashboard, API, on-chain program)</td>
+                        <td>$40,000</td>
+                    </tr>
+                    <tr>
+                        <td>Infrastructure (site hardware, cloud, integrations)</td>
+                        <td>$12,000</td>
+                    </tr>
+                    <tr>
+                        <td>Marketing & Launch</td>
+                        <td>$8,000</td>
+                    </tr>
+                    <tr class="table-total">
+                        <td><strong>Tranche 2 Total</strong></td>
+                        <td><strong>$125,000</strong></td>
+                    </tr>
+                </table>
+                
+                <h4>Development Management Fee</h4>
+                <p>The founder (Talor Byington) is also the primary developer of this project — identifying the site, negotiating land control, engaging vendors, managing engineering, and executing the NFT platform build. The Development Management Fee compensates for this active development work, not passive management.</p>
+            </section>
+            
+            <!-- Exit Waterfall -->
+            <section id="exit-waterfall">
+                <h2>Exit Waterfall</h2>
+                <p>When ReDew Anson sells to an institutional buyer at NTP:</p>
+                
+                <h4>Example: $40M Exit</h4>
+                <table>
+                    <tr>
+                        <th>Step</th>
+                        <th>Amount</th>
+                    </tr>
+                    <tr>
+                        <td>Gross Proceeds</td>
+                        <td>$40,000,000</td>
+                    </tr>
+                    <tr>
+                        <td>Less: Transaction Costs (~5%)</td>
+                        <td>($2,000,000)</td>
+                    </tr>
+                    <tr class="table-total">
+                        <td><strong>Net Proceeds</strong></td>
+                        <td><strong>$38,000,000</strong></td>
+                    </tr>
+                </table>
+                
+                <h4>Distribution of Net Proceeds</h4>
+                <table>
+                    <tr>
+                        <th>Equity Holder</th>
+                        <th>Ownership</th>
+                        <th>Proceeds</th>
+                    </tr>
+                    <tr>
+                        <td>Cayman Foundation (DAO Treasury)</td>
+                        <td>40%</td>
+                        <td>$15,200,000</td>
+                    </tr>
+                    <tr>
+                        <td>ReDewable Energy LLC (Founder)</td>
+                        <td>35%</td>
+                        <td>$13,300,000</td>
+                    </tr>
+                    <tr>
+                        <td>Seed Investors (You)</td>
+                        <td>25%</td>
+                        <td>$9,500,000</td>
+                    </tr>
+                </table>
+                
+                <div class="callout">
+                    <h3>Your Return</h3>
+                    <div class="big-number">$5,700,000</div>
+                    <div class="caption">15% of net proceeds on $40M exit</div>
+                    <div class="multiple"><strong>28.5x</strong> multiple on invested capital</div>
+                </div>
+            </section>
+            
+            <!-- Regulatory Compliance -->
+            <section id="regulatory">
+                <h2>Regulatory Compliance</h2>
+                
+                <h3>NFT/Token Structure — Utility, Not Security</h3>
+                <p>The Validator License NFT is structured as a utility token, not a security. This enables broad participation — <strong>anyone globally can purchase an NFT</strong>, regardless of accreditation status.</p>
+                
+                <div class="info-box">
+                    <h4>What is the Howey Test?</h4>
+                    <p>The Howey Test is a legal test established by the U.S. Supreme Court (SEC v. W.J. Howey Co., 1946) to determine whether a transaction qualifies as an "investment contract" — and therefore a security subject to SEC regulation. If all four prongs are met, the asset is a security and must be registered with the SEC or sold under an exemption. By structuring our NFT to fail key prongs, we avoid securities classification entirely.</p>
+                </div>
+                
+                <h4>Howey Test Analysis</h4>
+                <table>
+                    <tr>
+                        <th>Howey Prong</th>
+                        <th>Our Position</th>
+                        <th>Analysis</th>
+                    </tr>
+                    <tr>
+                        <td>1. Investment of money</td>
+                        <td>Yes</td>
+                        <td>Buyers pay SOL — this prong is met</td>
+                    </tr>
+                    <tr>
+                        <td>2. Common enterprise</td>
+                        <td>Mitigated</td>
+                        <td>Decentralized validator network; rewards vary by individual participation</td>
+                    </tr>
+                    <tr>
+                        <td>3. Expectation of profits</td>
+                        <td><strong>NO</strong></td>
+                        <td>Rewards are compensation for work performed (attestations), not passive investment returns</td>
+                    </tr>
+                    <tr>
+                        <td>4. Efforts of others</td>
+                        <td><strong>NO</strong></td>
+                        <td>Validators must actively participate monthly; rewards depend on their own work</td>
+                    </tr>
+                </table>
+                
+                <div class="info-box">
+                    <h4>Why This Matters: Open Access</h4>
+                    <p>Because the NFT is <strong>not a security</strong>, it can be sold to anyone — no accreditation required, no income verification, no net worth checks. A teacher in Texas, a developer in Germany, or a student in Japan can all participate equally. This is the power of proper token structuring: regulatory clarity enables global, permissionless participation.</p>
+                </div>
+                
+                <h4>Key Protections</h4>
+                <ul>
+                    <li><strong>Active participation required:</strong> Monthly attestations are mandatory to earn rewards</li>
+                    <li><strong>Work-based rewards:</strong> Earnings explicitly tied to validator activity, not passive holding</li>
+                    <li><strong>No profit language:</strong> All marketing emphasizes utility and participation, never investment returns</li>
+                    <li><strong>Clear disclaimers:</strong> Terms of service and purchase flow include prominent risk disclosures</li>
+                    <li><strong>Helium precedent:</strong> SEC dropped its case against Helium (April 2025) with prejudice, establishing that hardware + token rewards for network participation ≠ securities</li>
+                </ul>
+                
+                <h3>Your Seed Investment — Properly Exempt Security</h3>
+                <p>Unlike the NFT, your $200K investment <strong>IS</strong> a security (LLC equity) — and we're treating it as such with full compliance:</p>
+                
+                <table>
+                    <tr>
+                        <th>Requirement</th>
+                        <th>How We Comply</th>
+                    </tr>
+                    <tr>
+                        <td>Exemption</td>
+                        <td>Reg D 506(c) — accredited investors only</td>
+                    </tr>
+                    <tr>
+                        <td>Documentation</td>
+                        <td>Full subscription agreement, operating agreement amendment</td>
+                    </tr>
+                    <tr>
+                        <td>Verification</td>
+                        <td>Accredited investor verification (income/net worth)</td>
+                    </tr>
+                    <tr>
+                        <td>Filing</td>
+                        <td>Form D filed with SEC within 15 days of closing</td>
+                    </tr>
+                    <tr>
+                        <td>Disclosure</td>
+                        <td>Complete risk disclosure in subscription documents</td>
+                    </tr>
+                </table>
+            </section>
+            
+            <!-- Investor Protections -->
+            <section id="protections">
+                <h2>Investor Protections</h2>
+                
+                <h3>Tranched Funding</h3>
+                <p>Your capital is released in two tranches. You're not releasing $200K into a void — you see the legal structure built before the majority of your capital deploys.</p>
+                
+                <h3>Board Seat</h3>
+                <p>Your Treasury Council seat gives you:</p>
+                <ul>
+                    <li><strong>Visibility:</strong> See all fund flows, invoices, treasury movements</li>
+                    <li><strong>Voice:</strong> Vote on allocations >$50K, major decisions</li>
+                    <li><strong>Veto power:</strong> Supermajority (4 of 5) required for large disbursements</li>
+                    <li><strong>Minutes:</strong> All board meetings documented</li>
+                </ul>
+                
+                <h3>Operating Agreement Rights</h3>
+                <p>As a member of ReDew Anson, LLC, you have:</p>
+                <ul>
+                    <li><strong>Information rights:</strong> Quarterly financials, project updates</li>
+                    <li><strong>Consent rights:</strong> Major decisions (sale, financing, etc.)</li>
+                    <li><strong>Distribution rights:</strong> Pro-rata share per waterfall</li>
+                    <li><strong>Transfer rights:</strong> Subject to right of first refusal</li>
+                </ul>
+                
+                <h3>Exit Alignment</h3>
+                <p>The structure aligns everyone's incentives. You want the project to sell at the highest price. The founder wants the same (35% equity). The Foundation wants the same (40% to benefit validators). No one can extract value without the project succeeding.</p>
+            </section>
+            
+            <!-- Risk Factors -->
+            <section id="risks">
+                <h2>Risk Factors</h2>
+                <p>Investment in early-stage energy development involves significant risk:</p>
+                
+                <table class="risk-table">
+                    <tr>
+                        <th>Risk</th>
+                        <th>Mitigation</th>
+                    </tr>
+                    <tr>
+                        <td>NFT sale underperforms</td>
+                        <td>Land asset retains value; can pursue traditional financing; your equity secured by real asset</td>
+                    </tr>
+                    <tr>
+                        <td>Regulatory action on NFT</td>
+                        <td>Utility token structure; active participation model; Helium precedent; Reg D wrapper for US buyers</td>
+                    </tr>
+                    <tr>
+                        <td>Project delays</td>
+                        <td>ERCOT timelines are standard; experienced engineering/EPC partners; buffer in timeline</td>
+                    </tr>
+                    <tr>
+                        <td>Market conditions</td>
+                        <td>ERCOT battery demand is structural (grid reliability); not dependent on single off-taker</td>
+                    </tr>
+                    <tr>
+                        <td>Execution risk</td>
+                        <td>Year of development work complete; vendor relationships established; board visibility</td>
+                    </tr>
+                    <tr>
+                        <td>Founder performance</td>
+                        <td>Your board seat enables monitoring; tranched funding limits exposure; legal structure limits unilateral control</td>
+                    </tr>
+                </table>
+            </section>
+            
+            <!-- Timeline -->
+            <section id="timeline">
+                <h2>Timeline</h2>
+                
+                <table>
+                    <tr>
+                        <th>Period</th>
+                        <th>Milestones</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Jan 1, 2026</strong></td>
+                        <td><strong>TARGET START</strong> — Close seed; execute subscription agreement; Tranche 1 released</td>
+                    </tr>
+                    <tr>
+                        <td>Week 1-2</td>
+                        <td>Engage Cayman counsel (Ogier); begin Foundation formation</td>
+                    </tr>
+                    <tr>
+                        <td>Week 3-4</td>
+                        <td>Cayman Foundation formed; BVI company formed; service agreements executed; your board seat active; <strong>GATE: Tranche 2 released</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Week 5-10</td>
+                        <td>NFT smart contract development; validator dashboard development; smart contract audit; community building</td>
+                    </tr>
+                    <tr>
+                        <td>Week 11-14</td>
+                        <td>Soft launch (whitelist); public NFT sale; dashboard live; first attestation cycle — <strong>Q1 2026 LAUNCH</strong></td>
+                    </tr>
+                    <tr>
+                        <td>2026-2027</td>
+                        <td>Land acquisition; full engineering; interconnection completion; permitting</td>
+                    </tr>
+                    <tr>
+                        <td>Q1 2027</td>
+                        <td><strong>NTP — Project sale process; institutional buyer due diligence; EXIT</strong></td>
+                    </tr>
+                </table>
+            </section>
+            
+            <!-- Existing Contracts -->
+            <section id="contracts">
+                <h2>Existing Contracts & Proposals</h2>
+                <p>The following agreements are executed or in hand and available for review:</p>
+                
+                <table>
+                    <tr>
+                        <th>Partner</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Document</th>
+                    </tr>
+                    <tr>
+                        <td>Clearleaf Hills, LTD</td>
+                        <td>Land Control</td>
+                        <td>✓ Verbal agreement on updated terms</td>
+                        <td><span class="view-doc-btn coming-soon">Coming Soon</span></td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://enerzinx.com/" target="_blank" style="color: var(--brand-green);">Enerzinx</a></td>
+                        <td>Interconnection</td>
+                        <td>✓ Study contract signed; proposal in hand</td>
+                        <td><a href="docs/enerzinx-proposal.pdf" target="_blank" class="view-doc-btn">View Proposal</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://www.ans-team.com/" target="_blank" style="color: var(--brand-green);">ANS Engineering</a><br><small style="color: var(--gray);">(fka FastGrid)</small></td>
+                        <td>Engineering</td>
+                        <td>✓ Full proposal received</td>
+                        <td><a href="docs/ans-proposal.pdf" target="_blank" class="view-doc-btn">View Proposal</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://www.pacehouston.com/" target="_blank" style="color: var(--brand-green);">PACE Houston</a></td>
+                        <td>PACE Financing</td>
+                        <td>✓ Proposal in hand</td>
+                        <td><a href="docs/pace-proposal.pdf" target="_blank" class="view-doc-btn">View Proposal</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://www.tesla.com/megapack" target="_blank" style="color: var(--brand-green);">Tesla Megapack</a></td>
+                        <td>Battery Manufacturer</td>
+                        <td>✓ Selected technology</td>
+                        <td>—</td>
+                    </tr>
+                </table>
+            </section>
+            
+            <!-- The Ask -->
+            <section id="the-ask">
+                <h2>The Ask</h2>
+                <p>I am seeking <strong>$200,000</strong> in seed capital in exchange for:</p>
+                
+                <ol>
+                    <li><strong>15% net exit equity</strong> in ReDew Anson, LLC</li>
+                    <li><strong>2% of $RDW token allocation</strong> (24-month vest, 6-month cliff)</li>
+                    <li><strong>Seat on the Foundation Treasury Council</strong> (1 of 5 board seats)</li>
+                </ol>
+                
+                <p><strong>Structured as:</strong></p>
+                <ul>
+                    <li>Tranche 1: $75,000 upon signed term sheet</li>
+                    <li>Tranche 2: $125,000 upon legal structure completion</li>
+                </ul>
+                
+                <div class="contact-section">
+                    <h3>Next Steps</h3>
+                    <p>If you're ready to proceed, I will send the formal subscription agreement for your review.</p>
+                    <p style="margin-top: 1.5rem;"><strong>Talor Byington</strong></p>
+                    <p>Founder & CEO, ReDewable Energy Company, LLC</p>
+                    <p style="margin-top: 1rem;">
+                        Email: <a href="mailto:tb@redewable.com" style="color: var(--brand-green);">tb@redewable.com</a><br>
+                        Website: <a href="https://redewable.com" target="_blank" style="color: var(--brand-green);">redewable.com</a><br>
+                        NFT Platform: <a href="https://redewables.com" target="_blank" style="color: var(--brand-green);">redewables.com</a>
+                    </p>
+                </div>
+            </section>
+            
+            <!-- Disclaimer -->
+            <div class="disclaimer">
+                <strong>DISCLAIMER:</strong> This document is for informational purposes only and does not constitute an offer to sell or solicitation of an offer to buy any securities. Any such offer will be made only pursuant to a formal subscription agreement and related documents. Investment involves significant risk, including possible loss of principal. Past performance is not indicative of future results.
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Password check
+        const correctPassword = 'oneradmate';
+        
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value.trim().toLowerCase();
+            const error = document.getElementById('passwordError');
+            
+            if (input === correctPassword) {
+                document.getElementById('passwordScreen').style.display = 'none';
+                document.getElementById('mainContent').classList.add('visible');
+                sessionStorage.setItem('authenticated', 'true');
+                
+                // Track successful access - uncomment ONE of these options:
+                
+                // OPTION 1: GoatCounter (free at goatcounter.com)
+                // Replace YOUR_CODE with your goatcounter subdomain
+                // var gc = document.createElement('script');
+                // gc.src = 'https://YOUR_CODE.goatcounter.com/count?p=/cj-private-accessed';
+                // document.body.appendChild(gc);
+                
+                // OPTION 2: Simple image pixel ping (works with any analytics)
+                // new Image().src = 'https://your-tracking-url.com/pixel.gif?accessed=true&t=' + Date.now();
+                
+            } else {
+                error.style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+        
+        // Check if already authenticated this session
+        if (sessionStorage.getItem('authenticated') === 'true') {
+            document.getElementById('passwordScreen').style.display = 'none';
+            document.getElementById('mainContent').classList.add('visible');
+        }
+        
+        // Enter key to submit
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+        
+        // Focus on password input on load
+        window.addEventListener('load', function() {
+            document.getElementById('passwordInput').focus();
+            
+            // Mobile accordion for entity boxes
+            const entityBoxes = document.querySelectorAll('.entity-box');
+            const entityDiagram = document.querySelector('.entity-diagram');
+            
+            entityBoxes.forEach(box => {
+                box.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    // Only toggle on mobile
+                    if (window.innerWidth <= 768) {
+                        const parent = this.parentElement;
+                        const isInRow = parent.classList.contains('entity-row');
+                        
+                        // If in a row, close sibling first
+                        if (isInRow) {
+                            const siblings = parent.querySelectorAll('.entity-box');
+                            siblings.forEach(sib => {
+                                if (sib !== this) {
+                                    sib.classList.remove('expanded');
+                                }
+                            });
+                        }
+                        
+                        this.classList.toggle('expanded');
+                        
+                        // Toggle blur on diagram
+                        const anyExpanded = document.querySelector('.entity-box.expanded');
+                        if (anyExpanded) {
+                            entityDiagram.classList.add('has-expanded');
+                        } else {
+                            entityDiagram.classList.remove('has-expanded');
+                        }
+                    }
+                });
+            });
+            
+            // Close expanded box when clicking outside
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768 && entityDiagram) {
+                    if (!e.target.closest('.entity-box')) {
+                        entityBoxes.forEach(box => box.classList.remove('expanded'));
+                        entityDiagram.classList.remove('has-expanded');
+                    }
+                }
+            });
+        });
+        
+        // Save as PDF
+        function saveAsPDF() {
+            window.print();
+        }
+        
+        // Progress bar
+        function updateProgressBar() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        }
+        
+        window.addEventListener('scroll', updateProgressBar);
+        
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc-list a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

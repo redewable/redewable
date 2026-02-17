@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ReDewable Energy Company - Precision battery storage development in ERCOT. We find what others miss.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/assets/logo-mark.png">
+  <link rel="apple-touch-icon" href="/assets/logo-mark.png">
+  
+  <!-- Open Graph / Social Share -->
+  <meta property="og:title" content="ReDewable Energy Company">
+  <meta property="og:description" content="Precision battery storage development. Surgical execution. Institutional-grade exits.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.redewable.com">
+  <meta property="og:image" content="https://www.redewable.com/assets/site-aerial.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.redewable.com/assets/site-aerial.png">
+  
+  <title>ReDewable Energy Company</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    :root {
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --gray-50: #fafafa;
+      --gray-100: #f5f5f5;
+      --gray-200: #e5e5e5;
+      --gray-300: #d4d4d4;
+      --gray-400: #a3a3a3;
+      --gray-500: #737373;
+      --gray-600: #525252;
+      --gray-700: #404040;
+      --gray-800: #262626;
+      --gray-900: #171717;
+      --green: #22c55e;
+      --green-dark: #16a34a;
+      --brand-green: #1a3d2f;
+      
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --max-width: 1200px;
+      
+      --bg-primary: var(--white);
+      --bg-secondary: var(--gray-50);
+      --bg-tertiary: var(--gray-900);
+      --text-primary: var(--gray-800);
+      --text-secondary: var(--gray-600);
+      --text-muted: var(--gray-500);
+      --border-color: var(--gray-200);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-primary: #111111;
+        --bg-secondary: #1a1a1a;
+        --bg-tertiary: #222222;
+        --text-primary: #f5f5f5;
+        --text-secondary: #a3a3a3;
+        --text-muted: #737373;
+        --border-color: #2a2a2a;
+        --black: #f5f5f5;
+        --white: #111111;
+        --gray-50: #1a1a1a;
+        --gray-100: #222222;
+        --gray-200: #2a2a2a;
+        --gray-800: #e5e5e5;
+        --gray-900: #1a1a1a;
+      }
+    }
+    
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+    
+    body {
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    
+    ::selection {
+      background: var(--brand-green);
+      color: var(--white);
+    }
+    
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    
+    /* ============================================
+       HEADER
+       ============================================ */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      .header {
+        background: rgba(17,17,17,0.95);
+      }
+    }
+    
+    .header__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .header__logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+    
+    .header__logo img {
+      height: 28px;
+      width: auto;
+    }
+    
+    .header__nav {
+      display: flex;
+      gap: 32px;
+    }
+    
+    .header__nav a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
+    
+    .header__nav a:hover {
+      color: var(--text-primary);
+    }
+    
+    /* Burger Menu */
+    .header__burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      z-index: 110;
+    }
+    
+    .header__burger span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    
+    .header__burger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .header__burger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .header__burger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+    
+    /* Mobile Menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-primary);
+      z-index: 99;
+      padding: 120px 24px 40px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 32px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .mobile-menu.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .mobile-menu a {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: color 0.2s;
+    }
+    
+    .mobile-menu a:hover {
+      color: var(--brand-green);
+    }
+    
+    @media (max-width: 768px) {
+      .header__nav {
+        display: none;
+      }
+      
+      .header__burger {
+        display: flex;
+      }
+      
+      .mobile-menu {
+        display: flex;
+      }
+    }
+    
+    /* ============================================
+       HERO
+       ============================================ */
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px 24px 60px;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    @media (max-width: 768px) {
+      .hero::before {
+        width: 300px;
+        height: 300px;
+        right: -50px;
+        top: 50px;
+      }
+    }
+    
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px 8px 10px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      width: fit-content;
+    }
+    
+    .hero__badge-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    .hero__title {
+      font-size: clamp(2.5rem, 5.5vw, 3.75rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      max-width: 800px;
+    }
+    
+    .hero__subtitle {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      color: var(--text-secondary);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+    
+    .hero__cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 6px;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    
+    .btn--primary {
+      background: var(--brand-green);
+      color: #ffffff;
+    }
+    
+    .btn--primary:hover {
+      background: #152f24;
+      transform: translateY(-1px);
+    }
+    
+    .btn--secondary {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+    
+    .btn--secondary:hover {
+      background: var(--border-color);
+    }
+    
+    .btn__arrow {
+      transition: transform 0.2s;
+    }
+    
+    .btn:hover .btn__arrow {
+      transform: translateX(3px);
+    }
+    
+    /* ============================================
+       SECTION BASICS
+       ============================================ */
+    .section {
+      padding: 70px 24px;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+    
+    .section__label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    
+    .section__title {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      color: var(--text-primary);
+    }
+    
+    /* ============================================
+       PROJECT SECTION
+       ============================================ */
+    .project {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .project__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+    
+    .project__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 36px;
+    }
+    
+    .project__title-group h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    
+    .project__location {
+      font-size: 1rem;
+      color: var(--text-secondary);
+    }
+    
+    .project__capacity {
+      text-align: right;
+    }
+    
+    .project__capacity-number {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+    
+    .project__capacity-unit {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    
+    .project__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border-color);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    @media (max-width: 768px) {
+      .project__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .project__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .project__item {
+      background: var(--bg-primary);
+      padding: 22px 20px;
+    }
+    
+    .project__item-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    
+    .project__item-value {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+    
+    .status-dot--progress {
+      background: #f59e0b;
+    }
+    
+    .project__actions {
+      margin-top: 24px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    
+    /* ============================================
+       PIPELINE
+       ============================================ */
+    .pipeline {
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .pipeline__content {
+      max-width: 700px;
+    }
+    
+    .pipeline__text {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+    
+    /* ============================================
+       APPROACH
+       ============================================ */
+    .approach__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 36px;
+      margin-top: 36px;
+    }
+    
+    @media (max-width: 800px) {
+      .approach__grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+    
+    .approach__item h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+    
+    .approach__item p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    
+    /* ============================================
+       TEAM
+       ============================================ */
+    .team {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .team__content {
+      max-width: 600px;
+    }
+    
+    .team__text {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    
+    .team__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: gap 0.2s;
+    }
+    
+    .team__link:hover {
+      gap: 12px;
+    }
+    
+    /* ============================================
+       CONTACT / FOOTER
+       ============================================ */
+    .contact {
+      background: var(--brand-green);
+      color: #ffffff;
+    }
+    
+    .contact__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+    
+    .contact__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+    }
+    
+    @media (max-width: 700px) {
+      .contact__grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+    }
+    
+    .contact__title {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    
+    .contact__subtitle {
+      color: rgba(255,255,255,0.75);
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    
+    .contact__links {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    
+    .contact__link-item {
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 24px;
+    }
+    
+    .contact__link-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 8px;
+    }
+    
+    .contact__link-value {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #ffffff;
+      transition: opacity 0.2s;
+    }
+    
+    .contact__link-value:hover {
+      opacity: 0.8;
+    }
+    
+    .footer {
+      background: #0d0d0d;
+      color: #737373;
+      padding: 32px 24px;
+    }
+    
+    .footer__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    
+    .footer__logo {
+      font-weight: 700;
+      color: #ffffff;
+    }
+    
+    .footer__links {
+      display: flex;
+      gap: 24px;
+    }
+    
+    .footer__links a {
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    
+    .footer__links a:hover {
+      color: #ffffff;
+    }
+    
+    /* ============================================
+       ANIMATIONS
+       ============================================ */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .stagger > * {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    
+    .stagger.visible > *:nth-child(1) { transition-delay: 0s; }
+    .stagger.visible > *:nth-child(2) { transition-delay: 0.1s; }
+    .stagger.visible > *:nth-child(3) { transition-delay: 0.2s; }
+    .stagger.visible > *:nth-child(4) { transition-delay: 0.3s; }
+    .stagger.visible > *:nth-child(5) { transition-delay: 0.4s; }
+    
+    .stagger.visible > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="/" class="header__logo">
+        <img src="/assets/favicon.png" alt="ReDewable">
+        ReDewable
+      </a>
+      <nav class="header__nav">
+        <a href="#project">Project</a>
+        <a href="#approach">Approach</a>
+        <a href="/team.html">Team</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="header__burger" id="burger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+  
+  <!-- MOBILE MENU -->
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="#project">Project</a>
+    <a href="#approach">Approach</a>
+    <a href="/team.html">Team</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  
+  <!-- HERO -->
+  <section class="hero">
+    <div class="stagger visible">
+      <div class="hero__badge">
+        <span class="hero__badge-dot"></span>
+        ERCOT · Battery Storage · Texas
+      </div>
+      <h1 class="hero__title">We find what others miss.</h1>
+      <p class="hero__subtitle">
+        Precision site selection. Surgical execution. Institutional-grade exits. We identify high-value battery storage opportunities in ERCOT, develop them to NTP, and position them for acquisition by operators who deploy at scale.
+      </p>
+      <div class="hero__cta">
+        <a href="/project-anson.html" class="btn btn--primary">
+          View Current Project
+          <span class="btn__arrow">→</span>
+        </a>
+        <a href="#contact" class="btn btn--secondary">Contact</a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- PROJECT -->
+  <section class="project" id="project">
+    <div class="project__inner">
+      <div class="project__header fade-up">
+        <div class="project__title-group">
+          <h2>ReDew Anson</h2>
+          <p class="project__location">Jones County, Texas · ERCOT West</p>
+        </div>
+        <div class="project__capacity">
+          <div class="project__capacity-number">300</div>
+          <div class="project__capacity-unit">MW Capacity</div>
+        </div>
+      </div>
+      
+      <div class="project__grid fade-up">
+        <div class="project__item">
+          <div class="project__item-label">Land Control</div>
+          <div class="project__item-value">
+            <span class="status-dot"></span>
+            Secured
+          </div>
+        </div>
+        <div class="project__item">
+          <div class="project__item-label">Environmental</div>
+          <div class="project__item-value">
+            <span class="status-dot"></span>
+            Clear Pathway
+          </div>
+        </div>
+        <div class="project__item">
+          <div class="project__item-label">Interconnection</div>
+          <div class="project__item-value">
+            <span class="status-dot status-dot--progress"></span>
+            In Progress
+          </div>
+        </div>
+        <div class="project__item">
+          <div class="project__item-label">Engineering</div>
+          <div class="project__item-value">ANS Engineering</div>
+        </div>
+        <div class="project__item">
+          <div class="project__item-label">Battery Technology</div>
+          <div class="project__item-value">Tesla Megapack</div>
+        </div>
+        <div class="project__item">
+          <div class="project__item-label">Target NTP</div>
+          <div class="project__item-value">Q1 2027</div>
+        </div>
+      </div>
+      
+      <div class="project__actions fade-up">
+        <a href="/project-anson.html" class="btn btn--primary">
+          View Full Project Details
+          <span class="btn__arrow">→</span>
+        </a>
+        <a href="mailto:power@redewable.com?subject=ReDew%20Anson%20-%20Information%20Request" class="btn btn--secondary">
+          Request Information
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- PIPELINE -->
+  <section class="section pipeline" id="pipeline">
+    <div class="fade-up">
+      <p class="section__label">Pipeline</p>
+      <h2 class="section__title">Additional sites under development.</h2>
+      <div class="pipeline__content">
+        <p class="pipeline__text">
+          Multiple ERCOT sites meeting institutional-grade criteria. Same rigor. Same partners. Same approach.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- APPROACH -->
+  <section class="section" id="approach">
+    <div class="fade-up">
+      <p class="section__label">How We Work</p>
+      <h2 class="section__title">Built for operators who deploy at scale.</h2>
+      
+      <div class="approach__grid">
+        <div class="approach__item">
+          <h3>Early-Stage Focus</h3>
+          <p>We specialize in the pre-development work that positions projects for institutional capital—before NTP, before construction, before the easy part.</p>
+        </div>
+        <div class="approach__item">
+          <h3>Proven Partners</h3>
+          <p>Engineering, technology, and land development through established relationships. No learning curves. No surprises.</p>
+        </div>
+        <div class="approach__item">
+          <h3>Clean Exits</h3>
+          <p>Projects structured from day one for acquisition or partnership. Clear documentation, clean cap tables, ready for deployment capital.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- TEAM -->
+  <section class="section team" id="team">
+    <div class="fade-up">
+      <p class="section__label">Leadership</p>
+      <h2 class="section__title">Texas-based. Founder-led. Moving fast.</h2>
+      <div class="team__content">
+        <p class="team__text">
+          ReDewable is led by a Texas A&M-trained team with deep roots in construction, development, and energy infrastructure. We've built businesses from the ground up, managed complex projects, and know what it takes to deliver.
+        </p>
+        <a href="/team.html" class="team__link">
+          Meet the team
+          <span class="btn__arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact__inner">
+      <div class="contact__grid">
+        <div class="fade-up">
+          <h2 class="contact__title">Let's talk.</h2>
+          <p class="contact__subtitle">
+            Whether you're evaluating acquisitions, exploring investment, or seeking development partnerships—we're ready.
+          </p>
+        </div>
+        <div class="contact__links fade-up">
+          <div class="contact__link-item">
+            <div class="contact__link-label">Acquisitions & Partnerships</div>
+            <a href="mailto:power@redewable.com" class="contact__link-value">power@redewable.com</a>
+          </div>
+          <div class="contact__link-item">
+            <div class="contact__link-label">Investment</div>
+            <a href="mailto:invest@redewable.com" class="contact__link-value">invest@redewable.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__logo">ReDewable Energy Company</div>
+      <div class="footer__links">
+        <a href="https://www.linkedin.com/company/redewable" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="/privacy.html">Privacy</a>
+        <span>© 2026</span>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- JS -->
+  <script>
+    // Burger Menu
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+    
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        burger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+    
+    // Intersection Observer for fade animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+    
+    document.querySelectorAll('.fade-up').forEach(el => {
+      observer.observe(el);
+    });
+    
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const offset = 80;
+          const position = target.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({ top: position, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
