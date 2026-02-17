@@ -293,11 +293,16 @@
     // Determine access mode
     const mode = await getSetting('investor_access_mode', 'code');
 
-    // Hide page content
-    document.body.classList.add('ig-content-hidden');
-
     // Inject gate UI
     injectStyles();
+
+    // Wrap existing body content so blur doesn't affect the overlay
+    const wrapper = document.createElement('div');
+    wrapper.id = 'ig-content-wrapper';
+    while (document.body.firstChild) wrapper.appendChild(document.body.firstChild);
+    document.body.appendChild(wrapper);
+    wrapper.classList.add('ig-content-hidden');
+
     const overlay = buildModal(mode);
     document.body.appendChild(overlay);
     requestAnimationFrame(() => overlay.classList.add('visible'));
@@ -358,7 +363,8 @@
       setSession({ email: visitor.email, name: visitor.name, company: visitor.company });
 
       // Reveal content
-      document.body.classList.remove('ig-content-hidden');
+      const wrap = document.getElementById('ig-content-wrapper');
+      if (wrap) wrap.classList.remove('ig-content-hidden');
       overlay.classList.remove('visible');
       setTimeout(() => overlay.remove(), 400);
 
