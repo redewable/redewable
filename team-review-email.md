@@ -23,7 +23,9 @@ A few things I'm specifically looking for:
 2. **James** — confirm your bio, review the economics section and revenue assumptions (still waiting on Bob's projections)
 3. **Ethan** — review interconnection and technical pages for accuracy, especially the Enerzinx study details and ERCOT timeline
 
-I have a call with Enerzinx this morning to nail down a few interconnection details and timelines, so the interconnection page may get a minor update after that.
+**One structural note** — the land is held separately through our strategic land partner and offered to the buyer as a long-term lease. It's not part of the project sale or the development capital raise. If a buyer strongly prefers to own the land, we're open to that conversation, but the default structure keeps it off the capital stack and simplifies the transaction. You'll see this reflected across the site — devfunds, at-a-glance, and the economics section all frame it as a lease with no upfront acquisition cost. I have a call with our land partner today to confirm this direction as well.
+
+I also have a call with Enerzinx this morning to nail down a few interconnection details and timelines, so the interconnection page may get a minor update after that.
 
 Flag anything that looks off — typos, wrong numbers, missing context. This is going to Kola first so it needs to be tight.
 

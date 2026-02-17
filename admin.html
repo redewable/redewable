@@ -1123,7 +1123,7 @@
                 <div class="analytics-error" id="analyticsError" style="display:none;"></div>
                 <div class="analytics-grid" id="analyticsSummary"></div>
                 <div class="analytics-panels">
-                    <div class="analytics-panel"><h3>Recent Visits</h3><div class="table-scroll"><table class="analytics-table"><thead><tr><th>Started</th><th>Visitor</th><th>Email</th><th>Company</th><th>Duration</th><th>Device</th></tr></thead><tbody id="sessionsTableBody"></tbody></table></div></div>
+                    <div class="analytics-panel"><h3>Recent Visits</h3><div class="table-scroll"><table class="analytics-table"><thead><tr><th>Started</th><th>Visitor</th><th>Email</th><th>Company</th><th>Duration</th><th>Device</th><th style="width:50px"></th></tr></thead><tbody id="sessionsTableBody"></tbody></table></div></div>
                     <div class="analytics-panel"><h3>Recent Activity</h3><div class="table-scroll"><table class="analytics-table"><thead><tr><th>Time</th><th>Action</th><th>Section</th><th>Document</th><th>Visitor</th></tr></thead><tbody id="clicksTableBody"></tbody></table></div></div>
                     <div class="analytics-panel"><h3>Top Documents</h3><div class="analytics-list" id="topDocsList"></div></div>
                     <div class="analytics-panel"><h3>Top Sections</h3><div class="analytics-list" id="topSectionsList"></div></div>
@@ -2230,9 +2230,11 @@
             if (sessionsTbody) {
                 var rows = analyticsSessions.slice(0, 100).map(function(s) {
                     var device = (s.user_agent ? 'Browser' : '');
-                    return '<tr><td>' + formatDateTime(s.started_at) + '</td><td>' + (s.visitor_name || '') + '</td><td>' + (s.visitor_email || '') + '</td><td>' + (s.visitor_company || '') + '</td><td>' + formatDurationSeconds(s.duration_seconds) + '</td><td>' + (device || '—') + '</td></tr>';
+                    var durationMin = s.duration_seconds ? Math.round(s.duration_seconds / 60) : 0;
+                    var durationClass = durationMin > 120 ? ' style="color:var(--status-yellow);font-weight:700"' : '';
+                    return '<tr><td>' + formatDateTime(s.started_at) + '</td><td>' + (s.visitor_name || '') + '</td><td>' + (s.visitor_email || '') + '</td><td>' + (s.visitor_company || '') + '</td><td' + durationClass + '>' + formatDurationSeconds(s.duration_seconds) + '</td><td>' + (device || '—') + '</td><td><button class="delete-btn" title="Delete session" onclick="deleteSession(\'' + s.id + '\')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button></td></tr>';
                 }).join('');
-                sessionsTbody.innerHTML = rows || '<tr><td colspan="6" style="color: var(--text-secondary);">No sessions yet.</td></tr>';
+                sessionsTbody.innerHTML = rows || '<tr><td colspan="7" style="color: var(--text-secondary);">No sessions yet.</td></tr>';
             }
 
             var clicksTbody = document.getElementById('clicksTableBody');
@@ -2264,6 +2266,20 @@
             analyticsClicks.forEach(function(c) { rows.push(['click',JSON.stringify(c.clicked_at||''),JSON.stringify(c.visitor_name||''),JSON.stringify(c.visitor_email||''),JSON.stringify(c.visitor_company||''),JSON.stringify(c.action||''),JSON.stringify(c.section||''),JSON.stringify(c.document_name||''),''].join(',')); });
             var blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
             var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'redew_dataroom_analytics_' + new Date().toISOString().slice(0,10) + '.csv'; document.body.appendChild(a); a.click(); a.remove();
+        }
+
+        async function deleteSession(sessionId) {
+            if (!db) return;
+            if (!confirm('Delete this session? This will remove the visit and its associated activity from analytics.')) return;
+            try {
+                await db.from('visitor_clicks').delete().eq('session_id', sessionId);
+                await db.from('visitor_sessions').delete().eq('id', sessionId);
+                analyticsSessions = analyticsSessions.filter(function(s) { return s.id !== sessionId; });
+                analyticsClicks = analyticsClicks.filter(function(c) { return c.session_id !== sessionId; });
+                renderAnalytics();
+            } catch(err) {
+                alert('Failed to delete session: ' + (err.message || err));
+            }
         }
 
         // ==================== INVESTOR ACCESS MANAGEMENT ====================
