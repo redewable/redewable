@@ -1165,7 +1165,7 @@
                         <div class="analytics-grid" id="investorAnalyticsSummary" style="margin-bottom:1rem"></div>
                         <div class="table-scroll">
                             <table class="analytics-table">
-                                <thead><tr><th>Time</th><th>Visitor</th><th>Company</th><th>Page</th><th>Duration</th><th>Scroll</th><th>Sections</th></tr></thead>
+                                <thead><tr><th>Time</th><th>Visitor</th><th>Company</th><th>Page</th><th>Duration</th><th>Scroll</th><th>Sections</th><th style="width:50px"></th></tr></thead>
                                 <tbody id="investorPageViewsBody"></tbody>
                             </table>
                         </div>
@@ -2282,6 +2282,18 @@
             }
         }
 
+        async function deleteInvestorPageView(pvId) {
+            if (!db) return;
+            if (!confirm('Delete this page view? This will remove it from investor analytics.')) return;
+            try {
+                await db.from('investor_page_views').delete().eq('id', pvId);
+                investorPageViews = investorPageViews.filter(function(p) { return p.id !== pvId; });
+                renderInvestorPageViews();
+            } catch(err) {
+                alert('Failed to delete page view: ' + (err.message || err));
+            }
+        }
+
         // ==================== INVESTOR ACCESS MANAGEMENT ====================
         var investorVisitors = [];
         var investorPageViews = [];
@@ -2421,6 +2433,7 @@
             tbody.innerHTML = investorPageViews.slice(0, 100).map(function(pv) {
                 var page = (pv.page_url || '').replace(/^\//, '').replace(/\.html$/, '') || 'home';
                 var duration = pv.duration_seconds ? formatDurationSeconds(pv.duration_seconds) : '—';
+                var durationStyle = (pv.duration_seconds && pv.duration_seconds > 7200) ? 'background:rgba(245,158,11,0.15);font-weight:700' : '';
                 var scroll = pv.scroll_depth_pct ? pv.scroll_depth_pct + '%' : '—';
                 var sections = (pv.sections_viewed || '').split(',').filter(Boolean).join(', ') || '—';
                 return '<tr>' +
@@ -2428,9 +2441,10 @@
                     '<td>' + (pv.visitor_name || pv.visitor_email || '—') + '</td>' +
                     '<td>' + (pv.visitor_company || '—') + '</td>' +
                     '<td><span class="analytics-pill info">' + page + '</span></td>' +
-                    '<td>' + duration + '</td>' +
+                    '<td style="' + durationStyle + '">' + duration + '</td>' +
                     '<td>' + scroll + '</td>' +
                     '<td style="font-size:0.75rem;max-width:200px;overflow:hidden;text-overflow:ellipsis">' + sections + '</td>' +
+                    '<td><button class="btn btn-small" style="font-size:0.65rem;padding:2px 6px;background:var(--status-red);color:#fff;border:none;border-radius:4px;cursor:pointer" onclick="deleteInvestorPageView(\'' + pv.id + '\')" title="Delete this page view">🗑</button></td>' +
                     '</tr>';
             }).join('');
         }
