@@ -2272,8 +2272,10 @@
             if (!db) return;
             if (!confirm('Delete this session? This will remove the visit and its associated activity from analytics.')) return;
             try {
-                await db.from('visitor_clicks').delete().eq('session_id', sessionId);
-                await db.from('visitor_sessions').delete().eq('id', sessionId);
+                var r1 = await db.from('visitor_clicks').delete().eq('session_id', sessionId);
+                if (r1.error) throw r1.error;
+                var r2 = await db.from('visitor_sessions').delete().eq('id', sessionId);
+                if (r2.error) throw r2.error;
                 analyticsSessions = analyticsSessions.filter(function(s) { return s.id !== sessionId; });
                 analyticsClicks = analyticsClicks.filter(function(c) { return c.session_id !== sessionId; });
                 renderAnalytics();
@@ -2286,7 +2288,8 @@
             if (!db) return;
             if (!confirm('Delete this page view? This will remove it from investor analytics.')) return;
             try {
-                await db.from('investor_page_views').delete().eq('id', pvId);
+                var result = await db.from('investor_page_views').delete().eq('id', pvId);
+                if (result.error) throw result.error;
                 investorPageViews = investorPageViews.filter(function(p) { return p.id !== pvId; });
                 renderInvestorPageViews();
             } catch(err) {
@@ -2354,7 +2357,8 @@
         async function deleteInvestorVisitor(id) {
             if (!confirm('Remove this visitor permanently?')) return;
             try {
-                await db.from('investor_visitors').delete().eq('id', id);
+                var result = await db.from('investor_visitors').delete().eq('id', id);
+                if (result.error) throw result.error;
                 await loadInvestorVisitors();
                 renderInvestorVisitors();
                 showSaveIndicator('saved');
