@@ -2448,7 +2448,7 @@
                     '<td style="' + durationStyle + '">' + duration + '</td>' +
                     '<td>' + scroll + '</td>' +
                     '<td style="font-size:0.75rem;max-width:200px;overflow:hidden;text-overflow:ellipsis">' + sections + '</td>' +
-                    '<td><button class="btn btn-small" style="font-size:0.65rem;padding:2px 6px;background:var(--status-red);color:#fff;border:none;border-radius:4px;cursor:pointer" onclick="deleteInvestorPageView(\'' + pv.id + '\')" title="Delete this page view">🗑</button></td>' +
+                    '<td><button class="delete-btn" style="opacity:1;" onclick="deleteInvestorPageView(\'' + pv.id + '\')" title="Delete this page view"><svg class="icon icon-sm"><use href="#icon-trash"/></svg></button></td>' +
                     '</tr>';
             }).join('');
         }
