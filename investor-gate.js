@@ -125,8 +125,26 @@
     });
   }
 
+  function getTrafficSource() {
+    const params = new URLSearchParams(window.location.search);
+    const utm_source = params.get('utm_source') || '';
+    const utm_medium = params.get('utm_medium') || '';
+    const utm_campaign = params.get('utm_campaign') || '';
+    const referrer = document.referrer || '';
+    // Derive source label
+    let source = 'direct';
+    if (utm_source) { source = utm_source; }
+    else if (referrer.includes('linkedin.com')) { source = 'linkedin'; }
+    else if (referrer.includes('google.com')) { source = 'google'; }
+    else if (referrer.includes('mail.google.com') || referrer.includes('outlook')) { source = 'email'; }
+    else if (referrer && !referrer.includes('redewable.com')) { source = referrer; }
+    else if (referrer.includes('redewable.com')) { source = 'internal'; }
+    return { source, utm_source, utm_medium, utm_campaign, referrer };
+  }
+
   async function logPageView() {
     if (!supabase || !visitor) return;
+    const traffic = getTrafficSource();
     try {
       await supabase.from('investor_page_views').insert([{
         visitor_email: visitor.email,
@@ -135,7 +153,12 @@
         page_url: window.location.pathname,
         page_title: document.title,
         entered_at: new Date(pageStart).toISOString(),
-        user_agent: navigator.userAgent
+        user_agent: navigator.userAgent,
+        referrer: traffic.referrer,
+        traffic_source: traffic.source,
+        utm_source: traffic.utm_source,
+        utm_medium: traffic.utm_medium,
+        utm_campaign: traffic.utm_campaign
       }]);
     } catch(e) { console.error('Gate: page view log error', e); }
   }
