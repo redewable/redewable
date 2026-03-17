@@ -677,48 +677,167 @@
         .dr-note-delete:hover { background: rgba(239, 68, 68, 0.15); color: var(--status-red); }
 
         /* ==================== FINANCES STYLES ==================== */
-        .fin-category {
+        .fin-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.75rem;
+        }
+        .fin-summary-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        .fin-summary-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+        .fin-summary-card.card-budget::after { background: var(--brand-green); }
+        .fin-summary-card.card-invoiced::after { background: var(--status-blue); }
+        .fin-summary-card.card-paid::after { background: var(--status-green); }
+        .fin-summary-card.card-outstanding::after { background: var(--status-yellow); }
+        .fin-summary-card.card-overdue::after { background: var(--status-red); }
+        .fin-summary-card .label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        .fin-summary-card .value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .fin-summary-card .sub {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+        }
+        @media (max-width: 900px) { .fin-summary-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 550px) { .fin-summary-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        .fin-toolbar {
+            display: flex;
+            gap: 0.75rem;
             margin-bottom: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .fin-toolbar .filter-group { display: flex; align-items: center; gap: 0.5rem; }
+        .fin-toolbar .filter-group label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+        .fin-category {
+            margin-bottom: 1.25rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
         }
         .fin-cat-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.875rem 1.25rem;
+            padding: 1rem 1.25rem;
             background: var(--bg-tertiary);
             border: 1px solid var(--border);
             border-radius: 12px 12px 0 0;
             cursor: pointer;
+            gap: 1rem;
+            transition: background 0.15s;
         }
         .fin-cat-header:hover { background: var(--bg-card); }
-        .fin-cat-header h2 {
-            font-size: 1rem;
+        .fin-cat-header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+        .fin-cat-header-left h2 {
+            font-size: 0.95rem;
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+        .fin-cat-header-left h2 .number {
+            background: var(--brand-green-glow);
+            color: var(--brand-green);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .fin-cat-header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            flex-wrap: nowrap;
+        }
+        .fin-cat-progress {
             display: flex;
             align-items: center;
             gap: 0.75rem;
         }
-        .fin-cat-header .fin-budget {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--brand-green);
+        .fin-cat-progress .bar {
+            width: 100px;
+            height: 6px;
+            background: var(--bg-primary);
+            border-radius: 3px;
+            overflow: hidden;
         }
-        .fin-cat-header .fin-cat-summary {
+        .fin-cat-progress .bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--brand-green-dim), var(--brand-green));
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+        .fin-cat-progress .percent {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--brand-green);
+            min-width: 38px;
+        }
+        .fin-cat-stats {
             display: flex;
+            gap: 1rem;
             align-items: center;
-            gap: 1.5rem;
         }
         .fin-cat-stat {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
+            font-size: 0.75rem;
             font-family: 'JetBrains Mono', monospace;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            white-space: nowrap;
         }
-        .fin-cat-stat .label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-right: 0.35rem; }
+        .fin-cat-stat .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .fin-cat-stat.paid .dot { background: var(--status-green); }
         .fin-cat-stat.paid { color: var(--status-green); }
+        .fin-cat-stat.due .dot { background: var(--status-yellow); }
         .fin-cat-stat.due { color: var(--status-yellow); }
+        .fin-cat-stat.overdue .dot { background: var(--status-red); }
         .fin-cat-stat.overdue { color: var(--status-red); }
+        .fin-cat-stat.budget { color: var(--text-muted); }
+        .fin-cat-stat.budget .dot { background: var(--text-muted); }
+
         .fin-category.collapsed .fin-cat-body { display: none; }
         .fin-category.collapsed .chevron-icon { transform: rotate(-90deg); }
+
         .fin-cat-body {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -726,74 +845,140 @@
             border-radius: 0 0 12px 12px;
             overflow-x: auto;
         }
-        .fin-table {
+
+        /* Card-based rows for cleaner reading */
+        .fin-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            padding: 0.875rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.1s;
+        }
+        .fin-row:last-child { border-bottom: none; }
+        .fin-row:hover { background: var(--bg-tertiary); }
+
+        .fin-row-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .fin-row-desc {
+            flex: 1;
+            min-width: 0;
+        }
+        .fin-row-desc input {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            padding: 0.25rem 0.4rem;
             width: 100%;
-            border-collapse: collapse;
-            min-width: 900px;
+            font-family: inherit;
+            transition: all 0.15s;
         }
-        .fin-table th {
-            text-align: left;
-            padding: 0.75rem 0.625rem;
-            background: var(--bg-secondary);
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-            font-weight: 700;
-            border-bottom: 1px solid var(--border);
-            white-space: nowrap;
+        .fin-row-desc input:hover { border-color: var(--border); background: var(--bg-secondary); }
+        .fin-row-desc input:focus { outline: none; border-color: var(--brand-green); background: var(--bg-secondary); }
+
+        .fin-row-status-badge {
+            flex-shrink: 0;
         }
-        .fin-table td {
-            padding: 0.5rem 0.625rem;
-            border-bottom: 1px solid var(--border);
-            vertical-align: top;
-            font-size: 0.85rem;
-        }
-        .fin-table tr:last-child td { border-bottom: none; }
-        .fin-table tr:hover td { background: var(--bg-tertiary); }
-        .fin-table .editable {
-            font-size: 0.85rem;
-            padding: 0.3rem 0.4rem;
-            min-width: 60px;
-        }
-        .fin-table .editable.mono {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-        }
-        .fin-status-select {
-            padding: 0.3rem 0.5rem;
+        .fin-status-pill {
+            padding: 0.3rem 0.75rem;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 700;
             border: none;
             cursor: pointer;
             font-family: 'Play', sans-serif;
-            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .fin-status-select.pending { background: rgba(90, 107, 100, 0.2); color: var(--text-muted); }
-        .fin-status-select.partial { background: rgba(234, 179, 8, 0.15); color: var(--status-yellow); }
-        .fin-status-select.paid { background: rgba(34, 197, 94, 0.15); color: var(--status-green); }
-        .fin-status-select.overdue { background: rgba(239, 68, 68, 0.15); color: var(--status-red); }
-        .fin-source-select {
-            padding: 0.3rem 0.4rem;
-            background: var(--bg-secondary);
+        .fin-status-pill.pending { background: rgba(90, 107, 100, 0.2); color: var(--text-muted); }
+        .fin-status-pill.partial { background: rgba(234, 179, 8, 0.15); color: var(--status-yellow); }
+        .fin-status-pill.paid { background: rgba(34, 197, 94, 0.15); color: var(--status-green); }
+        .fin-status-pill.overdue { background: rgba(239, 68, 68, 0.15); color: var(--status-red); }
+
+        .fin-row-bottom {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 0.5rem 1rem;
+            align-items: start;
+        }
+        .fin-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+        .fin-field-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+        .fin-field input,
+        .fin-field select {
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            background: transparent;
             border: 1px solid transparent;
             border-radius: 4px;
-            color: var(--text-primary);
-            font-family: 'Play', sans-serif;
-            font-size: 0.8rem;
-            cursor: pointer;
+            padding: 0.3rem 0.4rem;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.15s;
             width: 100%;
         }
-        .fin-source-select:hover { border-color: var(--border); }
-        .fin-source-select:focus { outline: none; border-color: var(--brand-green); }
+        .fin-field input:hover,
+        .fin-field select:hover { border-color: var(--border); background: var(--bg-secondary); }
+        .fin-field input:focus,
+        .fin-field select:focus { outline: none; border-color: var(--brand-green); background: var(--bg-secondary); }
+        .fin-field select { cursor: pointer; font-family: 'Play', sans-serif; font-size: 0.8rem; }
+        .fin-field .fin-balance {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.3rem 0.4rem;
+        }
+        .fin-field .fin-balance.positive { color: var(--status-yellow); }
+        .fin-field .fin-balance.zero { color: var(--status-green); }
+        .fin-field .fin-balance.overdue { color: var(--status-red); font-weight: 700; }
+        .fin-field .fin-balance.empty { color: var(--text-muted); }
+        .fin-field .fin-notes-input {
+            font-family: 'Play', sans-serif;
+            color: var(--text-secondary);
+        }
+
+        .fin-row-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            flex-shrink: 0;
+        }
+        .fin-row-actions .delete-btn {
+            opacity: 0;
+            padding: 0.25rem;
+        }
+        .fin-row:hover .fin-row-actions .delete-btn { opacity: 0.6; }
+        .fin-row-actions .delete-btn:hover { opacity: 1; background: rgba(239, 68, 68, 0.15); color: var(--status-red); }
+
+        .fin-empty {
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
         .fin-add-row {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.625rem 0.75rem;
+            padding: 0.625rem 1rem;
             border-top: 1px solid var(--border);
             background: var(--bg-secondary);
+            border-radius: 0 0 12px 12px;
         }
 
         /* ==================== SETTINGS STYLES ==================== */
@@ -1300,19 +1485,40 @@
 
             <!-- FINANCES TAB -->
             <div class="tab-content" id="tab-finances">
-                <div class="totals-bar">
-                    <div class="total-item"><div class="label">Total Budget</div><div class="value brand" id="finTotalBudget">$0</div></div>
-                    <div class="total-item"><div class="label">Total Invoiced</div><div class="value" id="finTotalInvoiced">$0</div></div>
-                    <div class="total-item"><div class="label">Total Paid</div><div class="value green" id="finTotalPaid">$0</div></div>
-                    <div class="total-item"><div class="label">Outstanding</div><div class="value yellow" id="finTotalOutstanding">$0</div></div>
-                    <div class="total-item"><div class="label">Overdue</div><div class="value" style="color: var(--status-red);" id="finTotalOverdue">$0</div></div>
+                <div class="fin-summary-grid">
+                    <div class="fin-summary-card card-budget">
+                        <div class="label">Total Budget</div>
+                        <div class="value brand" id="finTotalBudget">$0</div>
+                        <div class="sub" id="finBudgetSub">Lean pathway</div>
+                    </div>
+                    <div class="fin-summary-card card-invoiced">
+                        <div class="label">Total Invoiced</div>
+                        <div class="value" style="color:var(--status-blue)" id="finTotalInvoiced">$0</div>
+                        <div class="sub" id="finInvoicedSub">&nbsp;</div>
+                    </div>
+                    <div class="fin-summary-card card-paid">
+                        <div class="label">Total Paid</div>
+                        <div class="value green" id="finTotalPaid">$0</div>
+                        <div class="sub" id="finPaidSub">&nbsp;</div>
+                    </div>
+                    <div class="fin-summary-card card-outstanding">
+                        <div class="label">Outstanding</div>
+                        <div class="value yellow" id="finTotalOutstanding">$0</div>
+                        <div class="sub" id="finOutstandingSub">&nbsp;</div>
+                    </div>
+                    <div class="fin-summary-card card-overdue">
+                        <div class="label">Overdue</div>
+                        <div class="value" style="color:var(--status-red)" id="finTotalOverdue">$0</div>
+                        <div class="sub" id="finOverdueSub">&nbsp;</div>
+                    </div>
                 </div>
-                <div class="filter-bar">
+                <div class="fin-toolbar">
                     <div class="filter-group"><label>Status:</label><select class="filter-select" id="finFilterStatus" onchange="renderFinances()"><option value="all">All</option><option value="pending">Pending</option><option value="partial">Partial</option><option value="paid">Paid</option><option value="overdue">Overdue</option></select></div>
                     <div class="filter-group"><label>Source:</label><select class="filter-select" id="finFilterSource" onchange="renderFinances()"></select></div>
                     <div class="filter-group"><label>Category:</label><select class="filter-select" id="finFilterCategory" onchange="renderFinances()"></select></div>
                     <input type="text" class="search-input" id="finSearchInput" placeholder="Search transactions..." oninput="renderFinances()">
                     <button class="btn btn-small btn-secondary" onclick="addFinCategory()"><svg class="icon icon-sm"><use href="#icon-plus"/></svg> Category</button>
+                    <button class="btn btn-small btn-secondary" onclick="exportFinancesCSV()"><svg class="icon icon-sm"><use href="#icon-download"/></svg> Export</button>
                 </div>
                 <div id="financesContainer"></div>
             </div>
@@ -2666,10 +2872,12 @@
             var sources = getFinSources();
             var html = '';
             var totalBudget = 0, totalInvoiced = 0, totalPaid = 0, totalOutstanding = 0, totalOverdue = 0;
+            var txnCount = 0;
 
             categories.forEach(function(cat) {
                 var catTxns = filtered.filter(function(t) { return t.category === cat.id; });
-                totalBudget += (cat.budget || 0);
+                var budget = cat.budget || 0;
+                totalBudget += budget;
 
                 var catPaid = 0, catInvoiced = 0, catDue = 0, catOverdue = 0;
                 var allCatTxns = finTransactions.filter(function(t) { return t.category === cat.id; });
@@ -2691,37 +2899,38 @@
                 totalPaid += catPaid;
                 totalOutstanding += catDue;
                 totalOverdue += catOverdue;
+                txnCount += catTxns.length;
+
+                var paidPct = budget > 0 ? Math.min(Math.round((catPaid / budget) * 100), 100) : 0;
 
                 html += '<div class="fin-category" data-fin-cat="' + cat.id + '">';
                 html += '<div class="fin-cat-header" onclick="toggleFinCategory(\'' + cat.id + '\')">';
+
+                html += '<div class="fin-cat-header-left">';
                 html += '<h2><svg class="icon"><use href="#' + (cat.icon || 'icon-dollar') + '"/></svg> ' + esc(cat.name);
                 html += ' <span class="number">' + catTxns.length + '</span></h2>';
-                html += '<div class="fin-cat-summary">';
-                html += '<span class="fin-budget">Budget: $' + (cat.budget || 0).toLocaleString() + '</span>';
-                if (catPaid > 0) html += '<span class="fin-cat-stat paid"><span class="label">Paid</span>$' + catPaid.toLocaleString() + '</span>';
-                if (catDue > 0) html += '<span class="fin-cat-stat due"><span class="label">Due</span>$' + catDue.toLocaleString() + '</span>';
-                if (catOverdue > 0) html += '<span class="fin-cat-stat overdue"><span class="label">Overdue</span>$' + catOverdue.toLocaleString() + '</span>';
+                html += '</div>';
+
+                html += '<div class="fin-cat-header-right">';
+                html += '<div class="fin-cat-stats">';
+                html += '<span class="fin-cat-stat budget"><span class="dot"></span>$' + budget.toLocaleString() + '</span>';
+                if (catPaid > 0) html += '<span class="fin-cat-stat paid"><span class="dot"></span>$' + catPaid.toLocaleString() + '</span>';
+                if (catDue > 0) html += '<span class="fin-cat-stat due"><span class="dot"></span>$' + catDue.toLocaleString() + '</span>';
+                if (catOverdue > 0) html += '<span class="fin-cat-stat overdue"><span class="dot"></span>$' + catOverdue.toLocaleString() + '</span>';
+                html += '</div>';
+                html += '<div class="fin-cat-progress"><div class="bar"><div class="fill" style="width:' + paidPct + '%"></div></div>';
+                html += '<span class="percent">' + paidPct + '%</span></div>';
                 html += '<svg class="icon chevron-icon"><use href="#icon-chevron-down"/></svg>';
                 html += '</div></div>';
 
-                html += '<div class="fin-cat-body"><table class="fin-table"><thead><tr>';
-                html += '<th style="width:18%">Description</th>';
-                html += '<th style="width:8%">Invoice #</th>';
-                html += '<th style="width:9%">Invoiced</th>';
-                html += '<th style="width:9%">Paid</th>';
-                html += '<th style="width:9%">Balance</th>';
-                html += '<th style="width:9%">Due Date</th>';
-                html += '<th style="width:7%">Terms</th>';
-                html += '<th style="width:11%">Source</th>';
-                html += '<th style="width:9%">Paid Date</th>';
-                html += '<th style="width:7%">Status</th>';
-                html += '<th style="width:12%">Notes</th>';
-                html += '<th style="width:30px"></th>';
-                html += '</tr></thead><tbody>';
+                html += '<div class="fin-cat-body">';
 
-                catTxns.forEach(function(t) { html += renderFinRow(t, sources); });
+                if (catTxns.length === 0) {
+                    html += '<div class="fin-empty">No transactions yet — add one below</div>';
+                } else {
+                    catTxns.forEach(function(t) { html += renderFinRow(t, sources); });
+                }
 
-                html += '</tbody></table>';
                 html += '<div class="fin-add-row">';
                 html += '<input type="text" class="add-task-input" id="newFin-' + cat.id + '" placeholder="Add transaction..." onkeypress="if(event.key===\'Enter\')handleAddFinTxn(\'' + cat.id + '\')">';
                 html += '<button class="add-task-btn" onclick="handleAddFinTxn(\'' + cat.id + '\')"><svg class="icon icon-sm"><use href="#icon-plus"/></svg> Add</button>';
@@ -2730,12 +2939,21 @@
 
             container.innerHTML = html;
 
+            // Update summary cards
             document.getElementById('finTotalBudget').textContent = '$' + totalBudget.toLocaleString();
             document.getElementById('finTotalInvoiced').textContent = '$' + totalInvoiced.toLocaleString();
             document.getElementById('finTotalPaid').textContent = '$' + totalPaid.toLocaleString();
             document.getElementById('finTotalOutstanding').textContent = '$' + totalOutstanding.toLocaleString();
             document.getElementById('finTotalOverdue').textContent = '$' + totalOverdue.toLocaleString();
             document.getElementById('finCount').textContent = finTransactions.length;
+
+            // Contextual sub-labels
+            var paidPctTotal = totalBudget > 0 ? Math.round((totalPaid / totalBudget) * 100) : 0;
+            document.getElementById('finPaidSub').textContent = paidPctTotal + '% of budget';
+            document.getElementById('finInvoicedSub').textContent = txnCount + ' transaction' + (txnCount !== 1 ? 's' : '');
+            var overdueTxns = finTransactions.filter(function(t) { return t.status === 'overdue' || (t.due_date && new Date(t.due_date) < new Date() && t.status !== 'paid' && parseFinAmount(t.invoice_amount) > parseFinAmount(t.amount_paid)); });
+            document.getElementById('finOverdueSub').textContent = overdueTxns.length > 0 ? overdueTxns.length + ' item' + (overdueTxns.length !== 1 ? 's' : '') : 'None';
+
             updateFinFilterDropdowns();
         }
 
@@ -2744,30 +2962,39 @@
             var pd = parseFinAmount(t.amount_paid);
             var balance = inv - pd;
             var balDisplay = balance > 0 ? '$' + balance.toLocaleString() : (balance === 0 && inv > 0 ? '$0' : '—');
-            var balStyle = balance > 0 ? (t.status === 'overdue' ? 'color:var(--status-red);font-weight:700' : 'color:var(--status-yellow)') : (balance === 0 && inv > 0 ? 'color:var(--status-green)' : '');
+            var balClass = balance > 0 ? (t.status === 'overdue' ? 'overdue' : 'positive') : (balance === 0 && inv > 0 ? 'zero' : 'empty');
             var sc = t.status || 'pending';
 
-            var html = '<tr>';
-            html += '<td><input type="text" class="editable" value="' + esc(t.description) + '" onchange="handleFinField(\'' + t.id + '\',\'description\',this.value)"></td>';
-            html += '<td><input type="text" class="editable mono" value="' + esc(t.invoice_ref) + '" onchange="handleFinField(\'' + t.id + '\',\'invoice_ref\',this.value)" style="min-width:50px"></td>';
-            html += '<td><input type="text" class="editable mono" value="' + esc(t.invoice_amount) + '" placeholder="$0" onchange="handleFinField(\'' + t.id + '\',\'invoice_amount\',this.value)"></td>';
-            html += '<td><input type="text" class="editable mono" value="' + esc(t.amount_paid) + '" placeholder="$0" onchange="handleFinField(\'' + t.id + '\',\'amount_paid\',this.value)"></td>';
-            html += '<td style="font-family:\'JetBrains Mono\',monospace;font-size:0.8rem;' + balStyle + '">' + balDisplay + '</td>';
-            html += '<td><input type="date" class="editable mono" value="' + esc(t.due_date || '') + '" onchange="handleFinField(\'' + t.id + '\',\'due_date\',this.value)" style="min-width:80px"></td>';
-            html += '<td><input type="text" class="editable" value="' + esc(t.terms) + '" placeholder="—" onchange="handleFinField(\'' + t.id + '\',\'terms\',this.value)" style="min-width:50px"></td>';
-            html += '<td><select class="fin-source-select" onchange="handleFinField(\'' + t.id + '\',\'funding_source\',this.value)"><option value="">—</option>';
-            sources.forEach(function(s) { html += '<option value="' + esc(s) + '"' + (t.funding_source === s ? ' selected' : '') + '>' + esc(s) + '</option>'; });
-            html += '</select></td>';
-            html += '<td><input type="date" class="editable mono" value="' + esc(t.payment_date || '') + '" onchange="handleFinField(\'' + t.id + '\',\'payment_date\',this.value)" style="min-width:80px"></td>';
-            html += '<td><select class="fin-status-select ' + sc + '" onchange="handleFinStatus(\'' + t.id + '\',this.value)">';
+            var html = '<div class="fin-row">';
+
+            // Top row: description + status + delete
+            html += '<div class="fin-row-top">';
+            html += '<div class="fin-row-desc"><input type="text" value="' + esc(t.description) + '" onchange="handleFinField(\'' + t.id + '\',\'description\',this.value)" placeholder="Transaction description"></div>';
+            html += '<div class="fin-row-status-badge"><select class="fin-status-pill ' + sc + '" onchange="handleFinStatus(\'' + t.id + '\',this.value)">';
             html += '<option value="pending"' + (sc === 'pending' ? ' selected' : '') + '>Pending</option>';
             html += '<option value="partial"' + (sc === 'partial' ? ' selected' : '') + '>Partial</option>';
             html += '<option value="paid"' + (sc === 'paid' ? ' selected' : '') + '>Paid</option>';
             html += '<option value="overdue"' + (sc === 'overdue' ? ' selected' : '') + '>Overdue</option>';
-            html += '</select></td>';
-            html += '<td><input type="text" class="editable" value="' + esc(t.notes) + '" placeholder="..." onchange="handleFinField(\'' + t.id + '\',\'notes\',this.value)"></td>';
-            html += '<td><button class="delete-btn" style="opacity:0.5" onclick="deleteFinTxn(\'' + t.id + '\')"><svg class="icon icon-sm"><use href="#icon-trash"/></svg></button></td>';
-            html += '</tr>';
+            html += '</select></div>';
+            html += '<div class="fin-row-actions"><button class="delete-btn" onclick="deleteFinTxn(\'' + t.id + '\')"><svg class="icon icon-sm"><use href="#icon-trash"/></svg></button></div>';
+            html += '</div>';
+
+            // Bottom row: all fields in labeled grid
+            html += '<div class="fin-row-bottom">';
+            html += '<div class="fin-field"><span class="fin-field-label">Invoice #</span><input type="text" value="' + esc(t.invoice_ref) + '" onchange="handleFinField(\'' + t.id + '\',\'invoice_ref\',this.value)" placeholder="—"></div>';
+            html += '<div class="fin-field"><span class="fin-field-label">Invoiced</span><input type="text" value="' + esc(t.invoice_amount) + '" onchange="handleFinField(\'' + t.id + '\',\'invoice_amount\',this.value)" placeholder="$0"></div>';
+            html += '<div class="fin-field"><span class="fin-field-label">Paid</span><input type="text" value="' + esc(t.amount_paid) + '" onchange="handleFinField(\'' + t.id + '\',\'amount_paid\',this.value)" placeholder="$0"></div>';
+            html += '<div class="fin-field"><span class="fin-field-label">Balance</span><div class="fin-balance ' + balClass + '">' + balDisplay + '</div></div>';
+            html += '<div class="fin-field"><span class="fin-field-label">Due Date</span><input type="date" value="' + esc(t.due_date || '') + '" onchange="handleFinField(\'' + t.id + '\',\'due_date\',this.value)"></div>';
+            html += '<div class="fin-field"><span class="fin-field-label">Terms</span><input type="text" value="' + esc(t.terms) + '" onchange="handleFinField(\'' + t.id + '\',\'terms\',this.value)" placeholder="Net 30"></div>';
+            html += '<div class="fin-field"><span class="fin-field-label">Source</span><select onchange="handleFinField(\'' + t.id + '\',\'funding_source\',this.value)"><option value="">—</option>';
+            sources.forEach(function(s) { html += '<option value="' + esc(s) + '"' + (t.funding_source === s ? ' selected' : '') + '>' + esc(s) + '</option>'; });
+            html += '</select></div>';
+            html += '<div class="fin-field"><span class="fin-field-label">Paid Date</span><input type="date" value="' + esc(t.payment_date || '') + '" onchange="handleFinField(\'' + t.id + '\',\'payment_date\',this.value)"></div>';
+            html += '<div class="fin-field" style="grid-column:span 2"><span class="fin-field-label">Notes</span><input type="text" class="fin-notes-input" value="' + esc(t.notes) + '" onchange="handleFinField(\'' + t.id + '\',\'notes\',this.value)" placeholder="Additional details..."></div>';
+            html += '</div>';
+
+            html += '</div>';
             return html;
         }
 
@@ -2845,6 +3072,22 @@
             custom.push({ id: id, name: name.trim(), icon: 'icon-dollar', budget: budget });
             await saveSetting('fin_custom_categories', JSON.stringify(custom));
             renderFinances();
+        }
+
+        function exportFinancesCSV() {
+            var categories = getFinCategories();
+            var catMap = {};
+            categories.forEach(function(c) { catMap[c.id] = c.name; });
+            var rows = [['Category', 'Description', 'Invoice #', 'Invoiced', 'Paid', 'Balance', 'Due Date', 'Terms', 'Funding Source', 'Payment Date', 'Status', 'Notes']];
+            finTransactions.forEach(function(t) {
+                var inv = parseFinAmount(t.invoice_amount);
+                var pd = parseFinAmount(t.amount_paid);
+                var bal = inv - pd;
+                rows.push([catMap[t.category] || t.category, t.description, t.invoice_ref, t.invoice_amount, t.amount_paid, bal > 0 ? '$' + bal.toLocaleString() : (bal === 0 && inv > 0 ? '$0' : ''), t.due_date || '', t.terms, t.funding_source, t.payment_date || '', t.status, t.notes]);
+            });
+            var csv = rows.map(function(r) { return r.map(function(c) { return '"' + (c || '').replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+            var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'redew_finances_' + new Date().toISOString().slice(0, 10) + '.csv'; document.body.appendChild(a); a.click(); a.remove();
         }
 
         function updateFinFilterDropdowns() {
