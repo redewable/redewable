@@ -676,6 +676,126 @@
         .dr-note-item:hover .dr-note-delete { opacity: 1; }
         .dr-note-delete:hover { background: rgba(239, 68, 68, 0.15); color: var(--status-red); }
 
+        /* ==================== FINANCES STYLES ==================== */
+        .fin-category {
+            margin-bottom: 1.5rem;
+        }
+        .fin-cat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.875rem 1.25rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 12px 12px 0 0;
+            cursor: pointer;
+        }
+        .fin-cat-header:hover { background: var(--bg-card); }
+        .fin-cat-header h2 {
+            font-size: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .fin-cat-header .fin-budget {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--brand-green);
+        }
+        .fin-cat-header .fin-cat-summary {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .fin-cat-stat {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .fin-cat-stat .label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-right: 0.35rem; }
+        .fin-cat-stat.paid { color: var(--status-green); }
+        .fin-cat-stat.due { color: var(--status-yellow); }
+        .fin-cat-stat.overdue { color: var(--status-red); }
+        .fin-category.collapsed .fin-cat-body { display: none; }
+        .fin-category.collapsed .chevron-icon { transform: rotate(-90deg); }
+        .fin-cat-body {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            overflow-x: auto;
+        }
+        .fin-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+        .fin-table th {
+            text-align: left;
+            padding: 0.75rem 0.625rem;
+            background: var(--bg-secondary);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            font-weight: 700;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+        .fin-table td {
+            padding: 0.5rem 0.625rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+            font-size: 0.85rem;
+        }
+        .fin-table tr:last-child td { border-bottom: none; }
+        .fin-table tr:hover td { background: var(--bg-tertiary); }
+        .fin-table .editable {
+            font-size: 0.85rem;
+            padding: 0.3rem 0.4rem;
+            min-width: 60px;
+        }
+        .fin-table .editable.mono {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+        }
+        .fin-status-select {
+            padding: 0.3rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            font-family: 'Play', sans-serif;
+            width: 100%;
+        }
+        .fin-status-select.pending { background: rgba(90, 107, 100, 0.2); color: var(--text-muted); }
+        .fin-status-select.partial { background: rgba(234, 179, 8, 0.15); color: var(--status-yellow); }
+        .fin-status-select.paid { background: rgba(34, 197, 94, 0.15); color: var(--status-green); }
+        .fin-status-select.overdue { background: rgba(239, 68, 68, 0.15); color: var(--status-red); }
+        .fin-source-select {
+            padding: 0.3rem 0.4rem;
+            background: var(--bg-secondary);
+            border: 1px solid transparent;
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-family: 'Play', sans-serif;
+            font-size: 0.8rem;
+            cursor: pointer;
+            width: 100%;
+        }
+        .fin-source-select:hover { border-color: var(--border); }
+        .fin-source-select:focus { outline: none; border-color: var(--brand-green); }
+        .fin-add-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.625rem 0.75rem;
+            border-top: 1px solid var(--border);
+            background: var(--bg-secondary);
+        }
+
         /* ==================== SETTINGS STYLES ==================== */
         .settings-grid {
             display: grid;
@@ -1056,6 +1176,11 @@
                         Investors
                         <span class="badge" id="investorsCount">0</span>
                     </button>
+                    <button class="tab-btn" data-tab="finances" onclick="switchTab('finances')">
+                        <svg class="icon icon-sm"><use href="#icon-dollar"/></svg>
+                        Finances
+                        <span class="badge" id="finCount">0</span>
+                    </button>
                     <button class="tab-btn" data-tab="settings" onclick="switchTab('settings')">
                         <svg class="icon icon-sm"><use href="#icon-settings"/></svg>
                         Settings
@@ -1171,6 +1296,25 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- FINANCES TAB -->
+            <div class="tab-content" id="tab-finances">
+                <div class="totals-bar">
+                    <div class="total-item"><div class="label">Total Budget</div><div class="value brand" id="finTotalBudget">$0</div></div>
+                    <div class="total-item"><div class="label">Total Invoiced</div><div class="value" id="finTotalInvoiced">$0</div></div>
+                    <div class="total-item"><div class="label">Total Paid</div><div class="value green" id="finTotalPaid">$0</div></div>
+                    <div class="total-item"><div class="label">Outstanding</div><div class="value yellow" id="finTotalOutstanding">$0</div></div>
+                    <div class="total-item"><div class="label">Overdue</div><div class="value" style="color: var(--status-red);" id="finTotalOverdue">$0</div></div>
+                </div>
+                <div class="filter-bar">
+                    <div class="filter-group"><label>Status:</label><select class="filter-select" id="finFilterStatus" onchange="renderFinances()"><option value="all">All</option><option value="pending">Pending</option><option value="partial">Partial</option><option value="paid">Paid</option><option value="overdue">Overdue</option></select></div>
+                    <div class="filter-group"><label>Source:</label><select class="filter-select" id="finFilterSource" onchange="renderFinances()"></select></div>
+                    <div class="filter-group"><label>Category:</label><select class="filter-select" id="finFilterCategory" onchange="renderFinances()"></select></div>
+                    <input type="text" class="search-input" id="finSearchInput" placeholder="Search transactions..." oninput="renderFinances()">
+                    <button class="btn btn-small btn-secondary" onclick="addFinCategory()"><svg class="icon icon-sm"><use href="#icon-plus"/></svg> Category</button>
+                </div>
+                <div id="financesContainer"></div>
             </div>
 
             <!-- SETTINGS TAB -->
@@ -1476,7 +1620,7 @@
 
         // ==================== DATA LOADING ====================
         async function loadAllData() {
-            await Promise.all([loadTasks(), loadDocuments(), loadNotes(), loadSettings()]);
+            await Promise.all([loadTasks(), loadDocuments(), loadNotes(), loadSettings(), loadFinTransactions()]);
             loadCustomVendors();
         }
 
@@ -1512,6 +1656,7 @@
             renderTasks();
             renderDataroom();
             renderSettings();
+            renderFinances();
             updateStats();
             updateFilterDropdowns();
         }
@@ -1521,6 +1666,7 @@
             document.querySelectorAll('.tab-content').forEach(function(content) { content.classList.toggle('active', content.id === 'tab-' + tabId); });
             if (tabId === 'analytics') refreshAnalytics();
             if (tabId === 'investors') refreshInvestorAnalytics();
+            if (tabId === 'finances') renderFinances();
         }
 
         // ==================== NTP CHECKLIST ====================
@@ -2128,7 +2274,7 @@
         function closeExportModal() { document.getElementById('exportModal').classList.remove('visible'); }
 
         function exportJSON() {
-            var data = { tasks: tasks, documents: documents, notes: notes, settings: settings };
+            var data = { tasks: tasks, documents: documents, notes: notes, settings: settings, financial_transactions: finTransactions };
             var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'redew-admin-export.json'; a.click();
             closeExportModal();
@@ -2458,6 +2604,261 @@
             await loadInvestorPageViews();
             renderInvestorVisitors();
             renderInvestorPageViews();
+        }
+
+        // ==================== FINANCES ====================
+        var finTransactions = [];
+
+        var defaultFinCategories = [
+            { id: 'tsp_fis', name: 'TSP / FIS Deposit', icon: 'icon-zap', budget: 100000 },
+            { id: 'enerzinx', name: 'Enerzinx', icon: 'icon-package', budget: 65000 },
+            { id: 'dev_fee', name: 'Development Fee (Salary)', icon: 'icon-users', budget: 60000 },
+            { id: 'contingency', name: 'Contingency', icon: 'icon-shield', budget: 30000 },
+            { id: 'financing_prep', name: 'Financing Package Prep', icon: 'icon-dollar', budget: 25000 },
+            { id: 'ercot', name: 'ERCOT Fees', icon: 'icon-clipboard', budget: 17000 },
+            { id: 'optimum_epc', name: 'Optimum EPC', icon: 'icon-hard-hat', budget: 15000 },
+            { id: 'ese_partners', name: 'ESE Partners', icon: 'icon-leaf', budget: 8000 },
+            { id: 'engineering_30', name: '30% Engineering', icon: 'icon-tool', budget: 151000 },
+            { id: 'geotech', name: 'Geotechnical (ANS)', icon: 'icon-map', budget: 62000 }
+        ];
+
+        var defaultFinSources = ['Chuck (Personal)', 'Business Account', 'Investor Funds', 'Other'];
+
+        function getFinCategories() {
+            try {
+                var custom = JSON.parse(settings.fin_custom_categories || 'null');
+                if (custom && Array.isArray(custom)) return defaultFinCategories.concat(custom);
+            } catch (e) {}
+            return defaultFinCategories;
+        }
+
+        function getFinSources() {
+            try {
+                var custom = JSON.parse(settings.fin_custom_sources || 'null');
+                if (custom && Array.isArray(custom)) return defaultFinSources.concat(custom);
+            } catch (e) {}
+            return defaultFinSources;
+        }
+
+        async function loadFinTransactions() {
+            if (!db) return;
+            var result = await db.from('financial_transactions').select('*').order('created_at', { ascending: true });
+            finTransactions = (result.data || []);
+        }
+
+        function renderFinances() {
+            var container = document.getElementById('financesContainer');
+            if (!container) return;
+            var statusFilter = document.getElementById('finFilterStatus').value;
+            var sourceFilter = document.getElementById('finFilterSource').value;
+            var catFilter = document.getElementById('finFilterCategory').value;
+            var searchTerm = (document.getElementById('finSearchInput').value || '').toLowerCase();
+
+            var filtered = finTransactions.filter(function(t) {
+                if (statusFilter !== 'all' && t.status !== statusFilter) return false;
+                if (sourceFilter !== 'all' && t.funding_source !== sourceFilter) return false;
+                if (catFilter !== 'all' && t.category !== catFilter) return false;
+                if (searchTerm && (t.description || '').toLowerCase().indexOf(searchTerm) === -1 && (t.invoice_ref || '').toLowerCase().indexOf(searchTerm) === -1 && (t.notes || '').toLowerCase().indexOf(searchTerm) === -1) return false;
+                return true;
+            });
+
+            var categories = getFinCategories();
+            var sources = getFinSources();
+            var html = '';
+            var totalBudget = 0, totalInvoiced = 0, totalPaid = 0, totalOutstanding = 0, totalOverdue = 0;
+
+            categories.forEach(function(cat) {
+                var catTxns = filtered.filter(function(t) { return t.category === cat.id; });
+                totalBudget += (cat.budget || 0);
+
+                var catPaid = 0, catInvoiced = 0, catDue = 0, catOverdue = 0;
+                var allCatTxns = finTransactions.filter(function(t) { return t.category === cat.id; });
+                allCatTxns.forEach(function(t) {
+                    var inv = parseFinAmount(t.invoice_amount);
+                    var pd = parseFinAmount(t.amount_paid);
+                    catInvoiced += inv;
+                    catPaid += pd;
+                    var bal = inv - pd;
+                    if (bal > 0) {
+                        if (t.status === 'overdue' || (t.due_date && new Date(t.due_date) < new Date() && t.status !== 'paid')) {
+                            catOverdue += bal;
+                        } else {
+                            catDue += bal;
+                        }
+                    }
+                });
+                totalInvoiced += catInvoiced;
+                totalPaid += catPaid;
+                totalOutstanding += catDue;
+                totalOverdue += catOverdue;
+
+                html += '<div class="fin-category" data-fin-cat="' + cat.id + '">';
+                html += '<div class="fin-cat-header" onclick="toggleFinCategory(\'' + cat.id + '\')">';
+                html += '<h2><svg class="icon"><use href="#' + (cat.icon || 'icon-dollar') + '"/></svg> ' + esc(cat.name);
+                html += ' <span class="number">' + catTxns.length + '</span></h2>';
+                html += '<div class="fin-cat-summary">';
+                html += '<span class="fin-budget">Budget: $' + (cat.budget || 0).toLocaleString() + '</span>';
+                if (catPaid > 0) html += '<span class="fin-cat-stat paid"><span class="label">Paid</span>$' + catPaid.toLocaleString() + '</span>';
+                if (catDue > 0) html += '<span class="fin-cat-stat due"><span class="label">Due</span>$' + catDue.toLocaleString() + '</span>';
+                if (catOverdue > 0) html += '<span class="fin-cat-stat overdue"><span class="label">Overdue</span>$' + catOverdue.toLocaleString() + '</span>';
+                html += '<svg class="icon chevron-icon"><use href="#icon-chevron-down"/></svg>';
+                html += '</div></div>';
+
+                html += '<div class="fin-cat-body"><table class="fin-table"><thead><tr>';
+                html += '<th style="width:18%">Description</th>';
+                html += '<th style="width:8%">Invoice #</th>';
+                html += '<th style="width:9%">Invoiced</th>';
+                html += '<th style="width:9%">Paid</th>';
+                html += '<th style="width:9%">Balance</th>';
+                html += '<th style="width:9%">Due Date</th>';
+                html += '<th style="width:7%">Terms</th>';
+                html += '<th style="width:11%">Source</th>';
+                html += '<th style="width:9%">Paid Date</th>';
+                html += '<th style="width:7%">Status</th>';
+                html += '<th style="width:12%">Notes</th>';
+                html += '<th style="width:30px"></th>';
+                html += '</tr></thead><tbody>';
+
+                catTxns.forEach(function(t) { html += renderFinRow(t, sources); });
+
+                html += '</tbody></table>';
+                html += '<div class="fin-add-row">';
+                html += '<input type="text" class="add-task-input" id="newFin-' + cat.id + '" placeholder="Add transaction..." onkeypress="if(event.key===\'Enter\')handleAddFinTxn(\'' + cat.id + '\')">';
+                html += '<button class="add-task-btn" onclick="handleAddFinTxn(\'' + cat.id + '\')"><svg class="icon icon-sm"><use href="#icon-plus"/></svg> Add</button>';
+                html += '</div></div></div>';
+            });
+
+            container.innerHTML = html;
+
+            document.getElementById('finTotalBudget').textContent = '$' + totalBudget.toLocaleString();
+            document.getElementById('finTotalInvoiced').textContent = '$' + totalInvoiced.toLocaleString();
+            document.getElementById('finTotalPaid').textContent = '$' + totalPaid.toLocaleString();
+            document.getElementById('finTotalOutstanding').textContent = '$' + totalOutstanding.toLocaleString();
+            document.getElementById('finTotalOverdue').textContent = '$' + totalOverdue.toLocaleString();
+            document.getElementById('finCount').textContent = finTransactions.length;
+            updateFinFilterDropdowns();
+        }
+
+        function renderFinRow(t, sources) {
+            var inv = parseFinAmount(t.invoice_amount);
+            var pd = parseFinAmount(t.amount_paid);
+            var balance = inv - pd;
+            var balDisplay = balance > 0 ? '$' + balance.toLocaleString() : (balance === 0 && inv > 0 ? '$0' : '—');
+            var balStyle = balance > 0 ? (t.status === 'overdue' ? 'color:var(--status-red);font-weight:700' : 'color:var(--status-yellow)') : (balance === 0 && inv > 0 ? 'color:var(--status-green)' : '');
+            var sc = t.status || 'pending';
+
+            var html = '<tr>';
+            html += '<td><input type="text" class="editable" value="' + esc(t.description) + '" onchange="handleFinField(\'' + t.id + '\',\'description\',this.value)"></td>';
+            html += '<td><input type="text" class="editable mono" value="' + esc(t.invoice_ref) + '" onchange="handleFinField(\'' + t.id + '\',\'invoice_ref\',this.value)" style="min-width:50px"></td>';
+            html += '<td><input type="text" class="editable mono" value="' + esc(t.invoice_amount) + '" placeholder="$0" onchange="handleFinField(\'' + t.id + '\',\'invoice_amount\',this.value)"></td>';
+            html += '<td><input type="text" class="editable mono" value="' + esc(t.amount_paid) + '" placeholder="$0" onchange="handleFinField(\'' + t.id + '\',\'amount_paid\',this.value)"></td>';
+            html += '<td style="font-family:\'JetBrains Mono\',monospace;font-size:0.8rem;' + balStyle + '">' + balDisplay + '</td>';
+            html += '<td><input type="date" class="editable mono" value="' + esc(t.due_date || '') + '" onchange="handleFinField(\'' + t.id + '\',\'due_date\',this.value)" style="min-width:80px"></td>';
+            html += '<td><input type="text" class="editable" value="' + esc(t.terms) + '" placeholder="—" onchange="handleFinField(\'' + t.id + '\',\'terms\',this.value)" style="min-width:50px"></td>';
+            html += '<td><select class="fin-source-select" onchange="handleFinField(\'' + t.id + '\',\'funding_source\',this.value)"><option value="">—</option>';
+            sources.forEach(function(s) { html += '<option value="' + esc(s) + '"' + (t.funding_source === s ? ' selected' : '') + '>' + esc(s) + '</option>'; });
+            html += '</select></td>';
+            html += '<td><input type="date" class="editable mono" value="' + esc(t.payment_date || '') + '" onchange="handleFinField(\'' + t.id + '\',\'payment_date\',this.value)" style="min-width:80px"></td>';
+            html += '<td><select class="fin-status-select ' + sc + '" onchange="handleFinStatus(\'' + t.id + '\',this.value)">';
+            html += '<option value="pending"' + (sc === 'pending' ? ' selected' : '') + '>Pending</option>';
+            html += '<option value="partial"' + (sc === 'partial' ? ' selected' : '') + '>Partial</option>';
+            html += '<option value="paid"' + (sc === 'paid' ? ' selected' : '') + '>Paid</option>';
+            html += '<option value="overdue"' + (sc === 'overdue' ? ' selected' : '') + '>Overdue</option>';
+            html += '</select></td>';
+            html += '<td><input type="text" class="editable" value="' + esc(t.notes) + '" placeholder="..." onchange="handleFinField(\'' + t.id + '\',\'notes\',this.value)"></td>';
+            html += '<td><button class="delete-btn" style="opacity:0.5" onclick="deleteFinTxn(\'' + t.id + '\')"><svg class="icon icon-sm"><use href="#icon-trash"/></svg></button></td>';
+            html += '</tr>';
+            return html;
+        }
+
+        function parseFinAmount(str) {
+            if (!str) return 0;
+            var n = parseFloat(String(str).replace(/[$,]/g, ''));
+            return isNaN(n) ? 0 : n;
+        }
+
+        function toggleFinCategory(id) {
+            var el = document.querySelector('.fin-category[data-fin-cat="' + id + '"]');
+            if (el) el.classList.toggle('collapsed');
+        }
+
+        async function handleFinField(id, field, value) {
+            showSaveIndicator('saving');
+            var updateData = {}; updateData[field] = value; updateData['updated_at'] = new Date().toISOString();
+            var result = await db.from('financial_transactions').update(updateData).eq('id', id);
+            if (result.error) { showSaveIndicator('error'); }
+            else {
+                finTransactions = finTransactions.map(function(t) { if (t.id === id) { t[field] = value; } return t; });
+                showSaveIndicator('saved');
+                renderFinances();
+            }
+        }
+
+        async function handleFinStatus(id, value) {
+            await handleFinField(id, 'status', value);
+        }
+
+        function handleAddFinTxn(cat) {
+            var inp = document.getElementById('newFin-' + cat);
+            if (!inp) return;
+            addFinTxn(cat, inp.value);
+            inp.value = '';
+        }
+
+        async function addFinTxn(category, description) {
+            if (!description || !description.trim()) return;
+            showSaveIndicator('saving');
+            var newTxn = {
+                category: category,
+                description: description.trim(),
+                invoice_ref: '',
+                invoice_amount: '',
+                amount_paid: '',
+                due_date: null,
+                terms: '',
+                funding_source: '',
+                payment_date: null,
+                status: 'pending',
+                notes: ''
+            };
+            var result = await db.from('financial_transactions').insert([newTxn]).select().single();
+            if (result.error) { showSaveIndicator('error'); console.error(result.error); }
+            else { finTransactions.push(result.data); renderFinances(); showSaveIndicator('saved'); }
+        }
+
+        async function deleteFinTxn(id) {
+            if (!confirm('Delete this transaction?')) return;
+            showSaveIndicator('saving');
+            var result = await db.from('financial_transactions').delete().eq('id', id);
+            if (result.error) { showSaveIndicator('error'); }
+            else { finTransactions = finTransactions.filter(function(t) { return t.id !== id; }); renderFinances(); showSaveIndicator('saved'); }
+        }
+
+        async function addFinCategory() {
+            var name = prompt('New category name:');
+            if (!name || !name.trim()) return;
+            var budgetStr = prompt('Budget amount (e.g. 25000):', '0');
+            var budget = parseFinAmount(budgetStr);
+            var id = name.trim().toLowerCase().replace(/[^a-z0-9]+/g, '_');
+            var custom = [];
+            try { custom = JSON.parse(settings.fin_custom_categories || '[]'); } catch (e) { custom = []; }
+            custom.push({ id: id, name: name.trim(), icon: 'icon-dollar', budget: budget });
+            await saveSetting('fin_custom_categories', JSON.stringify(custom));
+            renderFinances();
+        }
+
+        function updateFinFilterDropdowns() {
+            var sources = {};
+            finTransactions.forEach(function(t) { if (t.funding_source) sources[t.funding_source] = true; });
+            var sourceHtml = '<option value="all">All</option>';
+            Object.keys(sources).forEach(function(s) { sourceHtml += '<option value="' + esc(s) + '">' + esc(s) + '</option>'; });
+            var sourceEl = document.getElementById('finFilterSource');
+            if (sourceEl) sourceEl.innerHTML = sourceHtml;
+
+            var catHtml = '<option value="all">All</option>';
+            getFinCategories().forEach(function(c) { catHtml += '<option value="' + c.id + '">' + esc(c.name) + '</option>'; });
+            var catEl = document.getElementById('finFilterCategory');
+            if (catEl) catEl.innerHTML = catHtml;
         }
 
         // ==================== INIT ====================
