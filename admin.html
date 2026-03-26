@@ -1559,7 +1559,7 @@
                     <div class="settings-card">
                         <h4><svg class="icon"><use href="#icon-file-text"/></svg> Project Info</h4>
                         <div class="settings-row"><label>Project Name</label><input type="text" id="settingProjectName" value="ReDew Anson" onchange="saveSetting('project_name', this.value)"></div>
-                        <div class="settings-row"><label>Project Capacity</label><input type="text" id="settingCapacity" value="300 MW" onchange="saveSetting('capacity', this.value)"></div>
+                        <div class="settings-row"><label>Project Capacity</label><input type="text" id="settingCapacity" value="600 MW" onchange="saveSetting('capacity', this.value)"></div>
                         <div class="settings-row"><label>Target NTP Date</label><input type="text" id="settingTargetNtp" value="Q1 2027" onchange="saveSetting('target_ntp', this.value)"></div>
                     </div>
                     <div class="settings-card">
@@ -1679,7 +1679,7 @@
             { section: 'executive', name: 'Investment Teaser', file_type: 'pdf', url: '', status: 'missing', date_added: '', is_hidden: false },
             { section: 'land', name: 'Land Control Agreement', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Jan 8, 2026', is_hidden: false },
             { section: 'land', name: 'Phase I ESA', file_type: 'pdf', url: '', status: 'pending', date_added: '', is_hidden: false },
-            { section: 'interconnection', name: 'Injection Study - 300 MW', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Jan 10, 2026', is_hidden: false },
+            { section: 'interconnection', name: 'Enhanced Injection Study - 600 MW', file_type: 'pdf', url: '', status: 'uploaded', date_added: 'Jan 10, 2026', is_hidden: false },
             { section: 'interconnection', name: 'Transmission Upgrade Analysis', file_type: 'xlsx', url: '', status: 'uploaded', date_added: 'Jan 10, 2026', is_hidden: false },
             { section: 'technical', name: 'Preliminary Site Layout', file_type: 'dwg', url: '', status: 'pending', date_added: '', is_hidden: false },
             { section: 'technical', name: 'Single-Line Diagram', file_type: 'dwg', url: '', status: 'pending', date_added: '', is_hidden: false },
@@ -1689,7 +1689,7 @@
 
         var defaultNotes = [
             { section: 'land', author: 'ANS Engineering', date: 'Jan 12, 2026', content: 'Requested Phase I ESA, Preliminary Site Drawings, SLD, and SWPPP from ANS.', is_highlight: true },
-            { section: 'interconnection', author: 'Enerzinx', date: 'Jan 10, 2026', content: 'Injection study completed at 300 MW. POI can accommodate up to 2,500 MW.', is_highlight: false },
+            { section: 'interconnection', author: 'Enerzinx', date: 'Jan 10, 2026', content: 'Enhanced injection study completed at 600 MW. POI can accommodate up to 2,500 MW.', is_highlight: false },
             { section: 'epc', author: 'Call Summary', date: 'Jan 12, 2026', content: 'Optimum EPC engaged for indicative pricing. MPT is longest lead item.', is_highlight: true }
         ];
 
@@ -1699,7 +1699,7 @@
             'dr_access_mode': 'password',
             'dr_link_token': '',
             'project_name': 'ReDew Anson',
-            'capacity': '300 MW',
+            'capacity': '600 MW',
             'target_ntp': 'Q1 2027',
             'progress_land': '90',
             'progress_interconnection': '75',
@@ -2371,7 +2371,7 @@
             document.getElementById('settingDrAccessMode').value = settings.dr_access_mode || 'password';
             document.getElementById('settingDrLinkToken').value = settings.dr_link_token || '';
             document.getElementById('settingProjectName').value = settings.project_name || 'ReDew Anson';
-            document.getElementById('settingCapacity').value = settings.capacity || '300 MW';
+            document.getElementById('settingCapacity').value = settings.capacity || '600 MW';
             document.getElementById('settingTargetNtp').value = settings.target_ntp || 'Q1 2027';
             document.getElementById('settingInvestorAccessMode').value = settings.investor_access_mode || 'code';
             document.getElementById('settingInvestorPassword').value = settings.investor_shared_password || '';

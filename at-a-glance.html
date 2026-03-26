@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex, nofollow">
   <title>ReDew Anson — Project Overview | ReDewable Energy</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-  <meta name="description" content="300 MW BESS at Phantom Hill 345 kV — West Texas curtailment capture with proven grid feasibility.">
+  <meta name="description" content="600 MW BESS at Phantom Hill 345 kV — West Texas curtailment capture with proven grid feasibility.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
@@ -258,6 +258,28 @@
     .btn-secondary{background:var(--bg-tertiary);color:var(--text-primary);border:1px solid var(--border);padding:12px 24px;border-radius:8px;font-size:12px;font-weight:700;font-family:inherit;text-transform:uppercase;letter-spacing:1px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:all .2s;cursor:pointer}
     .btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
 
+    /* DURATION TOGGLE */
+    .dur-toggle{display:flex;position:relative;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:10px;padding:3px;gap:2px}
+    .dur-btn{background:none;border:none;padding:10px 22px;font-size:12px;font-weight:700;font-family:inherit;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);cursor:pointer;position:relative;z-index:2;transition:color .25s;border-radius:8px}
+    .dur-btn.active{color:var(--bg-primary)}
+    .dur-slider{position:absolute;top:3px;left:3px;width:calc(50% - 4px);height:calc(100% - 6px);background:var(--accent);border-radius:8px;transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:1}
+    .dur-toggle[data-active="4"] .dur-slider{transform:translateX(calc(100% + 2px))}
+    .dur-stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px;transition:border-color .2s}
+    .dur-stat-card:hover{border-color:var(--accent)}
+    .dur-stat-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:6px}
+    .dur-stat-value{font-size:24px;font-weight:700;color:var(--accent);margin-bottom:8px;letter-spacing:-.5px;transition:all .4s cubic-bezier(.4,0,.2,1)}
+    .dur-stat-value.animating{opacity:0;transform:translateY(8px)}
+    .dur-stat-bar-wrap{height:6px;background:var(--bg-tertiary);border-radius:4px;overflow:hidden;margin-bottom:8px}
+    .dur-stat-bar{height:100%;background:linear-gradient(90deg,var(--green-dark),var(--green));border-radius:4px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+    .dur-stat-bar-rev{background:linear-gradient(90deg,#d97706,#f59e0b)}
+    .dur-stat-sub{font-size:11px;color:var(--text-muted);transition:opacity .3s}
+    .dur-insight{display:flex;align-items:flex-start;gap:12px;margin-top:16px;padding:16px 20px;background:var(--accent-glow);border:1px solid var(--border);border-radius:10px;transition:all .3s}
+    .dur-insight-icon{flex-shrink:0;margin-top:2px;color:var(--accent)}
+    #durInsightText{font-size:13px;color:var(--text-secondary);line-height:1.7;transition:opacity .3s}
+    #durInsightText a{color:var(--accent);text-decoration:underline;text-underline-offset:2px;transition:opacity .2s}
+    #durInsightText a:hover{opacity:.8}
+    @media(max-width:768px){.dur-stats-grid{grid-template-columns:1fr!important}.dur-toggle{align-self:flex-start}}
+
     /* FOOTER */
     .footer{background:var(--bg-secondary);border-top:1px solid var(--border);padding:24px}
     .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
@@ -340,14 +362,14 @@
     </div>
     <div class="hero-content">
       <div class="hero-badge">Buyer Project Overview</div>
-      <h1 class="hero-title">ReDew Anson<br><span class="gradient-text">300 MW BESS</span></h1>
-      <p class="hero-subtitle">Phantom Hill 345 kV &bull; Jones County, TX &bull; West Load Zone<br>300 MW confirmed feasible via independent injection study (Jan 2026). Updated feasibility study underway with current queue data — expected complete March 18, 2026. ERCOT application package targeting submission by March 25, 2026.</p>
+      <h1 class="hero-title">ReDew Anson<br><span class="gradient-text">600 MW BESS</span></h1>
+      <p class="hero-subtitle">Phantom Hill 345 kV &bull; Jones County, TX &bull; West Load Zone<br>600 MW confirmed feasible via enhanced injection study (March 2026). No thermal violations observed at full capacity for both charging and discharging. ERCOT application package targeting submission.</p>
       <div class="hero-stats">
-        <div class="hero-stat"><div class="hero-stat-value">300 MW</div><div class="hero-stat-label">Confirmed Feasible</div></div>
+        <div class="hero-stat"><div class="hero-stat-value">600 MW</div><div class="hero-stat-label">Confirmed Feasible</div></div>
         <div class="hero-stat"><div class="hero-stat-value">Q1 2027</div><div class="hero-stat-label">Target NTP</div></div>
         <div class="hero-stat"><div class="hero-stat-value">345 kV</div><div class="hero-stat-label">Direct Interconnection</div></div>
         <div class="hero-stat"><div class="hero-stat-value">Q1 2028</div><div class="hero-stat-label">Target COD</div></div>
-        <div class="hero-stat"><div class="hero-stat-value">2hr</div><div class="hero-stat-label">Duration (600 MWh)</div></div>
+        <div class="hero-stat"><div class="hero-stat-value">2–4hr</div><div class="hero-stat-label">Duration Flexible</div></div>
       </div>
     </div>
     <div class="scroll-indicator">
@@ -363,7 +385,7 @@
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px">
       <div class="card reveal" style="border-left:3px solid var(--accent)">
         <h4 style="font-size:14px;color:var(--accent);border:none;padding:0;margin-bottom:10px">Derisked Development</h4>
-        <div style="font-size:13px;color:var(--text-secondary);line-height:1.75">300 MW independently confirmed feasible at 345 kV (Jan 2026). Updated study with current queue data in progress. Land secured on long-term lease. Environmental complete — favorable profile. Site layout and SLD complete. ERCOT application package in preparation. Financing structured for transferability at closing. The hardest development risks — injection capacity, land, environmental — are retired or being validated with current data.</div>
+        <div style="font-size:13px;color:var(--text-secondary);line-height:1.75">600 MW independently confirmed feasible at 345 kV (March 2026). No thermal violations at full capacity. Land secured on long-term lease. Environmental complete — favorable profile. Site layout and SLD complete. ERCOT application package in preparation. Financing structured for transferability at closing. The hardest development risks — injection capacity, land, environmental — are retired.</div>
       </div>
       <div class="card reveal" style="border-left:3px solid var(--accent)">
         <h4 style="font-size:14px;color:var(--accent);border:none;padding:0;margin-bottom:10px">Structural Market Advantage</h4>
@@ -388,9 +410,9 @@
     <div class="site-grid">
       <div class="card reveal">
         <h3>Project Specifications</h3>
-        <div class="spec-row"><span class="spec-label">Studied Capacity</span><span class="spec-value green">300 MW — independently confirmed</span></div>
-        <div class="spec-row"><span class="spec-label">Configuration</span><span class="spec-value">300 MW discharge / 140 MW charge</span></div>
-        <div class="spec-row"><span class="spec-label">Updated Study</span><span class="spec-value">In progress — expected complete March 18, 2026</span></div>
+        <div class="spec-row"><span class="spec-label">Studied Capacity</span><span class="spec-value green">600 MW — independently confirmed</span></div>
+        <div class="spec-row"><span class="spec-label">Configuration</span><span class="spec-value">600 MW discharge / 600 MW charge</span></div>
+        <div class="spec-row"><span class="spec-label">Enhanced Study</span><span class="spec-value green">Complete — March 25, 2026</span></div>
         <div class="spec-row"><span class="spec-label">POI</span><span class="spec-value">Phantom Hill 345 kV (Bus 68004)</span></div>
         <div class="spec-row"><span class="spec-label">OEM</span><span class="spec-value">CATL EnerX (buyer-aligned)</span></div>
         <div class="spec-row"><span class="spec-label">Inverter</span><span class="spec-value">Selection in progress</span></div>
@@ -400,10 +422,10 @@
       </div>
       <div class="card reveal">
         <h3>Grid Position</h3>
-        <div class="spec-row"><span class="spec-label">SCR at POI</span><span class="spec-value green">4,200 MVA @ SCR=3</span></div>
-        <div class="spec-row"><span class="spec-label">SCR Higher Capacity</span><span class="spec-value green">2,520 MVA @ SCR=5</span></div>
+        <div class="spec-row"><span class="spec-label">SCR at POI</span><span class="spec-value green">4,388 MVA @ SCR=3</span></div>
+        <div class="spec-row"><span class="spec-label">SCR Higher Capacity</span><span class="spec-value green">2,633 MVA @ SCR=5</span></div>
         <div class="spec-row"><span class="spec-label">Existing Committed</span><span class="spec-value">~1.5 GW at POI</span></div>
-        <div class="spec-row"><span class="spec-label">Injection Study</span><span class="spec-value green">300 MW confirmed feasible</span></div>
+        <div class="spec-row"><span class="spec-label">Injection Study</span><span class="spec-value green">600 MW confirmed feasible</span></div>
         <div class="spec-row"><span class="spec-label">Planning Model</span><span class="spec-value">ERCOT Summer Peak (update in progress)</span></div>
         <div class="spec-row"><span class="spec-label">Upgrade Profile</span><span class="spec-value">Conductor-focused (favorable)</span></div>
         <div class="spec-row"><span class="spec-label">Study Firm</span><span class="spec-value">Enerzinx (independent)</span></div>
@@ -415,21 +437,21 @@
   <!-- FEASIBILITY + GALLERY -->
   <section class="snap-section" id="phased"><div class="container">
     <div class="section-label reveal">Grid Feasibility</div>
-    <h2 class="section-title reveal">300 MW Confirmed — Updated Study Underway</h2>
-    <p class="section-desc reveal">An independent injection study completed January 2026 confirms 300 MW feasibility at Phantom Hill 345 kV. The original study was based on mid-2025 queue data — since then, the ERCOT interconnection queue has shifted materially. Enerzinx is now running an updated feasibility study with current queue conditions (expected complete March 18, 2026) to validate capacity and inform the ERCOT application, targeting submission by March 25, 2026.</p>
+    <h2 class="section-title reveal">600 MW Confirmed — Enhanced Study Complete</h2>
+    <p class="section-desc reveal">An enhanced injection study completed March 25, 2026 by Enerzinx confirms 600 MW feasibility at Phantom Hill 345 kV. The study analyzed the POI using the latest ERCOT SSWG base case (Feb 2026) with updated queue data. No thermal violations observed at full 600 MW capacity for both charging and discharging scenarios.</p>
     <div class="phase-track reveal">
       <div class="phase-card active-phase">
         <div class="phase-number">Complete</div>
-        <div class="phase-mw">300 MW</div>
-        <div class="phase-label">Independent Injection Study — Jan 2026</div>
-        <div class="phase-desc">Confirmed 300 MW discharge / 140 MW charge at Phantom Hill 345 kV. Strong SCR metrics (4,200 MVA @ SCR=3). All thermal overloads identified are pre-existing base case conditions — remote from POI. Upgrade profile is conductor-focused and favorable.</div>
+        <div class="phase-mw">600 MW</div>
+        <div class="phase-label">Enhanced Injection Study — March 2026</div>
+        <div class="phase-desc">Confirmed 600 MW discharge / 600 MW charge at Phantom Hill 345 kV. No thermal violations at full capacity. Strong SCR metrics (4,388 MVA @ SCR=3). Study used latest ERCOT SSWG base case with current queue data.</div>
         <div class="phase-arrow">→</div>
       </div>
       <div class="phase-card">
         <div class="phase-number">In Progress</div>
-        <div class="phase-mw">Updated Study</div>
-        <div class="phase-label">Current Queue Data — Expected Complete March 18, 2026</div>
-        <div class="phase-desc">Enerzinx is re-running the feasibility analysis with updated base cases reflecting current queue conditions, new generation commitments, and recent transmission upgrades. This will validate capacity at the POI and determine the optimal project size for ERCOT submission.</div>
+        <div class="phase-mw">Study Complete</div>
+        <div class="phase-label">Enhanced Feasibility — Completed March 25, 2026</div>
+        <div class="phase-desc">Enerzinx completed the enhanced feasibility analysis with updated SSWG base cases reflecting current queue conditions (33 projects, 3,829 MW total queued generation). 600 MW confirmed with no thermal violations at full capacity.</div>
         <div class="phase-arrow">→</div>
       </div>
       <div class="phase-card">
@@ -501,7 +523,7 @@
       </div>
       <div class="queue-bar-wrapper">
         <div class="queue-bar-label"><span>Unmatched Storage Opportunity</span><span style="color:var(--accent)">~612 MW</span></div>
-        <div class="queue-bar-track"><div class="queue-bar-fill gap" style="width:27%">ReDew Anson: 300 MW</div></div>
+        <div class="queue-bar-track"><div class="queue-bar-fill gap" style="width:40%">ReDew Anson: 600 MW</div></div>
       </div>
       <div class="queue-legend">
         <div class="queue-legend-item"><div class="queue-legend-dot solar"></div>Solar (operational + queued)</div>
@@ -559,19 +581,19 @@
   <section id="technical" class="snap-section"><div class="container">
     <div class="section-label reveal">Engineering &amp; Interconnection</div>
     <h2 class="section-title reveal">Technical Position</h2>
-    <p class="section-desc reveal">Independent injection analysis by Enerzinx confirms 300 MW feasibility. Updated study with current queue data expected complete March 18, 2026 — ERCOT application targeting submission by March 25, 2026.</p>
+    <p class="section-desc reveal">Enhanced injection analysis by Enerzinx confirms 600 MW feasibility at Phantom Hill 345 kV. No thermal violations at full capacity for both charging and discharging. ERCOT application package in preparation.</p>
     <div class="tech-grid">
       <div class="card reveal"><h4>Injection Study Results</h4>
-        <div class="item"><div class="dot-done"></div><span><strong>300 MW / 140 MW charge</strong> confirmed feasible (Jan 2026)</span></div>
-        <div class="item"><div class="dot-done"></div><span>SCR: <strong>4,200 MVA @ SCR=3</strong> (2,520 @ SCR=5)</span></div>
+        <div class="item"><div class="dot-done"></div><span><strong>600 MW discharge / 600 MW charge</strong> confirmed feasible (March 2026)</span></div>
+        <div class="item"><div class="dot-done"></div><span>SCR: <strong>4,388 MVA @ SCR=3</strong> (2,633 @ SCR=5)</span></div>
         <div class="item"><div class="dot-done"></div><span>Thermal overloads are <strong>pre-existing base case</strong> — remote from POI</span></div>
         <div class="item"><div class="dot-done"></div><span>Upgrades: <strong>conductor-focused</strong> (favorable cost profile)</span></div>
-        <div class="item"><div class="dot-wip"></div><span><strong>Updated study in progress</strong> — current queue data, expected complete March 18, 2026</span></div>
+        <div class="item"><div class="dot-done"></div><span><strong>Enhanced study complete</strong> — current queue data, completed March 25, 2026</span></div>
       </div>
       <div class="card reveal"><h4>Interconnection Strategy</h4>
-        <div class="item"><div class="dot-done"></div><span><strong>Injection study complete</strong> (Jan 2026)</span></div>
-        <div class="item"><div class="dot-wip"></div><span><strong>Updated feasibility study</strong> — current queue data, expected complete March 18, 2026</span></div>
-        <div class="item"><div class="dot-wip"></div><span><strong>ERCOT application package</strong> — parallel preparation</span></div>
+        <div class="item"><div class="dot-done"></div><span><strong>Initial injection study complete</strong> (Jan 2026)</span></div>
+        <div class="item"><div class="dot-done"></div><span><strong>Enhanced feasibility study complete</strong> — current queue data, completed March 25, 2026</span></div>
+        <div class="item"><div class="dot-wip"></div><span><strong>ERCOT application package</strong> — in preparation</span></div>
         <div class="item"><div class="dot-pending"></div><span>System Impact Study — Q2–Q3 2026</span></div>
         <div class="item"><div class="dot-pending"></div><span>Facilities Study — Q4 2026</span></div>
         <div class="item"><div class="dot-pending"></div><span>IA / NTP — Q1 2027</span></div>
@@ -601,10 +623,10 @@
     <h2 class="section-title reveal">Where We Are Today</h2>
     <div class="status-grid reveal">
       <div class="status-card"><span class="status-tag done">Complete</span><h4>Land &amp; Site Control</h4><p>Agreements signed, in data room. ~0.5 mi from Phantom Hill 345 kV. Adjacent to ENGIE's ~420 MW Anson Solar.</p></div>
-      <div class="status-card"><span class="status-tag done">Complete</span><h4>Injection Study</h4><p>Enerzinx confirms 300 MW feasibility (Jan 2026). All thermal overloads are pre-existing base case conditions, remote from POI. Updated study with current queue data in progress.</p></div>
+      <div class="status-card"><span class="status-tag done">Complete</span><h4>Enhanced Injection Study</h4><p>Enerzinx confirms 600 MW feasibility (March 2026). No thermal violations at full capacity for both charging and discharging. Updated with latest ERCOT SSWG base case and current queue data.</p></div>
       <div class="status-card"><span class="status-tag done">Complete</span><h4>Preliminary SLD</h4><p>Single-line diagram complete. CATL EnerX at 345 kV. Available in data room.</p></div>
-      <div class="status-card"><span class="status-tag active">In Progress</span><h4>Updated Feasibility Study</h4><p>Enerzinx re-running injection analysis with current queue data to validate capacity at POI. Expected complete March 18, 2026.</p></div>
-      <div class="status-card"><span class="status-tag active">In Progress</span><h4>ERCOT Application Package</h4><p>Full GINR package in preparation — SLD, models, MQT compliance, RARF/RIOO. Targeting submission by March 25, 2026.</p></div>
+      <div class="status-card"><span class="status-tag done">Complete</span><h4>Enhanced Feasibility Study</h4><p>Enerzinx completed enhanced injection analysis with current queue data. 600 MW confirmed feasible at Phantom Hill 345 kV. Completed March 25, 2026.</p></div>
+      <div class="status-card"><span class="status-tag active">In Progress</span><h4>ERCOT Application Package</h4><p>Full GINR package in preparation — SLD, models, MQT compliance, RARF/RIOO. Enhanced study results informing application.</p></div>
       <div class="status-card"><span class="status-tag done">Complete</span><h4>Environmental</h4><p>ESE Partners: Phase I ESA, CIA, and Permit Matrix complete. Favorable profile — no wetlands, no floodplains, no hazardous sites. One historical REC (former reserve pit, ~1964) identified for further investigation.</p></div>
       <div class="status-card"><span class="status-tag done">Complete</span><h4>EPC &amp; Engineering</h4><p>Site layout and SLD complete. 9 breakers in stock. Open: ROW routing, transformer config, setbacks.</p></div>
       <div class="status-card"><span class="status-tag active">In Progress</span><h4>Financing</h4><p>Financing structured for transferability. Development capital raise underway. PPM updated, data room live.</p></div>
@@ -618,13 +640,74 @@
     <h2 class="section-title reveal">Buyer's Capital Stack</h2>
     <p class="section-desc reveal">Transparent cost structure for buyer-led modeling. All-in installed cost competitive with NREL benchmarks — with development risk already retired.</p>
 
+    <!-- DURATION TOGGLE -->
+    <div class="duration-toggle-wrapper reveal" style="margin-top:28px;margin-bottom:28px">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:20px">
+        <div>
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:4px">Battery Duration</div>
+          <div style="font-size:13px;color:var(--text-secondary)">Compare system configurations side by side</div>
+        </div>
+        <div class="dur-toggle" id="durToggle">
+          <button class="dur-btn active" data-dur="2">2-Hour</button>
+          <button class="dur-btn" data-dur="4">4-Hour</button>
+          <div class="dur-slider"></div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px" class="dur-stats-grid">
+        <div class="dur-stat-card">
+          <div class="dur-stat-label">Energy Capacity</div>
+          <div class="dur-stat-value" id="durMWh">1,200 MWh</div>
+          <div class="dur-stat-bar-wrap"><div class="dur-stat-bar" id="durMWhBar" style="width:50%"></div></div>
+          <div class="dur-stat-sub" id="durMWhSub">600 MW × 2 hours</div>
+        </div>
+        <div class="dur-stat-card">
+          <div class="dur-stat-label">Est. All-In Cost</div>
+          <div class="dur-stat-value" id="durCost">~$294M–$312M</div>
+          <div class="dur-stat-bar-wrap"><div class="dur-stat-bar" id="durCostBar" style="width:50%"></div></div>
+          <div class="dur-stat-sub" id="durCostSub">~$490–$520/kW</div>
+        </div>
+        <div class="dur-stat-card">
+          <div class="dur-stat-label">Indicative Revenue</div>
+          <div class="dur-stat-value" id="durRev">$18M–$33M/yr</div>
+          <div class="dur-stat-bar-wrap"><div class="dur-stat-bar dur-stat-bar-rev" id="durRevBar" style="width:50%"></div></div>
+          <div class="dur-stat-sub" id="durRevSub">$30–$55/kW-yr benchmark</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px" class="dur-stats-grid">
+        <div class="dur-stat-card">
+          <div class="dur-stat-label">Site Footprint</div>
+          <div class="dur-stat-value" id="durAcres">~15–20 acres</div>
+          <div class="dur-stat-sub" id="durAcresSub">BESS equipment area only</div>
+        </div>
+        <div class="dur-stat-card">
+          <div class="dur-stat-label">Container Count</div>
+          <div class="dur-stat-value" id="durContainers">~120 units</div>
+          <div class="dur-stat-sub" id="durContainersSub">CATL EnerX 5 MWh containers (est.)</div>
+        </div>
+        <div class="dur-stat-card">
+          <div class="dur-stat-label">Dispatch Window</div>
+          <div class="dur-stat-value" id="durDispatch">2 hr</div>
+          <div class="dur-stat-sub" id="durDispatchSub">Peak shaving + fast arbitrage</div>
+        </div>
+      </div>
+
+      <div class="dur-insight" id="durInsight">
+        <div class="dur-insight-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        </div>
+        <div id="durInsightText">2-hour BESS captures peak arbitrage windows and ancillary services. Lower capex per MW. Fastest path to NTP and COD. Ideal for operators prioritizing capital efficiency and rapid deployment.</div>
+      </div>
+    </div>
+
     <!-- CAPITAL STACK TABLE -->
     <div class="comp-table-wrap reveal" style="margin-top:28px">
       <table class="comp-table">
-        <thead><tr><th>Cost Component</th><th>$/kW</th><th>Total (300 MW)</th><th>Notes</th></tr></thead>
+        <thead><tr><th>Cost Component</th><th>$/kW</th><th>Total (600 MW)</th><th>Notes</th></tr></thead>
         <tbody>
           <tr><td><strong>Turnkey EPC</strong></td><td style="color:var(--accent);font-weight:700">~$440/kW</td><td style="font-weight:700">~$132M</td><td>Optimum EPC — sub, tie-line, BESS, PCS. CATL EnerX. Indicative; final pricing being finalized.</td></tr>
-          <tr><td><strong>Development Asset</strong></td><td style="color:var(--accent);font-weight:700">$50–$80/kW</td><td style="font-weight:700">$15M–$24M</td><td>Feasibility, land, environmental, interconnection, financing.</td></tr>
+          <tr><td><strong>Development Asset</strong></td><td style="color:var(--accent);font-weight:700">$50–$80/kW</td><td style="font-weight:700">$30M–$48M</td><td>Feasibility, land, environmental, interconnection, financing.</td></tr>
           <tr style="background:var(--accent-glow)"><td><strong>All-In Installed Cost</strong></td><td style="color:var(--accent);font-weight:700">~$490–$520/kW</td><td style="font-weight:700">~$147M–$156M</td><td>NREL 2026 benchmark: $480–$560/kW (competitive 2hr BESS).</td></tr>
           <tr><td>Land</td><td colspan="2" style="color:var(--accent)">20–30 Year Lease</td><td>Not in capital stack. Secured. Eliminates acquisition cost.</td></tr>
           <tr><td>Financing</td><td colspan="2" style="color:var(--accent)">Transferable at Closing</td><td>Structured for transferability. Non-accelerating. No prepayment penalty.</td></tr>
@@ -637,7 +720,7 @@
       <div class="card">
         <h3>EPC Detail</h3>
         <div class="spec-row"><span class="spec-label">EPC Rate</span><span class="spec-value">~$110/MWh (indicative)</span></div>
-        <div class="spec-row"><span class="spec-label">Configuration</span><span class="spec-value">300 MW / 600 MWh (2hr)</span></div>
+        <div class="spec-row"><span class="spec-label">Configuration</span><span class="spec-value">600 MW / 1,200 MWh (2hr)</span></div>
         <div class="spec-row"><span class="spec-label">Total EPC</span><span class="spec-value green">~$132M</span></div>
         <div class="spec-row"><span class="spec-label">Scope</span><span class="spec-value">Turnkey — full BOP</span></div>
         <div class="spec-row"><span class="spec-label">Includes</span><span class="spec-value">Substation, tie-line, BESS, PCS</span></div>
@@ -660,14 +743,14 @@
     </div>
 
     <div class="data-strip reveal" style="margin-top:24px">
-      <div class="data-box"><div class="data-box-label">Indicative Annual Revenue</div><div class="data-box-value">$9M–$16.5M</div><div class="data-box-desc">Range based on $30–$55/kW-yr ERCOT benchmarks at 300 MW. Top-quartile positioning and co-location upside not modeled. Full market data available for buyer-led modeling.</div></div>
+      <div class="data-box"><div class="data-box-label">Indicative Annual Revenue</div><div class="data-box-value">$18M–$33M</div><div class="data-box-desc">Range based on $30–$55/kW-yr ERCOT benchmarks at 600 MW. Top-quartile positioning and co-location upside not modeled. Full market data available for buyer-led modeling.</div></div>
       <div class="data-box"><div class="data-box-label">AS Revenue Shift</div><div class="data-box-value amber">42% → Energy</div><div class="data-box-desc">Ancillary services share fell from 84% to 42% in two years. Energy arbitrage now dominant. RTC+B (Dec 2025) reshapes dispatch — favors sophisticated operators.</div></div>
       <div class="data-box"><div class="data-box-label">ERCOT BESS Installed</div><div class="data-box-value">14 GW</div><div class="data-box-desc">Capacity nearly doubled in 2025. New applications fell 50% in H2. 79 GW of planned US capacity cancelled. Window narrowing for well-positioned projects.</div></div>
     </div>
 
     <div class="callout reveal" style="margin-top:24px">
       <h4>Development Premium Context</h4>
-      <p>Development-stage BESS acquisitions typically transact at <strong>$50–$80/kW</strong> for projects with completed feasibility, secured land, and active interconnection (Ascend Analytics, comparable transactions). At 300 MW, that implies a <strong>$15M–$24M development asset value</strong>. ReDew Anson's premium reflects: independent injection study complete, land secured on long-term lease, committed transferable financing, environmental complete (favorable profile), ERCOT application in progress, and buyer-aligned OEM specified (CATL EnerX). Full revenue projections and returns modeling available — <a href="mailto:invest@redewable.com" style="color:var(--accent)">let's discuss</a>.</p>
+      <p>Development-stage BESS acquisitions typically transact at <strong>$50–$80/kW</strong> for projects with completed feasibility, secured land, and active interconnection (Ascend Analytics, comparable transactions). At 600 MW, that implies a <strong>$30M–$48M development asset value</strong>. ReDew Anson's premium reflects: independent injection study complete, land secured on long-term lease, committed transferable financing, environmental complete (favorable profile), ERCOT application in progress, and buyer-aligned OEM specified (CATL EnerX). Full revenue projections and returns modeling available — <a href="mailto:invest@redewable.com" style="color:var(--accent)">let's discuss</a>.</p>
     </div>
   </div></section>
 
@@ -779,6 +862,45 @@
     document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)closeLightbox()});
     document.querySelector('.lightbox-close').addEventListener('click',closeLightbox);
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox()});
+
+    // Duration Toggle (2hr vs 4hr)
+    (function(){
+      const toggle=document.getElementById('durToggle');
+      if(!toggle)return;
+      const btns=toggle.querySelectorAll('.dur-btn');
+      const data={
+        2:{mwh:'1,200 MWh',mwhSub:'600 MW × 2 hours',mwhBar:50,cost:'~$294M–$312M',costSub:'~$490–$520/kW',costBar:48,rev:'$18M–$33M/yr',revSub:'$30–$55/kW-yr benchmark',revBar:50,acres:'~15–20 acres',acresSub:'BESS equipment area only',containers:'~120 units',containersSub:'CATL EnerX 5 MWh containers (est.)',dispatch:'2 hr',dispatchSub:'Peak shaving + fast arbitrage',insight:'2-hour BESS captures peak arbitrage windows and ancillary services. Lower capex per MW. Fastest path to NTP and COD. Ideal for operators prioritizing capital efficiency and rapid deployment.'},
+        4:{mwh:'2,400 MWh',mwhSub:'600 MW × 4 hours',mwhBar:100,cost:'~$456M–$492M',costSub:'~$760–$820/kW',costBar:80,rev:'$30M–$50M/yr',revSub:'Extended dispatch captures evening price spikes',revBar:85,acres:'~30–40 acres',acresSub:'2× equipment footprint vs 2hr',containers:'~240 units',containersSub:'CATL EnerX 5 MWh containers (est.)',dispatch:'4 hr',dispatchSub:'Extended arbitrage + solar shift + load following',insight:'4-hour BESS captures extended evening price spikes and solar-shift arbitrage. Higher total revenue potential. Larger physical footprint and higher capex, but stronger $/MWh economics over asset life. Preferred by utilities and long-hold operators.<br><br><strong style="color:var(--accent);">DRRS Eligible</strong> — 4-hour duration qualifies for ERCOT\'s upcoming Dispatchable Reliability Reserve Service (DRRS), a new ancillary service expected to launch in 2027 under NPRR 1309 (mandated by Texas HB 1500). DRRS requires 4-hour sustained output at HSL, creating a dedicated revenue stream for long-duration assets. <a href="https://www.ercot.com/files/docs/2025/12/04/6.1-NPRR1309-Dispatchable-Reliability-Reserve-Service-Ancillary-Service-and-NOGRR283.pdf" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline;">View ERCOT DRRS Announcement →</a>'}
+      };
+      function animateValue(el,val){el.classList.add('animating');setTimeout(()=>{el.textContent=val;el.classList.remove('animating')},200)}
+      function setDuration(dur){
+        toggle.setAttribute('data-active',dur);
+        btns.forEach(b=>b.classList.toggle('active',b.dataset.dur==dur));
+        const d=data[dur];
+        animateValue(document.getElementById('durMWh'),d.mwh);
+        animateValue(document.getElementById('durCost'),d.cost);
+        animateValue(document.getElementById('durRev'),d.rev);
+        animateValue(document.getElementById('durAcres'),d.acres);
+        animateValue(document.getElementById('durContainers'),d.containers);
+        animateValue(document.getElementById('durDispatch'),d.dispatch);
+        setTimeout(()=>{
+          document.getElementById('durMWhSub').textContent=d.mwhSub;
+          document.getElementById('durCostSub').textContent=d.costSub;
+          document.getElementById('durRevSub').textContent=d.revSub;
+          document.getElementById('durAcresSub').textContent=d.acresSub;
+          document.getElementById('durContainersSub').textContent=d.containersSub;
+          document.getElementById('durDispatchSub').textContent=d.dispatchSub;
+          document.getElementById('durMWhBar').style.width=d.mwhBar+'%';
+          document.getElementById('durCostBar').style.width=d.costBar+'%';
+          document.getElementById('durRevBar').style.width=d.revBar+'%';
+        },100);
+        const ins=document.getElementById('durInsightText');
+        ins.style.opacity=0;
+        setTimeout(()=>{ins.innerHTML=d.insight;ins.style.opacity=1},250);
+      }
+      btns.forEach(b=>b.addEventListener('click',()=>setDuration(b.dataset.dur)));
+      toggle.setAttribute('data-active','2');
+    })();
   </script>
   <script src="/investor-gate.js" defer></script>
 </body>
