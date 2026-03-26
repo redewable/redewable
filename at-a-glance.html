@@ -393,7 +393,7 @@
       </div>
       <div class="card reveal" style="border-left:3px solid var(--accent)">
         <h4 style="font-size:14px;color:var(--accent);border:none;padding:0;margin-bottom:10px">Below-Market Capital Stack</h4>
-        <div style="font-size:13px;color:var(--text-secondary);line-height:1.75">All-in installed cost of ~$490–$520/kW vs. NREL benchmark of $480–$560/kW for competitive 2hr BESS. Indicative turnkey EPC at ~$440/kW ($132M) from Optimum with CATL EnerX. Final pricing being finalized. 4hr duration under evaluation pending enhanced feasibility study and revenue modeling. No land acquisition cost — 20–30 year lease eliminates a major capital line item. Development premium of $50–$80/kW ($15M–$24M) reflects retired risk, not speculative value.</div>
+        <div style="font-size:13px;color:var(--text-secondary);line-height:1.75">All-in installed cost of ~$270–$300/kW for 2hr configuration — indicative turnkey EPC at ~$110/MWh ($220/kW, ~$132M) from Optimum with CATL EnerX. Final pricing being finalized. 4hr configuration under evaluation pending revenue modeling — estimated all-in ~$430–$460/kW. No land acquisition cost — 20–30 year lease eliminates a major capital line item. Development premium of $50–$80/kW ($30M–$48M) reflects retired risk, not speculative value.</div>
       </div>
       <div class="card reveal" style="border-left:3px solid var(--accent)">
         <h4 style="font-size:14px;color:var(--accent);border:none;padding:0;margin-bottom:10px">Clean Acquisition Path</h4>
@@ -457,7 +457,7 @@
       <div class="phase-card">
         <div class="phase-number">In Preparation</div>
         <div class="phase-mw">ERCOT Application</div>
-        <div class="phase-label">GINR Package — Targeting Submission March 25, 2026</div>
+        <div class="phase-label">GINR Package — Targeting Submission ~March 31, 2026 (tentative)</div>
         <div class="phase-desc">Full interconnection application package being developed by Enerzinx per ERCOT DWGP Manual Rev. 24 — including SLD, PSS/E and PSCAD models, reactive power study, MQT compliance, and RARF/RIOO form. Running parallel to the updated study for maximum queue speed.</div>
       </div>
     </div>
@@ -663,9 +663,9 @@
         </div>
         <div class="dur-stat-card">
           <div class="dur-stat-label">Est. All-In Cost</div>
-          <div class="dur-stat-value" id="durCost">~$294M–$312M</div>
-          <div class="dur-stat-bar-wrap"><div class="dur-stat-bar" id="durCostBar" style="width:50%"></div></div>
-          <div class="dur-stat-sub" id="durCostSub">~$490–$520/kW</div>
+          <div class="dur-stat-value" id="durCost">~$162M–$180M</div>
+          <div class="dur-stat-bar-wrap"><div class="dur-stat-bar" id="durCostBar" style="width:45%"></div></div>
+          <div class="dur-stat-sub" id="durCostSub">~$270–$300/kW · Optimum indicative</div>
         </div>
         <div class="dur-stat-card">
           <div class="dur-stat-label">Indicative Revenue</div>
@@ -706,9 +706,9 @@
       <table class="comp-table">
         <thead><tr><th>Cost Component</th><th>$/kW</th><th>Total (600 MW)</th><th>Notes</th></tr></thead>
         <tbody>
-          <tr><td><strong>Turnkey EPC</strong></td><td style="color:var(--accent);font-weight:700">~$440/kW</td><td style="font-weight:700">~$132M</td><td>Optimum EPC — sub, tie-line, BESS, PCS. CATL EnerX. Indicative; final pricing being finalized.</td></tr>
+          <tr><td><strong>Turnkey EPC</strong></td><td id="csEpcKw" style="color:var(--accent);font-weight:700">~$220/kW</td><td id="csEpcTotal" style="font-weight:700">~$132M</td><td id="csEpcNote">Optimum EPC — sub, tie-line, BESS, PCS. CATL EnerX. Indicative; final pricing being finalized.</td></tr>
           <tr><td><strong>Development Asset</strong></td><td style="color:var(--accent);font-weight:700">$50–$80/kW</td><td style="font-weight:700">$30M–$48M</td><td>Feasibility, land, environmental, interconnection, financing.</td></tr>
-          <tr style="background:var(--accent-glow)"><td><strong>All-In Installed Cost</strong></td><td style="color:var(--accent);font-weight:700">~$490–$520/kW</td><td style="font-weight:700">~$147M–$156M</td><td>NREL 2026 benchmark: $480–$560/kW (competitive 2hr BESS).</td></tr>
+          <tr style="background:var(--accent-glow)"><td><strong>All-In Installed Cost</strong></td><td id="csAllInKw" style="color:var(--accent);font-weight:700">~$270–$300/kW</td><td id="csAllInTotal" style="font-weight:700">~$162M–$180M</td><td id="csAllInNote">Based on Optimum indicative EPC + development costs at 600 MW.</td></tr>
           <tr><td>Land</td><td colspan="2" style="color:var(--accent)">20–30 Year Lease</td><td>Not in capital stack. Secured. Eliminates acquisition cost.</td></tr>
           <tr><td>Financing</td><td colspan="2" style="color:var(--accent)">Transferable at Closing</td><td>Structured for transferability. Non-accelerating. No prepayment penalty.</td></tr>
           <tr><td>Property Tax Benefits</td><td colspan="2" style="color:var(--accent)">Transferable</td><td>Long-term savings. Conveys to buyer automatically.</td></tr>
@@ -719,16 +719,16 @@
     <div class="site-grid reveal" style="margin-top:24px">
       <div class="card">
         <h3>EPC Detail</h3>
-        <div class="spec-row"><span class="spec-label">EPC Rate</span><span class="spec-value">~$110/MWh (indicative)</span></div>
-        <div class="spec-row"><span class="spec-label">Configuration</span><span class="spec-value">600 MW / 1,200 MWh (2hr)</span></div>
-        <div class="spec-row"><span class="spec-label">Total EPC</span><span class="spec-value green">~$132M</span></div>
+        <div class="spec-row"><span class="spec-label">EPC Rate</span><span id="epcRate" class="spec-value">~$110/MWh (indicative)</span></div>
+        <div class="spec-row"><span class="spec-label">Configuration</span><span id="epcConfig" class="spec-value">600 MW / 1,200 MWh (2hr)</span></div>
+        <div class="spec-row"><span class="spec-label">Total EPC</span><span id="epcTotal" class="spec-value green">~$132M</span></div>
         <div class="spec-row"><span class="spec-label">Scope</span><span class="spec-value">Turnkey — full BOP</span></div>
         <div class="spec-row"><span class="spec-label">Includes</span><span class="spec-value">Substation, tie-line, BESS, PCS</span></div>
         <div class="spec-row"><span class="spec-label">EPC Partner</span><span class="spec-value green">Optimum EPC</span></div>
         <div class="spec-row"><span class="spec-label">OEM</span><span class="spec-value">CATL EnerX (larger units = $/MWh efficiency)</span></div>
         <div class="spec-row"><span class="spec-label">Inverter</span><span class="spec-value">Selection in progress</span></div>
         <div class="spec-row"><span class="spec-label">Dev Costs</span><span class="spec-value"><a href="/devfunds" style="color:var(--accent);text-decoration:underline">View Breakdown →</a></span></div>
-        <div class="callout"><h4>EPC Pricing Context</h4><p>Indicative EPC pricing based on comparable ERCOT BESS projects at similar scale. Final turnkey pricing is being finalized with Optimum EPC — expected to be competitive within the NREL benchmark range of $480–$560/kW for 2hr BESS. 4hr configuration under evaluation.</p></div>
+        <div class="callout"><h4>EPC Pricing Context</h4><p id="epcContext">Indicative EPC pricing from Optimum EPC at ~$110/MWh ($220/kW) for 600 MW / 1,200 MWh turnkey scope. Final pricing being finalized. 4hr configuration under evaluation — estimated figures shown when toggled.</p></div>
       </div>
       <div class="card">
         <h3>ERCOT Revenue Framework</h3>
@@ -743,14 +743,14 @@
     </div>
 
     <div class="data-strip reveal" style="margin-top:24px">
-      <div class="data-box"><div class="data-box-label">Indicative Annual Revenue</div><div class="data-box-value">$18M–$33M</div><div class="data-box-desc">Range based on $30–$55/kW-yr ERCOT benchmarks at 600 MW. Top-quartile positioning and co-location upside not modeled. Full market data available for buyer-led modeling.</div></div>
+      <div class="data-box"><div class="data-box-label">Indicative Annual Revenue</div><div id="stripRevValue" class="data-box-value">$18M–$33M</div><div id="stripRevDesc" class="data-box-desc">Range based on $30–$55/kW-yr ERCOT benchmarks at 600 MW. Top-quartile positioning and co-location upside not modeled. Full market data available for buyer-led modeling.</div></div>
       <div class="data-box"><div class="data-box-label">AS Revenue Shift</div><div class="data-box-value amber">42% → Energy</div><div class="data-box-desc">Ancillary services share fell from 84% to 42% in two years. Energy arbitrage now dominant. RTC+B (Dec 2025) reshapes dispatch — favors sophisticated operators.</div></div>
       <div class="data-box"><div class="data-box-label">ERCOT BESS Installed</div><div class="data-box-value">14 GW</div><div class="data-box-desc">Capacity nearly doubled in 2025. New applications fell 50% in H2. 79 GW of planned US capacity cancelled. Window narrowing for well-positioned projects.</div></div>
     </div>
 
     <div class="callout reveal" style="margin-top:24px">
       <h4>Development Premium Context</h4>
-      <p>Development-stage BESS acquisitions typically transact at <strong>$50–$80/kW</strong> for projects with completed feasibility, secured land, and active interconnection (Ascend Analytics, comparable transactions). At 600 MW, that implies a <strong>$30M–$48M development asset value</strong>. ReDew Anson's premium reflects: independent injection study complete, land secured on long-term lease, committed transferable financing, environmental complete (favorable profile), ERCOT application in progress, and buyer-aligned OEM specified (CATL EnerX). Full revenue projections and returns modeling available — <a href="mailto:invest@redewable.com" style="color:var(--accent)">let's discuss</a>.</p>
+      <p>Development-stage BESS acquisitions typically transact at <strong>$50–$80/kW</strong> for projects with completed feasibility, secured land, and active interconnection (Ascend Analytics, comparable transactions). At 600 MW, that implies a <strong>$30M–$48M development asset value</strong>. ReDew Anson's premium reflects: independent injection study complete, land secured on long-term lease, committed transferable financing, environmental complete (favorable profile), ERCOT application targeting submission, and buyer-aligned OEM specified (CATL EnerX). Full revenue projections and returns modeling available — <a href="mailto:invest@redewable.com" style="color:var(--accent)">let's discuss</a>.</p>
     </div>
   </div></section>
 
@@ -869,14 +869,43 @@
       if(!toggle)return;
       const btns=toggle.querySelectorAll('.dur-btn');
       const data={
-        2:{mwh:'1,200 MWh',mwhSub:'600 MW × 2 hours',mwhBar:50,cost:'~$294M–$312M',costSub:'~$490–$520/kW',costBar:48,rev:'$18M–$33M/yr',revSub:'$30–$55/kW-yr benchmark',revBar:50,acres:'~15–20 acres',acresSub:'BESS equipment area only',containers:'~120 units',containersSub:'CATL EnerX 5 MWh containers (est.)',dispatch:'2 hr',dispatchSub:'Peak shaving + fast arbitrage',insight:'2-hour BESS captures peak arbitrage windows and ancillary services. Lower capex per MW. Fastest path to NTP and COD. Ideal for operators prioritizing capital efficiency and rapid deployment.'},
-        4:{mwh:'2,400 MWh',mwhSub:'600 MW × 4 hours',mwhBar:100,cost:'~$456M–$492M',costSub:'~$760–$820/kW',costBar:80,rev:'$30M–$50M/yr',revSub:'Extended dispatch captures evening price spikes',revBar:85,acres:'~30–40 acres',acresSub:'2× equipment footprint vs 2hr',containers:'~240 units',containersSub:'CATL EnerX 5 MWh containers (est.)',dispatch:'4 hr',dispatchSub:'Extended arbitrage + solar shift + load following',insight:'4-hour BESS captures extended evening price spikes and solar-shift arbitrage. Higher total revenue potential. Larger physical footprint and higher capex, but stronger $/MWh economics over asset life. Preferred by utilities and long-hold operators.<br><br><strong style="color:var(--accent);">DRRS Eligible</strong> — 4-hour duration qualifies for ERCOT\'s upcoming Dispatchable Reliability Reserve Service (DRRS), a new ancillary service expected to launch in 2027 under NPRR 1309 (mandated by Texas HB 1500). DRRS requires 4-hour sustained output at HSL, creating a dedicated revenue stream for long-duration assets. <a href="https://www.ercot.com/files/docs/2025/12/04/6.1-NPRR1309-Dispatchable-Reliability-Reserve-Service-Ancillary-Service-and-NOGRR283.pdf" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline;">View ERCOT DRRS Announcement →</a>'}
+        2:{
+          mwh:'1,200 MWh',mwhSub:'600 MW × 2 hours',mwhBar:50,
+          cost:'~$162M–$180M',costSub:'~$270–$300/kW · Optimum indicative',costBar:45,
+          rev:'$18M–$33M/yr',revSub:'$30–$55/kW-yr ERCOT benchmark',revBar:50,
+          acres:'~15–20 acres',acresSub:'BESS equipment area only',
+          containers:'~120 units',containersSub:'CATL EnerX 5 MWh containers (est.)',
+          dispatch:'2 hr',dispatchSub:'Peak shaving + fast arbitrage',
+          insight:'2-hour BESS captures peak arbitrage windows and ancillary services. Lower capex per MW. Fastest path to NTP and COD. Ideal for operators prioritizing capital efficiency and rapid deployment.',
+          csEpcKw:'~$220/kW',csEpcTotal:'~$132M',
+          csAllInKw:'~$270–$300/kW',csAllInTotal:'~$162M–$180M',
+          csAllInNote:'Based on Optimum indicative EPC + development costs at 600 MW.',
+          epcRate:'~$110/MWh (indicative)',epcConfig:'600 MW / 1,200 MWh (2hr)',epcTotal:'~$132M',
+          epcContext:'Indicative EPC pricing from Optimum EPC at ~$110/MWh ($220/kW) for 600 MW / 1,200 MWh turnkey scope. Final pricing being finalized. 4hr configuration under evaluation — estimated figures shown when toggled.',
+          stripRev:'$18M–$33M',stripRevDesc:'Range based on $30–$55/kW-yr ERCOT benchmarks at 600 MW. Top-quartile positioning and co-location upside not modeled. Full market data available for buyer-led modeling.'
+        },
+        4:{
+          mwh:'2,400 MWh',mwhSub:'600 MW × 4 hours',mwhBar:100,
+          cost:'~$258M–$276M ⁱ',costSub:'~$430–$460/kW · Estimated',costBar:75,
+          rev:'$30M–$50M/yr ⁱ',revSub:'Est. — extended dispatch + DRRS upside',revBar:85,
+          acres:'~30–40 acres',acresSub:'~2× equipment footprint vs 2hr (est.)',
+          containers:'~240 units',containersSub:'CATL EnerX 5 MWh containers (est.)',
+          dispatch:'4 hr',dispatchSub:'Extended arbitrage + solar shift + load following',
+          insight:'4-hour BESS captures extended evening price spikes and solar-shift arbitrage. Higher total revenue potential. Larger physical footprint and higher capex, but stronger $/MWh economics over asset life. Preferred by utilities and long-hold operators.<br><br><strong style="color:var(--accent);">DRRS Eligible</strong> — 4-hour duration qualifies for ERCOT\'s upcoming Dispatchable Reliability Reserve Service (DRRS), a new ancillary service expected to launch in 2027 under NPRR 1309 (mandated by Texas HB 1500). DRRS requires 4-hour sustained output at HSL, creating a dedicated revenue stream for long-duration assets. <a href="https://www.ercot.com/files/docs/2025/12/04/6.1-NPRR1309-Dispatchable-Reliability-Reserve-Service-Ancillary-Service-and-NOGRR283.pdf" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline;">View ERCOT DRRS Announcement →</a><br><br><em style="font-size:11px;color:var(--text-muted);">ⁱ 4hr figures are estimates based on ~$95/MWh projected scale efficiency. Final EPC pricing pending from Optimum. Revenue modeling in progress.</em>',
+          csEpcKw:'~$380/kW ⁱ',csEpcTotal:'~$228M ⁱ',
+          csAllInKw:'~$430–$460/kW ⁱ',csAllInTotal:'~$258M–$276M ⁱ',
+          csAllInNote:'Estimated — based on ~$95/MWh projected scale efficiency at 2,400 MWh. Final pricing pending.',
+          epcRate:'~$95/MWh (est. scale efficiency)',epcConfig:'600 MW / 2,400 MWh (4hr)',epcTotal:'~$228M (est.)',
+          epcContext:'Estimated 4hr EPC assumes ~$95/MWh scale efficiency from 2× container count. CATL EnerX scales favorably at volume. Final turnkey pricing pending from Optimum EPC. Revenue modeling in progress to inform duration selection.',
+          stripRev:'$30M–$50M ⁱ',stripRevDesc:'Estimated — extended dispatch window captures evening price spikes and solar-shift arbitrage at 600 MW. DRRS ancillary revenue not yet modeled — additional upside. Revenue modeling in progress to inform final duration selection.'
+        }
       };
       function animateValue(el,val){el.classList.add('animating');setTimeout(()=>{el.textContent=val;el.classList.remove('animating')},200)}
       function setDuration(dur){
         toggle.setAttribute('data-active',dur);
         btns.forEach(b=>b.classList.toggle('active',b.dataset.dur==dur));
         const d=data[dur];
+        /* Toggle stat cards */
         animateValue(document.getElementById('durMWh'),d.mwh);
         animateValue(document.getElementById('durCost'),d.cost);
         animateValue(document.getElementById('durRev'),d.rev);
@@ -894,9 +923,33 @@
           document.getElementById('durCostBar').style.width=d.costBar+'%';
           document.getElementById('durRevBar').style.width=d.revBar+'%';
         },100);
+        /* Insight box */
         const ins=document.getElementById('durInsightText');
         ins.style.opacity=0;
         setTimeout(()=>{ins.innerHTML=d.insight;ins.style.opacity=1},250);
+        /* Capital Stack table */
+        setTimeout(()=>{
+          var el;
+          if(el=document.getElementById('csEpcKw'))el.textContent=d.csEpcKw;
+          if(el=document.getElementById('csEpcTotal'))el.textContent=d.csEpcTotal;
+          if(el=document.getElementById('csAllInKw'))el.textContent=d.csAllInKw;
+          if(el=document.getElementById('csAllInTotal'))el.textContent=d.csAllInTotal;
+          if(el=document.getElementById('csAllInNote'))el.textContent=d.csAllInNote;
+        },150);
+        /* EPC Detail card */
+        setTimeout(()=>{
+          var el;
+          if(el=document.getElementById('epcRate'))el.textContent=d.epcRate;
+          if(el=document.getElementById('epcConfig'))el.textContent=d.epcConfig;
+          if(el=document.getElementById('epcTotal'))el.textContent=d.epcTotal;
+          if(el=document.getElementById('epcContext'))el.textContent=d.epcContext;
+        },150);
+        /* Revenue data strip */
+        setTimeout(()=>{
+          var el;
+          if(el=document.getElementById('stripRevValue'))el.textContent=d.stripRev;
+          if(el=document.getElementById('stripRevDesc'))el.textContent=d.stripRevDesc;
+        },150);
       }
       btns.forEach(b=>b.addEventListener('click',()=>setDuration(b.dataset.dur)));
       toggle.setAttribute('data-active','2');
