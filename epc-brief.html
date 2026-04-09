@@ -316,84 +316,53 @@ body {
 }
 
 /* ═══════════════════════════════════════════
-   EQUIPMENT + LAYOUT (overlay approach)
+   EQUIPMENT + LAYOUT (side by side)
    ═══════════════════════════════════════════ */
-.layout-hero {
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid var(--warm-200);
+.equip-row {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 48px;
+  align-items: center;
 }
-.layout-hero img {
-  width: 100%;
-  display: block;
+.equip-info__item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--warm-100);
 }
-.layout-hero__overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 380px;
-  background: linear-gradient(to right, rgba(28,26,22,0.92) 0%, rgba(28,26,22,0.85) 70%, transparent 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 40px 36px;
-}
-.layout-hero__label {
-  font-size: 0.58rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: rgba(255,255,255,0.4);
-  margin-bottom: 8px;
-}
-.layout-hero__title {
-  font-family: var(--serif);
-  font-size: 1.3rem;
-  font-weight: 400;
-  color: #fff;
-  line-height: 1.3;
-  margin-bottom: 28px;
-}
-.layout-hero__title em {
-  font-style: italic;
-  color: rgba(255,255,255,0.55);
-}
-.layout-hero__item {
-  padding: 12px 0;
-  border-top: 1px solid rgba(255,255,255,0.1);
-}
-.layout-hero__item:last-of-type { border-bottom: 1px solid rgba(255,255,255,0.1); }
-.layout-hero__item-label {
-  font-size: 0.58rem;
+.equip-info__item-label {
+  font-size: 0.6rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: rgba(255,255,255,0.35);
-  margin-bottom: 1px;
+  color: var(--warm-400);
+  margin-bottom: 2px;
 }
-.layout-hero__item-value {
-  font-size: 1.05rem;
+.equip-info__item-value {
+  font-size: 1.15rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--warm-900);
 }
-.layout-hero__note {
+.equip-info__note {
   margin-top: 20px;
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.4);
-  line-height: 1.55;
+  font-size: 0.82rem;
+  color: var(--warm-500);
+  line-height: 1.6;
 }
-.layout-hero__cap {
+.layout-box {
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--warm-200);
+}
+.layout-box img {
+  width: 100%;
+  display: block;
+}
+.layout-box__cap {
   padding: 10px 14px;
   font-size: 0.72rem;
   color: var(--warm-500);
   background: var(--warm-50);
   border-top: 1px solid var(--warm-100);
   line-height: 1.5;
-}
-@media (max-width: 860px) {
-  .layout-hero__overlay { width: 100%; position: relative; background: var(--warm-900); }
 }
 
 /* ═══════════════════════════════════════════
@@ -402,16 +371,7 @@ body {
 .two-col {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0;
-}
-.two-col__side {
-  padding: 0 40px;
-  border-left: 1px solid var(--warm-100);
-}
-.two-col__side:first-child {
-  padding-left: 0;
-  padding-right: 40px;
-  border-left: none;
+  gap: 64px;
 }
 .col-heading {
   font-family: var(--serif);
@@ -420,12 +380,16 @@ body {
   color: var(--warm-900);
   margin-bottom: 0;
   line-height: 1.35;
+  height: 2em;
+  display: flex;
+  align-items: flex-end;
 }
 .item {
   padding: 18px 0;
   border-top: 1px solid var(--warm-100);
+  min-height: 100px;
 }
-.item:first-of-type { margin-top: 20px; }
+.item:first-of-type { margin-top: 16px; }
 .item__title {
   font-size: 0.88rem;
   font-weight: 700;
@@ -516,10 +480,10 @@ body {
   .specs { grid-template-columns: 1fr; }
   .spec:nth-child(odd) { padding-right: 0; border-right: none; }
   .spec:nth-child(even) { padding-left: 0; }
-  .equip-grid { grid-template-columns: 1fr; }
-  .two-col { grid-template-columns: 1fr; }
-  .two-col__side { padding: 0; border-left: none; }
-  .two-col__side:first-child { padding: 0 0 32px 0; border-bottom: 1px solid var(--warm-100); margin-bottom: 32px; }
+  .equip-row { grid-template-columns: 1fr; }
+  .two-col { grid-template-columns: 1fr; gap: 48px; }
+  .col-heading { height: auto; }
+  .item { min-height: 0; }
   .footer__inner { flex-direction: column; gap: 16px; text-align: center; }
   .footer__right { text-align: center; }
 }
@@ -655,22 +619,24 @@ body {
 <!-- ═══ EQUIPMENT + SITE LAYOUT ═══ -->
 <section class="section section--tinted">
   <div class="wrap">
-    <div class="layout-hero">
-      <img src="/assets/site-layout.png" alt="Preliminary 300 MW BESS site layout">
-      <div class="layout-hero__overlay">
-        <div class="layout-hero__label">Procurement &amp; Layout</div>
-        <div class="layout-hero__title">Equipment Stack &amp; <em>Site Concept</em></div>
-        <div class="layout-hero__item">
-          <div class="layout-hero__item-label">Battery OEM</div>
-          <div class="layout-hero__item-value">CATL</div>
+    <div class="label">Procurement &amp; Layout</div>
+    <h2 class="heading">Equipment Stack &amp; <em>Site Concept</em></h2>
+    <div class="equip-row">
+      <div>
+        <div class="equip-info__item">
+          <div class="equip-info__item-label">Battery OEM</div>
+          <div class="equip-info__item-value">CATL</div>
         </div>
-        <div class="layout-hero__item">
-          <div class="layout-hero__item-label">PCS / Inverter</div>
-          <div class="layout-hero__item-value">Sineng</div>
+        <div class="equip-info__item">
+          <div class="equip-info__item-label">PCS / Inverter</div>
+          <div class="equip-info__item-value">Sineng</div>
         </div>
-        <p class="layout-hero__note">Existing EPC partner has established CATL procurement channel. Equipment selections are preliminary and open to optimization with the right construction partner.</p>
+        <p class="equip-info__note">Existing EPC partner has established CATL procurement channel. Equipment selections are preliminary and open to optimization with the right construction partner.</p>
       </div>
-      <div class="layout-hero__cap">300 MW layout completed prior to enhanced feasibility study. 600 MW layout in development — BESS footprint in NW corner, minimizing gen-tie distance to Phantom Hill 345 kV.</div>
+      <div class="layout-box">
+        <img src="/assets/site-layout.png" alt="Preliminary 300 MW BESS site layout">
+        <div class="layout-box__cap">300 MW layout completed prior to enhanced feasibility study. 600 MW layout in development — BESS footprint in NW corner, minimizing gen-tie distance to Phantom Hill 345 kV.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -679,7 +645,7 @@ body {
 <section class="section">
   <div class="wrap">
     <div class="two-col">
-      <div class="two-col__side">
+      <div>
         <div class="label">EPC Engagement</div>
         <div class="col-heading">What We're Seeking</div>
         <div class="item">
@@ -695,7 +661,7 @@ body {
           <div class="item__text">Duration decision (2-hr vs. 4-hr), equipment bankability, and tariff exposure analysis from a partner who has priced CATL stacks at scale in ERCOT.</div>
         </div>
       </div>
-      <div class="two-col__side">
+      <div>
         <div class="label">Project Thesis</div>
         <div class="col-heading">Why Now &middot; Why Here</div>
         <div class="item">
