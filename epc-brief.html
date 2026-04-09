@@ -7,148 +7,142 @@
 <link rel="icon" type="image/png" href="/assets/logo-mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ── Reset & Variables ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #0a0a0a;
-  --bg-card: #141414;
-  --bg-card-hover: #1a1a1a;
-  --border: #1f1f1f;
-  --border-light: #2a2a2a;
-  --green: #22c55e;
-  --green-dim: #166534;
-  --green-glow: rgba(34, 197, 94, 0.15);
-  --green-glow-strong: rgba(34, 197, 94, 0.3);
-  --brand-green: #1a3d2f;
-  --text: #f5f5f5;
-  --text-secondary: #a3a3a3;
-  --text-muted: #666;
+  --white: #ffffff;
+  --off-white: #f8f9fa;
+  --gray-50: #f1f3f5;
+  --gray-100: #e9ecef;
+  --gray-200: #dee2e6;
+  --gray-400: #adb5bd;
+  --gray-500: #868e96;
+  --gray-600: #6c757d;
+  --gray-700: #495057;
+  --gray-800: #343a40;
+  --gray-900: #212529;
+  --green-700: #1a3d2f;
+  --green-600: #1b5e3b;
+  --green-500: #22c55e;
+  --green-50: #ecfdf5;
+  --navy: #0f1a2e;
   --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--font);
-  background: var(--bg);
-  color: var(--text);
+  background: var(--white);
+  color: var(--gray-900);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
-::selection { background: var(--brand-green); color: #fff; }
+::selection { background: var(--green-700); color: #fff; }
 
-.container { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+.container { max-width: 1060px; margin: 0 auto; padding: 0 40px; }
 
-/* ── SECTION 1: HERO ── */
+/* ════════════════════════════════════
+   SECTION 1: HERO
+   ════════════════════════════════════ */
 .hero {
-  position: relative;
-  padding: 60px 0 70px;
-  border-bottom: 1px solid var(--border);
-  overflow: hidden;
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 0%, var(--green-glow) 0%, transparent 70%);
-  pointer-events: none;
-}
-.hero__inner {
-  position: relative;
-  z-index: 1;
+  background: var(--navy);
+  color: #fff;
+  padding: 48px 0 56px;
 }
 .hero__top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 48px;
+  margin-bottom: 40px;
 }
 .hero__logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
-.hero__logo img { height: 36px; width: auto; filter: brightness(0) invert(1); }
+.hero__logo img { height: 30px; width: auto; filter: brightness(0) invert(1); }
 .hero__logo span {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--text-secondary);
+  color: rgba(255,255,255,0.6);
 }
 .hero__badge {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--green);
-  background: var(--green-glow);
-  border: 1px solid var(--green-dim);
-  padding: 6px 14px;
-  border-radius: 100px;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 5px 12px;
+  border-radius: 4px;
 }
 .hero__title {
-  font-size: 3.5rem;
-  font-weight: 800;
+  font-size: 2.8rem;
+  font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.1;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 .hero__tagline {
-  font-size: 1.15rem;
-  color: var(--text-secondary);
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.55);
   font-weight: 400;
-  letter-spacing: 0.02em;
-  margin-bottom: 40px;
+  margin-bottom: 36px;
 }
 .hero__pills {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 .pill {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-size: 0.9rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 0.85rem;
   font-weight: 500;
-  color: var(--text);
-  transition: border-color 0.2s;
+  color: rgba(255,255,255,0.85);
 }
-.pill:hover { border-color: var(--green-dim); }
-.pill svg { flex-shrink: 0; }
 
-/* ── SECTION 2: SITE CONTEXT MAP ── */
-.site-map {
-  padding: 80px 0;
-  border-bottom: 1px solid var(--border);
-}
+/* ════════════════════════════════════
+   SECTION SHARED STYLES
+   ════════════════════════════════════ */
+.section { padding: 64px 0; }
+.section--alt { background: var(--off-white); }
+.section + .section { border-top: 1px solid var(--gray-100); }
+.section--alt + .section,
+.section + .section--alt { border-top: none; }
+
 .section-label {
-  font-size: 0.7rem;
-  font-weight: 600;
+  font-size: 0.65rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--green);
-  margin-bottom: 16px;
+  letter-spacing: 0.12em;
+  color: var(--green-600);
+  margin-bottom: 8px;
 }
 .section-title {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  margin-bottom: 32px;
+  color: var(--gray-900);
+  margin-bottom: 28px;
 }
+
+/* ════════════════════════════════════
+   SECTION 2: SITE CONTEXT MAP
+   ════════════════════════════════════ */
 .map-frame {
   position: relative;
-  border-radius: 16px;
+  border-radius: 8px;
   overflow: hidden;
-  border: 1px solid var(--border-light);
-  background: var(--bg-card);
+  border: 1px solid var(--gray-200);
 }
 .map-frame img {
   width: 100%;
@@ -158,233 +152,215 @@ body {
 .map-overlay {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.6) 60%, transparent 100%);
-  padding: 40px 32px 24px;
+  background: linear-gradient(to top, rgba(15,26,46,0.92) 0%, rgba(15,26,46,0.5) 60%, transparent 100%);
+  padding: 36px 28px 20px;
 }
 .map-labels {
   display: flex;
-  gap: 24px;
+  gap: 20px;
   flex-wrap: wrap;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 .map-label {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.8rem;
+  gap: 7px;
+  font-size: 0.78rem;
   font-weight: 500;
-  color: var(--text);
+  color: #fff;
 }
 .map-dot {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
 }
-.map-dot--red { background: #ef4444; box-shadow: 0 0 8px rgba(239,68,68,0.5); }
-.map-dot--green { background: var(--green); box-shadow: 0 0 8px var(--green-glow-strong); }
-.map-dot--blue { background: #3b82f6; box-shadow: 0 0 8px rgba(59,130,246,0.5); }
+.map-dot--red { background: #ef4444; }
+.map-dot--green { background: var(--green-500); }
+.map-dot--blue { background: #60a5fa; }
 .map-caption {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  font-style: italic;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
 }
 
-/* ── SECTION 3: DEVELOPMENT PIPELINE ── */
-.pipeline-section {
-  padding: 80px 0;
-  border-bottom: 1px solid var(--border);
-}
+/* ════════════════════════════════════
+   SECTION 3: DEVELOPMENT PIPELINE
+   ════════════════════════════════════ */
 .pipeline {
   display: flex;
-  gap: 0;
-  margin-bottom: 40px;
-  position: relative;
+  align-items: flex-start;
+  margin-bottom: 32px;
 }
-.pipeline::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0; right: 0;
-  height: 3px;
-  background: var(--border-light);
-  transform: translateY(-50%);
-  z-index: 0;
+.pipeline-track {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
-.stage {
+.p-stage {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
-  z-index: 1;
-  text-align: center;
-  padding: 0 8px;
 }
-.stage__node {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
+.p-stage__top {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 16px;
+}
+.p-stage__circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 14px;
-  font-size: 1.2rem;
+  font-size: 0.75rem;
   font-weight: 700;
+  flex-shrink: 0;
   position: relative;
-  transition: transform 0.2s;
+  z-index: 2;
 }
-.stage:hover .stage__node { transform: scale(1.08); }
+.p-stage__line {
+  flex: 1;
+  height: 3px;
+  background: var(--gray-200);
+}
+.p-stage:last-child .p-stage__line { display: none; }
 
-.stage--complete .stage__node {
-  background: var(--green);
+/* Complete */
+.p-stage--done .p-stage__circle {
+  background: var(--green-600);
   color: #fff;
-  box-shadow: 0 0 20px var(--green-glow-strong);
 }
-.stage--active .stage__node {
-  background: var(--bg-card);
-  border: 2px solid var(--green);
-  color: var(--green);
-  animation: pulse-border 2s ease-in-out infinite;
+.p-stage--done .p-stage__line {
+  background: var(--green-600);
 }
-.stage--future .stage__node {
-  background: transparent;
-  border: 2px dashed var(--border-light);
-  color: var(--text-muted);
+/* Active */
+.p-stage--active .p-stage__circle {
+  background: #fff;
+  border: 3px solid var(--green-600);
+  color: var(--green-600);
 }
-@keyframes pulse-border {
-  0%, 100% { box-shadow: 0 0 0 0 var(--green-glow); }
-  50% { box-shadow: 0 0 20px 4px var(--green-glow-strong); }
+/* Future */
+.p-stage--future .p-stage__circle {
+  background: #fff;
+  border: 2px solid var(--gray-200);
+  color: var(--gray-400);
 }
-.stage__label {
-  font-size: 0.8rem;
+
+.p-stage__label {
+  font-size: 0.75rem;
   font-weight: 600;
-  color: var(--text);
-  margin-bottom: 4px;
+  color: var(--gray-800);
+  text-align: center;
+  line-height: 1.3;
 }
-.stage__status {
-  font-size: 0.7rem;
+.p-stage__status {
+  font-size: 0.68rem;
   font-weight: 500;
-  color: var(--text-muted);
+  color: var(--gray-500);
+  text-align: center;
+  margin-top: 3px;
 }
-.stage--complete .stage__status { color: var(--green); }
-.stage--active .stage__status { color: var(--green); }
+.p-stage--done .p-stage__status { color: var(--green-600); }
+.p-stage--active .p-stage__status { color: var(--green-600); font-weight: 600; }
 
 .pipeline-note {
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  border-left: 3px solid var(--green);
-  padding: 20px 24px;
-  border-radius: 10px;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
+  background: var(--green-50);
+  border-left: 3px solid var(--green-600);
+  padding: 16px 20px;
+  border-radius: 4px;
+  font-size: 0.88rem;
+  color: var(--gray-700);
+  line-height: 1.65;
 }
 
-/* ── SECTION 4: PROJECT SPECS ── */
-.specs-section {
-  padding: 80px 0;
-  border-bottom: 1px solid var(--border);
-}
+/* ════════════════════════════════════
+   SECTION 4: PROJECT SPECS
+   ════════════════════════════════════ */
 .specs-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-.spec-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
-  padding: 24px;
-  transition: border-color 0.2s, background 0.2s;
-}
-.spec-card:hover {
-  border-color: var(--green-dim);
-  background: var(--bg-card-hover);
-}
-.spec-card__label {
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-}
-.spec-card__value {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--text);
-  line-height: 1.4;
-}
-
-/* ── SECTION 4B: EQUIPMENT & SITE LAYOUT ── */
-.equip-section {
-  padding: 80px 0;
-  border-bottom: 1px solid var(--border);
-}
-.equip-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-top: 8px;
-}
-.equip-col-title {
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  margin-bottom: 16px;
-}
-.equip-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.equip-item {
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  border-radius: 10px;
-  padding: 16px 20px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  transition: border-color 0.2s;
-}
-.equip-item:hover { border-color: var(--green-dim); }
-.equip-item__icon {
-  width: 36px;
-  height: 36px;
+  gap: 1px;
+  background: var(--gray-200);
+  border: 1px solid var(--gray-200);
   border-radius: 8px;
-  background: var(--green-glow);
-  border: 1px solid var(--green-dim);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  overflow: hidden;
 }
-.equip-item__icon svg { color: var(--green); }
-.equip-item__label {
-  font-size: 0.7rem;
+.spec-cell {
+  background: var(--white);
+  padding: 20px 24px;
+}
+.spec-cell__label {
+  font-size: 0.65rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--text-muted);
+  color: var(--gray-500);
+  margin-bottom: 4px;
+}
+.spec-cell__value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  line-height: 1.4;
+}
+
+/* ════════════════════════════════════
+   SECTION 4B: EQUIPMENT & SITE LAYOUT
+   ════════════════════════════════════ */
+.equip-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.equip-col-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gray-500);
+  margin-bottom: 14px;
+}
+.equip-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--gray-100);
+}
+.equip-item:last-of-type { border-bottom: none; }
+.equip-item__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green-600);
+  flex-shrink: 0;
+}
+.equip-item__label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 .equip-item__value {
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--text);
+  color: var(--gray-900);
 }
 .equip-note {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  font-style: italic;
-  margin-top: 12px;
-  line-height: 1.5;
+  font-size: 0.82rem;
+  color: var(--gray-600);
+  margin-top: 16px;
+  line-height: 1.55;
 }
 .layout-frame {
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
-  border: 1px solid var(--border-light);
-  background: var(--bg-card);
+  border: 1px solid var(--gray-200);
 }
 .layout-frame img {
   width: 100%;
@@ -392,110 +368,76 @@ body {
   display: block;
 }
 .layout-frame__caption {
-  padding: 12px 16px;
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  border-top: 1px solid var(--border);
+  padding: 10px 14px;
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  background: var(--off-white);
+  border-top: 1px solid var(--gray-100);
 }
 
-/* ── SECTION 4C: EPC PARTNERSHIP VALUE ── */
-.partner-section {
-  padding: 80px 0;
-  border-bottom: 1px solid var(--border);
-}
-.partner-grid {
+/* ════════════════════════════════════
+   SECTION 4C: WHAT WE'RE SEEKING
+   ════════════════════════════════════ */
+.seek-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
-.partner-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  border-radius: 14px;
+.seek-card {
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
   padding: 28px 24px;
-  transition: border-color 0.3s, transform 0.2s;
+  background: var(--white);
 }
-.partner-card:hover {
-  border-color: var(--green-dim);
-  transform: translateY(-2px);
-}
-.partner-card__number {
-  font-size: 0.7rem;
+.seek-card__num {
+  font-size: 0.65rem;
   font-weight: 700;
-  color: var(--green);
-  background: var(--green-glow);
-  width: 24px;
-  height: 24px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
+  color: var(--green-600);
+  margin-bottom: 12px;
 }
-.partner-card__title {
+.seek-card__title {
   font-size: 1rem;
   font-weight: 700;
+  color: var(--gray-900);
   margin-bottom: 8px;
-  color: var(--text);
 }
-.partner-card__text {
+.seek-card__text {
   font-size: 0.85rem;
-  color: var(--text-secondary);
+  color: var(--gray-600);
   line-height: 1.6;
 }
-@media (max-width: 800px) {
-  .equip-layout { grid-template-columns: 1fr; }
-  .partner-grid { grid-template-columns: 1fr; }
-}
 
-/* ── SECTION 5: WHY NOW / WHY HERE ── */
-.why-section {
-  padding: 80px 0;
-  border-bottom: 1px solid var(--border);
-}
+/* ════════════════════════════════════
+   SECTION 5: WHY NOW / WHY HERE
+   ════════════════════════════════════ */
 .why-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 .why-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  border-radius: 14px;
-  padding: 32px 28px;
-  transition: border-color 0.3s, transform 0.2s;
+  background: var(--navy);
+  border-radius: 8px;
+  padding: 28px 24px;
+  color: #fff;
 }
-.why-card:hover {
-  border-color: var(--green-dim);
-  transform: translateY(-2px);
-}
-.why-card__icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: var(--green-glow);
-  border: 1px solid var(--green-dim);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-.why-card__icon svg { color: var(--green); }
 .why-card__title {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   margin-bottom: 10px;
-  color: var(--text);
 }
 .why-card__text {
-  font-size: 0.88rem;
-  color: var(--text-secondary);
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
   line-height: 1.6;
 }
 
-/* ── SECTION 6: FOOTER ── */
+/* ════════════════════════════════════
+   FOOTER
+   ════════════════════════════════════ */
 .footer {
-  padding: 60px 0;
+  padding: 48px 0;
+  border-top: 1px solid var(--gray-100);
 }
 .footer__inner {
   display: flex;
@@ -505,52 +447,51 @@ body {
 .footer__brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
-.footer__brand img { height: 32px; filter: brightness(0) invert(1); opacity: 0.6; }
+.footer__brand img { height: 26px; opacity: 0.35; }
 .footer__brand span {
-  font-size: 1rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  color: var(--text-muted);
+  color: var(--gray-400);
 }
-.footer__contact {
-  text-align: right;
-}
+.footer__contact { text-align: right; }
 .footer__name {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: var(--text);
-  margin-bottom: 2px;
+  color: var(--gray-800);
 }
 .footer__role {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  margin-bottom: 2px;
+  font-size: 0.82rem;
+  color: var(--gray-500);
 }
 .footer__company {
-  font-size: 0.8rem;
-  color: var(--text-muted);
+  font-size: 0.78rem;
+  color: var(--gray-400);
 }
 
-/* ── Utility ── */
+/* ════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════ */
 @media (max-width: 800px) {
-  .hero__title { font-size: 2.2rem; }
+  .hero__title { font-size: 2rem; }
   .specs-grid { grid-template-columns: 1fr; }
-  .why-grid { grid-template-columns: 1fr; }
-  .pipeline { flex-wrap: wrap; gap: 20px; }
-  .pipeline::before { display: none; }
-  .footer__inner { flex-direction: column; gap: 24px; text-align: center; }
+  .why-grid, .seek-grid { grid-template-columns: 1fr; }
+  .equip-layout { grid-template-columns: 1fr; }
+  .pipeline-track { flex-direction: column; align-items: flex-start; }
+  .p-stage { flex-direction: row; align-items: center; width: 100%; }
+  .p-stage__top { width: auto; margin-bottom: 0; margin-right: 12px; flex-direction: column; }
+  .p-stage__line { width: 3px; height: 24px; flex: none; }
+  .footer__inner { flex-direction: column; gap: 20px; text-align: center; }
   .footer__contact { text-align: center; }
 }
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════════
-     SECTION 1 — HERO
-     ══════════════════════════════════════════════ -->
+<!-- ═══ SECTION 1 — HERO ═══ -->
 <section class="hero">
-  <div class="container hero__inner">
+  <div class="container">
     <div class="hero__top">
       <div class="hero__logo">
         <img src="/assets/logo-mark.png" alt="ReDewable">
@@ -559,33 +500,22 @@ body {
       <div class="hero__badge">EPC Introduction Brief</div>
     </div>
     <h1 class="hero__title">ReDew Anson</h1>
-    <p class="hero__tagline">600 MW Standalone BESS &nbsp;·&nbsp; Jones County, Texas &nbsp;·&nbsp; ERCOT</p>
+    <p class="hero__tagline">600 MW Standalone BESS &nbsp;&middot;&nbsp; Jones County, Texas &nbsp;&middot;&nbsp; ERCOT</p>
     <div class="hero__pills">
-      <div class="pill">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-        600 MW Capacity
-      </div>
-      <div class="pill">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="12" x2="16" y2="12"/></svg>
-        Phantom Hill 345 kV POI
-      </div>
-      <div class="pill">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        NTP Target Q1 2027
-      </div>
+      <div class="pill">600 MW Capacity</div>
+      <div class="pill">Phantom Hill 345 kV POI</div>
+      <div class="pill">NTP Target Q1 2027</div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════
-     SECTION 2 — SITE CONTEXT MAP
-     ══════════════════════════════════════════════ -->
-<section class="site-map">
+<!-- ═══ SECTION 2 — SITE CONTEXT MAP ═══ -->
+<section class="section">
   <div class="container">
     <div class="section-label">Site Context</div>
     <h2 class="section-title">Jones County, Texas — Phantom Hill Substation Area</h2>
     <div class="map-frame">
-      <img src="/assets/redew-anson-aerial.jpg" alt="Aerial view of ReDew Anson project site showing Phantom Hill 345 kV substation and adjacent solar cluster">
+      <img src="/assets/redew-anson-aerial.jpg" alt="Aerial view of ReDew Anson project site near Phantom Hill 345 kV substation">
       <div class="map-overlay">
         <div class="map-labels">
           <div class="map-label"><div class="map-dot map-dot--red"></div> POI — Phantom Hill 345 kV</div>
@@ -598,47 +528,59 @@ body {
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════
-     SECTION 3 — DEVELOPMENT MILESTONE PIPELINE
-     ══════════════════════════════════════════════ -->
-<section class="pipeline-section">
+<!-- ═══ SECTION 3 — DEVELOPMENT PIPELINE ═══ -->
+<section class="section section--alt">
   <div class="container">
     <div class="section-label">Development Timeline</div>
     <h2 class="section-title">Milestone Pipeline</h2>
     <div class="pipeline">
-      <!-- Stage 1 — Complete -->
-      <div class="stage stage--complete">
-        <div class="stage__node">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <div class="pipeline-track">
+
+        <div class="p-stage p-stage--done">
+          <div class="p-stage__top">
+            <div class="p-stage__circle">&#10003;</div>
+            <div class="p-stage__line"></div>
+          </div>
+          <div class="p-stage__label">Site Control</div>
+          <div class="p-stage__status">Complete</div>
         </div>
-        <div class="stage__label">Site Control</div>
-        <div class="stage__status">Complete</div>
-      </div>
-      <!-- Stage 2 — Complete -->
-      <div class="stage stage--complete">
-        <div class="stage__node">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+
+        <div class="p-stage p-stage--done">
+          <div class="p-stage__top">
+            <div class="p-stage__circle">&#10003;</div>
+            <div class="p-stage__line"></div>
+          </div>
+          <div class="p-stage__label">Enhanced Feasibility Study</div>
+          <div class="p-stage__status">Complete</div>
         </div>
-        <div class="stage__label">Enhanced Feasibility Study</div>
-        <div class="stage__status">Complete</div>
-      </div>
-      <!-- Stage 3 — Active -->
-      <div class="stage stage--active">
-        <div class="stage__node">3</div>
-        <div class="stage__label">GINR Submission</div>
-        <div class="stage__status">In Progress</div>
-      </div>
-      <!-- Stage 4 — Future -->
-      <div class="stage stage--future">
-        <div class="stage__node">4</div>
-        <div class="stage__label">Interconnection Agreement</div>
-        <div class="stage__status">Q1 2027</div>
-      </div>
-      <!-- Stage 5 — Future -->
-      <div class="stage stage--future">
-        <div class="stage__node">5</div>
-        <div class="stage__label">NTP → Sale</div>
-        <div class="stage__status">Exit</div>
+
+        <div class="p-stage p-stage--active">
+          <div class="p-stage__top">
+            <div class="p-stage__circle">3</div>
+            <div class="p-stage__line"></div>
+          </div>
+          <div class="p-stage__label">GINR Submission</div>
+          <div class="p-stage__status">In Progress</div>
+        </div>
+
+        <div class="p-stage p-stage--future">
+          <div class="p-stage__top">
+            <div class="p-stage__circle">4</div>
+            <div class="p-stage__line"></div>
+          </div>
+          <div class="p-stage__label">Interconnection Agreement</div>
+          <div class="p-stage__status">Q1 2027</div>
+        </div>
+
+        <div class="p-stage p-stage--future">
+          <div class="p-stage__top">
+            <div class="p-stage__circle">5</div>
+            <div class="p-stage__line"></div>
+          </div>
+          <div class="p-stage__label">NTP &rarr; Sale</div>
+          <div class="p-stage__status">Exit</div>
+        </div>
+
       </div>
     </div>
     <div class="pipeline-note">
@@ -647,95 +589,76 @@ body {
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════
-     SECTION 4 — PROJECT SPECS
-     ══════════════════════════════════════════════ -->
-<section class="specs-section">
+<!-- ═══ SECTION 4 — PROJECT SPECS ═══ -->
+<section class="section">
   <div class="container">
     <div class="section-label">Technical Detail</div>
     <h2 class="section-title">Project Specifications</h2>
     <div class="specs-grid">
-      <div class="spec-card">
-        <div class="spec-card__label">Capacity</div>
-        <div class="spec-card__value">600 MW Standalone BESS</div>
+      <div class="spec-cell">
+        <div class="spec-cell__label">Capacity</div>
+        <div class="spec-cell__value">600 MW Standalone BESS</div>
       </div>
-      <div class="spec-card">
-        <div class="spec-card__label">Duration</div>
-        <div class="spec-card__value">2–4 Hour (TBD)</div>
+      <div class="spec-cell">
+        <div class="spec-cell__label">Duration</div>
+        <div class="spec-cell__value">2–4 Hour (TBD)</div>
       </div>
-      <div class="spec-card">
-        <div class="spec-card__label">Point of Interconnection</div>
-        <div class="spec-card__value">Phantom Hill 345 kV Substation (Bus 68004)</div>
+      <div class="spec-cell">
+        <div class="spec-cell__label">Point of Interconnection</div>
+        <div class="spec-cell__value">Phantom Hill 345 kV Substation (Bus 68004)</div>
       </div>
-      <div class="spec-card">
-        <div class="spec-card__label">TSP</div>
-        <div class="spec-card__value">Oncor (ERCOT)</div>
+      <div class="spec-cell">
+        <div class="spec-cell__label">TSP</div>
+        <div class="spec-cell__value">Oncor (ERCOT)</div>
       </div>
-      <div class="spec-card">
-        <div class="spec-card__label">CDR Zone</div>
-        <div class="spec-card__value">ERCOT WEST</div>
+      <div class="spec-cell">
+        <div class="spec-cell__label">CDR Zone</div>
+        <div class="spec-cell__value">ERCOT WEST</div>
       </div>
-      <div class="spec-card">
-        <div class="spec-card__label">Grid Strength</div>
-        <div class="spec-card__value">2,633 MVA — no local thermal constraints</div>
+      <div class="spec-cell">
+        <div class="spec-cell__label">Grid Strength</div>
+        <div class="spec-cell__value">2,633 MVA — no local thermal constraints</div>
       </div>
-      <div class="spec-card">
-        <div class="spec-card__label">Environmental</div>
-        <div class="spec-card__value">Phase I ESA &amp; Desktop CIA complete — one manageable REC, outside development footprint</div>
+      <div class="spec-cell">
+        <div class="spec-cell__label">Environmental</div>
+        <div class="spec-cell__value">Phase I ESA &amp; Desktop CIA complete — one manageable REC, outside development footprint</div>
       </div>
-      <div class="spec-card">
-        <div class="spec-card__label">Land</div>
-        <div class="spec-card__value">Site controlled — northwest corner, maximizing POI proximity</div>
+      <div class="spec-cell">
+        <div class="spec-cell__label">Land</div>
+        <div class="spec-cell__value">Site controlled — northwest corner, maximizing POI proximity</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════
-     SECTION 4B — EQUIPMENT STACK & SITE LAYOUT
-     ══════════════════════════════════════════════ -->
-<section class="equip-section">
+<!-- ═══ SECTION 4B — EQUIPMENT & SITE LAYOUT ═══ -->
+<section class="section section--alt">
   <div class="container">
     <div class="section-label">Procurement &amp; Layout</div>
     <h2 class="section-title">Preliminary Equipment Stack &amp; Site Concept</h2>
     <div class="equip-layout">
       <div>
-        <div class="equip-col-title">Equipment Selection (Preliminary)</div>
-        <div class="equip-stack">
-          <div class="equip-item">
-            <div class="equip-item__icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="22" height="12" rx="2" ry="2"/><line x1="23" y1="13" x2="23" y2="11"/></svg>
-            </div>
-            <div>
-              <div class="equip-item__label">Battery OEM</div>
-              <div class="equip-item__value">CATL</div>
-            </div>
-          </div>
-          <div class="equip-item">
-            <div class="equip-item__icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            </div>
-            <div>
-              <div class="equip-item__label">Power Conversion</div>
-              <div class="equip-item__value">Sineng PCS</div>
-            </div>
-          </div>
-          <div class="equip-item">
-            <div class="equip-item__icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-            </div>
-            <div>
-              <div class="equip-item__label">Inverters</div>
-              <div class="equip-item__value">SMA</div>
-            </div>
+        <div class="equip-col-label">Equipment Selection (Preliminary)</div>
+        <div class="equip-item">
+          <div class="equip-item__dot"></div>
+          <div>
+            <div class="equip-item__label">Battery OEM</div>
+            <div class="equip-item__value">CATL</div>
           </div>
         </div>
-        <div class="equip-note">Existing EPC partner has established CATL procurement channel. Equipment selections are preliminary and open to optimization with the right construction partner.</div>
+        <div class="equip-item">
+          <div class="equip-item__dot"></div>
+          <div>
+            <div class="equip-item__label">PCS / Inverter</div>
+            <div class="equip-item__value">Sineng</div>
+          </div>
+        </div>
+        <p class="equip-note">Existing EPC partner has established CATL procurement channel. Equipment selections are preliminary and open to optimization with the right construction partner.</p>
       </div>
       <div>
-        <div class="equip-col-title">Conceptual Site Layout</div>
+        <div class="equip-col-label">Conceptual Site Layout</div>
         <div class="layout-frame">
-          <img src="/assets/site-layout.png" alt="Conceptual BESS site layout — northwest corner of parcel, maximizing POI proximity">
+          <img src="/assets/site-layout.png" alt="Conceptual BESS site layout — northwest corner of parcel">
           <div class="layout-frame__caption">BESS footprint positioned in NW corner — minimizing gen-tie distance to Phantom Hill 345 kV</div>
         </div>
       </div>
@@ -743,72 +666,54 @@ body {
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════
-     SECTION 4C — EPC PARTNERSHIP VALUE
-     ══════════════════════════════════════════════ -->
-<section class="partner-section">
+<!-- ═══ SECTION 4C — WHAT WE'RE SEEKING ═══ -->
+<section class="section">
   <div class="container">
-    <div class="section-label">Collaboration Opportunity</div>
-    <h2 class="section-title">Where an EPC Partner Adds Value Pre-NTP</h2>
-    <div class="partner-grid">
-      <div class="partner-card">
-        <div class="partner-card__number">1</div>
-        <div class="partner-card__title">Buyer Connectivity</div>
-        <div class="partner-card__text">Strategic buyers building BESS portfolios rely on EPC relationships to source construction-ready projects. An established EPC channel makes this asset more competitive at sale.</div>
+    <div class="section-label">EPC Engagement</div>
+    <h2 class="section-title">What We're Seeking</h2>
+    <div class="seek-grid">
+      <div class="seek-card">
+        <div class="seek-card__num">01</div>
+        <div class="seek-card__title">Buyer Connectivity</div>
+        <div class="seek-card__text">Access to strategic buyers building BESS portfolios who rely on trusted EPC relationships to source construction-ready projects.</div>
       </div>
-      <div class="partner-card">
-        <div class="partner-card__number">2</div>
-        <div class="partner-card__title">Revenue Modeling</div>
-        <div class="partner-card__text">Independent forward-looking revenue forecast is a key deliverable for buyer conversations. An EPC partner with merchant modeling capabilities or analyst relationships accelerates this.</div>
+      <div class="seek-card">
+        <div class="seek-card__num">02</div>
+        <div class="seek-card__title">Revenue Modeling</div>
+        <div class="seek-card__text">An independent forward-looking revenue forecast is a key deliverable for buyer conversations. Merchant modeling capabilities or analyst relationships would accelerate this.</div>
       </div>
-      <div class="partner-card">
-        <div class="partner-card__number">3</div>
-        <div class="partner-card__title">Procurement Optimization</div>
-        <div class="partner-card__text">Duration decision (2-hour vs. 4-hour), equipment bankability, and tariff exposure analysis benefit from an EPC partner who has priced CATL/Sineng stacks at scale in ERCOT.</div>
+      <div class="seek-card">
+        <div class="seek-card__num">03</div>
+        <div class="seek-card__title">Procurement Optimization</div>
+        <div class="seek-card__text">Duration decision (2-hour vs. 4-hour), equipment bankability, and tariff exposure analysis from a partner who has priced CATL stacks at scale in ERCOT.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════
-     SECTION 5 — WHY NOW / WHY HERE
-     ══════════════════════════════════════════════ -->
-<section class="why-section">
+<!-- ═══ SECTION 5 — WHY NOW / WHY HERE ═══ -->
+<section class="section section--alt">
   <div class="container">
-    <div class="section-label">Investment Thesis</div>
-    <h2 class="section-title">Why Now · Why Here</h2>
+    <div class="section-label">Project Thesis</div>
+    <h2 class="section-title">Why Now &middot; Why Here</h2>
     <div class="why-grid">
       <div class="why-card">
-        <div class="why-card__icon">
-          <!-- Grid / Network icon -->
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="6" height="6" rx="1"/><rect x="16" y="2" width="6" height="6" rx="1"/><rect x="9" y="16" width="6" height="6" rx="1"/><path d="M5 8v3a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><path d="M12 12v4"/></svg>
-        </div>
         <div class="why-card__title">Grid Need</div>
-        <div class="why-card__text">2.5+ GW of solar coming online in Jones County creates direct storage demand at this node</div>
+        <div class="why-card__text">2.5+ GW of solar coming online in Jones County creates direct storage demand at this node.</div>
       </div>
       <div class="why-card">
-        <div class="why-card__icon">
-          <!-- Shield / Verified icon -->
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-        </div>
         <div class="why-card__title">Cleared Feasibility</div>
-        <div class="why-card__text">600 MW confirmed at 345 kV with no local thermal constraints — a hard-to-replicate grid position</div>
+        <div class="why-card__text">600 MW confirmed at 345 kV with no local thermal constraints — a hard-to-replicate grid position.</div>
       </div>
       <div class="why-card">
-        <div class="why-card__icon">
-          <!-- Rocket / fast-track icon -->
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
-        </div>
         <div class="why-card__title">Shovel-Ready Path</div>
-        <div class="why-card__text">GINR submitting in coming weeks, IA target Q1 2027, NTP to follow</div>
+        <div class="why-card__text">GINR submitting in coming weeks, IA target Q1 2027, NTP to follow.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════
-     SECTION 6 — FOOTER
-     ══════════════════════════════════════════════ -->
+<!-- ═══ FOOTER ═══ -->
 <footer class="footer">
   <div class="container">
     <div class="footer__inner">
