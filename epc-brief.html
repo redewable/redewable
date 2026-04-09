@@ -321,55 +321,43 @@ body {
 .equip-row {
   display: grid;
   grid-template-columns: 1fr 1.1fr;
-  gap: 0;
-  align-items: stretch;
+  gap: 48px;
+  align-items: center;
 }
-.equip-info {
-  background: var(--warm-900);
-  border-radius: 6px 0 0 6px;
-  padding: 36px 32px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.equip-info .label { color: rgba(255,255,255,0.4); }
 .equip-info .heading {
-  color: #fff;
   font-size: 1.3rem;
   margin-bottom: 24px;
 }
-.equip-info .heading em { color: rgba(255,255,255,0.55); }
 .equip-info__item {
   padding: 12px 0;
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid var(--warm-100);
 }
 .equip-info__item:last-of-type {
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid var(--warm-100);
 }
 .equip-info__item-label {
   font-size: 0.58rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: rgba(255,255,255,0.35);
+  color: var(--warm-400);
   margin-bottom: 1px;
 }
 .equip-info__item-value {
   font-size: 1.05rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--warm-900);
 }
 .equip-info__note {
   margin-top: 20px;
   font-size: 0.78rem;
-  color: rgba(255,255,255,0.4);
+  color: var(--warm-500);
   line-height: 1.55;
 }
 .layout-box {
-  border-radius: 0 6px 6px 0;
+  border-radius: 6px;
   overflow: hidden;
   border: 1px solid var(--warm-200);
-  border-left: none;
 }
 .layout-box img {
   width: 100%;
@@ -643,7 +631,7 @@ body {
     <div class="equip-row">
       <div class="equip-info">
         <div class="label">Procurement &amp; Layout</div>
-        <h2 class="heading">Equipment Stack &amp; <em>Site Concept</em></h2>
+        <div class="heading">Equipment Stack &amp; <em>Site Concept</em></div>
         <div class="equip-info__item">
           <div class="equip-info__item-label">Battery OEM</div>
           <div class="equip-info__item-value">CATL</div>
