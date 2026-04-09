@@ -275,6 +275,7 @@ body {
   font-size: 0.88rem;
   color: var(--gray-700);
   line-height: 1.65;
+  text-align: center;
 }
 
 /* ════════════════════════════════════
@@ -313,8 +314,9 @@ body {
    ════════════════════════════════════ */
 .equip-layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 40px;
+  align-items: start;
 }
 .equip-col-label {
   font-size: 0.65rem;
@@ -554,9 +556,18 @@ body {
           <div class="p-stage__status">Complete</div>
         </div>
 
+        <div class="p-stage p-stage--done">
+          <div class="p-stage__top">
+            <div class="p-stage__circle">&#10003;</div>
+            <div class="p-stage__line"></div>
+          </div>
+          <div class="p-stage__label">Environmental &amp; Permitting</div>
+          <div class="p-stage__status">Phase I ESA &amp; CIA Complete</div>
+        </div>
+
         <div class="p-stage p-stage--active">
           <div class="p-stage__top">
-            <div class="p-stage__circle">3</div>
+            <div class="p-stage__circle">4</div>
             <div class="p-stage__line"></div>
           </div>
           <div class="p-stage__label">GINR Submission</div>
@@ -565,7 +576,7 @@ body {
 
         <div class="p-stage p-stage--future">
           <div class="p-stage__top">
-            <div class="p-stage__circle">4</div>
+            <div class="p-stage__circle">5</div>
             <div class="p-stage__line"></div>
           </div>
           <div class="p-stage__label">Interconnection Agreement</div>
@@ -574,7 +585,7 @@ body {
 
         <div class="p-stage p-stage--future">
           <div class="p-stage__top">
-            <div class="p-stage__circle">5</div>
+            <div class="p-stage__circle">6</div>
             <div class="p-stage__line"></div>
           </div>
           <div class="p-stage__label">NTP &rarr; Sale</div>
@@ -656,10 +667,10 @@ body {
         <p class="equip-note">Existing EPC partner has established CATL procurement channel. Equipment selections are preliminary and open to optimization with the right construction partner.</p>
       </div>
       <div>
-        <div class="equip-col-label">Conceptual Site Layout</div>
+        <div class="equip-col-label">Site Layout (300 MW Preliminary)</div>
         <div class="layout-frame">
-          <img src="/assets/site-layout.png" alt="Conceptual BESS site layout — northwest corner of parcel">
-          <div class="layout-frame__caption">BESS footprint positioned in NW corner — minimizing gen-tie distance to Phantom Hill 345 kV</div>
+          <img src="/assets/site-layout.png" alt="Preliminary 300 MW BESS site layout — northwest corner of parcel">
+          <div class="layout-frame__caption">300 MW layout completed prior to enhanced feasibility study. 600 MW layout in development — BESS footprint positioned in NW corner, minimizing gen-tie distance to Phantom Hill 345 kV.</div>
         </div>
       </div>
     </div>
