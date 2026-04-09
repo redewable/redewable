@@ -321,39 +321,60 @@ body {
 .equip-row {
   display: grid;
   grid-template-columns: 1fr 1.1fr;
-  gap: 48px;
-  align-items: center;
+  gap: 0;
+  align-items: stretch;
 }
+.equip-info {
+  background: var(--warm-900);
+  border-radius: 6px 0 0 6px;
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.equip-info .label { color: rgba(255,255,255,0.4); }
+.equip-info .heading {
+  color: #fff;
+  font-size: 1.3rem;
+  margin-bottom: 24px;
+}
+.equip-info .heading em { color: rgba(255,255,255,0.55); }
 .equip-info__item {
-  padding: 16px 0;
-  border-bottom: 1px solid var(--warm-100);
+  padding: 12px 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.equip-info__item:last-of-type {
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 .equip-info__item-label {
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--warm-400);
-  margin-bottom: 2px;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 1px;
 }
 .equip-info__item-value {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  color: var(--warm-900);
+  color: #fff;
 }
 .equip-info__note {
   margin-top: 20px;
-  font-size: 0.82rem;
-  color: var(--warm-500);
-  line-height: 1.6;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.55;
 }
 .layout-box {
-  border-radius: 6px;
+  border-radius: 0 6px 6px 0;
   overflow: hidden;
   border: 1px solid var(--warm-200);
+  border-left: none;
 }
 .layout-box img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
 }
 .layout-box__cap {
@@ -619,10 +640,10 @@ body {
 <!-- ═══ EQUIPMENT + SITE LAYOUT ═══ -->
 <section class="section section--tinted">
   <div class="wrap">
-    <div class="label">Procurement &amp; Layout</div>
-    <h2 class="heading">Equipment Stack &amp; <em>Site Concept</em></h2>
     <div class="equip-row">
-      <div>
+      <div class="equip-info">
+        <div class="label">Procurement &amp; Layout</div>
+        <h2 class="heading">Equipment Stack &amp; <em>Site Concept</em></h2>
         <div class="equip-info__item">
           <div class="equip-info__item-label">Battery OEM</div>
           <div class="equip-info__item-value">CATL</div>
