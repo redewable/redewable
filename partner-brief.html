@@ -417,6 +417,17 @@ body {
   color: var(--warm-400);
   margin-top: 1px;
 }
+.footer__email {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--warm-400);
+  margin-top: 2px;
+  text-decoration: none;
+}
+.footer__email:hover {
+  color: var(--warm-600);
+  text-decoration: underline;
+}
 
 /* ═══════════════════════════════════════════
    LIGHTBOX
@@ -503,30 +514,6 @@ body {
     </div>
     <h1 class="hero__title">ReDew Anson</h1>
     <p class="hero__sub">600 MW Standalone BESS &middot; Jones County, Texas &middot; ERCOT</p>
-  </div>
-</section>
-
-<!-- ═══ STAT BAR ═══ -->
-<section class="section" style="padding-top: 0; padding-bottom: 0; margin-top: -36px; position: relative; z-index: 4;">
-  <div class="wrap">
-    <div class="stat-bar">
-      <div class="stat-bar__item">
-        <div class="stat-bar__value">600 MW</div>
-        <div class="stat-bar__label">Capacity</div>
-      </div>
-      <div class="stat-bar__item">
-        <div class="stat-bar__value">Phantom Hill 345 kV</div>
-        <div class="stat-bar__label">Point of Interconnection</div>
-      </div>
-      <div class="stat-bar__item">
-        <div class="stat-bar__value">Q1 2027</div>
-        <div class="stat-bar__label">NTP Target</div>
-      </div>
-      <div class="stat-bar__item">
-        <div class="stat-bar__value">Q3 2029</div>
-        <div class="stat-bar__label">Target COD</div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -679,7 +666,7 @@ body {
       <div class="footer__right">
         <div class="footer__name">Talor Byington</div>
         <div class="footer__meta">Founder &middot; ReDewable Energy Company, LLC</div>
-        <a href="mailto:tb@redewable.com" style="display:block;font-size:0.75rem;color:var(--warm-400);margin-top:2px;text-decoration:none;">tb@redewable.com</a>
+        <a href="mailto:tb@redewable.com" class="footer__email">tb@redewable.com</a>
       </div>
     </div>
   </div>
