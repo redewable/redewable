@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ReDew Anson — a 600 MW long-duration storage flagship at Phantom Hill 345 kV, anchored for hyperscaler off-take in the most stressed grid corridor in the country.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="/assets/logo-mark.png">
+  <link rel="apple-touch-icon" href="/assets/logo-mark.png">
+  <meta property="og:title" content="ReDew Anson — Partnership Proposition">
+  <meta property="og:description" content="600 MW. Phantom Hill 345 kV. Long-duration. Domestically built. Hyperscaler-anchored.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.redewable.com/assets/og-image.png">
+  <title>ReDew Anson — Partnership Proposition | ReDewable</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --black:#0a0a0a;--white:#fff;
+      --gray-50:#fafafa;--gray-100:#f5f5f5;--gray-200:#e5e5e5;--gray-300:#d4d4d4;
+      --gray-400:#a3a3a3;--gray-500:#737373;--gray-600:#525252;--gray-700:#404040;
+      --gray-800:#262626;--gray-900:#171717;
+      --green:#22c55e;--yellow:#f59e0b;
+      --brand-green:#1a3d2f;--brand-green-light:#2a5c46;
+      --font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+      --max-width:1200px;
+      --bg-primary:var(--white);--bg-secondary:var(--gray-50);
+      --text-primary:var(--gray-800);--text-secondary:var(--gray-600);--text-muted:var(--gray-500);
+      --border-color:var(--gray-200);
+    }
+    @media(prefers-color-scheme:dark){
+      :root{--bg-primary:#0a0a0a;--bg-secondary:#141414;--text-primary:#f5f5f5;--text-secondary:#a3a3a3;--text-muted:#737373;--border-color:#262626;--gray-50:#141414;--gray-100:#1a1a1a;--gray-200:#262626;--gray-800:#e5e5e5;--gray-900:#1a1a1a}
+    }
+    html{scroll-behavior:smooth;overflow-x:hidden}
+    body{font-family:var(--font);font-size:16px;line-height:1.65;color:var(--text-primary);background:var(--bg-primary);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    ::selection{background:var(--brand-green);color:#fff}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* HEADER */
+    .header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border-color)}
+    @media(prefers-color-scheme:dark){.header{background:rgba(10,10,10,.95)}}
+    .header__inner{max-width:var(--max-width);margin:0 auto;padding:20px 24px;display:flex;justify-content:space-between;align-items:center}
+    .header__logo{display:flex;align-items:center;gap:10px;font-size:1.25rem;font-weight:700;letter-spacing:-.02em;color:var(--text-primary)}
+    .header__logo img{height:28px;width:auto}
+    .header__nav{display:flex;gap:32px}
+    .header__nav a{font-size:.9rem;font-weight:500;color:var(--text-secondary);transition:color .2s}
+    .header__nav a:hover{color:var(--text-primary)}
+    .header__burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:28px;height:28px;cursor:pointer;z-index:110}
+    .header__burger span{display:block;width:100%;height:2px;background:var(--text-primary);border-radius:2px;transition:all .3s ease}
+    .header__burger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+    .header__burger.active span:nth-child(2){opacity:0}
+    .header__burger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+    .mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg-primary);z-index:99;padding:120px 24px 40px;flex-direction:column;align-items:center;gap:32px;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease}
+    .mobile-menu.active{opacity:1;visibility:visible}
+    .mobile-menu a{font-size:1.5rem;font-weight:600;color:var(--text-primary)}
+    .mobile-menu a:hover{color:var(--brand-green)}
+    @media(max-width:768px){.header__nav{display:none}.header__burger{display:flex}.mobile-menu{display:flex}}
+
+    /* HERO */
+    .hero{position:relative;min-height:88vh;display:flex;flex-direction:column;justify-content:flex-end;padding:140px 24px 80px;max-width:var(--max-width);margin:0 auto;overflow:hidden}
+    .hero::before{content:'';position:absolute;top:80px;right:-100px;width:560px;height:560px;background:radial-gradient(circle,rgba(34,197,94,.08) 0%,transparent 70%);pointer-events:none;z-index:-1}
+    @media(max-width:768px){.hero::before{width:320px;height:320px;right:-60px}}
+    .hero__badge{display:inline-flex;align-items:center;gap:10px;padding:8px 14px 8px 10px;background:var(--bg-secondary);border:1px solid var(--border-color);border-radius:6px;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted);margin-bottom:32px;width:fit-content}
+    .hero__badge-dot{width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    .hero__title{font-size:clamp(2.6rem,6vw,4.4rem);font-weight:700;line-height:1.05;letter-spacing:-.035em;color:var(--text-primary);margin-bottom:24px;max-width:980px}
+    .hero__title em{font-style:normal;color:var(--brand-green)}
+    @media(prefers-color-scheme:dark){.hero__title em{color:#7fb89a}}
+    .hero__subtitle{font-size:clamp(1.05rem,1.6vw,1.25rem);color:var(--text-secondary);max-width:640px;line-height:1.7;margin-bottom:36px}
+    .hero__meta{display:flex;flex-wrap:wrap;gap:32px 56px;padding-top:32px;border-top:1px solid var(--border-color);max-width:960px}
+    .hero__meta-item{display:flex;flex-direction:column;gap:4px}
+    .hero__meta-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted)}
+    .hero__meta-value{font-size:1.05rem;font-weight:600;color:var(--text-primary)}
+
+    /* SECTION FRAMEWORK */
+    .section{padding:90px 24px;max-width:var(--max-width);margin:0 auto}
+    .section--alt{background:var(--bg-secondary);border-top:1px solid var(--border-color);border-bottom:1px solid var(--border-color);max-width:none;padding:90px 24px}
+    .section--alt .section__inner{max-width:var(--max-width);margin:0 auto}
+    .section__num{display:inline-block;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--brand-green);margin-bottom:18px}
+    @media(prefers-color-scheme:dark){.section__num{color:#7fb89a}}
+    .section__title{font-size:clamp(1.85rem,3.6vw,2.7rem);font-weight:700;letter-spacing:-.02em;line-height:1.18;margin-bottom:28px;color:var(--text-primary);max-width:880px}
+    .section__lead{font-size:1.15rem;color:var(--text-secondary);line-height:1.75;max-width:760px;margin-bottom:24px}
+    .section__body p{font-size:1.05rem;color:var(--text-secondary);line-height:1.8;max-width:760px;margin-bottom:18px}
+    .section__body p strong{color:var(--text-primary);font-weight:600}
+
+    /* STAT GRID */
+    .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border-color);border:1px solid var(--border-color);border-radius:10px;overflow:hidden;margin:48px 0 16px}
+    @media(max-width:900px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+    .stat-item{background:var(--bg-primary);padding:32px 24px}
+    .stat-item__num{font-size:clamp(2rem,3.6vw,2.6rem);font-weight:700;letter-spacing:-.025em;color:var(--text-primary);line-height:1;margin-bottom:8px}
+    .stat-item__num small{font-size:.55em;font-weight:600;color:var(--text-muted);margin-left:4px}
+    .stat-item__label{font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:6px}
+    .stat-item__sub{font-size:.9rem;color:var(--text-secondary);line-height:1.4}
+
+    /* IMG ANCHOR */
+    .anchor-img{margin:48px 0 16px;border-radius:12px;overflow:hidden;border:1px solid var(--border-color);background:var(--bg-secondary)}
+    .anchor-img img{width:100%;height:auto;display:block}
+    .anchor-img__caption{padding:16px 22px;font-size:.85rem;color:var(--text-muted);border-top:1px solid var(--border-color);background:var(--bg-secondary)}
+    .anchor-img__caption strong{color:var(--text-primary);font-weight:600}
+
+    /* STATUS GRID */
+    .status-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-color);border:1px solid var(--border-color);border-radius:10px;overflow:hidden;margin-top:36px}
+    @media(max-width:780px){.status-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:480px){.status-grid{grid-template-columns:1fr}}
+    .status-item{background:var(--bg-primary);padding:24px 22px}
+    .status-item__label{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:10px}
+    .status-item__value{font-size:1.05rem;font-weight:600;color:var(--text-primary);display:flex;align-items:center;gap:10px;margin-bottom:6px}
+    .status-item__sub{font-size:.85rem;color:var(--text-secondary);line-height:1.45}
+    .status-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+    .status-dot--complete{background:var(--green)}
+    .status-dot--progress{background:var(--yellow)}
+    .status-dot--pending{background:var(--gray-300)}
+
+    /* TWO-COL */
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;margin-top:24px}
+    @media(max-width:880px){.two-col{grid-template-columns:1fr;gap:32px}}
+    .two-col__head{font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:14px}
+    .two-col p{font-size:1rem;color:var(--text-secondary);line-height:1.75;margin-bottom:14px}
+
+    /* PROPOSITION (brand-green band) */
+    .proposition{background:var(--brand-green);color:#fff;padding:110px 24px}
+    .proposition__inner{max-width:var(--max-width);margin:0 auto}
+    .proposition__num{display:inline-block;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.55);margin-bottom:20px}
+    .proposition__title{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:700;letter-spacing:-.025em;line-height:1.15;margin-bottom:36px;max-width:980px;color:#fff}
+    .proposition__body{max-width:780px;font-size:1.1rem;line-height:1.8;color:rgba(255,255,255,.82)}
+    .proposition__body p{margin-bottom:18px}
+    .proposition__body p strong{color:#fff;font-weight:600}
+    .proposition__pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:56px;padding-top:48px;border-top:1px solid rgba(255,255,255,.18)}
+    @media(max-width:780px){.proposition__pillars{grid-template-columns:1fr;gap:28px}}
+    .pillar h4{font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.55);margin-bottom:10px}
+    .pillar p{color:rgba(255,255,255,.88);font-size:1rem;line-height:1.6}
+
+    /* CLOSING / CONTACT */
+    .closing{padding:110px 24px;max-width:var(--max-width);margin:0 auto;text-align:left}
+    .closing__title{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:700;letter-spacing:-.03em;line-height:1.1;margin-bottom:22px;color:var(--text-primary);max-width:880px}
+    .closing__sub{font-size:1.15rem;color:var(--text-secondary);max-width:680px;line-height:1.7;margin-bottom:48px}
+    .contact-card{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border-color);border-radius:12px;overflow:hidden;max-width:780px;margin-bottom:36px}
+    @media(max-width:680px){.contact-card{grid-template-columns:1fr}}
+    .contact-card__cell{padding:28px 26px;border-right:1px solid var(--border-color);background:var(--bg-secondary)}
+    .contact-card__cell:last-child{border-right:none;border-top:none}
+    @media(max-width:680px){.contact-card__cell{border-right:none;border-bottom:1px solid var(--border-color)}.contact-card__cell:last-child{border-bottom:none}}
+    .contact-card__label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted);margin-bottom:8px}
+    .contact-card__name{font-size:1.05rem;font-weight:600;color:var(--text-primary);margin-bottom:2px}
+    .contact-card__role{font-size:.9rem;color:var(--text-secondary);margin-bottom:12px}
+    .contact-card__link{font-size:.95rem;font-weight:500;color:var(--brand-green);transition:opacity .2s;display:block;margin-bottom:4px}
+    @media(prefers-color-scheme:dark){.contact-card__link{color:#7fb89a}}
+    .contact-card__link:hover{opacity:.7}
+
+    /* FOOTER */
+    .footer{background:#0a0a0a;color:#737373;padding:40px 24px}
+    .footer__inner{max-width:var(--max-width);margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+    .footer__logo{font-weight:700;color:#fff}
+    .footer__links{display:flex;gap:24px}
+    .footer__links a{font-size:.9rem;transition:color .2s}
+    .footer__links a:hover{color:#fff}
+
+    /* ANIMATIONS */
+    .fade-up{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+    .fade-up.visible{opacity:1;transform:translateY(0)}
+    .stagger > *{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+    .stagger.visible > *:nth-child(1){transition-delay:0s}
+    .stagger.visible > *:nth-child(2){transition-delay:.08s}
+    .stagger.visible > *:nth-child(3){transition-delay:.16s}
+    .stagger.visible > *:nth-child(4){transition-delay:.24s}
+    .stagger.visible > *:nth-child(5){transition-delay:.32s}
+    .stagger.visible > *{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="/" class="header__logo">
+        <img src="/assets/logo-mark.png" alt="ReDewable">
+        ReDewable
+      </a>
+      <nav class="header__nav">
+        <a href="/#project">Project</a>
+        <a href="/#approach">Approach</a>
+        <a href="/team.html">Team</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <div class="header__burger" id="burger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="/#project">Project</a>
+    <a href="/#approach">Approach</a>
+    <a href="/team.html">Team</a>
+    <a href="/#contact">Contact</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="stagger visible">
+      <div class="hero__badge">
+        <span class="hero__badge-dot"></span>
+        Partnership Proposition · Phantom Hill 345 kV · April 2026
+      </div>
+      <h1 class="hero__title">
+        A 600 MW long-duration storage flagship,<br>
+        <em>at the most stressed grid corridor in the country.</em>
+      </h1>
+      <p class="hero__subtitle">
+        ReDew Anson is shovel-ready land at a top-tier interconnection point, surrounded by gigawatts of solar and the largest data center buildout in history. Between the right partners, we have everything required to make it real.
+      </p>
+      <div class="hero__meta">
+        <div class="hero__meta-item">
+          <span class="hero__meta-label">Capacity</span>
+          <span class="hero__meta-value">600 MW</span>
+        </div>
+        <div class="hero__meta-item">
+          <span class="hero__meta-label">Interconnection</span>
+          <span class="hero__meta-value">Phantom Hill 345 kV · ERCOT Bus 68004</span>
+        </div>
+        <div class="hero__meta-item">
+          <span class="hero__meta-label">TSP / Zone</span>
+          <span class="hero__meta-value">Oncor · ERCOT West</span>
+        </div>
+        <div class="hero__meta-item">
+          <span class="hero__meta-label">Location</span>
+          <span class="hero__meta-value">Jones County, Texas</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 1: WHO WE ARE -->
+  <section class="section">
+    <div class="fade-up">
+      <span class="section__num">01 / Foundation</span>
+      <h2 class="section__title">A Texas-based developer building grid infrastructure for the buyers who are showing up.</h2>
+      <div class="section__body">
+        <p>ReDew develops shovel-ready storage assets at strategically-located interconnection points. We focus on the work that comes before construction: land, environmental, interconnection, and the partnership architecture that turns a site into a financeable project.</p>
+        <p>The next era of the grid has to be <strong>domestically built, long-duration, and designed for the buyers who are actually showing up</strong> — hyperscalers, industrials, and a system stressed in ways it has never been before. That conviction shapes every project we touch.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: WHAT WE HAVE -->
+  <section class="section--alt">
+    <div class="section__inner fade-up">
+      <span class="section__num">02 / Position</span>
+      <h2 class="section__title">We're sitting on the most strategic interconnection point in the most stressed corridor in the country.</h2>
+      <p class="section__lead">Land purchased adjacent to Phantom Hill 345 kV. Surrounded by the gigawatts of solar already built and the gigawatts of hyperscaler load arriving in the next 36 months.</p>
+
+      <div class="stat-grid">
+        <div class="stat-item">
+          <div class="stat-item__num">600<small>MW</small></div>
+          <div class="stat-item__label">Cleared Capacity</div>
+          <div class="stat-item__sub">Full Enerzinx enhanced feasibility at Phantom Hill</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__num">1.8<small>GW</small></div>
+          <div class="stat-item__label">Adjacent Solar</div>
+          <div class="stat-item__sub">In operation or active development immediately surrounding the site</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__num">4+<small>GW</small></div>
+          <div class="stat-item__label">Corridor Solar</div>
+          <div class="stat-item__sub">Across Jones, Shackelford &amp; Taylor counties · ERCOT GIS</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__num">36<small>MO</small></div>
+          <div class="stat-item__label">Load Arriving</div>
+          <div class="stat-item__sub">Stargate clean energy campus &amp; Vantage Frontier underway</div>
+        </div>
+      </div>
+
+      <div class="anchor-img">
+        <img src="/assets/redew-anson-aerial.jpg" alt="Aerial of the ReDew Anson site adjacent to the Phantom Hill 345 kV substation, Jones County, Texas">
+        <div class="anchor-img__caption"><strong>ReDew Anson site</strong> — Jones County, Texas, directly adjacent to the Phantom Hill 345 kV substation in Oncor TSP territory.</div>
+      </div>
+
+      <div class="section__body" style="margin-top:32px">
+        <p>This is the largest data center buildout in history, and it is happening in our corridor. The <strong>Stargate clean energy campus</strong> is underway. <strong>Vantage Data Centers' Frontier campus</strong> in Shackelford County is underway. Many gigawatts of load are arriving inside three years.</p>
+        <p>Meanwhile, <strong>the West Load Zone is curtailing solar at a rate that grows every quarter.</strong> The infrastructure that exists wasn't designed for what's coming. The interconnection points that can host the answer are scarce — and we have one of them.</p>
+      </div>
+
+      <div class="anchor-img" style="margin-top:48px">
+        <img src="/assets/redew-anson-curtailment-map.png" alt="ERCOT West curtailment and corridor map showing Phantom Hill, surrounding solar, and data center campus locations">
+        <div class="anchor-img__caption"><strong>The corridor</strong> — Phantom Hill 345 kV at the center of an unprecedented concentration of solar generation and hyperscaler load.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: WHAT WE'VE DONE -->
+  <section class="section">
+    <div class="fade-up">
+      <span class="section__num">03 / Execution</span>
+      <h2 class="section__title">Cleared. Permitted. Environmental clean. Ready to build.</h2>
+      <p class="section__lead">The original plan was to develop ReDew Anson to NTP and exit, with Li-ion as the assumed chemistry. We executed against that plan.</p>
+
+      <div class="status-grid">
+        <div class="status-item">
+          <div class="status-item__label">Interconnection Feasibility</div>
+          <div class="status-item__value"><span class="status-dot status-dot--complete"></span>Cleared 600 MW</div>
+          <div class="status-item__sub">Full Enerzinx enhanced study at Phantom Hill — exceptional grid strength, no local thermal constraints.</div>
+        </div>
+        <div class="status-item">
+          <div class="status-item__label">Environmental</div>
+          <div class="status-item__value"><span class="status-dot status-dot--complete"></span>Phase I ESA &amp; CIA Complete</div>
+          <div class="status-item__sub">One manageable REC: a 1964-era reserve pit in the southern portion, outside the BESS development footprint in the NW corner.</div>
+        </div>
+        <div class="status-item">
+          <div class="status-item__label">Land</div>
+          <div class="status-item__value"><span class="status-dot status-dot--complete"></span>Purchased</div>
+          <div class="status-item__sub">Owned outright, adjacent to Phantom Hill substation. No optionality risk, no rolling lease exposure.</div>
+        </div>
+        <div class="status-item">
+          <div class="status-item__label">Permitting</div>
+          <div class="status-item__value"><span class="status-dot status-dot--complete"></span>Path Established</div>
+          <div class="status-item__sub">Jones County, Texas. Confirmed development pathway, cooperative AHJ.</div>
+        </div>
+        <div class="status-item">
+          <div class="status-item__label">Original OEM Path</div>
+          <div class="status-item__value"><span class="status-dot status-dot--progress"></span>Re-evaluating</div>
+          <div class="status-item__sub">CATL anchor, EPC built around 2-hour Li-ion economics — credible at scale, with offshore-sourcing and short-duration revenue trade-offs.</div>
+        </div>
+        <div class="status-item">
+          <div class="status-item__label">Capital Structure</div>
+          <div class="status-item__value"><span class="status-dot status-dot--progress"></span>Open</div>
+          <div class="status-item__sub">Capacity in the structure for a long-duration OEM partner and a hyperscaler off-taker on a 20+ year horizon.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: WHERE WE ARE TODAY -->
+  <section class="section--alt">
+    <div class="section__inner fade-up">
+      <span class="section__num">04 / Inflection</span>
+      <h2 class="section__title">The buyer who values this asset most isn't optimizing for 2-hour merchant arbitrage.</h2>
+
+      <div class="two-col">
+        <div>
+          <div class="two-col__head">What changed</div>
+          <p>As we watched the buyer set evolve — hyperscalers chasing 24/7 clean firm power, the Stargate buildout, West Zone curtailment growing every quarter — it became clear which buyer values this asset most. It's the one who needs <strong>firmed renewables on a 24/7 profile, built domestically, designed to last 20+ years.</strong></p>
+          <p>Two-hour Li-ion was never going to be the answer for that buyer. Long-duration is.</p>
+        </div>
+        <div>
+          <div class="two-col__head">What it takes</div>
+          <p>We have the land. We have the feasibility. We have the environmental and the permitting. A long-duration OEM brings the technology, the equipment, and the manufacturing capability.</p>
+          <p>The final piece of the puzzle is a customer who finds value in <strong>firmed capacity and a contracted rate over a long horizon.</strong> That customer exists. They're already in our corridor.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: PROPOSITION -->
+  <section class="proposition">
+    <div class="proposition__inner fade-up">
+      <span class="proposition__num">05 / The Proposition</span>
+      <h2 class="proposition__title">ReDew Anson becomes the flagship demonstration of domestically-built, long-duration storage as a standalone grid asset.</h2>
+      <div class="proposition__body">
+        <p>Not a co-location project. Not a behind-the-meter UPS.</p>
+        <p>A <strong>600 MW front-of-the-meter, solar-firmed, hyperscaler-anchored asset</strong> that proves long-duration is the answer for the next era of the grid — for reliability, for resiliency, and ultimately for national security.</p>
+        <p>Between the right partners, we have everything required to make that real.</p>
+      </div>
+
+      <div class="proposition__pillars">
+        <div class="pillar">
+          <h4>Domestic</h4>
+          <p>Long-duration, US-manufactured chemistry. Supply chain resilience built into the asset, not bolted on.</p>
+        </div>
+        <div class="pillar">
+          <h4>Firmed</h4>
+          <p>4+ GW of corridor solar paired with multi-hour storage. A 24/7 clean profile shaped to hyperscaler demand.</p>
+        </div>
+        <div class="pillar">
+          <h4>Anchored</h4>
+          <p>Front-of-the-meter, contracted at length. The buyer who values this asset most is the one already showing up.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="closing fade-up">
+    <span class="section__num">06 / Together</span>
+    <h2 class="closing__title">Let's build it together.</h2>
+    <p class="closing__sub">A site this strategic, in this corridor, at this moment, doesn't come around again. We have the foundation. The right partners turn it into the flagship.</p>
+
+    <div class="contact-card">
+      <div class="contact-card__cell">
+        <div class="contact-card__label">Founder</div>
+        <div class="contact-card__name">Talor Byington</div>
+        <div class="contact-card__role">Founder, ReDew Energy Company LLC</div>
+        <a href="mailto:tb@redewable.com" class="contact-card__link">tb@redewable.com</a>
+        <a href="https://www.linkedin.com/company/redewable" target="_blank" rel="noopener" class="contact-card__link">LinkedIn → ReDewable</a>
+      </div>
+      <div class="contact-card__cell">
+        <div class="contact-card__label">Project</div>
+        <div class="contact-card__name">ReDew Anson</div>
+        <div class="contact-card__role">600 MW BESS · Phantom Hill 345 kV · Jones County, TX</div>
+        <a href="/project-anson.html" class="contact-card__link">Project page →</a>
+        <a href="mailto:power@redewable.com" class="contact-card__link">power@redewable.com</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__logo">ReDewable Energy Company</div>
+      <div class="footer__links">
+        <a href="/">Home</a>
+        <a href="https://www.linkedin.com/company/redewable" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="/privacy.html">Privacy</a>
+        <span>© 2026</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Burger menu
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        burger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Fade-up observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up, .stagger').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
