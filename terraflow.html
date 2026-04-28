@@ -62,11 +62,12 @@ img { display: block; max-width: 100%; }
   display: flex;
   align-items: flex-end;
   overflow: hidden;
+  cursor: zoom-in;
 }
 .hero__bg {
   position: absolute;
   inset: 0;
-  cursor: pointer;
+  pointer-events: none;
 }
 .hero__bg img {
   width: 100%;
@@ -733,8 +734,8 @@ img { display: block; max-width: 100%; }
 <body>
 
 <!-- ═══ HERO ═══ -->
-<section class="hero">
-  <div class="hero__bg" onclick="openLB('/assets/redew-anson-aerial.jpg')">
+<section class="hero" onclick="openLB('/assets/redew-anson-aerial.jpg')">
+  <div class="hero__bg">
     <img src="/assets/redew-anson-aerial.jpg" alt="Aerial view — ReDew Anson site, Phantom Hill 345 kV, Jones County, Texas">
   </div>
   <div class="hero__bar">
@@ -748,7 +749,7 @@ img { display: block; max-width: 100%; }
   <div class="hero__content">
     <div class="hero__eyebrow">Partnership Proposition · Phantom Hill 345 kV</div>
     <h1 class="hero__title">A 600 MW long-duration storage flagship, <em>at the most stressed grid corridor in the country.</em></h1>
-    <p class="hero__sub">Shovel-ready land at a top-tier interconnection point. The right partners turn it into the asset.</p>
+    <p class="hero__sub">Shovel-ready land at a top-tier interconnection point.<br>The right partners turn it into the asset.</p>
   </div>
 </section>
 
@@ -810,7 +811,7 @@ img { display: block; max-width: 100%; }
 <section class="section">
   <div class="wrap fade-up">
     <div class="label">03 / Execution</div>
-    <h2 class="heading">Cleared. Permitted. Environmental clean. <em>Ready to build.</em></h2>
+    <h2 class="heading">Cleared. Permitted. Environmental clean.<br><em>Ready to build.</em></h2>
     <p class="lead">The original plan was to develop ReDew Anson to NTP and exit, with Li-ion as the assumed chemistry. We executed against that plan.</p>
 
     <div class="timeline">
@@ -862,15 +863,17 @@ img { display: block; max-width: 100%; }
       <div>
         <div class="col-heading">What <em>changed</em></div>
         <div class="col-body">
-          <p>The buyer set evolved. Hyperscalers are now in the corridor chasing 24/7 clean firm power. Stargate is underway. West Zone curtailment grows every quarter.</p>
-          <p>The buyer who values this asset most needs <strong>firmed renewables on a 24/7 profile, built domestically, designed to last 20+ years.</strong> Two-hour merchant arbitrage was never that buyer.</p>
+          <p>The buyer set evolved. Hyperscalers are now in the corridor chasing 24/7 clean firm power. Stargate is underway.<br>West Zone curtailment grows every quarter.</p>
+          <p>The buyer who values this asset most needs <strong>firmed renewables on a 24/7 profile, built domestically, designed to last 20+ years.</strong></p>
+          <p>Two-hour merchant arbitrage was never that buyer.<br>Four-hour Li-ion is good.<br>For a 20-year hyperscaler contract, it isn't good enough.</p>
         </div>
       </div>
       <div>
         <div class="col-heading">What it <em>takes</em></div>
         <div class="col-body">
-          <p>We have the land, the feasibility, the environmental, the permitting. TerraFlow brings <strong>LDUPS</strong> — the architecture shaped for the load profile that's arriving.</p>
-          <p>The final piece is the customer who finds value in firmed capacity over a long horizon. That customer exists. They're already in the corridor.</p>
+          <p>We have the land, the feasibility, the environmental, the permitting.</p>
+          <p>TerraFlow brings <strong>LDUPS&trade;</strong> — the architecture shaped for the load profile that's arriving.</p>
+          <p>The final piece is the customer who finds value in firmed capacity over a long horizon. That customer exists.<br>They're already in the corridor.</p>
         </div>
       </div>
     </div>
@@ -884,7 +887,7 @@ img { display: block; max-width: 100%; }
     <h2 class="proposition__title">ReDew Anson becomes the flagship for <em>domestically-built, long-duration storage</em> as a standalone grid asset.</h2>
     <div class="proposition__body">
       <p>A <strong>600 MW front-of-the-meter, solar-firmed, hyperscaler-anchored asset</strong> in ERCOT West.</p>
-      <p>The site is here. TerraFlow's LDUPS architecture is the answer. The off-taker is already in the corridor.</p>
+      <p>The site is here.<br>TerraFlow's LDUPS&trade; architecture is the answer.<br>The off-taker is already in the corridor.</p>
       <p>Between the three of us, we have everything required to make it real.</p>
     </div>
 
@@ -896,7 +899,7 @@ img { display: block; max-width: 100%; }
       </div>
       <div class="pillar">
         <div class="pillar__tag">Asset</div>
-        <h4>TerraFlow LDUPS</h4>
+        <h4>TerraFlow LDUPS&trade;</h4>
         <p>The architecture shaped for the buyer profile arriving — long-duration, 24/7, built to live on a hyperscaler underwriter's balance sheet for 20+ years.</p>
       </div>
       <div class="pillar">
@@ -913,7 +916,7 @@ img { display: block; max-width: 100%; }
   <div class="wrap fade-up">
     <div class="label">06 / Together</div>
     <h2 class="closing__title">Let's <em>build it</em> together.</h2>
-    <p class="closing__sub">A site this strategic, in this corridor, at this moment, doesn't come around again. We have the foundation. The right partners turn it into the flagship.</p>
+    <p class="closing__sub">A site this strategic, in this corridor, at this moment, doesn't come around again.<br>We have the foundation.<br>The right partners turn it into the flagship.</p>
 
     <div class="contact-card">
       <div class="contact-card__cell">
