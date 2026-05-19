@@ -405,6 +405,165 @@
     }
     
     /* ============================================
+       WHY IT MATTERS
+       ============================================ */
+    .why {
+      border-top: 1px solid var(--border-color);
+      background: var(--bg-primary);
+    }
+
+    .why__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 70px 24px;
+    }
+
+    .why__header {
+      max-width: 720px;
+      margin-bottom: 48px;
+    }
+
+    .why__lede {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-top: 12px;
+    }
+
+    .why__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border-color);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    @media (max-width: 900px) {
+      .why__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .why__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .why__item {
+      background: var(--bg-primary);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .why__item-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--brand-green);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .why__item-eyebrow {
+        color: #5eb88a;
+      }
+    }
+
+    .why__item-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .why__item-body {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ============================================
+       LAND / PHOTOS
+       ============================================ */
+    .land {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .land__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 70px 24px;
+    }
+
+    .land__header {
+      max-width: 720px;
+      margin-bottom: 36px;
+    }
+
+    .land__hero {
+      width: 100%;
+      aspect-ratio: 16 / 7;
+      overflow: hidden;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-primary);
+      margin-bottom: 16px;
+    }
+
+    .land__hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .land__pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 700px) {
+      .land__pair {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .land__tile {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .land__tile-img {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      background: var(--bg-primary);
+    }
+
+    .land__tile-img img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+    }
+
+    .land__caption {
+      margin-top: 10px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      letter-spacing: 0.01em;
+      font-style: italic;
+    }
+
+    /* ============================================
        PROJECT SECTION
        ============================================ */
     .project {
@@ -574,16 +733,52 @@
       background: var(--bg-secondary);
       border-top: 1px solid var(--border-color);
     }
-    
+
+    .team__layout {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    @media (max-width: 800px) {
+      .team__layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+
     .team__content {
       max-width: 600px;
     }
-    
+
     .team__text {
       font-size: 1.1rem;
       color: var(--text-secondary);
       line-height: 1.7;
       margin-bottom: 24px;
+    }
+
+    .team__photo {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      background: var(--bg-primary);
+    }
+
+    .team__photo img {
+      width: 100%;
+      height: auto;
+      display: block;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+    }
+
+    .team__photo-caption {
+      padding: 12px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
     }
     
     .team__link {
@@ -747,7 +942,8 @@
       </a>
       <nav class="header__nav">
         <a href="#project">Project</a>
-        <a href="#approach">Approach</a>
+        <a href="#why">Why It Matters</a>
+        <a href="/neighbors.html">Neighbors</a>
         <a href="/team.html">Team</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -762,7 +958,8 @@
   <!-- MOBILE MENU -->
   <nav class="mobile-menu" id="mobileMenu">
     <a href="#project">Project</a>
-    <a href="#approach">Approach</a>
+    <a href="#why">Why It Matters</a>
+    <a href="/neighbors.html">Neighbors</a>
     <a href="/team.html">Team</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -772,11 +969,11 @@
     <div class="stagger visible">
       <div class="hero__badge">
         <span class="hero__badge-dot"></span>
-        ERCOT · Battery Storage · Texas
+        Texas-Born · ERCOT · Battery Storage
       </div>
       <h1 class="hero__title">We find what others miss.</h1>
       <p class="hero__subtitle">
-        Precision site selection. Surgical execution. Institutional-grade exits. We identify high-value battery storage opportunities in ERCOT, develop them to NTP, and position them for acquisition by operators who deploy at scale.
+        Texas-born and raised. Building long-duration storage that strengthens the ERCOT grid instead of straining it. A clear path to power. A fast time to power. An asset to the grid &mdash; and a good neighbor to West Texas.
       </p>
       <div class="hero__cta">
         <a href="/project-anson.html" class="btn btn--primary">
@@ -788,6 +985,74 @@
     </div>
   </section>
   
+  <!-- WHY IT MATTERS -->
+  <section class="why" id="why">
+    <div class="why__inner">
+      <div class="why__header fade-up">
+        <p class="section__label">Why It Matters</p>
+        <h2 class="section__title">An asset to the grid. A win for Texas.</h2>
+        <p class="why__lede">
+          Texans remember what happens when the grid runs thin. We're building storage that helps make sure it doesn't — sited where the grid needs it, on a timeline the grid can use, with technology that's safe for the community and built at home.
+        </p>
+      </div>
+
+      <div class="why__grid fade-up">
+        <div class="why__item">
+          <div class="why__item-eyebrow">Path to Power</div>
+          <div class="why__item-title">A clear route to interconnection.</div>
+          <p class="why__item-body">Land secured. Environmental complete. Interconnection underway at Phantom Hill 345 kV &mdash; one of the most strategic nodes in ERCOT West.</p>
+        </div>
+        <div class="why__item">
+          <div class="why__item-eyebrow">Time to Power</div>
+          <div class="why__item-title">Ready when Texas needs it.</div>
+          <p class="why__item-body">On track for mid-2027 NTP and commercial operations 18 months later. Pre-development work done up front means power on the grid when demand is rising fastest.</p>
+        </div>
+        <div class="why__item">
+          <div class="why__item-eyebrow">An Asset, Not a Liability</div>
+          <div class="why__item-title">Storage that firms the grid.</div>
+          <p class="why__item-body">Dispatchable capacity that reduces curtailment, supports reliability, and pays its way &mdash; not another draw on the system, but a stabilizer for it.</p>
+        </div>
+        <div class="why__item">
+          <div class="why__item-eyebrow">Next-Generation Tech</div>
+          <div class="why__item-title">Long-duration. Vanadium-backed.</div>
+          <p class="why__item-body">Vanadium flow chemistry. 100% domestically sourced. 100% recyclable. No water waste. No fire risk. Storage Texas can be proud of and live next to.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAND -->
+  <section class="land" id="land">
+    <div class="land__inner">
+      <div class="land__header fade-up">
+        <p class="section__label">The Land · Jones County, Texas</p>
+        <h2 class="section__title">Putting tired land back to work.</h2>
+        <p class="why__lede">
+          The parcel is dryland farmland that has run at roughly a quarter of its historical yield for more than a decade &mdash; the water table has dropped, the rain has shifted, and the economics of cropping it have gone with them. Right next door sits the Phantom Hill 345 kV substation. The same ground that won't support a profitable harvest will support the grid Texas actually needs. And the facility we're putting on it is designed to belong here.
+        </p>
+      </div>
+
+      <div class="land__hero fade-up">
+        <img src="/assets/anson-pano-sw-corner.jpg" alt="ReDew Anson land — panorama from the southwest corner" loading="lazy">
+      </div>
+
+      <div class="land__pair fade-up">
+        <div class="land__tile">
+          <div class="land__tile-img">
+            <img src="/assets/anson-land-nw-corner.jpg" alt="ReDew Anson land — view from the northwest corner of the parcel" loading="lazy">
+          </div>
+          <p class="land__caption">Northwest corner of the parcel.</p>
+        </div>
+        <div class="land__tile">
+          <div class="land__tile-img">
+            <img src="/assets/phantom-hill-substation.jpg" alt="Phantom Hill 345 kV substation — the project's point of interconnection" loading="lazy">
+          </div>
+          <p class="land__caption">Phantom Hill 345 kV &mdash; the project's point of interconnection.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- PROJECT -->
   <section class="project" id="project">
     <div class="project__inner">
@@ -830,11 +1095,11 @@
         </div>
         <div class="project__item">
           <div class="project__item-label">Battery Technology</div>
-          <div class="project__item-value">Tier-1 LFP BESS</div>
+          <div class="project__item-value">Long-Duration Vanadium Flow</div>
         </div>
         <div class="project__item">
           <div class="project__item-label">Target NTP</div>
-          <div class="project__item-value">Q1 2027</div>
+          <div class="project__item-value">Mid-2027</div>
         </div>
       </div>
       
@@ -890,15 +1155,22 @@
   <section class="section team" id="team">
     <div class="fade-up">
       <p class="section__label">Leadership</p>
-      <h2 class="section__title">Texas-based. Founder-led. Moving fast.</h2>
-      <div class="team__content">
-        <p class="team__text">
-          ReDewable is led by a Texas A&M-trained team with deep roots in construction, development, and energy infrastructure. We've built businesses from the ground up, managed complex projects, and know what it takes to deliver.
-        </p>
-        <a href="/team.html" class="team__link">
-          Meet the team
-          <span class="btn__arrow">→</span>
-        </a>
+      <h2 class="section__title">Texas-born. Founder-led. Building for home.</h2>
+
+      <div class="team__layout">
+        <div class="team__content">
+          <p class="team__text">
+            ReDewable is founder-led by a Texas A&amp;M graduate with deep roots in construction, development, and energy infrastructure. Texas-born and raised — and raising the next generation right here. Every decision we make about this project, we make as neighbors first.
+          </p>
+          <a href="/team.html" class="team__link">
+            Meet the team
+            <span class="btn__arrow">→</span>
+          </a>
+        </div>
+        <div class="team__photo">
+          <img src="/assets/family-photo.jpg" alt="Talor Byington with family, West Texas" loading="lazy">
+          <div class="team__photo-caption">For us, it's all about family.</div>
+        </div>
       </div>
     </div>
   </section>
@@ -930,8 +1202,12 @@
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer__inner">
-      <div class="footer__logo">ReDewable Energy Company</div>
+      <div>
+        <div class="footer__logo">ReDewable Energy Company</div>
+        <div style="font-size:0.85rem;color:#888;margin-top:4px">Texas-born and raised &middot; Jones County, TX</div>
+      </div>
       <div class="footer__links">
+        <a href="/neighbors.html">Neighbors</a>
         <a href="https://www.linkedin.com/company/redewable" target="_blank" rel="noopener">LinkedIn</a>
         <a href="/privacy.html">Privacy</a>
         <span>© 2026</span>

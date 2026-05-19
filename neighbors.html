@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Answers to the questions neighbors, families, and Jones County residents ask about the ReDew Anson battery storage project — safety, economics, construction, and community impact.">
+
+  <link rel="icon" type="image/png" href="/assets/logo-mark.png">
+  <link rel="apple-touch-icon" href="/assets/logo-mark.png">
+
+  <meta property="og:title" content="For Our Neighbors | ReDewable Energy Company">
+  <meta property="og:description" content="Texas-born and raised. Straight answers about ReDew Anson — safety, economics, and community impact in Jones County.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.redewable.com/neighbors.html">
+  <meta property="og:image" content="https://www.redewable.com/assets/anson-pano-sw-corner.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.redewable.com/assets/anson-pano-sw-corner.jpg">
+
+  <title>For Our Neighbors | ReDewable Energy Company</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --gray-50: #fafafa;
+      --gray-100: #f5f5f5;
+      --gray-200: #e5e5e5;
+      --gray-300: #d4d4d4;
+      --gray-400: #a3a3a3;
+      --gray-500: #737373;
+      --gray-600: #525252;
+      --gray-700: #404040;
+      --gray-800: #262626;
+      --gray-900: #171717;
+      --green: #22c55e;
+      --brand-green: #1a3d2f;
+
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --max-width: 1100px;
+
+      --bg-primary: var(--white);
+      --bg-secondary: var(--gray-50);
+      --text-primary: var(--gray-800);
+      --text-secondary: var(--gray-600);
+      --text-muted: var(--gray-500);
+      --border-color: var(--gray-200);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-primary: #111111;
+        --bg-secondary: #1a1a1a;
+        --text-primary: #f5f5f5;
+        --text-secondary: #a3a3a3;
+        --text-muted: #737373;
+        --border-color: #2a2a2a;
+        --gray-50: #1a1a1a;
+        --gray-200: #2a2a2a;
+        --gray-800: #e5e5e5;
+      }
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    ::selection { background: var(--brand-green); color: #fff; }
+    a { color: inherit; text-decoration: none; }
+
+    /* HEADER */
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+    }
+    @media (prefers-color-scheme: dark) {
+      .header { background: rgba(17,17,17,0.95); }
+    }
+    .header__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header__logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+    .header__logo img { height: 28px; width: auto; }
+    .header__nav { display: flex; gap: 32px; }
+    .header__nav a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
+    .header__nav a:hover { color: var(--text-primary); }
+    .header__nav a.is-current { color: var(--text-primary); font-weight: 600; }
+
+    /* Burger Menu */
+    .header__burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      z-index: 110;
+    }
+    .header__burger span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .header__burger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .header__burger.active span:nth-child(2) { opacity: 0; }
+    .header__burger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--bg-primary);
+      z-index: 99;
+      padding: 120px 24px 40px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 32px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .mobile-menu.active { opacity: 1; visibility: visible; }
+    .mobile-menu a {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .mobile-menu a:hover { color: var(--brand-green); }
+
+    @media (max-width: 768px) {
+      .header__nav { display: none; }
+      .header__burger { display: flex; }
+      .mobile-menu { display: flex; }
+    }
+
+    /* HERO */
+    .hero {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 160px 24px 40px;
+    }
+    .hero__eyebrow {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .hero__title {
+      font-size: clamp(2.25rem, 5vw, 3.25rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      max-width: 760px;
+    }
+    .hero__sub {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 680px;
+      line-height: 1.7;
+    }
+
+    /* HERO IMAGE */
+    .hero-img {
+      max-width: var(--max-width);
+      margin: 24px auto 0;
+      padding: 0 24px;
+    }
+    .hero-img__frame {
+      width: 100%;
+      aspect-ratio: 16 / 7;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+    .hero-img__frame img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* INTRO */
+    .intro {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 56px 24px 24px;
+    }
+    .intro__quote {
+      font-size: clamp(1.15rem, 2vw, 1.35rem);
+      line-height: 1.65;
+      color: var(--text-primary);
+      max-width: 780px;
+      border-left: 3px solid var(--brand-green);
+      padding-left: 24px;
+    }
+    .intro__byline {
+      margin-top: 14px;
+      padding-left: 27px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    /* TOC */
+    .toc {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 32px 24px 8px;
+    }
+    .toc__label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .toc__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 800px) {
+      .toc__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .toc__grid { grid-template-columns: 1fr; }
+    }
+    .toc__item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: background 0.2s, transform 0.15s;
+    }
+    .toc__item:hover {
+      background: var(--border-color);
+      transform: translateY(-1px);
+    }
+    .toc__item-num {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--brand-green);
+      letter-spacing: 0.06em;
+    }
+    @media (prefers-color-scheme: dark) {
+      .toc__item-num { color: #5eb88a; }
+    }
+
+    /* FAQ SECTIONS */
+    .faq {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 36px 24px 24px;
+    }
+    .faq__group {
+      margin-top: 56px;
+      scroll-margin-top: 100px;
+    }
+    .faq__group:first-of-type { margin-top: 36px; }
+
+    .faq__group-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--brand-green);
+      margin-bottom: 8px;
+    }
+    @media (prefers-color-scheme: dark) {
+      .faq__group-eyebrow { color: #5eb88a; }
+    }
+
+    .faq__group-title {
+      font-size: clamp(1.45rem, 3vw, 1.85rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .faq__group-lede {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+      max-width: 720px;
+    }
+
+    .qa {
+      padding: 22px 0;
+      border-top: 1px solid var(--border-color);
+    }
+    .qa:last-child { padding-bottom: 8px; }
+
+    .qa__q {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      letter-spacing: -0.005em;
+    }
+    .qa__a {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .qa__a + .qa__a { margin-top: 10px; }
+
+    /* CONTACT BAND */
+    .contact-band {
+      background: var(--brand-green);
+      color: #ffffff;
+      margin-top: 72px;
+    }
+    .contact-band__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 56px 24px;
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    @media (max-width: 700px) {
+      .contact-band__inner {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+    }
+    .contact-band__title {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .contact-band__body {
+      color: rgba(255,255,255,0.82);
+      font-size: 1.05rem;
+      line-height: 1.65;
+    }
+    .contact-band__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 24px;
+      background: #ffffff;
+      color: var(--brand-green);
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: transform 0.15s;
+    }
+    .contact-band__cta:hover { transform: translateY(-1px); }
+
+    /* FOOTER */
+    .footer {
+      background: #0d0d0d;
+      color: #737373;
+      padding: 32px 24px;
+    }
+    .footer__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer__logo { font-weight: 700; color: #ffffff; }
+    .footer__tag {
+      font-size: 0.85rem;
+      color: #888;
+      margin-top: 4px;
+    }
+    .footer__links { display: flex; gap: 24px; }
+    .footer__links a { font-size: 0.9rem; transition: color 0.2s; }
+    .footer__links a:hover { color: #ffffff; }
+
+    /* ANIMATIONS */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="/" class="header__logo">
+        <img src="/assets/logo-mark.png" alt="ReDewable">
+        ReDewable
+      </a>
+      <nav class="header__nav">
+        <a href="/#project">Project</a>
+        <a href="/#why">Why It Matters</a>
+        <a href="/neighbors.html" class="is-current">Neighbors</a>
+        <a href="/team.html">Team</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <div class="header__burger" id="burger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="/#project">Project</a>
+    <a href="/#why">Why It Matters</a>
+    <a href="/neighbors.html">Neighbors</a>
+    <a href="/team.html">Team</a>
+    <a href="/#contact">Contact</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero fade-up">
+    <p class="hero__eyebrow">For Our Neighbors · Jones County, TX</p>
+    <h1 class="hero__title">Straight answers about ReDew Anson.</h1>
+    <p class="hero__sub">
+      You shouldn't have to dig through industry websites to find out what's being built down the road. This page is for neighbors, county officials, school folks, and anyone in West Texas who wants the real story on what we're doing here.
+    </p>
+  </section>
+
+  <!-- HERO IMAGE -->
+  <div class="hero-img fade-up">
+    <div class="hero-img__frame">
+      <img src="/assets/anson-pano-sw-corner.jpg" alt="The ReDew Anson land — panorama from the southwest corner, Jones County, Texas">
+    </div>
+  </div>
+
+  <!-- INTRO / FOUNDER NOTE -->
+  <section class="intro fade-up">
+    <p class="intro__quote">
+      &ldquo;I was born and raised in Texas. My family lives here. We're not parachuting in from out of state — we're building this project as neighbors. If you have a question or concern, the right place to send it is to us, directly. We'll answer it.&rdquo;
+    </p>
+    <p class="intro__byline">&mdash; Talor Byington, Founder, ReDewable Energy Company</p>
+  </section>
+
+  <!-- TABLE OF CONTENTS -->
+  <section class="toc fade-up">
+    <p class="toc__label">Jump to a topic</p>
+    <div class="toc__grid">
+      <a href="#what-it-is" class="toc__item"><span class="toc__item-num">01</span> What it is &amp; why here</a>
+      <a href="#safety" class="toc__item"><span class="toc__item-num">02</span> Safety</a>
+      <a href="#look-sound" class="toc__item"><span class="toc__item-num">03</span> Look &amp; sound</a>
+      <a href="#construction" class="toc__item"><span class="toc__item-num">04</span> Construction</a>
+      <a href="#economics" class="toc__item"><span class="toc__item-num">05</span> Economics &amp; jobs</a>
+      <a href="#community" class="toc__item"><span class="toc__item-num">06</span> Community impact</a>
+      <a href="#end-of-life" class="toc__item"><span class="toc__item-num">07</span> End of life</a>
+      <a href="#who" class="toc__item"><span class="toc__item-num">08</span> Who we are</a>
+      <a href="#contact" class="toc__item"><span class="toc__item-num">09</span> Reach us</a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+
+    <!-- WHAT IT IS -->
+    <div class="faq__group fade-up" id="what-it-is">
+      <p class="faq__group-eyebrow">01 · The Basics</p>
+      <h2 class="faq__group-title">What ReDew Anson is &mdash; and why it's here.</h2>
+      <p class="faq__group-lede">Quick orientation before the detailed questions.</p>
+
+      <div class="qa">
+        <p class="qa__q">What are you building?</p>
+        <p class="qa__a">An energy facility in Jones County, Texas, anchored by 600 MW of long-duration vanadium flow battery storage and interconnected to the ERCOT grid at the existing Phantom Hill 345 kV substation. The storage is the core of the project: it holds electricity when there is plenty of it and releases it back to the grid when Texas needs it most.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Is this a power plant?</p>
+        <p class="qa__a">No. We do not generate power. We store power that has already been generated &mdash; from solar, wind, gas, and other sources feeding the ERCOT grid &mdash; and we release it when demand spikes. No combustion. No smokestack. No air emissions from the storage system.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Is this solar? Wind?</p>
+        <p class="qa__a">No. The site has no solar panels and no wind turbines. ReDew Anson works alongside the generators that already exist on the ERCOT grid, holding their output and dispatching it when it's needed.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Why this specific piece of land?</p>
+        <p class="qa__a">Two reasons. First, the land. This parcel has been used for dryland farming, but for more than a decade the yields have run at roughly 25% of what they should be &mdash; the water table has dropped, the rainfall has shifted, and the economics of cropping it have gone with them. We are not taking productive cropland out of production. We are putting underused land back to work. Second, the grid. The Phantom Hill 345 kV substation sits right next door &mdash; one of the most strategically valuable interconnection points in ERCOT West. The right land happens to be next to the right node on the grid. That doesn't happen by accident, and it doesn't happen often.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Is this all you're planning to build on the site?</p>
+        <p class="qa__a">The 600 MW long-duration storage facility is the core of the project, and it's what we're building first. Energy infrastructure of this scale is designed to support the grid and the customers around it, and we expect the facility to evolve as we work with grid operators and energy partners. Anything that changes the footprint, the look, or the impact on the community will get communicated to the community openly. We're not in the business of surprises.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">When does construction start and finish?</p>
+        <p class="qa__a">We're on track for notice-to-proceed in mid-2027, with construction running roughly 18 months from that point and commercial operations late 2028.</p>
+      </div>
+    </div>
+
+    <!-- SAFETY -->
+    <div class="faq__group fade-up" id="safety">
+      <p class="faq__group-eyebrow">02 · Safety</p>
+      <h2 class="faq__group-title">Safety for your family, your land, and your water.</h2>
+      <p class="faq__group-lede">The single most important reason we chose this technology over the alternatives.</p>
+
+      <div class="qa">
+        <p class="qa__q">Is there a fire risk?</p>
+        <p class="qa__a">No. This project uses <strong>long-duration vanadium flow</strong> chemistry &mdash; not lithium-ion. The electrolyte is water-based. It doesn't burn. It cannot enter thermal runaway the way lithium-ion batteries can. The headlines you've seen about battery fires &mdash; those were lithium-ion projects. This is a fundamentally different technology, deliberately chosen for that reason.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">What's inside the tanks?</p>
+        <p class="qa__a">Vanadium dissolved in a water-based electrolyte, fully contained in sealed tanks engineered for zero release under normal operations. Vanadium is a stable, recyclable metal used in steel manufacturing for over a century.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Will this affect our drinking water or the aquifer?</p>
+        <p class="qa__a">The storage facility consumes essentially no water in operation. We do not draw from local wells, the aquifer, or municipal supply to run it. The system is sealed and engineered to prevent any release into soil or groundwater, with secondary containment built into the site design.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Does building here help or hurt the water table?</p>
+        <p class="qa__a">It helps. This land has been worked as dryland farming for decades, with declining yields tied directly to a falling water table and shifting rainfall. Continuing to farm it means continuing to attempt extraction from a depleted aquifer for diminishing returns. Taking this parcel out of marginal farming &mdash; and putting a facility on it that uses essentially no water &mdash; is a net positive for the local water table, not a draw on it.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Does the project use water during construction?</p>
+        <p class="qa__a">Yes, in limited amounts and not from local supply. Construction water for concrete, dust control, and site work is delivered from off-site sources. We do not pull from local wells, neighboring landowners, or municipal supply, and we do not draw the parcel's groundwater. The total construction-period draw is a fraction of what an equivalent footprint of irrigated farming would use in a single season.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">What happens to rainwater and runoff on the site?</p>
+        <p class="qa__a">Site engineering keeps stormwater on the parcel. Grading, retention, and drainage are designed to contain rainfall and release it slowly, not dump runoff onto neighboring property or into local drainages. The civil design is reviewed as part of the permitting process &mdash; this is not optional, and it is not a corner anyone gets to cut.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">What about water for fire suppression or emergencies?</p>
+        <p class="qa__a">Vanadium flow batteries do not burn. There is no thermal-runaway fire risk to suppress, which is one of the reasons we chose this technology. A small, sealed emergency-water reserve is standard for any industrial site &mdash; it sits in storage tanks on the parcel and is not drawn from local wells or municipal supply.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">How does the water use compare to other power projects?</p>
+        <p class="qa__a">It is not close. Traditional gas-fired power plants use thousands of gallons per day for cooling. Lithium-ion battery projects use significant water for cell cooling and fire suppression. The long-duration vanadium flow storage facility we're building uses essentially none. The water profile is one of the main reasons this technology was chosen for West Texas in the first place.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">What about toxic chemicals or emissions?</p>
+        <p class="qa__a">There is no combustion, no smokestack, no air emissions, and no ongoing waste stream from operations. The electrolyte stays inside the system for the project's life and is fully recyclable at end of life &mdash; the vanadium is recovered and reused, not landfilled.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Who shows up if something goes wrong?</p>
+        <p class="qa__a">The local fire authority and county emergency services are part of the project from the design stage forward. They get trained on the site, they receive the equipment information, and they have a direct line to our operations team. The site is fenced, monitored 24/7, and built to industrial safety standards.</p>
+      </div>
+    </div>
+
+    <!-- LOOK & SOUND -->
+    <div class="faq__group fade-up" id="look-sound">
+      <p class="faq__group-eyebrow">03 · Look &amp; Sound</p>
+      <h2 class="faq__group-title">What it looks like. What it sounds like.</h2>
+      <p class="faq__group-lede">We didn't want a fenced container yard. We wanted something worthy of the land it sits on.</p>
+
+      <div class="qa">
+        <p class="qa__q">What does it look like?</p>
+        <p class="qa__a">A purpose-designed energy campus. We commissioned architecture-driven building design specifically so this site would not feel like a typical industrial yard. The buildings are world-class &mdash; clean lines, deliberate materials, low profile, designed to complement the West Texas horizon rather than fight it. Landscaped grounds. No towers. No spinning blades. A facility you can drive past and recognize as belonging here.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Will it block our view?</p>
+        <p class="qa__a">No. The buildings are low-profile and the active footprint sits well back from the road and from property lines. The long horizon lines that make this part of West Texas what it is &mdash; those stay open.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Will we hear it?</p>
+        <p class="qa__a">Battery storage is one of the quieter pieces of grid infrastructure. The main sound sources are cooling equipment and inverters, engineered to stay at or below ambient noise levels at the property line. No turbines. No combustion engines. No rail noise. From down the road, you will not hear it.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">What about lights at night?</p>
+        <p class="qa__a">Security lighting only, directed downward and shielded, designed to stay on the site and out of your sky. We chose West Texas because the land works &mdash; not because we want to wash it in floodlights.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">How big is the footprint?</p>
+        <p class="qa__a">The active equipment and building footprint is a fraction of the total parcel. The rest of the land stays open. The site layout deliberately sets the facility well back from neighbors and from the road.</p>
+      </div>
+    </div>
+
+    <!-- CONSTRUCTION -->
+    <div class="faq__group fade-up" id="construction">
+      <p class="faq__group-eyebrow">04 · Construction</p>
+      <h2 class="faq__group-title">What construction looks like &mdash; and how we keep it from being a headache.</h2>
+      <p class="faq__group-lede">The temporary side of any project. We take this seriously because it's the part you'll feel.</p>
+
+      <div class="qa">
+        <p class="qa__q">How long will construction take?</p>
+        <p class="qa__a">Roughly 18 months from notice-to-proceed to commercial operations. The heaviest traffic and equipment deliveries are concentrated in defined windows within that period, not constant across all 18 months.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Will heavy trucks tear up our roads?</p>
+        <p class="qa__a">We work with Jones County on route planning before construction starts, and we coordinate on road maintenance that results from project-related traffic. We don't want a finished project sitting at the end of a torn-up road any more than the county does.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Construction noise and dust?</p>
+        <p class="qa__a">Standard daylight construction hours. Standard dust control practices on site access roads and laydown areas. We publish a community point of contact during construction &mdash; if something isn't right, we want to hear about it directly, not through a complaint chain.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Will construction workers come from out of state?</p>
+        <p class="qa__a">We prioritize Texas-based contractors and Texas trades wherever the work supports it. Some specialized crews travel for projects like this regardless of where they're built &mdash; that's industry-wide &mdash; but the general construction labor leans Texas.</p>
+      </div>
+    </div>
+
+    <!-- ECONOMICS -->
+    <div class="faq__group fade-up" id="economics">
+      <p class="faq__group-eyebrow">05 · Economics &amp; Jobs</p>
+      <h2 class="faq__group-title">What this puts back into Jones County.</h2>
+      <p class="faq__group-lede">The economic case for the community. Specific dollar figures get firmed up as the project moves through development &mdash; the structure is what matters.</p>
+
+      <div class="qa">
+        <p class="qa__q">What does ReDew Anson bring to Jones County?</p>
+        <p class="qa__a">A project of this size adds meaningful, long-term property tax revenue to the Jones County tax rolls and to the local Independent School District &mdash; revenue that supports schools, roads, emergency services, and county operations for the life of the project. That funding does not come out of any homeowner's pocket. It's new revenue, paid by the project, for the community.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Will it create local jobs?</p>
+        <p class="qa__a">Yes. Construction employs a meaningful workforce during the build period, with subcontracting opportunities for Texas-based trades &mdash; electrical, civil, mechanical, fencing, site prep, fueling, food service, and more. Once operating, the site supports skilled long-term technician and operations roles.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Will you hire locally?</p>
+        <p class="qa__a">Where the work fits, yes. Texas labor and Texas suppliers are the default &mdash; not because it sounds good, but because local crews who live in the community do better work and stay longer.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Will this hurt my property value?</p>
+        <p class="qa__a">No. The reasons are practical: low visual profile, architecturally designed buildings, minimal noise, no smokestack, no continuous truck traffic after construction, no land subdivision around the site. The land around the project stays usable for the things it has always been used for.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Will my electric bill go down?</p>
+        <p class="qa__a">We're not going to promise that. What we will say plainly: battery storage on the ERCOT grid helps moderate the price volatility Texans saw in February 2021 and during hot-summer peaks. More storage on the system is a structural benefit for ratepayers over time, even if you can't draw a straight line from one project to one month's bill.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Are you getting tax abatements?</p>
+        <p class="qa__a">We engage with the county and the school district on the standard tools Texas uses to attract major capital investment. Any abatement structure is negotiated in public, on the record &mdash; not in a side deal. The goal is a fair outcome that brings the project to Jones County and makes the community a meaningful long-term beneficiary.</p>
+      </div>
+    </div>
+
+    <!-- COMMUNITY -->
+    <div class="faq__group fade-up" id="community">
+      <p class="faq__group-eyebrow">06 · Community Impact</p>
+      <h2 class="faq__group-title">Schools, reliability, and being a good neighbor.</h2>
+      <p class="faq__group-lede">Beyond the tax line items &mdash; the way this fits into the community.</p>
+
+      <div class="qa">
+        <p class="qa__q">What does this do for our schools?</p>
+        <p class="qa__a">The local ISD is one of the largest direct beneficiaries of property tax revenue from a project like this. That funding can support facilities, teacher retention, programs, and stability over the long life of the project. We see that as one of the most important things this project does, not a side effect of it.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Will this help with grid reliability?</p>
+        <p class="qa__a">That is the whole point. Texans remember February 2021. They remember summer 2023. Battery storage is one of the most effective tools we have to firm the grid against demand spikes and supply gaps &mdash; and Phantom Hill is one of the most strategic interconnection points in ERCOT West for that purpose.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Will you support the community beyond taxes?</p>
+        <p class="qa__a">Yes. The specifics get worked out in conversation with the community, not in a press release &mdash; but the principle is simple: if this project is going to benefit from being built here, the community deserves to benefit from us being here.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">What about agriculture and ranching on neighboring land?</p>
+        <p class="qa__a">The project doesn't affect surrounding agricultural operations. No water draw on shared resources, no chemical drift, no field disruption. Ranching and farming continue as they have.</p>
+      </div>
+    </div>
+
+    <!-- END OF LIFE -->
+    <div class="faq__group fade-up" id="end-of-life">
+      <p class="faq__group-eyebrow">07 · End of Life</p>
+      <h2 class="faq__group-title">What happens at the end of the project.</h2>
+      <p class="faq__group-lede">A fair question that every neighbor deserves a clear answer to before the project gets built &mdash; not after.</p>
+
+      <div class="qa">
+        <p class="qa__q">How long will it operate?</p>
+        <p class="qa__a">Design life is 20+ years of active operation, with ongoing maintenance and component refresh over that period. Vanadium flow electrolyte doesn't degrade the way lithium cells do &mdash; the active material can be reused effectively indefinitely.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">What happens when it's done?</p>
+        <p class="qa__a">A decommissioning plan is part of the project from the start, including financial assurance to cover removal of the equipment and restoration of the site. The community shouldn't carry that cost; the project does. That commitment is part of the permitting and approval process, not a handshake.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Is this going to leave a mess behind?</p>
+        <p class="qa__a">No. Vanadium flow systems are designed to be recyclable &mdash; most of the active material is recovered and reused rather than landfilled. The site itself is engineered to be restored when the project ends.</p>
+      </div>
+    </div>
+
+    <!-- WHO WE ARE -->
+    <div class="faq__group fade-up" id="who">
+      <p class="faq__group-eyebrow">08 · Who We Are</p>
+      <h2 class="faq__group-title">Who's actually behind this.</h2>
+      <p class="faq__group-lede">Plain answer: a Texas company, founder-led, accountable in person.</p>
+
+      <div class="qa">
+        <p class="qa__q">Who owns ReDewable?</p>
+        <p class="qa__a">ReDewable Energy Company LLC is a Texas-registered, founder-led company. Talor Byington is the founder &mdash; a Texas A&amp;M graduate with a background in Texas construction, development, and energy infrastructure. We're not a foreign owner, not a private-equity holding company, and not a developer parachuting in from out of state.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Will this project be sold to someone else?</p>
+        <p class="qa__a">Battery storage projects often involve institutional capital partners and operating partners for construction and long-term operations &mdash; that's how the energy industry works at this scale. But the commitments made during development, including the community ones, travel with the project. We're not in the business of building a problem and walking away from it.</p>
+      </div>
+
+      <div class="qa">
+        <p class="qa__q">Why did you pick Jones County?</p>
+        <p class="qa__a">Because the grid needs storage here, the land works, the people are good, and the Phantom Hill 345 kV substation is one of the most useful interconnection points in ERCOT West. The honest answer is that we looked for the right site for the project, and West Texas was the right answer.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- CONTACT BAND -->
+  <section class="contact-band" id="contact">
+    <div class="contact-band__inner fade-up">
+      <div>
+        <h2 class="contact-band__title">Have a question we didn't answer?</h2>
+        <p class="contact-band__body">
+          If you're a neighbor, a county or city official, a member of the school board, a member of the press, or just somebody who lives here and wants to know more &mdash; we want to hear from you directly. Email us. We answer.
+        </p>
+      </div>
+      <div style="text-align:right">
+        <a href="mailto:power@redewable.com?subject=Neighbor%20Question%20-%20ReDew%20Anson" class="contact-band__cta">
+          power@redewable.com
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div>
+        <div class="footer__logo">ReDewable Energy Company</div>
+        <div class="footer__tag">Texas-born and raised &middot; Jones County, TX</div>
+      </div>
+      <div class="footer__links">
+        <a href="https://www.linkedin.com/company/redewable" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="/privacy.html">Privacy</a>
+        <span>&copy; 2026</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        burger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Fade-up animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Smooth-scroll for in-page anchors with offset
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const id = this.getAttribute('href');
+        if (id.length <= 1) return;
+        const target = document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+        const offset = 90;
+        const position = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: position, behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
