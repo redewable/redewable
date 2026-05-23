@@ -11,18 +11,18 @@
   
   <!-- Open Graph / Social Share -->
   <meta property="og:title" content="ReDewable Energy Company">
-  <meta property="og:description" content="Precision battery storage development. Surgical execution. Institutional-grade exits.">
+  <meta property="og:description" content="Long-duration technology, long-term thinking. New energy infrastructure that strengthens the ERCOT grid without disrupting the way people live.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.redewable.com">
-  <meta property="og:image" content="https://www.redewable.com/assets/site-aerial.png">
+  <meta property="og:image" content="https://www.redewable.com/assets/site-aerial.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://www.redewable.com/assets/site-aerial.png">
+  <meta name="twitter:image" content="https://www.redewable.com/assets/site-aerial.jpg">
   
   <title>ReDewable Energy Company</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
     *, *::before, *::after {
@@ -50,6 +50,8 @@
       
       --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       --max-width: 1200px;
+      --section-y: 104px;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
       
       --bg-primary: var(--white);
       --bg-secondary: var(--gray-50);
@@ -79,6 +81,12 @@
       }
     }
     
+    @media (max-width: 768px) {
+      :root {
+        --section-y: 68px;
+      }
+    }
+
     html {
       scroll-behavior: smooth;
       overflow-x: hidden;
@@ -252,34 +260,42 @@
        HERO
        ============================================ */
     .hero {
-      min-height: 90vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 100px 24px 60px;
-      max-width: var(--max-width);
-      margin: 0 auto;
       position: relative;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 24px 90px;
+      background-image: url('/assets/anson-pano-sw-corner.jpg');
+      background-size: cover;
+      background-position: center 60%;
+      overflow: hidden;
     }
-    
+
     .hero::before {
       content: '';
       position: absolute;
-      top: 0;
-      right: 0;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(34, 197, 94, 0.06) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: -1;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(8,14,11,0.68) 0%, rgba(8,14,11,0.38) 46%, rgba(8,14,11,0.06) 100%),
+        linear-gradient(0deg, rgba(8,14,11,0.42) 0%, rgba(8,14,11,0) 44%);
+      z-index: 1;
     }
-    
+
+    .hero__inner {
+      position: relative;
+      z-index: 2;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      width: 100%;
+    }
+
     @media (max-width: 768px) {
+      .hero {
+        background-position: center 55%;
+      }
       .hero::before {
-        width: 300px;
-        height: 300px;
-        right: -50px;
-        top: 50px;
+        background:
+          linear-gradient(180deg, rgba(8,14,11,0.58) 0%, rgba(8,14,11,0.36) 45%, rgba(8,14,11,0.58) 100%);
       }
     }
     
@@ -288,14 +304,16 @@
       align-items: center;
       gap: 8px;
       padding: 8px 14px 8px 10px;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       border-radius: 6px;
       font-size: 0.75rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--text-muted);
+      color: rgba(255, 255, 255, 0.92);
       margin-bottom: 28px;
       width: fit-content;
     }
@@ -314,21 +332,35 @@
     }
     
     .hero__title {
-      font-size: clamp(2.5rem, 5.5vw, 3.75rem);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-      color: var(--text-primary);
-      margin-bottom: 20px;
-      max-width: 800px;
+      font-size: clamp(2.75rem, 6.4vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.04;
+      letter-spacing: -0.038em;
+      color: #ffffff;
+      text-shadow: 0 1px 30px rgba(0, 0, 0, 0.35);
+      margin-bottom: 22px;
+      max-width: 900px;
     }
-    
+
     .hero__subtitle {
       font-size: clamp(1rem, 1.8vw, 1.2rem);
-      color: var(--text-secondary);
-      max-width: 540px;
+      color: rgba(255, 255, 255, 0.86);
+      max-width: 560px;
       line-height: 1.7;
       margin-bottom: 36px;
+      text-shadow: 0 1px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero .btn--secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .hero .btn--secondary:hover {
+      background: rgba(255, 255, 255, 0.18);
     }
     
     .hero__cta {
@@ -345,19 +377,20 @@
       font-size: 0.95rem;
       font-weight: 600;
       border-radius: 6px;
-      transition: all 0.2s;
+      transition: background 0.25s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
       cursor: pointer;
       border: none;
     }
-    
+
     .btn--primary {
       background: var(--brand-green);
       color: #ffffff;
     }
-    
+
     .btn--primary:hover {
       background: #152f24;
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(26, 61, 47, 0.28);
     }
     
     .btn--secondary {
@@ -382,7 +415,7 @@
        SECTION BASICS
        ============================================ */
     .section {
-      padding: 70px 24px;
+      padding: var(--section-y) 24px;
       max-width: var(--max-width);
       margin: 0 auto;
     }
@@ -397,9 +430,10 @@
     }
     
     .section__title {
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
+      font-size: clamp(2rem, 4.6vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.032em;
+      line-height: 1.08;
       margin-bottom: 24px;
       color: var(--text-primary);
     }
@@ -415,12 +449,12 @@
     .why__inner {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 70px 24px;
+      padding: var(--section-y) 24px;
     }
 
     .why__header {
       max-width: 720px;
-      margin-bottom: 48px;
+      margin-bottom: 56px;
     }
 
     .why__lede {
@@ -428,6 +462,7 @@
       color: var(--text-secondary);
       line-height: 1.7;
       margin-top: 12px;
+      max-width: 760px;
     }
 
     .why__grid {
@@ -454,10 +489,15 @@
 
     .why__item {
       background: var(--bg-primary);
-      padding: 28px 24px;
+      padding: 30px 26px;
       display: flex;
       flex-direction: column;
       gap: 10px;
+      transition: background 0.35s var(--ease);
+    }
+
+    .why__item:hover {
+      background: var(--bg-secondary);
     }
 
     .why__item-eyebrow {
@@ -475,10 +515,11 @@
     }
 
     .why__item-title {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: var(--text-primary);
-      letter-spacing: -0.01em;
+      letter-spacing: -0.018em;
+      line-height: 1.25;
     }
 
     .why__item-body {
@@ -499,12 +540,12 @@
     .land__inner {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 70px 24px;
+      padding: var(--section-y) 24px;
     }
 
     .land__header {
       max-width: 720px;
-      margin-bottom: 36px;
+      margin-bottom: 48px;
     }
 
     .land__hero {
@@ -567,15 +608,14 @@
        PROJECT SECTION
        ============================================ */
     .project {
-      background: var(--bg-secondary);
-      border-top: 1px solid var(--border-color);
+      background: var(--bg-primary);
       border-bottom: 1px solid var(--border-color);
     }
     
     .project__inner {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 60px 24px;
+      padding: var(--section-y) 24px;
     }
     
     .project__header {
@@ -588,8 +628,9 @@
     }
     
     .project__title-group h2 {
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 700;
+      font-size: clamp(1.6rem, 3.2vw, 2.25rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
       color: var(--text-primary);
       margin-bottom: 8px;
     }
@@ -604,8 +645,9 @@
     }
     
     .project__capacity-number {
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
-      font-weight: 700;
+      font-size: clamp(2.75rem, 5.4vw, 3.75rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
       color: var(--text-primary);
       line-height: 1;
     }
@@ -640,7 +682,12 @@
     
     .project__item {
       background: var(--bg-primary);
-      padding: 22px 20px;
+      padding: 24px 22px;
+      transition: background 0.35s var(--ease);
+    }
+
+    .project__item:hover {
+      background: var(--bg-secondary);
     }
     
     .project__item-label {
@@ -805,7 +852,7 @@
     .contact__inner {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 60px 24px;
+      padding: var(--section-y) 24px;
     }
     
     .contact__grid {
@@ -822,8 +869,10 @@
     }
     
     .contact__title {
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
-      font-weight: 700;
+      font-size: clamp(2rem, 4.6vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.032em;
+      line-height: 1.08;
       margin-bottom: 16px;
     }
     
@@ -904,8 +953,22 @@
        ============================================ */
     .fade-up {
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      transform: translateY(24px);
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fade-up, .stagger > * {
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 3px;
+      border-radius: 3px;
     }
     
     .fade-up.visible {
@@ -928,6 +991,68 @@
     .stagger.visible > * {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* ============================================
+       IMAGE LIGHTBOX
+       ============================================ */
+    img.zoomable {
+      cursor: zoom-in;
+      transition: filter 0.4s var(--ease), transform 0.5s var(--ease);
+    }
+    img.zoomable:hover {
+      filter: brightness(1.05);
+      transform: scale(1.035);
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4vw;
+      background: rgba(6, 10, 8, 0.92);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+      cursor: zoom-out;
+    }
+    .lightbox.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .lightbox img {
+      max-width: 100%;
+      max-height: 88vh;
+      border-radius: 10px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+      transform: scale(0.96);
+      transition: transform 0.25s ease;
+    }
+    .lightbox.open img {
+      transform: scale(1);
+    }
+    .lightbox__close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 1.4rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox__close:hover {
+      background: rgba(255, 255, 255, 0.22);
     }
   </style>
 </head>
@@ -966,11 +1091,7 @@
   
   <!-- HERO -->
   <section class="hero">
-    <div class="stagger visible">
-      <div class="hero__badge">
-        <span class="hero__badge-dot"></span>
-        Texas-Born · ERCOT · Battery Storage
-      </div>
+    <div class="hero__inner stagger visible">
       <h1 class="hero__title">Long-duration technology. Long-term thinking.</h1>
       <p class="hero__subtitle">
         New infrastructure doesn&rsquo;t have to disrupt the way people live. Built right, it strengthens the grid, earns its keep from day one, and leaves the community better &mdash; now and for generations.
@@ -1033,23 +1154,14 @@
       </div>
 
       <div class="land__hero fade-up">
-        <img src="/assets/anson-pano-sw-corner.jpg" alt="ReDew Anson land — panorama from the southwest corner" loading="lazy">
+        <img class="zoomable" src="/assets/anson-land-nw-corner.jpg" alt="ReDew Anson land — view from the northwest corner of the parcel" loading="lazy">
       </div>
+      <p class="land__caption" style="margin-bottom:32px;">Northwest corner of the parcel &mdash; dryland that has run at roughly a quarter of its historical yield for more than a decade.</p>
 
-      <div class="land__pair fade-up">
-        <div class="land__tile">
-          <div class="land__tile-img">
-            <img src="/assets/anson-land-nw-corner.jpg" alt="ReDew Anson land — view from the northwest corner of the parcel" loading="lazy">
-          </div>
-          <p class="land__caption">Northwest corner of the parcel.</p>
-        </div>
-        <div class="land__tile">
-          <div class="land__tile-img">
-            <img src="/assets/phantom-hill-substation.jpg" alt="Phantom Hill 345 kV substation — the project's point of interconnection" loading="lazy">
-          </div>
-          <p class="land__caption">Phantom Hill 345 kV &mdash; the project's point of interconnection.</p>
-        </div>
+      <div class="land__hero fade-up">
+        <img class="zoomable" src="/assets/phantom-hill-substation.jpg" alt="Phantom Hill 345 kV substation — the project's point of interconnection" loading="lazy">
       </div>
+      <p class="land__caption">Phantom Hill 345 kV &mdash; the project's point of interconnection, right next door.</p>
     </div>
   </section>
 
@@ -1062,6 +1174,7 @@
           <p class="project__location">Jones County, Texas · ERCOT West</p>
         </div>
         <div class="project__capacity">
+          <div class="project__capacity-unit" style="margin:0 0 2px; text-transform:uppercase; letter-spacing:0.08em; font-size:0.78rem; font-weight:600;">Up to</div>
           <div class="project__capacity-number">600</div>
           <div class="project__capacity-unit">MW Capacity</div>
         </div>
@@ -1115,40 +1228,27 @@
     </div>
   </section>
   
-  <!-- PIPELINE -->
-  <section class="section pipeline" id="pipeline">
-    <div class="fade-up">
-      <p class="section__label">Pipeline</p>
-      <h2 class="section__title">Additional sites under evaluation.</h2>
-      <div class="pipeline__content">
-        <p class="pipeline__text">
-          Actively screening ERCOT sites against institutional-grade criteria. Same rigor. Same partners. Same approach.
-        </p>
-      </div>
-    </div>
-  </section>
-  
   <!-- APPROACH -->
   <section class="section" id="approach">
     <div class="fade-up">
       <p class="section__label">How We Work</p>
       <h2 class="section__title">We don&rsquo;t build these alone. We bring the right people together.</h2>
       <p class="why__lede">
-        The hardest part of a project this size isn&rsquo;t the technology &mdash; it&rsquo;s getting the right people to the same table at the right time. Power, capital, engineering, the grid, the county, the community. We&rsquo;re the least technical people in the room, by design. Our job is to surround the project with the best in every seat, and connect them.
+        The hardest part of a project this size isn&rsquo;t the technology &mdash; it&rsquo;s orchestration. Knowing which specialists a project needs, and bringing them in at the right moment, in the right order. We&rsquo;re the least technical people in the room, by design: our job is to convene the team, not to be it.
       </p>
 
       <div class="approach__grid">
         <div class="approach__item">
           <h3>Assemble the Pieces</h3>
-          <p>Every project is a puzzle: land, capital, technology, interconnection, offtake, permitting, community. We hold the whole picture and fit the pieces together in the order that actually gets it built.</p>
+          <p>Every project is a puzzle &mdash; land, capital, technology, interconnection, offtake, permitting, community. We hold the whole picture and fit the pieces together in the sequence that gets it built.</p>
         </div>
         <div class="approach__item">
-          <h3>Connect the Right People</h3>
-          <p>Our value isn&rsquo;t being the expert &mdash; it&rsquo;s knowing who is. We surround a project with the best in every seat and make the introductions, at the right moment, that move it forward.</p>
+          <h3>Make the Introductions</h3>
+          <p>Our edge isn&rsquo;t being the expert &mdash; it&rsquo;s knowing who is. We bring in the best in every seat and connect them precisely when it moves a project forward.</p>
         </div>
         <div class="approach__item">
           <h3>Give First</h3>
-          <p>Go-giver, not go-getter. We bring value to every table before we ask for any. Good introductions and earned trust compound &mdash; and they build better projects than transactions ever will.</p>
+          <p>Go-giver, not go-getter. We bring value to every table before we ask for any. Generosity offered up front, and trust earned over time, compound &mdash; and they make stronger projects than transactions ever will.</p>
         </div>
       </div>
     </div>
@@ -1171,13 +1271,26 @@
           </a>
         </div>
         <div class="team__photo">
-          <img src="/assets/family-photo.jpg" alt="Talor Byington with family, West Texas" loading="lazy">
+          <img class="zoomable" src="/assets/family-photo.jpg" alt="Talor Byington with family, West Texas" loading="lazy">
           <div class="team__photo-caption">For us, it's all about family.</div>
         </div>
       </div>
     </div>
   </section>
   
+  <!-- PIPELINE -->
+  <section class="section pipeline" id="pipeline">
+    <div class="fade-up">
+      <p class="section__label">Pipeline</p>
+      <h2 class="section__title">Additional sites under evaluation.</h2>
+      <div class="pipeline__content">
+        <p class="pipeline__text">
+          Actively screening ERCOT sites against institutional-grade criteria. Same rigor. Same partners. Same approach.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- CONTACT -->
   <section class="contact" id="contact">
     <div class="contact__inner">
@@ -1269,6 +1382,35 @@
         }
       });
     });
+
+    // Image lightbox — click any .zoomable image to expand
+    (function () {
+      const box = document.getElementById('lightbox');
+      const boxImg = document.getElementById('lightbox-img');
+      function open(src, alt) {
+        boxImg.src = src;
+        boxImg.alt = alt || '';
+        box.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function close() {
+        box.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+      document.querySelectorAll('img.zoomable').forEach(img => {
+        img.addEventListener('click', () => open(img.src, img.alt));
+      });
+      box.addEventListener('click', close);
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') close();
+      });
+    })();
   </script>
+
+  <!-- Image lightbox overlay -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox__close" aria-label="Close">&times;</button>
+    <img id="lightbox-img" src="" alt="">
+  </div>
 </body>
 </html>
