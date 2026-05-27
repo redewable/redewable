@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>ReDew Anson | Capital Brief</title>
+<link rel="icon" type="image/png" href="/assets/logo-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --white:#ffffff; --cream:#fafaf7; --warm-50:#f5f4f0; --warm-100:#eae8e3; --warm-200:#d5d2cb;
+  --warm-400:#9e9a90; --warm-500:#7a766c; --warm-600:#5c584f; --warm-700:#3d3a33; --warm-900:#1c1a16;
+  --forest:#1a3d2f; --forest-light:#2a5c46; --accent:#22c55e; --gold:#b8954b;
+  --serif:'Libre Baskerville', Georgia, serif; --sans:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--white); color: var(--warm-900); -webkit-font-smoothing: antialiased; }
+::selection { background: var(--forest); color: #fff; }
+.wrap { max-width: 1020px; margin: 0 auto; padding: 0 48px; }
+
+/* HERO */
+.hero { position: relative; min-height: 520px; display: flex; align-items: flex-end; overflow: hidden; }
+.hero__bg { position: absolute; inset: 0; cursor: pointer; }
+.hero__bg img { width: 100%; height: 100%; object-fit: cover; }
+.hero__bg::after { content:''; position:absolute; inset:0; background: linear-gradient(to bottom, rgba(28,26,22,0.3) 0%, rgba(28,26,22,0.45) 40%, rgba(28,26,22,0.88) 100%); }
+.hero__bar { position:absolute; top:0; left:0; right:0; padding: 28px 48px; display:flex; align-items:center; justify-content:space-between; z-index:2; }
+.hero__logo { display:flex; align-items:center; gap:10px; }
+.hero__logo img { height:26px; filter: brightness(0) invert(1); }
+.hero__logo span { font-size:0.85rem; font-weight:600; color: rgba(255,255,255,0.7); letter-spacing:0.02em; }
+.hero__logo a { color: inherit; text-decoration: none; }
+.hero__tag { font-size:0.6rem; font-weight:600; text-transform:uppercase; letter-spacing:0.14em; color: rgba(255,255,255,0.4); }
+.hero__content { position:relative; z-index:2; padding: 0 48px 52px; width:100%; max-width:1020px; margin:0 auto; }
+.hero__title { font-family: var(--serif); font-size: 3rem; font-weight:700; color:#fff; line-height:1.15; margin-bottom:8px; letter-spacing:-0.01em; }
+.hero__sub { font-size:1rem; color: rgba(255,255,255,0.55); font-weight:400; margin-bottom:0; }
+.hero__stats { display:flex; gap:36px; flex-wrap:wrap; }
+.hero__stat { border-left: 2px solid rgba(255,255,255,0.15); padding-left:16px; }
+.hero__stat-value { font-size:0.95rem; font-weight:600; color:#fff; }
+.hero__stat-label { font-size:0.65rem; color: rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.06em; margin-top:2px; }
+
+/* SHARED */
+.section { padding: 72px 0; }
+.section + .section { border-top: 1px solid var(--warm-100); }
+.section--tinted { background: var(--cream); }
+.section--tinted + .section, .section + .section--tinted { border-top: none; }
+.section--forest { background: var(--forest); color: #fff; }
+.section--forest + .section, .section + .section--forest { border-top: none; }
+
+.label { font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; color: var(--forest); margin-bottom:10px; }
+.section--forest .label { color: var(--accent); }
+.heading { font-family: var(--serif); font-size: 1.6rem; font-weight:400; color: var(--warm-900); line-height:1.35; margin-bottom:28px; }
+.section--forest .heading { color: #fff; }
+.heading em { font-style: italic; color: var(--warm-600); }
+.section--forest .heading em { color: var(--warm-200); }
+.about__text { font-size: 1.02rem; line-height: 1.75; color: var(--warm-600); max-width: 780px; }
+.about__text + .about__text { margin-top: 16px; }
+.section--forest .about__text { color: rgba(255,255,255,0.78); }
+
+/* PULL QUOTE / ANCHOR LINE */
+.anchor-line {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  line-height: 1.45;
+  color: var(--warm-900);
+  font-style: italic;
+  border-left: 3px solid var(--forest);
+  padding-left: 24px;
+  margin-top: 32px;
+  max-width: 820px;
+}
+.section--forest .anchor-line { color: #fff; border-left-color: var(--accent); }
+
+/* STAT BAR */
+.stat-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; background: var(--forest); border-radius: 6px; overflow: hidden; margin-top: 28px; }
+.section--forest .stat-bar { background: rgba(255,255,255,0.06); }
+.stat-bar__item { padding: 24px 24px; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }
+.stat-bar__item:last-child { border-right: none; }
+.stat-bar__value { font-size:1.05rem; font-weight:700; color:#fff; margin-bottom:4px; }
+.stat-bar__label { font-size:0.6rem; font-weight:500; text-transform:uppercase; letter-spacing:0.08em; color: rgba(255,255,255,0.5); }
+
+/* CARDS */
+.cards { display:grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.cards--two { grid-template-columns: repeat(2, 1fr); }
+.cards--four { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.card { padding: 28px; border: 1px solid var(--warm-100); border-radius: 6px; background: var(--white); }
+.section--tinted .card { background: var(--white); }
+.section--forest .card { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
+.card__num { font-family: var(--serif); font-size:0.85rem; font-style:italic; color: var(--forest); margin-bottom:10px; }
+.section--forest .card__num { color: var(--accent); }
+.card__title { font-size:0.95rem; font-weight:700; color: var(--warm-900); margin-bottom:8px; line-height:1.4; }
+.section--forest .card__title { color: #fff; }
+.card__text { font-size:0.84rem; color: var(--warm-500); line-height:1.65; }
+.section--forest .card__text { color: rgba(255,255,255,0.72); }
+
+/* BEFORE / AFTER TABLE */
+.ba { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--warm-100); margin-top: 8px; }
+.ba__col { padding: 28px 28px; }
+.ba__col--before { background: var(--cream); }
+.ba__col--after { background: var(--white); border-left: 1px solid var(--warm-100); }
+.ba__label { font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:12px; }
+.ba__col--before .ba__label { color: var(--warm-500); }
+.ba__col--after .ba__label { color: var(--forest); }
+.ba__list { list-style: none; padding: 0; margin: 0; }
+.ba__list li { padding: 10px 0; font-size: 0.88rem; line-height: 1.55; border-bottom: 1px dashed var(--warm-100); color: var(--warm-600); }
+.ba__list li:last-child { border-bottom: none; }
+.ba__col--after .ba__list li { color: var(--warm-900); font-weight: 500; }
+.ba__col--after .ba__list li::before { content: '✓  '; color: var(--forest); font-weight: 700; }
+
+/* USE OF FUNDS */
+.uof { display: grid; grid-template-columns: 1fr; gap: 0; border-top: 1px solid var(--warm-100); }
+.uof__row { display: grid; grid-template-columns: 1fr 120px; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--warm-100); align-items: start; }
+.uof__row--total { background: var(--forest); color: #fff; padding: 22px 28px; border-bottom: none; border-radius: 0 0 6px 6px; }
+.uof__row--total .uof__band { color: #fff; }
+.uof__band { font-size:1rem; font-weight:700; color: var(--warm-900); margin-bottom:4px; }
+.uof__desc { font-size:0.82rem; color: var(--warm-500); line-height:1.55; }
+.uof__row--total .uof__desc { color: rgba(255,255,255,0.65); }
+.uof__amount { font-size:1.15rem; font-weight:700; color: var(--forest); text-align:right; white-space:nowrap; }
+.uof__row--total .uof__amount { font-size: 1.4rem; color: var(--accent); }
+.uof__note { margin-top: 18px; font-size:0.78rem; color: var(--warm-500); font-style:italic; line-height:1.55; }
+
+/* BIO */
+.bio { padding: 16px 0; border-top: 1px solid var(--warm-100); }
+.bio:first-of-type { padding-top: 0; border-top: none; }
+.bio__name { font-size:0.98rem; font-weight:700; color: var(--warm-900); margin-bottom:2px; }
+.bio__title { font-size:0.78rem; font-weight:600; color: var(--forest); margin-bottom:8px; }
+.bio__body { font-size:0.84rem; color: var(--warm-500); line-height:1.65; }
+
+/* CTA BOX */
+.cta-box { background: var(--forest); color: #fff; padding: 36px 40px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+.cta-box__text { flex: 1; min-width: 280px; }
+.cta-box__title { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: #fff; margin-bottom: 6px; line-height: 1.35; }
+.cta-box__sub { font-size:0.88rem; color: rgba(255,255,255,0.65); line-height:1.55; }
+.cta-box__btn { display:inline-flex; align-items:center; gap:8px; background: var(--accent); color: var(--warm-900); padding: 14px 26px; border-radius: 4px; font-size:0.85rem; font-weight:700; text-decoration:none; transition: transform 0.2s; white-space: nowrap; }
+.cta-box__btn:hover { transform: translateY(-1px); }
+
+/* FOOTER */
+.footer { padding: 40px 0; border-top: 1px solid var(--warm-100); }
+.footer__inner { display: flex; align-items: center; justify-content: space-between; }
+.footer__left { display: flex; align-items: center; gap: 10px; }
+.footer__left img { height: 22px; opacity: 0.3; }
+.footer__left span { font-size: 0.8rem; font-weight: 500; color: var(--warm-400); }
+.footer__right { text-align: right; }
+.footer__name { font-size: 0.88rem; font-weight: 600; color: var(--warm-700); }
+.footer__meta { font-size: 0.75rem; color: var(--warm-400); margin-top: 1px; }
+.footer__email { display: block; font-size: 0.75rem; color: var(--warm-400); margin-top: 2px; text-decoration: none; }
+.footer__email:hover { color: var(--warm-600); text-decoration: underline; }
+
+/* LIGHTBOX */
+.lb { display: none; position: fixed; inset: 0; background: rgba(28,26,22,0.92); z-index: 1000; align-items: center; justify-content: center; padding: 48px; cursor: zoom-out; }
+.lb.on { display: flex; }
+.lb img { max-width: 100%; max-height: 100%; border-radius: 4px; }
+.lb__hint { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 0.68rem; color: rgba(255,255,255,0.3); font-family: var(--sans); }
+
+@media (max-width: 860px) {
+  .wrap { padding: 0 28px; }
+  .hero__content { padding: 0 28px 40px; }
+  .hero__bar { padding: 20px 28px; }
+  .hero__title { font-size: 2rem; }
+  .hero__stats { flex-direction: column; gap: 12px; }
+  .anchor-line { font-size: 1.2rem; padding-left: 18px; }
+  .stat-bar { grid-template-columns: repeat(2, 1fr); }
+  .stat-bar__item:nth-child(2) { border-right: none; }
+  .cards, .cards--two, .cards--four { grid-template-columns: 1fr; }
+  .ba { grid-template-columns: 1fr; }
+  .ba__col--after { border-left: none; border-top: 1px solid var(--warm-100); }
+  .uof__row { grid-template-columns: 1fr; gap: 8px; }
+  .uof__amount { text-align: left; }
+  .cta-box { flex-direction: column; align-items: flex-start; }
+  .footer__inner { flex-direction: column; gap: 16px; text-align: center; }
+  .footer__right { text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__bg" onclick="openLB('/assets/redew-anson-aerial.jpg')">
+    <img src="/assets/redew-anson-aerial.jpg" alt="Aerial — ReDew Anson site, Phantom Hill 345 kV, Jones County, TX">
+  </div>
+  <div class="hero__bar">
+    <a href="/at-a-glance.html" class="hero__logo">
+      <img src="/assets/logo-mark.png" alt="ReDewable">
+      <span>ReDewable</span>
+    </a>
+    <div class="hero__tag">Capital Brief</div>
+  </div>
+  <div class="hero__content">
+    <div class="hero__stats" style="margin: 20px 0 24px;">
+      <div class="hero__stat"><div class="hero__stat-value">$1.8M</div><div class="hero__stat-label">Seed to NTP</div></div>
+      <div class="hero__stat"><div class="hero__stat-value">600 MW</div><div class="hero__stat-label">Cleared IC</div></div>
+      <div class="hero__stat"><div class="hero__stat-value">~19 mi</div><div class="hero__stat-label">From Stargate</div></div>
+      <div class="hero__stat"><div class="hero__stat-value">Hold &amp; Operate</div><div class="hero__stat-label">Model</div></div>
+    </div>
+    <h1 class="hero__title">ReDew Anson</h1>
+    <p class="hero__sub">$1.8M seed to a signed IA on 600 MW of cleared interconnection &middot; Phantom Hill 345 kV &middot; Jones County, Texas</p>
+  </div>
+</section>
+
+<!-- THE ASSET -->
+<section class="section">
+  <div class="wrap">
+    <div class="label">The Asset</div>
+    <h2 class="heading">Cleared 600 MW at a 345 kV node, <em>~19 miles from the largest AI compute build in North America.</em></h2>
+    <p class="about__text">
+      ReDew Anson holds 600 MW of cleared injection capacity at Phantom Hill 345 kV &mdash; a queue-cleared interconnection at scale that the AI compute market needs and the queue can no longer easily reproduce. We're developing it as a data center, on-site natural gas, and long-duration vanadium flow storage campus, configured as a Large-Duty UPS (battery in-series between grid and load), held and operated behind an anchor data center tenant.
+    </p>
+    <p class="anchor-line">
+      Capacity is the bottleneck. We control 600 MW of it, next to the corridor that needs it most.
+    </p>
+  </div>
+</section>
+
+<!-- INVESTMENT THESIS -->
+<section class="section section--forest">
+  <div class="wrap">
+    <div class="label">Investment Thesis</div>
+    <h2 class="heading">Four facts the bet rests on.</h2>
+    <div class="cards cards--four">
+      <div class="card">
+        <div class="card__num">i.</div>
+        <div class="card__title">Cleared MW is the moat.</div>
+        <div class="card__text">New 600 MW positions at 345 kV nodes are not being created in the ERCOT queue at the pace AI demand is consuming them. Cleared capacity at scale is non-fungible &mdash; you cannot buy your way back to one with money in the queue.</div>
+      </div>
+      <div class="card">
+        <div class="card__num">ii.</div>
+        <div class="card__title">AI compute has set the clock.</div>
+        <div class="card__text">The Stargate AI campus near Abilene sits ~19 miles south. Hyperscalers and AI infrastructure operators are reserving capacity today for energization windows two-plus years out. The buyer is already in market.</div>
+      </div>
+      <div class="card">
+        <div class="card__num">iii.</div>
+        <div class="card__title">LDUPS stacks three revenue streams.</div>
+        <div class="card__text">Battery in-series captures ERCOT arbitrage, sells ancillary services, and firms the tenant's power &mdash; from one asset position. Hold-and-operate lets the operator capture all three. Develop-and-sell would surrender most of it.</div>
+      </div>
+      <div class="card">
+        <div class="card__num">iv.</div>
+        <div class="card__title">Phased monetization derisks the bet.</div>
+        <div class="card__text">25&ndash;50 MW tranches inside the cleared envelope are independently financeable, fillable, and monetizable. First-tranche economics close before full-envelope COD. No single-build cliff.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY REDEWABLE -->
+<section class="section">
+  <div class="wrap">
+    <div class="label">Why ReDewable</div>
+    <h2 class="heading">Why this team holds this position.</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="card__title">We control the ground.</div>
+        <div class="card__text">45 acres owned plus 123 acres pending purchase across the development footprint. Cleared 600 MW feasibility at Phantom Hill 345 kV in hand. Founder-led, locally rooted in the region the campus serves &mdash; not a sponsor parachuted in.</div>
+      </div>
+      <div class="card">
+        <div class="card__title">Turnkey absorbs the technical risk.</div>
+        <div class="card__text">TerraFlow takes integrated turnkey scope on battery and IC engineering &mdash; application prep, single line, architecture (via Goree), site design, IC engineering &mdash; and brings the ERCOT, Centerpoint, and Oncor relationships the LDUPS configuration runs through.</div>
+      </div>
+      <div class="card">
+        <div class="card__title">The diligence stack is already built.</div>
+        <div class="card__text">Phase I ESA, CIA, and Permit Matrix complete. Air permits in development for on-site gas. Independent IE review, independent revenue modeling overlay, and ERCOT/FERC counsel opinion are line items in the seed &mdash; not aspirations.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHERE THE SEED LANDS YOU -->
+<section class="section section--tinted">
+  <div class="wrap">
+    <div class="label">Asset State</div>
+    <h2 class="heading">What $1.8M moves us from &mdash; <em>and to.</em></h2>
+    <div class="ba">
+      <div class="ba__col ba__col--before">
+        <div class="ba__label">Today (late May 2026)</div>
+        <ul class="ba__list">
+          <li>600 MW feasibility cleared; GINR not yet submitted</li>
+          <li>Environmental Phase I &amp; CIA complete; air permits in scoping</li>
+          <li>45 ac owned; 123 ac pending purchase from the Ward family</li>
+          <li>TerraFlow turnkey scope engaged; FiberLight quote in hand</li>
+          <li>No anchor tenant LOI; no signed IA; no air permits issued</li>
+        </ul>
+      </div>
+      <div class="ba__col ba__col--after">
+        <div class="ba__label">At NTP (mid-2027)</div>
+        <ul class="ba__list">
+          <li>Signed Interconnection Agreement with Oncor</li>
+          <li>Anchor tenant LOI from a hyperscale or AI-infrastructure operator</li>
+          <li>Phase II ESA, BRE, geotech, and ALTA closed</li>
+          <li>Air permits issued for on-site gas; civil and BOP scoped</li>
+          <li>Independent IE review, revenue modeling overlay, and ERCOT/FERC counsel opinion on the LDUPS configuration in the data room</li>
+        </ul>
+      </div>
+    </div>
+    <p class="uof__note">Asset state at NTP is the platform from which the operating company finances and energizes the first 50 MW tranche.</p>
+  </div>
+</section>
+
+<!-- USE OF FUNDS -->
+<section class="section">
+  <div class="wrap">
+    <div class="label">Use of Funds</div>
+    <h2 class="heading">Where the $1.8M goes.</h2>
+    <div class="uof">
+      <div class="uof__row">
+        <div>
+          <div class="uof__band">Interconnection &amp; ERCOT path</div>
+          <div class="uof__desc">GINR submission, ERCOT and Oncor study pass-through fees, interconnection deposits and network upgrade security, vendor closeout.</div>
+        </div>
+        <div class="uof__amount">~$440K</div>
+      </div>
+      <div class="uof__row">
+        <div>
+          <div class="uof__band">Diligence &amp; specialized counsel</div>
+          <div class="uof__desc">Counsel through NTP including specialized ERCOT/FERC counsel for an independent LDUPS opinion. Phase II environmental on the identified REC, BRE, geotech, ALTA survey, on-site gas air permits, independent IE review, independent revenue modeling overlay.</div>
+        </div>
+        <div class="uof__amount">~$580K</div>
+      </div>
+      <div class="uof__row">
+        <div>
+          <div class="uof__band">Team &amp; operating</div>
+          <div class="uof__desc">Founder and Director of Operations through NTP, transition obligations, GL/D&amp;O insurance, accounting and tax, BD travel, data room tooling.</div>
+        </div>
+        <div class="uof__amount">~$590K</div>
+      </div>
+      <div class="uof__row">
+        <div>
+          <div class="uof__band">Marketing &amp; BD</div>
+          <div class="uof__desc">Tenant and capital outreach materials and engagement support.</div>
+        </div>
+        <div class="uof__amount">~$60K</div>
+      </div>
+      <div class="uof__row">
+        <div>
+          <div class="uof__band">Contingency (8%)</div>
+          <div class="uof__desc">Reserve against scope changes through NTP.</div>
+        </div>
+        <div class="uof__amount">~$135K</div>
+      </div>
+      <div class="uof__row uof__row--total">
+        <div>
+          <div class="uof__band">Total seed target</div>
+          <div class="uof__desc">Carries the operating company to NTP with diligence-stack ready.</div>
+        </div>
+        <div class="uof__amount">$1.8M</div>
+      </div>
+    </div>
+    <p class="uof__note">Granular line-item budget, vendor invoicing, and burn-rate detail in the data room.</p>
+  </div>
+</section>
+
+<!-- WHY NOW -->
+<section class="section section--tinted">
+  <div class="wrap">
+    <div class="label">Why Now</div>
+    <h2 class="heading">Three reasons this raise is timed to this window.</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="card__num">01</div>
+        <div class="card__title">The IC queue won't wait.</div>
+        <div class="card__text">GINR submission is the next milestone. The position is cleared today; queue dynamics behind it tighten every month. The seed funds the submission, the study cycle, and the IA execution &mdash; the window between cleared feasibility and signed IA is the highest-leverage equity entry point in the project's life.</div>
+      </div>
+      <div class="card">
+        <div class="card__num">02</div>
+        <div class="card__title">Tenant timing rewards the asset state at NTP.</div>
+        <div class="card__text">Hyperscalers and AI infrastructure operators sign capacity reservation against energization windows two-plus years out. An NTP-stage asset with a signed IA, scoped tenant infrastructure, and an LDUPS configuration is the asset state tenant counterparties can sign against.</div>
+      </div>
+      <div class="card">
+        <div class="card__num">03</div>
+        <div class="card__title">Phased capture starts in 2028.</div>
+        <div class="card__text">First tranche 50 MW energizes in 2028. Returns begin compounding from energization &mdash; not from full-envelope COD. The seed-to-NTP arc is the last all-asset-class equity window before the operating company finances and energizes incremental tranches.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRUCTURE -->
+<section class="section">
+  <div class="wrap">
+    <div class="label">Structure</div>
+    <h2 class="heading">Open to structures that match the work.</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="card__title">Seed Equity</div>
+        <div class="card__text">Common or preferred equity in the operating company at the seed round. Same risk, same upside as the founder. Full participation in subsequent project-level monetization across the 600 MW envelope.</div>
+      </div>
+      <div class="card">
+        <div class="card__title">Project-Level JV</div>
+        <div class="card__text">JV at the first-tranche level once IA is signed. Lower-risk entry at a defined block; structured to preserve operating-company optionality on subsequent tranches.</div>
+      </div>
+      <div class="card">
+        <div class="card__title">Convertible / SAFE</div>
+        <div class="card__text">Convertible note or SAFE into a priced round at IA, for partners who want optionality on terms while we close the most material development milestones.</div>
+      </div>
+    </div>
+    <p class="uof__note" style="margin-top:24px;">Terms negotiated with the capital partner. Governance, protective provisions, and operating-company structure detail in the data room.</p>
+  </div>
+</section>
+
+<!-- TEAM & PARTNERS -->
+<section class="section section--tinted">
+  <div class="wrap">
+    <div class="label">Team &amp; Partners</div>
+    <h2 class="heading">Founder-led. <em>Accountable in person.</em></h2>
+    <div class="cards cards--two">
+      <div class="card">
+        <div class="card__title">Operating Company</div>
+        <div class="bio">
+          <div class="bio__name">Talor Byington</div>
+          <div class="bio__title">Founder &amp; Managing Member</div>
+          <div class="bio__body">Sole accountable party for direction, structure, and execution. Reports to the board and to capital partners &mdash; not to a corporate parent. Deep roots in Texas construction, development, and energy infrastructure, and the relationships that move projects from concept to ground-breaking in this market. Full-time. Texas A&amp;M.</div>
+        </div>
+        <div class="bio">
+          <div class="bio__name">Tim Crockett</div>
+          <div class="bio__title">Director of Operations</div>
+          <div class="bio__body">Owns the project's operating cadence. Translates founder direction into vendor accountability, milestone discipline, and the weekly reporting cycle capital partners will see. Full-time.</div>
+        </div>
+        <div class="bio">
+          <div class="bio__name">Chuck Moreau</div>
+          <div class="bio__title">Member, Board of Directors</div>
+          <div class="bio__body">Governance oversight at the operating-company level; non-operating role today.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card__title">Partner Stack</div>
+        <div class="bio">
+          <div class="bio__name">TerraFlow Energy Operating</div>
+          <div class="bio__title">Technology &amp; Turnkey Integrator</div>
+          <div class="bio__body">Battery and IC engineering on turnkey scope. Absorbs the largest single block of technical and queue-execution risk in the development plan. Brings the ERCOT, Centerpoint, and Oncor relationships the LDUPS configuration runs through.</div>
+        </div>
+        <div class="bio">
+          <div class="bio__name">ESE Partners</div>
+          <div class="bio__title">Environmental Diligence</div>
+          <div class="bio__body">Phase I ESA, CIA, and Permit Matrix complete; Phase II, BRE, and geotech in scope for NTP. Closes the diligence checklist that capital underwriting requires.</div>
+        </div>
+        <div class="bio">
+          <div class="bio__name">FiberLight</div>
+          <div class="bio__title">Tenant Connectivity</div>
+          <div class="bio__body">Fiber connectivity scoped to tenant standards. LOI in process. One of the dependencies that converts the campus from a power asset into a leaseable data center asset.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="wrap">
+    <div class="cta-box">
+      <div class="cta-box__text">
+        <div class="cta-box__title">Ready when you are.</div>
+        <div class="cta-box__sub">Data room access, governance documents, and granular budget on request. Direct line to the founder.</div>
+      </div>
+      <a href="mailto:invest@redewable.com?subject=ReDew%20Anson%20%E2%80%94%20Capital%20Brief%20Follow-up" class="cta-box__btn">
+        invest@redewable.com &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__inner">
+      <div class="footer__left">
+        <img src="/assets/logo-mark.png" alt="ReDewable">
+        <span>ReDewable Energy Company</span>
+      </div>
+      <div class="footer__right">
+        <div class="footer__name">Talor Byington</div>
+        <div class="footer__meta">Founder &middot; ReDewable Energy Company, LLC</div>
+        <a href="mailto:tb@redewable.com" class="footer__email">tb@redewable.com</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div class="lb" id="lb" onclick="this.classList.remove('on')">
+  <img id="lb-img" src="" alt="">
+  <div class="lb__hint">Click anywhere or press Esc to close</div>
+</div>
+<script>
+function openLB(src) { var lb = document.getElementById('lb'); document.getElementById('lb-img').src = src; lb.classList.add('on'); }
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') document.getElementById('lb').classList.remove('on'); });
+</script>
+</body>
+</html>

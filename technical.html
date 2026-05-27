@@ -1,923 +1,338 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
-    <title>Technical & Engineering Assessment | ReDewable Energy</title>
-    <meta name="description" content="Technical engineering status and interconnection requirements for ReDew Anson battery storage project.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-    <style>
-        :root {
-            --black: #0a0a0a;
-            --white: #ffffff;
-            --gray-50: #fafafa;
-            --gray-100: #f5f5f5;
-            --gray-200: #e5e5e5;
-            --gray-300: #d4d4d4;
-            --gray-400: #a3a3a3;
-            --gray-500: #737373;
-            --gray-600: #525252;
-            --gray-700: #404040;
-            --gray-800: #262626;
-            --gray-900: #171717;
-            --green: #22c55e;
-            --green-dark: #16a34a;
-            --brand-green: #1a3d2f;
-
-            --bg-primary: var(--white);
-            --bg-secondary: var(--gray-50);
-            --bg-tertiary: var(--gray-100);
-            --bg-card: var(--white);
-            --text-primary: var(--gray-900);
-            --text-secondary: var(--gray-600);
-            --text-muted: var(--gray-500);
-            --accent: var(--green-dark);
-            --accent-dark: var(--brand-green);
-            --accent-glow: rgba(22, 163, 74, 0.08);
-            --border: var(--gray-200);
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root:not([data-theme="light"]) {
-                --bg-primary: #111111;
-                --bg-secondary: #1a1a1a;
-                --bg-tertiary: #222222;
-                --bg-card: #1a1a1a;
-                --text-primary: #f5f5f5;
-                --text-secondary: #a3a3a3;
-                --text-muted: #737373;
-                --accent: var(--green);
-                --accent-dark: var(--green-dark);
-                --accent-glow: rgba(34, 197, 94, 0.12);
-                --border: #2a2a2a;
-            }
-        }
-
-        [data-theme="dark"] {
-            --bg-primary: #111111;
-            --bg-secondary: #1a1a1a;
-            --bg-tertiary: #222222;
-            --bg-card: #1a1a1a;
-            --text-primary: #f5f5f5;
-            --text-secondary: #a3a3a3;
-            --text-muted: #737373;
-            --accent: var(--green);
-            --accent-dark: var(--green-dark);
-            --accent-glow: rgba(34, 197, 94, 0.12);
-            --border: #2a2a2a;
-        }
-
-        [data-theme="light"] {
-            --bg-primary: var(--white);
-            --bg-secondary: var(--gray-50);
-            --bg-tertiary: var(--gray-100);
-            --bg-card: var(--white);
-            --text-primary: var(--gray-900);
-            --text-secondary: var(--gray-600);
-            --text-muted: var(--gray-500);
-            --accent: var(--green-dark);
-            --accent-dark: var(--brand-green);
-            --accent-glow: rgba(22, 163, 74, 0.08);
-            --border: var(--gray-200);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Play', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            transition: background 0.3s ease, color 0.3s ease;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        ::selection {
-            background: var(--accent);
-            color: var(--white);
-        }
-
-        /* Header */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1rem 2rem;
-            background: var(--bg-primary);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            transition: background 0.3s ease;
-        }
-
-        .header-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-weight: 700;
-            font-size: 1.125rem;
-            color: var(--text-primary);
-            text-decoration: none;
-            letter-spacing: 0.5px;
-        }
-
-        .logo img {
-            height: 32px;
-            width: auto;
-        }
-
-        .nav-desktop {
-            display: flex;
-            gap: 2.5rem;
-            align-items: center;
-        }
-
-        .nav-link {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 0.875rem;
-            font-weight: 700;
-            font-family: inherit;
-            transition: color 0.2s ease;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            color: var(--accent);
-        }
-
-        .theme-toggle {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--text-primary);
-            transition: all 0.2s ease;
-        }
-
-        .theme-toggle:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .mobile-controls {
-            display: none;
-            gap: 0.75rem;
-            align-items: center;
-        }
-
-        @media (max-width: 768px) {
-            .nav-desktop {
-                display: none;
-            }
-            .mobile-controls {
-                display: flex;
-            }
-        }
-
-        /* Cover */
-        .cover {
-            background: linear-gradient(135deg, var(--brand-green) 0%, #2a5a45 100%);
-            color: var(--white);
-            padding: 8rem 2rem 3rem;
-            text-align: center;
-            margin-top: 73px;
-        }
-
-        .cover h1 {
-            font-size: clamp(1.75rem, 4vw, 2.25rem);
-            margin-bottom: 0.5rem;
-            letter-spacing: 1px;
-        }
-
-        .cover .subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 1rem;
-        }
-
-        .cover .meta {
-            font-size: 0.9rem;
-            opacity: 0.7;
-        }
-
-        /* Main */
-        main {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2.5rem 2rem;
-            flex: 1;
-        }
-
-        /* Source tags */
-        .source-tags {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-        }
-
-        .source-tag {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--white);
-            font-size: 0.75rem;
-            padding: 0.35rem 1rem;
-            border-radius: 20px;
-            letter-spacing: 0.5px;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .source-tag.secondary {
-            background: var(--bg-tertiary);
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
-        }
-
-        /* Summary Box */
-        .summary-box {
-            background: var(--accent-glow);
-            border: 1px solid var(--accent);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .summary-box h3 {
-            font-size: 1rem;
-            color: var(--accent);
-            margin-bottom: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .summary-box p {
-            color: var(--text-primary);
-            line-height: 1.8;
-        }
-
-        /* Section Headers */
-        .section-header {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin: 2.5rem 0 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 2px solid var(--border);
-            color: var(--text-primary);
-        }
-
-        /* Info Box */
-        .info-box {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.25rem 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .info-box p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.7;
-            margin: 0;
-        }
-
-        .info-box a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 700;
-        }
-
-        .info-box a:hover {
-            text-decoration: underline;
-        }
-
-        /* Timeline */
-        .timeline-container {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            overflow-x: auto;
-        }
-
-        .timeline {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            min-width: 600px;
-            position: relative;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--border);
-            transform: translateY(-50%);
-            z-index: 0;
-        }
-
-        .timeline-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .timeline-dot {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--bg-tertiary);
-            border: 2px solid var(--border);
-            margin-bottom: 0.75rem;
-        }
-
-        .timeline-step.complete .timeline-dot {
-            background: var(--accent);
-            border-color: var(--accent);
-        }
-
-        .timeline-step.active .timeline-dot {
-            background: var(--white);
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px var(--accent-glow), 0 0 0 6px var(--accent);
-        }
-
-        .timeline-step.active .timeline-dot::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 6px;
-            height: 6px;
-            background: var(--accent);
-            border-radius: 50%;
-        }
-
-        .timeline-label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-muted);
-            text-align: center;
-            max-width: 100px;
-        }
-
-        .timeline-step.complete .timeline-label,
-        .timeline-step.active .timeline-label {
-            color: var(--accent);
-        }
-
-        .timeline-step.active .timeline-label {
-            font-weight: 700;
-        }
-
-        /* Cross-reference box */
-        .cross-ref-box {
-            background: var(--accent-glow);
-            border: 1px solid var(--accent);
-            border-radius: 12px;
-            padding: 1.25rem 1.5rem;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .cross-ref-icon {
-            flex-shrink: 0;
-            width: 40px;
-            height: 40px;
-            background: var(--accent);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-        }
-
-        .cross-ref-content {
-            flex: 1;
-        }
-
-        .cross-ref-content p {
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        .cross-ref-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-            color: var(--accent);
-            font-weight: 700;
-            text-decoration: none;
-            font-size: 0.85rem;
-            margin-top: 0.5rem;
-        }
-
-        .cross-ref-link:hover {
-            text-decoration: underline;
-        }
-
-        .cross-ref-link svg {
-            width: 14px;
-            height: 14px;
-        }
-
-        /* POI Callout */
-        .poi-callout {
-            background: var(--brand-green);
-            border-radius: 8px;
-            padding: 1rem 1.25rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .poi-callout-icon {
-            flex-shrink: 0;
-            color: var(--green);
-        }
-
-        .poi-callout p {
-            color: var(--white);
-            font-size: 0.9rem;
-            margin: 0;
-        }
-
-        .poi-callout strong {
-            color: var(--green);
-        }
-
-        /* Assessment Grid */
-        .assessment-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.25rem;
-            margin-bottom: 2rem;
-        }
-
-        @media (max-width: 700px) {
-            .assessment-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .assessment-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.25rem;
-            transition: border-color 0.2s ease;
-        }
-
-        .assessment-card:hover {
-            border-color: var(--accent);
-        }
-
-        .assessment-card.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .assessment-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 0.75rem;
-            gap: 1rem;
-        }
-
-        .assessment-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .assessment-status {
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 0.25rem 0.6rem;
-            border-radius: 4px;
-            white-space: nowrap;
-        }
-
-        .status-progress {
-            background: rgba(59, 130, 246, 0.15);
-            color: #3b82f6;
-        }
-
-        .status-pending {
-            background: rgba(245, 158, 11, 0.15);
-            color: #f59e0b;
-        }
-
-        .status-complete {
-            background: rgba(34, 197, 94, 0.15);
-            color: var(--green);
-        }
-
-        .status-deferred {
-            background: rgba(139, 92, 246, 0.15);
-            color: #8b5cf6;
-        }
-
-        .assessment-content {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.7;
-        }
-
-        .assessment-content strong {
-            color: var(--text-primary);
-        }
-
-        .assessment-partner {
-            display: inline-block;
-            margin-top: 0.75rem;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .assessment-partner a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 700;
-        }
-
-        .assessment-partner a:hover {
-            text-decoration: underline;
-        }
-
-        /* Insight Box */
-        .insight-box {
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            padding: 1.25rem 1.5rem;
-            border-left: 4px solid var(--accent);
-            margin-bottom: 1.5rem;
-        }
-
-        .insight-box.highlight {
-            background: var(--accent-glow);
-            border-left-color: var(--green);
-        }
-
-        .insight-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--text-muted);
-        }
-
-        .insight-box p {
-            margin: 0;
-            color: var(--text-primary);
-            line-height: 1.8;
-        }
-
-        .insight-box strong {
-            color: var(--accent);
-        }
-
-        /* Footer note */
-        .footer-note {
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border);
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            font-style: italic;
-        }
-
-        /* Footer */
-        .footer {
-            background: #0d0d0d;
-            color: #737373;
-            padding: 32px 24px;
-            margin-top: auto;
-        }
-
-        .footer-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .footer-logo {
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 24px;
-            align-items: center;
-        }
-
-        .footer-links a {
-            font-size: 0.9rem;
-            color: #737373;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer-links a:hover {
-            color: #ffffff;
-        }
-
-        .footer-links span {
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .cover {
-                padding: 7rem 1.5rem 2.5rem;
-            }
-            
-            main {
-                padding: 1.5rem 1rem;
-            }
-
-            .footer-inner {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>ReDew Anson | Technical Brief</title>
+<link rel="icon" type="image/png" href="/assets/logo-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --white:#fff; --cream:#fafaf7; --warm-50:#f5f4f0; --warm-100:#eae8e3; --warm-200:#d5d2cb; --warm-400:#9e9a90; --warm-500:#7a766c; --warm-600:#5c584f; --warm-700:#3d3a33; --warm-900:#1c1a16; --forest:#1a3d2f; --forest-light:#2a5c46; --accent:#22c55e; --serif:'Libre Baskerville',Georgia,serif; --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--white); color: var(--warm-900); -webkit-font-smoothing: antialiased; }
+::selection { background: var(--forest); color: #fff; }
+.wrap { max-width: 1020px; margin: 0 auto; padding: 0 48px; }
+
+.hero { position: relative; min-height: 480px; display: flex; align-items: flex-end; overflow: hidden; background: var(--warm-900); }
+.hero__bg { position: absolute; inset: 0; }
+.hero__bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.55; }
+.hero__bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(28,26,22,0.4), rgba(28,26,22,0.92)); }
+.hero__bar { position: absolute; top: 0; left: 0; right: 0; padding: 28px 48px; display: flex; align-items: center; justify-content: space-between; z-index: 2; }
+.hero__logo { display: flex; align-items: center; gap: 10px; }
+.hero__logo img { height: 26px; filter: brightness(0) invert(1); }
+.hero__logo span { font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.7); }
+.hero__logo a { color: inherit; text-decoration: none; }
+.hero__tag { font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255,255,255,0.4); }
+.hero__content { position: relative; z-index: 2; padding: 0 48px 48px; width: 100%; max-width: 1020px; margin: 0 auto; }
+.hero__title { font-family: var(--serif); font-size: 2.6rem; font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 8px; letter-spacing: -0.01em; }
+.hero__sub { font-size: 1rem; color: rgba(255,255,255,0.55); }
+.hero__stats { display: flex; gap: 36px; flex-wrap: wrap; }
+.hero__stat { border-left: 2px solid rgba(255,255,255,0.15); padding-left: 16px; }
+.hero__stat-value { font-size: 0.95rem; font-weight: 600; color: #fff; }
+.hero__stat-label { font-size: 0.65rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+
+.section { padding: 72px 0; }
+.section + .section { border-top: 1px solid var(--warm-100); }
+.section--tinted { background: var(--cream); }
+.section--tinted + .section, .section + .section--tinted { border-top: none; }
+
+.label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: var(--forest); margin-bottom: 10px; }
+.heading { font-family: var(--serif); font-size: 1.55rem; font-weight: 400; color: var(--warm-900); line-height: 1.35; margin-bottom: 28px; }
+.heading em { font-style: italic; color: var(--warm-600); }
+.about__text { font-size: 1rem; line-height: 1.75; color: var(--warm-600); max-width: 780px; }
+
+.stat-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; background: var(--forest); border-radius: 6px; overflow: hidden; margin-top: 28px; }
+.stat-bar__item { padding: 22px 18px; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }
+.stat-bar__item:last-child { border-right: none; }
+.stat-bar__value { font-size: 1.02rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.stat-bar__label { font-size: 0.6rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.45); }
+
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.cards--two { grid-template-columns: repeat(2, 1fr); }
+.card { padding: 26px; border: 1px solid var(--warm-100); border-radius: 6px; background: var(--white); }
+.section--tinted .card { background: var(--white); }
+.card__num { font-family: var(--serif); font-size: 0.85rem; font-style: italic; color: var(--forest); margin-bottom: 10px; }
+.card__title { font-size: 0.92rem; font-weight: 700; color: var(--warm-900); margin-bottom: 8px; line-height: 1.4; }
+.card__text { font-size: 0.82rem; color: var(--warm-500); line-height: 1.65; }
+
+.specs { display: grid; grid-template-columns: 1fr 1fr; }
+.spec { padding: 18px 0; border-bottom: 1px solid var(--warm-100); }
+.spec:nth-child(odd) { padding-right: 32px; border-right: 1px solid var(--warm-100); }
+.spec:nth-child(even) { padding-left: 32px; }
+.spec:nth-last-child(-n+2) { border-bottom: none; }
+.spec__label { font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--warm-400); margin-bottom: 3px; }
+.spec__value { font-size: 0.92rem; font-weight: 600; color: var(--warm-900); line-height: 1.45; }
+
+.ldups { background: var(--white); border: 1px solid var(--warm-100); border-radius: 6px; padding: 32px 24px 24px; }
+.section--tinted .ldups { background: var(--white); }
+.ldups__svg { width: 100%; height: auto; display: block; }
+.ldups__caveat { margin-top: 20px; font-size: 0.78rem; color: var(--warm-500); line-height: 1.55; font-style: italic; }
+
+.bio { padding: 16px 0; border-top: 1px solid var(--warm-100); }
+.bio:first-of-type { padding-top: 0; border-top: none; }
+.bio__name { font-size: 0.98rem; font-weight: 700; color: var(--warm-900); margin-bottom: 2px; }
+.bio__title { font-size: 0.78rem; font-weight: 600; color: var(--forest); margin-bottom: 8px; }
+.bio__body { font-size: 0.82rem; color: var(--warm-500); line-height: 1.65; }
+
+.routes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.route { display: block; padding: 22px; background: var(--white); border: 1px solid var(--warm-200); border-radius: 6px; text-decoration: none; color: inherit; transition: border-color 0.2s, transform 0.2s; }
+.section--tinted .route { background: var(--white); }
+.route:hover { border-color: var(--forest); transform: translateY(-2px); }
+.route__label { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--forest); margin-bottom: 6px; }
+.route__title { font-family: var(--serif); font-size: 1rem; font-weight: 700; color: var(--warm-900); margin-bottom: 6px; }
+.route__sub { font-size: 0.78rem; color: var(--warm-500); line-height: 1.55; }
+
+.footer { padding: 40px 0; border-top: 1px solid var(--warm-100); }
+.footer__inner { display: flex; align-items: center; justify-content: space-between; }
+.footer__left { display: flex; align-items: center; gap: 10px; }
+.footer__left img { height: 22px; opacity: 0.3; }
+.footer__left span { font-size: 0.8rem; font-weight: 500; color: var(--warm-400); }
+.footer__right { text-align: right; }
+.footer__name { font-size: 0.88rem; font-weight: 600; color: var(--warm-700); }
+.footer__meta { font-size: 0.75rem; color: var(--warm-400); margin-top: 1px; }
+.footer__email { display: block; font-size: 0.75rem; color: var(--warm-400); margin-top: 2px; text-decoration: none; }
+
+@media (max-width: 860px) {
+  .wrap { padding: 0 28px; }
+  .hero__content { padding: 0 28px 36px; }
+  .hero__bar { padding: 20px 28px; }
+  .hero__title { font-size: 1.8rem; }
+  .hero__stats { flex-direction: column; gap: 12px; }
+  .stat-bar { grid-template-columns: repeat(2, 1fr); }
+  .stat-bar__item:nth-child(2) { border-right: none; }
+  .cards, .cards--two { grid-template-columns: 1fr; }
+  .specs { grid-template-columns: 1fr; }
+  .spec:nth-child(odd) { padding-right: 0; border-right: none; }
+  .spec:nth-child(even) { padding-left: 0; }
+  .routes { grid-template-columns: 1fr; }
+  .footer__inner { flex-direction: column; gap: 16px; text-align: center; }
+  .footer__right { text-align: center; }
+}
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-inner">
-            <a href="https://www.redewable.com" class="logo">
-                <img src="/assets/logo-mark.png" alt="ReDewable">
-                <span>ReDewable Energy</span>
-            </a>
 
-            <nav class="nav-desktop">
-                <a href="https://www.redewable.com" class="nav-link">Home</a>
-                <a href="https://www.redewable.com/dataroom" class="nav-link">Data Room</a>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                    </svg>
-                    <svg class="moon-icon" style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                    </svg>
-                </button>
-            </nav>
-
-            <div class="mobile-controls">
-                <button class="theme-toggle" id="themeToggleMobile" aria-label="Toggle theme">
-                    <svg class="sun-icon-mobile" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                    </svg>
-                    <svg class="moon-icon-mobile" style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Cover -->
-    <div class="cover">
-        <h1>Technical & Engineering Assessment</h1>
-        <div class="subtitle">ReDew Anson — Jones County, Texas</div>
-        <div class="meta">Development Status · March 2026</div>
+<section class="hero">
+  <div class="hero__bg">
+    <img src="/assets/redew-anson-aerial.jpg" alt="ReDew Anson aerial">
+  </div>
+  <div class="hero__bar">
+    <a href="/at-a-glance.html" class="hero__logo">
+      <img src="/assets/logo-mark.png" alt="ReDewable">
+      <span>ReDewable</span>
+    </a>
+    <div class="hero__tag">Technical Brief</div>
+  </div>
+  <div class="hero__content">
+    <div class="hero__stats" style="margin: 0 0 24px;">
+      <div class="hero__stat"><div class="hero__stat-value">TerraFlow</div><div class="hero__stat-label">Battery</div></div>
+      <div class="hero__stat"><div class="hero__stat-value">LDUPS</div><div class="hero__stat-label">Configuration</div></div>
+      <div class="hero__stat"><div class="hero__stat-value">On-Site Gas</div><div class="hero__stat-label">Generation</div></div>
+      <div class="hero__stat"><div class="hero__stat-value">600 MW</div><div class="hero__stat-label">IC Envelope</div></div>
     </div>
+    <h1 class="hero__title">Technical Brief</h1>
+    <p class="hero__sub">Campus, configuration, and stack &middot; Phantom Hill 345 kV &middot; ERCOT West</p>
+  </div>
+</section>
 
-    <main>
-        <div class="source-tags">
-            <span class="source-tag">Optimum EPC</span>
-            <span class="source-tag secondary">Enerzinx</span>
+<section class="section">
+  <div class="wrap">
+    <div class="label">The Campus</div>
+    <h2 class="heading">Data center, battery, on-site gas &mdash; <em>built around a cleared 600 MW interconnection.</em></h2>
+    <p class="about__text">
+      ReDew Anson combines on-site natural gas generation, long-duration vanadium flow battery storage, and a 600 MW cleared interconnection at Phantom Hill 345 kV &mdash; configured as a Large-Duty Uninterruptible Power System (LDUPS) behind an anchor data center tenant. The campus deploys in 25&ndash;50 MW tranches inside the cleared envelope; the first tranche is 50 MW, energized 2028.
+    </p>
+    <div class="stat-bar">
+      <div class="stat-bar__item"><div class="stat-bar__value">TerraFlow VF</div><div class="stat-bar__label">Battery</div></div>
+      <div class="stat-bar__item"><div class="stat-bar__value">LDUPS</div><div class="stat-bar__label">Configuration</div></div>
+      <div class="stat-bar__item"><div class="stat-bar__value">Natural Gas</div><div class="stat-bar__label">On-Site Gen</div></div>
+      <div class="stat-bar__item"><div class="stat-bar__value">600 MW</div><div class="stat-bar__label">IC Envelope</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tinted">
+  <div class="wrap">
+    <div class="label">Battery Technology</div>
+    <h2 class="heading">TerraFlow vanadium flow &mdash; <em>long-duration, non-flammable, domestic.</em></h2>
+    <div class="cards">
+      <div class="card">
+        <div class="card__num">i.</div>
+        <div class="card__title">Chemistry</div>
+        <div class="card__text">Vanadium redox flow. Non-flammable; cycles essentially indefinitely without capacity degradation. Electrolyte is reusable and recyclable.</div>
+      </div>
+      <div class="card">
+        <div class="card__num">ii.</div>
+        <div class="card__title">Long Duration</div>
+        <div class="card__text">Duration scales independently of power rating &mdash; configurable to anchor tenant firming profile and the ancillary services we'll bid into ERCOT.</div>
+      </div>
+      <div class="card">
+        <div class="card__num">iii.</div>
+        <div class="card__title">Domestic &amp; Low-Water</div>
+        <div class="card__text">Domestically sourced electrolyte and stack components. Minimal water consumption vs. lithium-ion fire-suppression and cooling profiles. Safe for the community.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="label">Configuration</div>
+    <h2 class="heading">LDUPS &mdash; <em>battery in-series between grid and load.</em></h2>
+    <p class="about__text">
+      The campus is configured as a Large-Duty Uninterruptible Power System. Storage sits in-series between the substation and the data center load; on-site natural gas generation feeds the load bus in parallel. The same battery captures grid arbitrage, sells ancillary services, and firms the tenant load &mdash; three revenue streams from one asset position.
+    </p>
+
+    <div class="ldups" style="margin-top: 28px;">
+      <svg class="ldups__svg" viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LDUPS topology diagram">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#5c584f"/>
+          </marker>
+          <marker id="arr-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#22c55e"/>
+          </marker>
+        </defs>
+        <rect x="540" y="20" width="180" height="60" rx="4" fill="#fafaf7" stroke="#d5d2cb" stroke-width="1.5"/>
+        <text x="630" y="46" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1c1a16">ON-SITE GAS</text>
+        <text x="630" y="62" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">Sized to anchor load</text>
+        <path d="M630 80 L630 160" stroke="#5c584f" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+        <text x="640" y="125" font-family="Inter, sans-serif" font-size="9" font-style="italic" fill="#7a766c">firm baseload</text>
+        <rect x="20" y="140" width="160" height="80" rx="4" fill="#fafaf7" stroke="#d5d2cb" stroke-width="1.5"/>
+        <text x="100" y="170" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1c1a16">ERCOT WEST</text>
+        <text x="100" y="186" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">Phantom Hill</text>
+        <text x="100" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">345 kV &middot; Bus 68004</text>
+        <path d="M180 180 L280 180" stroke="#5c584f" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+        <path d="M280 168 L180 168" stroke="#5c584f" stroke-width="1" fill="none" marker-end="url(#arr)" opacity="0.6"/>
+        <rect x="280" y="140" width="220" height="80" rx="4" fill="#1a3d2f" stroke="#1a3d2f" stroke-width="1.5"/>
+        <text x="390" y="170" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#ffffff">BATTERY</text>
+        <text x="390" y="186" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.75)">TerraFlow vanadium flow</text>
+        <text x="390" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.75)">long-duration, in-series</text>
+        <path d="M500 180 L600 180" stroke="#22c55e" stroke-width="2" fill="none" marker-end="url(#arr-green)"/>
+        <rect x="600" y="140" width="180" height="80" rx="4" fill="#fafaf7" stroke="#d5d2cb" stroke-width="1.5"/>
+        <text x="690" y="170" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1c1a16">DATA CENTER LOAD</text>
+        <text x="690" y="186" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">Anchor data center</text>
+        <text x="690" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">tenant</text>
+        <text x="230" y="252" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-style="italic" fill="#7a766c">charge / discharge</text>
+        <text x="550" y="252" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-style="italic" fill="#22c55e" font-weight="600">firm power to tenant</text>
+        <text x="450" y="295" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#7a766c" letter-spacing="1">CO-LOCATED LDUPS &middot; BATTERY IN-SERIES</text>
+      </svg>
+      <p class="ldups__caveat">
+        The LDUPS configuration is supported by deep ERCOT, Centerpoint, and Oncor relationships through our technology partner. Specialized ERCOT/FERC counsel will provide an independent legal opinion as part of tenant and capital diligence.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tinted">
+  <div class="wrap">
+    <div class="label">On-Site Generation</div>
+    <h2 class="heading">Natural gas &mdash; sized to anchor load.</h2>
+    <p class="about__text">
+      On-site natural gas generation provides firm baseload to the anchor tenant in parallel with the battery and grid supply. Generation is sized to match the anchor's first-phase load and scales with subsequent tranches across the 600 MW envelope. Air permits are in development.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="label">Site &amp; Layout</div>
+    <h2 class="heading">Campus design.</h2>
+    <p class="about__text">
+      45 acres owned and 123 acres pending purchase, totaling long-term site control across the development footprint. Campus footprint sits in the NW corner of the parcel adjacent to Phantom Hill 345 kV, minimizing gen-tie distance and substation BOP. Site layout is under development through TerraFlow's architecture partner (Goree).
+    </p>
+  </div>
+</section>
+
+<section class="section section--tinted">
+  <div class="wrap">
+    <div class="label">Specifications</div>
+    <h2 class="heading">Technical at a glance.</h2>
+    <div class="specs">
+      <div class="spec"><div class="spec__label">Asset</div><div class="spec__value">Data center + battery storage campus</div></div>
+      <div class="spec"><div class="spec__label">Configuration</div><div class="spec__value">LDUPS &mdash; battery in-series</div></div>
+      <div class="spec"><div class="spec__label">Battery</div><div class="spec__value">TerraFlow vanadium flow</div></div>
+      <div class="spec"><div class="spec__label">On-Site Generation</div><div class="spec__value">Natural gas</div></div>
+      <div class="spec"><div class="spec__label">Cleared IC</div><div class="spec__value">600 MW at Phantom Hill 345 kV</div></div>
+      <div class="spec"><div class="spec__label">Deployment</div><div class="spec__value">25&ndash;50 MW phased tranches</div></div>
+      <div class="spec"><div class="spec__label">First Tranche</div><div class="spec__value">50 MW &middot; energized 2028</div></div>
+      <div class="spec"><div class="spec__label">Grid Strength</div><div class="spec__value">2,633 MVA SCR</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="label">Partner Stack</div>
+    <h2 class="heading">Who carries the technical work.</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="bio">
+          <div class="bio__name">TerraFlow Energy Operating</div>
+          <div class="bio__title">Technology &amp; Turnkey Scope</div>
+          <div class="bio__body">Vanadium flow battery + integrated turnkey scope: application prep, single line, architecture (via Goree), site design, and IC engineering. Deep ERCOT, Centerpoint, and Oncor relationships underpin the configuration.</div>
         </div>
-
-        <div class="summary-box">
-            <h3>Executive Summary</h3>
-            <p>Site engineering scope supports <strong>GINR application and buyer due diligence</strong>—delivering layout, electrical design, and optional geotechnical studies while preserving flexibility for the buyer on detailed design, EPC selection, and equipment procurement.</p>
+      </div>
+      <div class="card">
+        <div class="bio">
+          <div class="bio__name">ESE Partners</div>
+          <div class="bio__title">Environmental</div>
+          <div class="bio__body">Phase I ESA and Desktop CIA complete. Additional environmental scope (Phase II, BRE, geotech) in progress through NTP.</div>
         </div>
-
-        <h2 class="section-header">Site Engineering</h2>
-
-        <div class="cross-ref-box">
-            <div class="cross-ref-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                    <polyline points="10 9 9 9 8 9"></polyline>
-                </svg>
-            </div>
-            <div class="cross-ref-content">
-                <p>Grid interconnection and ERCOT application managed by Enerzinx. Injection study confirmed <strong>600 MW feasibility</strong> at Phantom Hill 345 kV with favorable conductor-based upgrade profile. Updated feasibility study complete.</p>
-                <a href="/interconnection-status" class="cross-ref-link">
-                    View Interconnection Status
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                </a>
-            </div>
+      </div>
+      <div class="card">
+        <div class="bio">
+          <div class="bio__name">FiberLight</div>
+          <div class="bio__title">Fiber Connectivity</div>
+          <div class="bio__body">Tenant-grade redundant fiber connectivity in scoping. Quote received; LOI in process.</div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <div class="assessment-grid">
-            <div class="assessment-card">
-                <div class="assessment-header">
-                    <span class="assessment-title">Preliminary Site Layout</span>
-                    <span class="assessment-status status-complete">Complete</span>
-                </div>
-                <div class="assessment-content">
-                    Conceptual arrangement of battery enclosures, inverters, transformers, and balance-of-plant equipment. Supports GINR application and demonstrates site feasibility.
-                </div>
-                <span class="assessment-partner">Partner: Optimum EPC</span>
-            </div>
+<section class="section section--tinted">
+  <div class="wrap">
+    <div class="label">Related</div>
+    <h2 class="heading">Read further.</h2>
+    <div class="routes">
+      <a href="/interconnection.html" class="route">
+        <div class="route__label">Position</div>
+        <div class="route__title">Interconnection</div>
+        <div class="route__sub">The cleared 600 MW position at Phantom Hill 345 kV.</div>
+      </a>
+      <a href="/permitting.html" class="route">
+        <div class="route__label">Environmental</div>
+        <div class="route__title">Permitting &amp; Environmental</div>
+        <div class="route__sub">Phase I, CIA, air permits, and next-diligence path.</div>
+      </a>
+      <a href="/at-a-glance.html" class="route">
+        <div class="route__label">Overview</div>
+        <div class="route__title">At a Glance</div>
+        <div class="route__sub">Executive overview of the project, market, and team.</div>
+      </a>
+    </div>
+  </div>
+</section>
 
-            <div class="assessment-card">
-                <div class="assessment-header">
-                    <span class="assessment-title">Single-Line Diagram</span>
-                    <span class="assessment-status status-complete">Complete</span>
-                </div>
-                <div class="assessment-content">
-                    Preliminary conceptual one-line based on 300 MW design — dual 133/177 MVA 345 kV-to-34.5 kV main power transformers, 56 PCS units across 14 feeders, 112 CATL EnerX BESS containers, POI at Phantom Hill 345 kV bus (Bus 68004). Updated 600 MW SLD in development to reflect confirmed capacity and duration selection (2–4hr).
-                    <a href="/docs/preliminary-sld.pdf" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;color:var(--accent);font-weight:700;text-decoration:none;margin-top:8px">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                        View Preliminary SLD
-                    </a>
-                </div>
-                <span class="assessment-partner">Partner: Optimum EPC · March 2026</span>
-            </div>
-
-            <div class="assessment-card full-width">
-                <div class="assessment-header">
-                    <span class="assessment-title">OEM Equipment Specifications</span>
-                    <span class="assessment-status status-complete">Complete</span>
-                </div>
-                <div class="assessment-content">
-                    Battery energy storage system specifications including capacity, reactive capability, and performance characteristics. <strong>CATL selected</strong> as OEM partner (January 2026).
-                </div>
-                <span class="assessment-partner">Partner: Optimum EPC</span>
-            </div>
-        </div>
-
-        <h2 class="section-header">Optional Scopes</h2>
-
-        <div class="insight-box">
-            <div class="insight-label">Buyer Flexibility</div>
-            <p>The following scopes can be executed pre-sale to enhance buyer readiness, or deferred to buyer preference depending on their EPC relationships and due diligence requirements.</p>
-        </div>
-
-        <div class="assessment-grid">
-            <div class="assessment-card">
-                <div class="assessment-header">
-                    <span class="assessment-title">Geotechnical Investigation</span>
-                    <span class="assessment-status status-deferred">Optional</span>
-                </div>
-                <div class="assessment-content">
-                    Subsurface exploration and soil analysis to inform foundation design and site preparation requirements. Typically 8–12 borings across the 45-acre site.
-                </div>
-                <span class="assessment-partner">Partner: ANS Engineering</span>
-            </div>
-
-            <div class="assessment-card">
-                <div class="assessment-header">
-                    <span class="assessment-title">30% Engineering Design</span>
-                    <span class="assessment-status status-deferred">Optional</span>
-                </div>
-                <div class="assessment-content">
-                    Preliminary design package including civil, structural, and electrical engineering. Supports construction financing and EPC mobilization.
-                </div>
-                <span class="assessment-partner">Partner: ANS Engineering</span>
-            </div>
-        </div>
-
-        <div class="footer-note">
-            Optimum EPC scope complete — site layout and SLD delivered. Optional engineering scopes available upon request. Most strategic buyers prefer to execute detailed engineering through their own EPC relationships.
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-inner">
-            <div class="footer-logo">ReDewable Energy Company</div>
-            <div class="footer-links">
-                <a href="https://www.linkedin.com/company/redewable" target="_blank" rel="noopener">LinkedIn</a>
-                <a href="https://www.redewable.com/privacy">Privacy</a>
-                <span>© 2026</span>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Theme Management
-        function getSystemTheme() {
-            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
-
-        function getCurrentTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) return savedTheme;
-            return getSystemTheme();
-        }
-
-        function setTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            updateThemeIcons(theme);
-            localStorage.setItem('theme', theme);
-        }
-
-        function updateThemeIcons(theme) {
-            const isDark = theme === 'dark';
-            document.querySelector('.sun-icon').style.display = isDark ? 'block' : 'none';
-            document.querySelector('.moon-icon').style.display = isDark ? 'none' : 'block';
-            document.querySelector('.sun-icon-mobile').style.display = isDark ? 'block' : 'none';
-            document.querySelector('.moon-icon-mobile').style.display = isDark ? 'none' : 'block';
-        }
-
-        function toggleTheme() {
-            const current = getCurrentTheme();
-            const newTheme = current === 'dark' ? 'light' : 'dark';
-            setTheme(newTheme);
-        }
-
-        function initTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                setTheme(savedTheme);
-            } else {
-                const systemTheme = getSystemTheme();
-                updateThemeIcons(systemTheme);
-            }
-        }
-
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            if (!localStorage.getItem('theme')) {
-                updateThemeIcons(e.matches ? 'dark' : 'light');
-            }
-        });
-
-        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-        document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
-
-        document.addEventListener('DOMContentLoaded', initTheme);
-    </script>
-    <script src="/investor-gate.js" defer></script>
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__inner">
+      <div class="footer__left">
+        <img src="/assets/logo-mark.png" alt="ReDewable">
+        <span>ReDewable Energy Company</span>
+      </div>
+      <div class="footer__right">
+        <div class="footer__name">Talor Byington</div>
+        <div class="footer__meta">Founder &middot; ReDewable Energy Company, LLC</div>
+        <a href="mailto:tb@redewable.com" class="footer__email">tb@redewable.com</a>
+      </div>
+    </div>
+  </div>
+</footer>
 </body>
 </html>
