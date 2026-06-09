@@ -491,37 +491,95 @@ body {
   line-height: 1.65;
 }
 
-/* ═══════════════════════════════════════════
-   FOOTER
-   ═══════════════════════════════════════════ */
-.footer { padding: 40px 0; border-top: 1px solid var(--warm-100); }
-.footer__inner { display: flex; align-items: center; justify-content: space-between; }
-.footer__left { display: flex; align-items: center; gap: 10px; }
-.footer__left img { height: 22px; opacity: 0.3; }
-.footer__left span {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--warm-400);
+/* FOOTER */
+.footer {
+  padding: 56px 0 40px;
+  border-top: 1px solid var(--warm-100);
 }
-.footer__right { text-align: right; }
-.footer__name {
-  font-size: 0.88rem;
-  font-weight: 600;
+.footer__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 56px;
+  align-items: start;
+}
+.footer__brand { max-width: 540px; }
+.footer__brand-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.footer__brand-row img { height: 22px; opacity: 0.35; }
+.footer__logo {
+  font-weight: 700;
   color: var(--warm-700);
+  font-size: 0.86rem;
+  letter-spacing: 0.01em;
 }
-.footer__meta {
-  font-size: 0.75rem;
-  color: var(--warm-400);
-  margin-top: 1px;
+.footer__tagline {
+  font-family: var(--serif);
+  font-size: 0.98rem;
+  color: var(--warm-700);
+  margin: 0 0 14px;
+  line-height: 1.55;
 }
-.footer__email {
+.footer__verse {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.84rem;
+  color: var(--warm-500);
+  border-left: 2px solid var(--warm-200);
+  padding-left: 14px;
+  margin: 0;
+  line-height: 1.65;
+}
+.footer__verse-cite {
   display: block;
-  font-size: 0.75rem;
+  font-style: normal;
+  font-family: var(--sans);
+  font-size: 0.7rem;
   color: var(--warm-400);
-  margin-top: 2px;
-  text-decoration: none;
+  margin-top: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
-.footer__email:hover { color: var(--warm-600); text-decoration: underline; }
+.footer__links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+  font-size: 0.88rem;
+}
+.footer__links a {
+  color: var(--warm-500);
+  text-decoration: none;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.footer__links a:hover { color: var(--forest); }
+.footer__copyright {
+  font-size: 0.74rem;
+  color: var(--warm-400);
+  margin-top: 6px;
+  white-space: nowrap;
+}
+@media (max-width: 860px) {
+  .footer { padding: 40px 0 32px; }
+  .footer__inner {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .footer__links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 14px 24px;
+  }
+  .footer__copyright {
+    width: 100%;
+    margin-top: 6px;
+  }
+}
 
 /* ═══════════════════════════════════════════
    LIGHTBOX
@@ -567,8 +625,6 @@ body {
   .cards, .cards--two { grid-template-columns: 1fr; }
   .ldups__streams { grid-template-columns: 1fr; }
   .routes { grid-template-columns: 1fr; }
-  .footer__inner { flex-direction: column; gap: 16px; text-align: center; }
-  .footer__right { text-align: center; }
 }
 </style>
 </head>
@@ -996,15 +1052,23 @@ body {
 <footer class="footer">
   <div class="wrap">
     <div class="footer__inner">
-      <div class="footer__left">
-        <img src="/assets/logo-mark.png" alt="ReDewable">
-        <span>ReDewable Energy Company</span>
+      <div class="footer__brand">
+        <div class="footer__brand-row">
+          <img src="/assets/logo-mark.png" alt="ReDewable">
+          <span class="footer__logo">ReDewable Energy Company</span>
+        </div>
+        <p class="footer__tagline">With Christ, you have a ReDew in life. God Bless You.</p>
+        <p class="footer__verse">
+          &ldquo;&hellip;if you confess with your mouth that Jesus is Lord and believe in your heart that God raised him from the dead, you will be saved.&rdquo;
+          <span class="footer__verse-cite">Romans 10:9</span>
+        </p>
       </div>
-      <div class="footer__right">
-        <div class="footer__name">Talor Byington</div>
-        <div class="footer__meta">Founder &middot; ReDewable Energy Company, LLC</div>
-        <a href="mailto:tb@redewable.com" class="footer__email">tb@redewable.com</a>
-      </div>
+      <nav class="footer__links" aria-label="Footer navigation">
+        <a href="/neighbors.html">Neighbors</a>
+        <a href="https://www.linkedin.com/company/redewable" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="/privacy.html">Privacy</a>
+        <span class="footer__copyright">&copy; 2026 ReDewable Energy Company, LLC</span>
+      </nav>
     </div>
   </div>
 </footer>
