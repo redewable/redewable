@@ -195,7 +195,7 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
 
 <section class="hero">
   <div class="hero__bg">
-    <img src="/assets/redew-anson-aerial.jpg" alt="ReDew Anson aerial">
+    <img src="/assets/anson-dc-site-aerial.jpg" alt="ReDew Anson parcel aerial at Phantom Hill 345 kV">
   </div>
   <div class="hero__bar">
     <a href="/at-a-glance.html" class="hero__logo">
@@ -206,8 +206,8 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
   </div>
   <div class="hero__content">
     <div class="hero__stats" style="margin: 0 0 24px;">
-      <div class="hero__stat"><div class="hero__stat-value">TerraFlow</div><div class="hero__stat-label">Battery</div></div>
-      <div class="hero__stat"><div class="hero__stat-value">LDUPS</div><div class="hero__stat-label">Configuration</div></div>
+      <div class="hero__stat"><div class="hero__stat-value">Vanadium Flow</div><div class="hero__stat-label">Battery</div></div>
+      <div class="hero__stat"><div class="hero__stat-value">In-Series</div><div class="hero__stat-label">Configuration</div></div>
       <div class="hero__stat"><div class="hero__stat-value">On-Site Gas</div><div class="hero__stat-label">Generation</div></div>
       <div class="hero__stat"><div class="hero__stat-value">600 MW</div><div class="hero__stat-label">IC Envelope</div></div>
     </div>
@@ -219,13 +219,13 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
 <section class="section">
   <div class="wrap">
     <div class="label">The Campus</div>
-    <h2 class="heading">Data center, battery, on-site gas &mdash; <em>built around a cleared 600 MW interconnection.</em></h2>
+    <h2 class="heading">Data center, battery, on-site generation &mdash; <em>built around a cleared 600 MW interconnection.</em></h2>
     <p class="about__text">
-      ReDew Anson combines on-site natural gas generation, long-duration vanadium flow battery storage, and a 600 MW cleared interconnection at Phantom Hill 345 kV &mdash; configured as a Large-Duty Uninterruptible Power System (LDUPS) behind an anchor data center tenant. The campus deploys in 25&ndash;50 MW tranches inside the cleared envelope; the first tranche is 50 MW, energized 2028.
+      ReDew Anson combines on-site natural gas generation, long-duration vanadium flow battery storage, and a cleared 600 MW envelope at Phantom Hill 345 kV &mdash; with the battery in-series between the grid and the data center load, behind an anchor tenant. The point of interconnection has been studied to 2 GW under normal conditions on official ERCOT base cases. The campus deploys as Phase 1 (74.5 MW of critical IT on a modular build) followed by three 200 MW phases; Phase 1 energizes mid-2028.
     </p>
     <div class="stat-bar">
-      <div class="stat-bar__item"><div class="stat-bar__value">TerraFlow VF</div><div class="stat-bar__label">Battery</div></div>
-      <div class="stat-bar__item"><div class="stat-bar__value">LDUPS</div><div class="stat-bar__label">Configuration</div></div>
+      <div class="stat-bar__item"><div class="stat-bar__value">Vanadium Flow</div><div class="stat-bar__label">Battery</div></div>
+      <div class="stat-bar__item"><div class="stat-bar__value">In-Series</div><div class="stat-bar__label">Configuration</div></div>
       <div class="stat-bar__item"><div class="stat-bar__value">Natural Gas</div><div class="stat-bar__label">On-Site Gen</div></div>
       <div class="stat-bar__item"><div class="stat-bar__value">600 MW</div><div class="stat-bar__label">IC Envelope</div></div>
     </div>
@@ -235,7 +235,7 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
 <section class="section section--tinted">
   <div class="wrap">
     <div class="label">Battery Technology</div>
-    <h2 class="heading">TerraFlow vanadium flow &mdash; <em>long-duration, non-flammable, domestic.</em></h2>
+    <h2 class="heading">Vanadium flow &mdash; <em>long-duration, non-flammable, domestic.</em></h2>
     <div class="cards">
       <div class="card">
         <div class="card__num">i.</div>
@@ -259,13 +259,13 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
 <section class="section">
   <div class="wrap">
     <div class="label">Configuration</div>
-    <h2 class="heading">LDUPS &mdash; <em>battery in-series between grid and load.</em></h2>
+    <h2 class="heading">In-series &mdash; <em>battery between grid and load.</em></h2>
     <p class="about__text">
-      The campus is configured as a Large-Duty Uninterruptible Power System. Storage sits in-series between the substation and the data center load; on-site natural gas generation feeds the load bus in parallel. The same battery captures grid arbitrage, sells ancillary services, and firms the tenant load &mdash; three revenue streams from one asset position.
+      The campus runs a long-duration UPS configuration: storage sits in-series between the substation and the data center load; on-site generation feeds the load bus in parallel. The same battery captures grid arbitrage, sells ancillary services, and firms the tenant load &mdash; three revenue streams from one asset position.
     </p>
 
     <div class="ldups" style="margin-top: 28px;">
-      <svg class="ldups__svg" viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LDUPS topology diagram">
+      <svg class="ldups__svg" viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Battery in-series topology diagram">
         <defs>
           <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
             <path d="M0,0 L10,5 L0,10 z" fill="#5c584f"/>
@@ -287,7 +287,7 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
         <path d="M280 168 L180 168" stroke="#5c584f" stroke-width="1" fill="none" marker-end="url(#arr)" opacity="0.6"/>
         <rect x="280" y="140" width="220" height="80" rx="4" fill="#1a3d2f" stroke="#1a3d2f" stroke-width="1.5"/>
         <text x="390" y="170" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#ffffff">BATTERY</text>
-        <text x="390" y="186" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.75)">TerraFlow vanadium flow</text>
+        <text x="390" y="186" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.75)">10-hour vanadium flow</text>
         <text x="390" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.75)">long-duration, in-series</text>
         <path d="M500 180 L600 180" stroke="#22c55e" stroke-width="2" fill="none" marker-end="url(#arr-green)"/>
         <rect x="600" y="140" width="180" height="80" rx="4" fill="#fafaf7" stroke="#d5d2cb" stroke-width="1.5"/>
@@ -296,10 +296,10 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
         <text x="690" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">tenant</text>
         <text x="230" y="252" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-style="italic" fill="#7a766c">charge / discharge</text>
         <text x="550" y="252" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-style="italic" fill="#22c55e" font-weight="600">firm power to tenant</text>
-        <text x="450" y="295" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#7a766c" letter-spacing="1">CO-LOCATED LDUPS &middot; BATTERY IN-SERIES</text>
+        <text x="450" y="295" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#7a766c" letter-spacing="1">BATTERY IN-SERIES BETWEEN GRID AND LOAD</text>
       </svg>
       <p class="ldups__caveat">
-        The LDUPS configuration is supported by deep ERCOT, Centerpoint, and Oncor relationships through our technology partner. Specialized ERCOT/FERC counsel will provide an independent legal opinion as part of tenant and capital diligence.
+        Interconnection engineering by EPE (Electric Power Engineers), working directly with Lone Star Transmission, the transmission service provider at Phantom Hill. Specialized regulatory counsel will provide an independent legal opinion on the configuration as part of tenant and capital diligence.
       </p>
     </div>
   </div>
@@ -308,9 +308,12 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
 <section class="section section--tinted">
   <div class="wrap">
     <div class="label">On-Site Generation</div>
-    <h2 class="heading">Natural gas &mdash; sized to anchor load.</h2>
+    <h2 class="heading">Natural gas &mdash; <em>funded, owned, and operated by our power-generation partner.</em></h2>
     <p class="about__text">
-      On-site natural gas generation provides firm baseload to the anchor tenant in parallel with the battery and grid supply. Generation is sized to match the anchor's first-phase load and scales with subsequent tranches across the 600 MW envelope. Air permits are in development.
+      On-site natural gas generation provides firm baseload to the anchor tenant in parallel with the battery and grid supply. The fleet is funded, owned, and operated by our power-generation partner &mdash; generation capex and fuel risk sit on the partner's balance sheet, and power passes through to the tenant at cost on a triple-net basis. Generation is sized to the anchor's first-phase load and scales with subsequent phases across the 600 MW envelope. Air permitting for the on-site generation is being scoped; responsibility is expected to sit with our power-generation partner under the final structure.
+    </p>
+    <p class="about__text">
+      Phase 1 of the data center itself is modular and prefabricated: factory-built blocks, assembled on site in roughly six to twelve months rather than a multi-year stick build. That is what makes a mid-2028 energization credible &mdash; and it holds construction cost meaningfully below traditional builds.
     </p>
   </div>
 </section>
@@ -320,7 +323,7 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
     <div class="label">Site &amp; Layout</div>
     <h2 class="heading">Campus design.</h2>
     <p class="about__text">
-      45 acres owned and 123 acres pending purchase, totaling long-term site control across the development footprint. Campus footprint sits in the NW corner of the parcel adjacent to Phantom Hill 345 kV, minimizing gen-tie distance and substation BOP. Site layout is under development through TerraFlow's architecture partner (Goree).
+      Site control established across 168 acres at the in-service Phantom Hill 345 kV substation, minimizing gen-tie distance and substation BOP. Campus footprint prepared by Goree Architecture.
     </p>
   </div>
 </section>
@@ -331,13 +334,13 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
     <h2 class="heading">Technical at a glance.</h2>
     <div class="specs">
       <div class="spec"><div class="spec__label">Asset</div><div class="spec__value">Data center + battery storage campus</div></div>
-      <div class="spec"><div class="spec__label">Configuration</div><div class="spec__value">LDUPS &mdash; battery in-series</div></div>
-      <div class="spec"><div class="spec__label">Battery</div><div class="spec__value">TerraFlow vanadium flow</div></div>
-      <div class="spec"><div class="spec__label">On-Site Generation</div><div class="spec__value">Natural gas</div></div>
+      <div class="spec"><div class="spec__label">Configuration</div><div class="spec__value">Battery in-series between grid and load</div></div>
+      <div class="spec"><div class="spec__label">Battery</div><div class="spec__value">Vanadium flow &mdash; 10-hour</div></div>
+      <div class="spec"><div class="spec__label">On-Site Generation</div><div class="spec__value">Natural gas &mdash; IPP-owned &amp; operated</div></div>
       <div class="spec"><div class="spec__label">Cleared IC</div><div class="spec__value">600 MW at Phantom Hill 345 kV</div></div>
-      <div class="spec"><div class="spec__label">Deployment</div><div class="spec__value">25&ndash;50 MW phased tranches</div></div>
-      <div class="spec"><div class="spec__label">First Tranche</div><div class="spec__value">50 MW &middot; energized 2028</div></div>
-      <div class="spec"><div class="spec__label">Grid Strength</div><div class="spec__value">2,633 MVA SCR</div></div>
+      <div class="spec"><div class="spec__label">Deployment</div><div class="spec__value">Phase 1 + three 200 MW phases</div></div>
+      <div class="spec"><div class="spec__label">Phase 1</div><div class="spec__value">74.5 MW critical IT (modular) &middot; energized mid-2028</div></div>
+      <div class="spec"><div class="spec__label">Studied Limit</div><div class="spec__value">2,000 MW under normal (N-0) conditions</div></div>
     </div>
   </div>
 </section>
@@ -349,9 +352,9 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
     <div class="cards">
       <div class="card">
         <div class="bio">
-          <div class="bio__name">TerraFlow Energy Operating</div>
-          <div class="bio__title">Technology &amp; Turnkey Scope</div>
-          <div class="bio__body">Vanadium flow battery + integrated turnkey scope: application prep, single line, architecture (via Goree), site design, and IC engineering. Deep ERCOT, Centerpoint, and Oncor relationships underpin the configuration.</div>
+          <div class="bio__name">Technology Partner</div>
+          <div class="bio__title">Battery &amp; Turnkey Scope</div>
+          <div class="bio__body">Long-duration vanadium flow battery on turnkey scope, with campus architecture by Goree Architecture. The partner's engineering team ran the transfer-limit study confirming the POI to 2 GW. Interconnection engineering by EPE, working directly with Lone Star Transmission.</div>
         </div>
       </div>
       <div class="card">

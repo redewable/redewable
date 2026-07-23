@@ -1560,7 +1560,7 @@
                         <h4><svg class="icon"><use href="#icon-file-text"/></svg> Project Info</h4>
                         <div class="settings-row"><label>Project Name</label><input type="text" id="settingProjectName" value="ReDew Anson" onchange="saveSetting('project_name', this.value)"></div>
                         <div class="settings-row"><label>Project Capacity</label><input type="text" id="settingCapacity" value="600 MW" onchange="saveSetting('capacity', this.value)"></div>
-                        <div class="settings-row"><label>Target NTP Date</label><input type="text" id="settingTargetNtp" value="Q1 2027" onchange="saveSetting('target_ntp', this.value)"></div>
+                        <div class="settings-row"><label>Target NTP Date</label><input type="text" id="settingTargetNtp" value="Mid-2027" onchange="saveSetting('target_ntp', this.value)"></div>
                     </div>
                     <div class="settings-card">
                         <h4><svg class="icon"><use href="#icon-database"/></svg> Database</h4>
@@ -1700,7 +1700,7 @@
             'dr_link_token': '',
             'project_name': 'ReDew Anson',
             'capacity': '600 MW',
-            'target_ntp': 'Q1 2027',
+            'target_ntp': 'Mid-2027',
             'progress_land': '90',
             'progress_interconnection': '75',
             'progress_permitting': '15',
@@ -2372,7 +2372,7 @@
             document.getElementById('settingDrLinkToken').value = settings.dr_link_token || '';
             document.getElementById('settingProjectName').value = settings.project_name || 'ReDew Anson';
             document.getElementById('settingCapacity').value = settings.capacity || '600 MW';
-            document.getElementById('settingTargetNtp').value = settings.target_ntp || 'Q1 2027';
+            document.getElementById('settingTargetNtp').value = settings.target_ntp || 'Mid-2027';
             document.getElementById('settingInvestorAccessMode').value = settings.investor_access_mode || 'code';
             document.getElementById('settingInvestorPassword').value = settings.investor_shared_password || '';
             
