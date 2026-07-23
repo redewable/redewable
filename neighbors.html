@@ -252,6 +252,11 @@
     /* ANIMATIONS */
     .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* BACK TO TOP */
+    .to-top { position: fixed; right: 22px; bottom: 22px; width: 42px; height: 42px; border: none; border-radius: 50%; background: var(--brand-green); color: #fff; font-size: 1rem; cursor: pointer; opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity 0.25s, transform 0.25s, visibility 0.25s; z-index: 500; box-shadow: 0 4px 14px rgba(0,0,0,0.25); }
+    .to-top.on { opacity: 0.92; visibility: visible; transform: none; }
+    .to-top:hover { opacity: 1; }
   </style>
 </head>
 <body>
@@ -700,6 +705,18 @@
         window.scrollTo({ top: position, behavior: 'smooth' });
       });
     });
-  </script>
+      // Back to top
+    (function () {
+      var btn = document.createElement('button');
+      btn.className = 'to-top';
+      btn.setAttribute('aria-label', 'Back to top');
+      btn.innerHTML = '\u2191';
+      btn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      document.body.appendChild(btn);
+      var onScroll = function () { btn.classList.toggle('on', window.scrollY > 600); };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+</script>
 </body>
 </html>

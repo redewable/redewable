@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/brief-shared.css">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -87,94 +88,7 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
 .route__title { font-family: var(--serif); font-size: 1rem; font-weight: 700; color: var(--warm-900); margin-bottom: 6px; }
 .route__sub { font-size: 0.78rem; color: var(--warm-500); line-height: 1.55; }
 
-.footer {
-  padding: 56px 0 40px;
-  border-top: 1px solid var(--warm-100);
-}
-.footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 56px;
-  align-items: start;
-}
-.footer__brand { max-width: 540px; }
-.footer__brand-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-.footer__brand-row img { height: 22px; opacity: 0.35; }
-.footer__logo {
-  font-weight: 700;
-  color: var(--warm-700);
-  font-size: 0.86rem;
-  letter-spacing: 0.01em;
-}
-.footer__tagline {
-  font-family: var(--serif);
-  font-size: 0.98rem;
-  color: var(--warm-700);
-  margin: 0 0 14px;
-  line-height: 1.55;
-}
-.footer__verse {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 0.84rem;
-  color: var(--warm-500);
-  border-left: 2px solid var(--warm-200);
-  padding-left: 14px;
-  margin: 0;
-  line-height: 1.65;
-}
-.footer__verse-cite {
-  display: block;
-  font-style: normal;
-  font-family: var(--sans);
-  font-size: 0.7rem;
-  color: var(--warm-400);
-  margin-top: 8px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-.footer__links {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 14px;
-  font-size: 0.88rem;
-}
-.footer__links a {
-  color: var(--warm-500);
-  text-decoration: none;
-  transition: color 0.2s;
-  white-space: nowrap;
-}
-.footer__links a:hover { color: var(--forest); }
-.footer__copyright {
-  font-size: 0.74rem;
-  color: var(--warm-400);
-  margin-top: 6px;
-  white-space: nowrap;
-}
-@media (max-width: 860px) {
-  .footer { padding: 40px 0 32px; }
-  .footer__inner {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-  .footer__links {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: 14px 24px;
-  }
-  .footer__copyright {
-    width: 100%;
-    margin-top: 6px;
-  }
-}
+/* footer styles: /assets/brief-shared.css */
 
 @media (max-width: 860px) {
   .wrap { padding: 0 28px; }
@@ -360,6 +274,21 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
   </div>
 </section>
 
+<nav class="brief-nav" aria-label="Project pages">
+  <div class="wrap">
+    <span class="brief-nav__label">Explore</span>
+    <a href="/at-a-glance.html">At a Glance</a>
+    <a href="/capital-brief.html">Capital</a>
+    <a href="/tenant-brief.html">Tenant</a>
+    <a href="/epc-brief.html">EPC</a>
+    <a href="/partner-brief.html">Partner</a>
+    <a href="/interconnection.html">Interconnection</a>
+    <a href="/interconnection-status.html">Status</a>
+    <a href="/technical.html">Technical</a>
+    <a href="/permitting.html">Permitting</a>
+  </div>
+</nav>
+
 <footer class="footer">
   <div class="wrap">
     <div class="footer__inner">
@@ -383,5 +312,6 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
     </div>
   </div>
 </footer>
+<script src="/assets/brief-shared.js" defer></script>
 </body>
 </html>
