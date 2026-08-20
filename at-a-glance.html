@@ -546,7 +546,7 @@ body {
 <!-- ═══ HERO ═══ -->
 <section class="hero">
   <div class="hero__bg" onclick="openLB('/assets/anson-dc-site-aerial.jpg')">
-    <img src="/assets/anson-dc-site-aerial.jpg" alt="Aerial — ReDew Anson parcel at the Phantom Hill 345 kV substation, Jones County, TX">
+    <img fetchpriority="high" decoding="async" src="/assets/anson-dc-site-aerial.jpg" alt="Aerial — ReDew Anson parcel at the Phantom Hill 345 kV substation, Jones County, TX">
   </div>
   <div class="hero__bar">
     <div class="hero__logo">
@@ -592,7 +592,7 @@ body {
     <div class="label">The Project</div>
     <h2 class="heading">A cleared 600 MW interconnection at Phantom Hill &mdash; <em>built out as a data center and battery storage campus, anchored by a long-term data center tenant.</em></h2>
     <p class="about__text">
-      The core asset is grid capacity at scale. A cleared 600 MW envelope at the in-service Phantom Hill 345 kV substation &mdash; studied to 2 GW under normal conditions &mdash; with site control established across 168 acres. We're developing it as an AI-grade data center plus long-duration energy campus: 10-hour vanadium flow storage in-series, IPP-owned on-site generation, an anchor data center tenant. Phase 1 (74.5 MW critical IT, modular) leads; three 200 MW phases follow. And Phase 1 doesn't stand in the 226 GW ERCOT queue &mdash; it files as a small-load application directly with Lone Star Transmission.
+      The core asset is grid capacity at scale. A cleared 600 MW envelope at the in-service Phantom Hill 345 kV substation &mdash; studied to 2 GW under normal conditions &mdash; with site control established across 165 acres. We're developing it as an AI-grade data center plus long-duration energy campus: 10-hour vanadium flow storage in-series, IPP-owned on-site generation, an anchor data center tenant. Phase 1 (74.5 MW critical IT, modular) leads; three 200 MW phases follow. And Phase 1 doesn't stand in the 226 GW ERCOT queue &mdash; it files as a small-load application directly with Lone Star Transmission.
     </p>
 
     <div class="stat-bar">
@@ -742,7 +742,7 @@ body {
       <div class="tl tl--done">
         <div class="tl__num">01</div>
         <div class="tl__title">Site Control</div>
-        <div class="tl__status">168 Acres<br>Controlled</div>
+        <div class="tl__status">165 Acres<br>Controlled</div>
       </div>
       <div class="tl tl--done">
         <div class="tl__num">02</div>
@@ -832,7 +832,7 @@ body {
       </div>
       <div class="spec">
         <div class="spec__label">Land</div>
-        <div class="spec__value">168 acres controlled
+        <div class="spec__value">165 acres controlled
           <em>Long-term site control across the development footprint</em>
         </div>
       </div>
@@ -879,7 +879,7 @@ body {
     </div>
 
     <div class="figure">
-      <img src="/assets/redew-anson-curtailment-map.png" alt="ERCOT West curtailment and Jones County storage gap" onclick="openLB('/assets/redew-anson-curtailment-map.png')">
+      <img src="/assets/redew-anson-curtailment-map.jpg" loading="lazy" decoding="async" alt="ERCOT West curtailment and Jones County storage gap" onclick="openLB('/assets/redew-anson-curtailment-map.jpg')">
       <div class="figure__cap">ERCOT West curtailment intensity and Jones County queued solar &mdash; the storage gap.</div>
     </div>
   </div>
@@ -939,19 +939,19 @@ body {
     <h2 class="heading">Continue by <em>audience</em>.</h2>
 
     <div class="routes">
-      <a href="/tenant-brief.html" class="route">
+      <a href="/tenant-brief" class="route">
         <div class="route__label">Tenant</div>
         <div class="route__title">Tenant Brief</div>
         <div class="route__sub">For data center, AI infrastructure, and hyperscaler teams evaluating firm power, speed-to-MW, configuration, fiber, water, and gas.</div>
         <div class="route__arrow">Read &rarr;</div>
       </a>
-      <a href="/capital-brief.html" class="route">
-        <div class="route__label">Capital</div>
-        <div class="route__title">Capital Brief</div>
-        <div class="route__sub">$2.45M seed offered to a signed position and NTP. Use-of-funds bands, structure, and priority protections.</div>
+      <a href="/grid-path" class="route">
+        <div class="route__label">Grid Path</div>
+        <div class="route__title">Grid Interconnection Path</div>
+        <div class="route__sub">The transmission-service route with Lone Star Transmission &mdash; POI data, thresholds, study sequence, and fees as provided by LST.</div>
         <div class="route__arrow">Read &rarr;</div>
       </a>
-      <a href="/epc-brief.html" class="route">
+      <a href="/epc-brief" class="route">
         <div class="route__label">EPC</div>
         <div class="route__title">EPC Brief</div>
         <div class="route__sub">For construction partners. Site, interconnection position, equipment stack, and engagement.</div>
@@ -965,15 +965,15 @@ body {
 <nav class="brief-nav" aria-label="Project pages">
   <div class="wrap">
     <span class="brief-nav__label">Explore</span>
-    <a href="/at-a-glance.html">At a Glance</a>
-    <a href="/capital-brief.html">Capital</a>
-    <a href="/tenant-brief.html">Tenant</a>
-    <a href="/epc-brief.html">EPC</a>
-    <a href="/partner-brief.html">Partner</a>
-    <a href="/interconnection.html">Interconnection</a>
-    <a href="/interconnection-status.html">Status</a>
-    <a href="/technical.html">Technical</a>
-    <a href="/permitting.html">Permitting</a>
+    <a href="/at-a-glance">At a Glance</a>
+    <a href="/tenant-brief">Tenant</a>
+    <a href="/epc-brief">EPC</a>
+    <a href="/partner-brief">Partner</a>
+    <a href="/interconnection">Interconnection</a>
+    <a href="/grid-path">Grid Path</a>
+    <a href="/interconnection-status">Status</a>
+    <a href="/technical">Technical</a>
+    <a href="/permitting">Permitting</a>
   </div>
 </nav>
 
@@ -992,9 +992,9 @@ body {
         </p>
       </div>
       <nav class="footer__links" aria-label="Footer navigation">
-        <a href="/neighbors.html">Neighbors</a>
+        <a href="/neighbors">Neighbors</a>
         <a href="https://www.linkedin.com/company/redewable" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="/privacy.html">Privacy</a>
+        <a href="/privacy">Privacy</a>
         <span class="footer__copyright">&copy; 2026 ReDewable Energy Company, LLC</span>
       </nav>
     </div>

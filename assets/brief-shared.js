@@ -35,10 +35,11 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* Mark current page in the cross-brief nav */
-  var here = location.pathname.replace(/\/$/, '');
+  /* Mark current page in the cross-brief nav.
+     Links are extensionless, but .html URLs still resolve — normalize both sides. */
+  var norm = function (p) { return p.replace(/\/$/, '').replace(/\.html$/, ''); };
+  var here = norm(location.pathname);
   document.querySelectorAll('.brief-nav a').forEach(function (a) {
-    var path = a.getAttribute('href').replace(/\/$/, '');
-    if (path === here) { a.classList.add('is-current'); }
+    if (norm(a.getAttribute('href')) === here) { a.classList.add('is-current'); }
   });
 })();
