@@ -151,7 +151,7 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
     <div class="label">Topology</div>
     <h2 class="heading">Generation-served, <em>battery in-series, grid available.</em></h2>
     <p class="about__text">
-      Once the tie is energized, utility service from Phantom Hill becomes a supply of record into the campus. It lands at the LST point of interconnection, passes the metering boundary into the ReDew campus substation, feeds the in-series long-duration battery, and reaches the data center load. On-site generation sits alongside as supplemental firm capacity rather than as the carrying source &mdash; the distinction that separates this path from the behind-the-meter framing.
+      On-site generation remains the carrying source in every configuration &mdash; the grid tie adds to it, not the other way around. Once the tie is energized, utility service from Phantom Hill becomes an additional supply into the campus: it lands at the LST point of interconnection, passes the metering boundary into the ReDew campus substation, and reaches the in-series long-duration battery and the data center load. Just as important, the tie opens the battery&rsquo;s discharge path to market &mdash; the export revenue the injection study confirms the bus can absorb.
     </p>
 
     <div class="ldups" style="margin-top: 28px;">
@@ -173,8 +173,9 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
         <text x="106" y="194" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.6)">TSP: Lone Star Transmission</text>
 
         <!-- POI / metering boundary -->
-        <path d="M196 163 L266 163" stroke="#5c584f" stroke-width="2" fill="none" marker-end="url(#ga)"/>
-        <path d="M266 178 L196 178" stroke="#5c584f" stroke-width="1" fill="none" marker-end="url(#ga)" opacity="0.5"/>
+        <path d="M196 163 L266 163" stroke="#5c584f" stroke-width="1.5" fill="none" marker-end="url(#ga)" opacity="0.7"/>
+        <path d="M266 178 L196 178" stroke="#5c584f" stroke-width="2" fill="none" marker-end="url(#ga)"/>
+        <text x="231" y="222" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" font-style="italic" fill="#7a766c">supply in &middot; discharge out</text>
         <line x1="231" y1="60" x2="231" y2="290" stroke="#9e9a90" stroke-width="1" stroke-dasharray="4 4"/>
         <text x="231" y="52" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#7a766c" letter-spacing="0.5">POI &middot; METER</text>
 
@@ -198,13 +199,13 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
         <text x="815" y="171" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">Phase 1 &mdash; 74.5 MW</text>
         <text x="815" y="185" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">critical IT</text>
 
-        <!-- Supplemental on-site generation -->
-        <rect x="500" y="248" width="180" height="60" rx="4" fill="#ffffff" stroke="#d5d2cb" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <!-- On-site generation — carrying source -->
+        <rect x="500" y="248" width="180" height="60" rx="4" fill="#ffffff" stroke="#d5d2cb" stroke-width="1.5"/>
         <text x="590" y="273" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1c1a16">ON-SITE GENERATION</text>
-        <text x="590" y="289" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">Supplemental &middot; IPP-owned</text>
-        <path d="M590 248 L590 200" stroke="#5c584f" stroke-width="1.5" fill="none" marker-end="url(#ga)" stroke-dasharray="5 4"/>
+        <text x="590" y="289" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">Carrying source &middot; IPP-owned</text>
+        <path d="M590 248 L590 200" stroke="#5c584f" stroke-width="2" fill="none" marker-end="url(#ga)"/>
 
-        <text x="450" y="326" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#7a766c" letter-spacing="1">GRID PATH &mdash; UTILITY SERVICE OF RECORD THROUGH LONE STAR TRANSMISSION</text>
+        <text x="450" y="326" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#7a766c" letter-spacing="1">GRID PATH &mdash; UTILITY SUPPLY IN, BATTERY DISCHARGE OUT, THROUGH LONE STAR TRANSMISSION</text>
       </svg>
       <p class="ldups__caveat" style="font-size:0.78rem;color:var(--warm-500);line-height:1.6;margin-top:14px;">
         Interconnection engineering by EPE (Electric Power Engineers), working directly with Lone Star Transmission, the transmission service provider at Phantom Hill. Facilities scope and ownership boundary are set by LST through the Facilities Interconnection Study. Specialized regulatory counsel will provide an independent legal opinion on the configuration as part of tenant and capital diligence.

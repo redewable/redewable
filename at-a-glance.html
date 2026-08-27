@@ -676,9 +676,8 @@ body {
         <text x="100" y="186" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">Phantom Hill</text>
         <text x="100" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">345 kV &middot; Bus 68004</text>
 
-        <!-- Grid → Battery -->
-        <path d="M180 180 L280 180" stroke="#5c584f" stroke-width="2" fill="none" marker-end="url(#arr)"/>
-        <path d="M280 168 L180 168" stroke="#5c584f" stroke-width="1" fill="none" marker-end="url(#arr)" opacity="0.6"/>
+        <!-- Battery → Grid (discharge only) -->
+        <path d="M280 180 L180 180" stroke="#5c584f" stroke-width="2" fill="none" marker-end="url(#arr)"/>
 
         <!-- Battery (center, highlight) -->
         <rect x="280" y="140" width="220" height="80" rx="4" fill="#1a3d2f" stroke="#1a3d2f" stroke-width="1.5"/>
@@ -696,7 +695,7 @@ body {
         <text x="690" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">tenant</text>
 
         <!-- Bottom labels -->
-        <text x="230" y="252" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-style="italic" fill="#7a766c">charge / discharge</text>
+        <text x="230" y="252" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-style="italic" fill="#7a766c">discharge to grid</text>
         <text x="550" y="252" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-style="italic" fill="#22c55e" font-weight="600">firm power to tenant</text>
 
         <!-- Envelope label -->
@@ -845,7 +844,7 @@ body {
       <div class="spec">
         <div class="spec__label">Environmental</div>
         <div class="spec__value">Phase I ESA &amp; CIA complete
-          <em>Single REC (former 1964 reserve pit, outside development footprint)</em>
+          <em>Single REC (former 1964 reserve pit; characterization pre-NTP)</em>
         </div>
       </div>
       <div class="spec">
