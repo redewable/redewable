@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>ReDew Anson | Technical Brief</title>
-<meta name="description" content="Technical overview of the ReDew Anson campus — modular data center, 10-hour vanadium flow storage in-series, and IPP-owned on-site generation at the in-service Phantom Hill 345 kV substation.">
+<meta name="description" content="Technical overview of the ReDew Anson campus — IPP-owned gas turbines, 10-hour vanadium flow storage in-series, and a modular data center, built behind the meter at the in-service Phantom Hill 345 kV substation.">
 <meta property="og:title" content="ReDew Anson | Technical Brief">
-<meta property="og:description" content="Technical overview of the ReDew Anson campus — modular data center, 10-hour vanadium flow storage in-series, and IPP-owned on-site generation at the in-service Phantom Hill 345 kV substation.">
+<meta property="og:description" content="Technical overview of the ReDew Anson campus — IPP-owned gas turbines, 10-hour vanadium flow storage in-series, and a modular data center, built behind the meter at the in-service Phantom Hill 345 kV substation.">
 <link rel="icon" type="image/png" href="/assets/logo-mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -138,7 +138,7 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
     <div class="label">The Campus</div>
     <h2 class="heading">Every piece of the stack serves one job &mdash; <em>firm power behind an anchor tenant.</em></h2>
     <p class="about__text">
-      On-site generation, funded and operated by an independent power producer, carries the campus behind the meter &mdash; no interconnection is required for Phase 1 to energize. The battery sits in-series between that generation and the data center load, with the grid tie proceeding in parallel. The point of interconnection has been studied to 2 GW under normal conditions on official ERCOT base cases. The campus deploys as Phase 1 &mdash; 74.5 MW of critical IT on a modular build &mdash; followed by three 200 MW phases, with Phase 1 energizing mid-2028.
+      On-site generation &mdash; aeroderivative gas turbines funded and operated by an independent power producer &mdash; carries the campus behind the meter; no interconnection is required for Phase 1 to energize. The battery sits in-series between that generation and the data center load, with the grid tie proceeding in parallel. The point of interconnection has been studied to 2 GW under normal conditions on official ERCOT base cases. The campus deploys as Phase 1 &mdash; a ~100 MW campus carrying 74.5 MW of critical IT on a modular build &mdash; followed by three ~200 MW phases inside the 600 MW studied envelope, with Phase 1 energizing mid-2028.
     </p>
   </div>
 </section>
@@ -170,9 +170,9 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
 <section class="section">
   <div class="wrap">
     <div class="label">Configuration</div>
-    <h2 class="heading">In-series &mdash; <em>battery between grid and load.</em></h2>
+    <h2 class="heading">LDUPS &mdash; <em>dual conversion, every megawatt through the battery.</em></h2>
     <p class="about__text">
-      The campus runs a long-duration UPS configuration: storage sits in-series between the substation and the data center load; on-site generation feeds the load bus in parallel. The same battery captures grid arbitrage, sells ancillary services, and firms the tenant load &mdash; three revenue streams from one asset position.
+      The campus runs TerraFlow's Long-Duration Uninterruptible Power Supply, a dual-conversion power path implemented at low voltage: on-site generation lands on a rectifier held at fixed power, the rectifier feeds the vanadium flow battery's DC bus, and inverters carry a fixed-voltage supply to the data center load. Because all power passes through the battery, volatility smoothing, harmonic isolation, and ride-through are native to the architecture &mdash; the multi-megawatt swings of AI load are absorbed at the DC bus and never reach the turbines or the medium-voltage plant. The grid tie is secondary: supplemental supply in once energized, and a tri-conversion mode that exports to ERCOT West when prices warrant. Round-trip efficiency of a flow battery is lower than lithium; the architecture trades peak efficiency for stability, no cycling degradation, and a 20-plus-year system life, and generation is sized with that in mind.
     </p>
 
     <div class="ldups" style="margin-top: 28px;">
@@ -186,10 +186,10 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
           </marker>
         </defs>
         <rect x="300" y="20" width="180" height="60" rx="4" fill="#fafaf7" stroke="#d5d2cb" stroke-width="1.5"/>
-        <text x="390" y="46" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1c1a16">ON-SITE GAS</text>
-        <text x="390" y="62" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">Sized to anchor load</text>
+        <text x="390" y="46" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1c1a16">ON-SITE GENERATION</text>
+        <text x="390" y="62" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">Gas turbines &middot; IPP-owned</text>
         <path d="M390 80 L390 140" stroke="#5c584f" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
-        <text x="400" y="118" font-family="Inter, sans-serif" font-size="9" font-style="italic" fill="#7a766c">gas charging</text>
+        <text x="400" y="118" font-family="Inter, sans-serif" font-size="9" font-style="italic" fill="#7a766c">generation to battery</text>
         <rect x="20" y="140" width="160" height="80" rx="4" fill="#fafaf7" stroke="#d5d2cb" stroke-width="1.5"/>
         <text x="100" y="170" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1c1a16">ERCOT WEST</text>
         <text x="100" y="186" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">Phantom Hill</text>
@@ -198,15 +198,15 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
         <rect x="280" y="140" width="220" height="80" rx="4" fill="#1a3d2f" stroke="#1a3d2f" stroke-width="1.5"/>
         <text x="390" y="170" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#ffffff">BATTERY</text>
         <text x="390" y="186" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.75)">10-hour vanadium flow</text>
-        <text x="390" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.75)">long-duration, in-series</text>
+        <text x="390" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.75)">dual-conversion DC bus</text>
         <path d="M500 180 L600 180" stroke="#22c55e" stroke-width="2" fill="none" marker-end="url(#arr-green)"/>
         <rect x="600" y="140" width="180" height="80" rx="4" fill="#fafaf7" stroke="#d5d2cb" stroke-width="1.5"/>
         <text x="690" y="170" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1c1a16">DATA CENTER LOAD</text>
         <text x="690" y="186" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">Anchor data center</text>
         <text x="690" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">tenant</text>
-        <text x="230" y="252" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-style="italic" fill="#7a766c">discharge to grid</text>
+        <text x="230" y="252" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-style="italic" fill="#7a766c">tri-conversion export</text>
         <text x="550" y="252" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-style="italic" fill="#22c55e" font-weight="600">firm power to tenant</text>
-        <text x="450" y="295" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#7a766c" letter-spacing="1">BATTERY IN-SERIES BETWEEN GRID AND LOAD</text>
+        <text x="450" y="295" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#7a766c" letter-spacing="1">GAS &rarr; GENERATION &rarr; LDUPS DUAL CONVERSION &rarr; DATA CENTER &middot; GRID TIE SECONDARY</text>
       </svg>
       <p class="ldups__caveat">
         Interconnection engineering by EPE (Electric Power Engineers), working directly with Lone Star Transmission, the transmission service provider at Phantom Hill. Specialized regulatory counsel will provide an independent legal opinion on the configuration as part of tenant and capital diligence.
@@ -220,10 +220,10 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
     <div class="label">On-Site Generation</div>
     <h2 class="heading">Natural gas &mdash; <em>funded, owned, and operated by an independent power producer.</em></h2>
     <p class="about__text">
-      On-site natural gas generation provides firm baseload to the anchor tenant in parallel with the battery and grid supply. The fleet is funded, owned, and operated by an independent power producer &mdash; generation capex and fuel risk sit on the producer's balance sheet, and power passes through to the tenant at cost on a triple-net basis. Generation is sized to the anchor's first-phase load and scales with subsequent phases across the 600 MW envelope. ReDewable holds the air permit for the on-site generation, keeping the emissions envelope with the site rather than with any single equipment vendor.
+      On-site aeroderivative gas turbines &mdash; 40&ndash;50 MW class units, N+1 for Phase 1 &mdash; provide firm baseload, feeding the battery ahead of the data center load. Units are available from inventory and securable on a reservation deposit. The fleet is funded, owned, and operated by an independent power producer &mdash; generation capex and fuel risk sit on the producer's balance sheet, and power passes through to the tenant at cost on a triple-net basis. Generation is sized to the anchor's first-phase load and scales with subsequent phases across the 600 MW envelope. ReDewable holds the air permit for the on-site generation, keeping the emissions envelope with the site rather than with any single equipment vendor.
     </p>
     <p class="about__text">
-      <strong>Fuel path.</strong> The generation fleet is served by natural gas delivered through a dedicated lateral to the site. Route, length and tap point are in engineering; supply sourcing and firm transportation capacity are in negotiation. The lateral is structured to be built, owned and operated by the pipeline owner-operator rather than capitalized by the project.
+      <strong>Fuel path.</strong> The generation fleet is served by natural gas delivered through a dedicated lateral to the site. Firm transportation is on an indicative quote from the pipeline owner-operator; route, length and tap point are in engineering, and supply terms are in negotiation. The lateral is structured to be built, owned and operated by the pipeline owner-operator rather than capitalized by the project.
     </p>
     <p class="about__text">
       Phase 1 of the data center itself is modular and prefabricated: factory-built blocks, assembled on site in roughly six to twelve months rather than a multi-year stick build. That is what makes a mid-2028 energization credible &mdash; and it holds construction cost meaningfully below traditional builds.
@@ -236,7 +236,7 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
     <div class="label">Site &amp; Layout</div>
     <h2 class="heading">Campus design.</h2>
     <p class="about__text">
-      Site control established across 165 acres at the in-service Phantom Hill 345 kV substation, minimizing gen-tie distance and substation BOP. Campus footprint prepared by Goree Architecture.
+      Site control established across 165 acres at the in-service Phantom Hill 345 kV substation, minimizing gen-tie distance and substation BOP. Campus footprint prepared by the project architect.
     </p>
   </div>
 </section>
@@ -246,13 +246,13 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
     <div class="label">Specifications</div>
     <h2 class="heading">Technical at a glance.</h2>
     <div class="specs">
-      <div class="spec"><div class="spec__label">Asset</div><div class="spec__value">Data center + battery storage campus</div></div>
-      <div class="spec"><div class="spec__label">Configuration</div><div class="spec__value">Battery in-series between grid and load</div></div>
+      <div class="spec"><div class="spec__label">Asset</div><div class="spec__value">Firm-power data center campus</div></div>
+      <div class="spec"><div class="spec__label">Configuration</div><div class="spec__value">LDUPS dual conversion &mdash; generation &rarr; rectifier &rarr; DC bus &rarr; inverter &rarr; load; grid tie secondary</div></div>
       <div class="spec"><div class="spec__label">Battery</div><div class="spec__value">Vanadium flow &mdash; 10-hour</div></div>
-      <div class="spec"><div class="spec__label">On-Site Generation</div><div class="spec__value">Natural gas &mdash; IPP-owned &amp; operated</div></div>
-      <div class="spec"><div class="spec__label">Fuel Path</div><div class="spec__value">Dedicated gas lateral &mdash; route and firm transportation in engineering</div></div>
+      <div class="spec"><div class="spec__label">On-Site Generation</div><div class="spec__value">Aeroderivative gas turbines &mdash; IPP-owned &amp; operated</div></div>
+      <div class="spec"><div class="spec__label">Fuel Path</div><div class="spec__value">Dedicated gas lateral &mdash; firm transportation on indicative quote; route in engineering</div></div>
       <div class="spec"><div class="spec__label">Studied Capacity</div><div class="spec__value">600 MW at Phantom Hill 345 kV</div></div>
-      <div class="spec"><div class="spec__label">Deployment</div><div class="spec__value">Phase 1 + three 200 MW phases</div></div>
+      <div class="spec"><div class="spec__label">Deployment</div><div class="spec__value">Phase 1 (~100 MW), then three ~200 MW phases</div></div>
       <div class="spec"><div class="spec__label">Phase 1</div><div class="spec__value">74.5 MW critical IT (modular) &middot; energized mid-2028</div></div>
       <div class="spec"><div class="spec__label">Studied Limit</div><div class="spec__value">2,000 MW under normal (N-0) conditions</div></div>
     </div>
@@ -269,7 +269,7 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
         <div class="bio">
           <div class="bio__name">Technology Partner</div>
           <div class="bio__title">Battery &amp; Turnkey Scope</div>
-          <div class="bio__body">Long-duration vanadium flow battery on turnkey scope, with campus architecture by Goree Architecture. The partner's engineering team ran the transfer-limit study confirming the POI to 2 GW. Interconnection engineering by EPE, working directly with Lone Star Transmission.</div>
+          <div class="bio__body">Long-duration vanadium flow battery on turnkey scope, with campus architecture in hand. The partner's engineering team ran the transfer-limit study confirming the POI to 2 GW. Interconnection engineering by EPE, working directly with Lone Star Transmission.</div>
         </div>
       </div>
       <div class="card">
@@ -281,7 +281,7 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
       </div>
       <div class="card">
         <div class="bio">
-          <div class="bio__name">FiberLight</div>
+          <div class="bio__name">Fiber Carrier</div>
           <div class="bio__title">Fiber Connectivity</div>
           <div class="bio__body">Tenant-grade redundant fiber connectivity in scoping. Quote received; LOI in process.</div>
         </div>

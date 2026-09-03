@@ -174,8 +174,8 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
         <div class="hero__stat-label">Studied Envelope</div>
       </div>
       <div class="hero__stat">
-        <div class="hero__stat-value">74.5 MW IT</div>
-        <div class="hero__stat-label">Phase 1</div>
+        <div class="hero__stat-value">~100 MW</div>
+        <div class="hero__stat-label">Phase 1 (74.5 MW IT)</div>
       </div>
       <div class="hero__stat">
         <div class="hero__stat-value">LDUPS</div>
@@ -197,7 +197,7 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
     <div class="label">Firm Power at Scale</div>
     <h2 class="heading">Firm power in West Texas, <em>built to your phase plan.</em></h2>
     <p class="about__text">
-      The envelope is studied at the in-service Phantom Hill 345 kV substation &mdash; to 2 GW under normal conditions &mdash; with site control established across 165 acres. The campus runs as a Large-Duty Uninterruptible Power System: battery in-series between the grid and your load, with on-site generation funded, owned, and operated by an independent power producer and passed through to you at cost on a triple-net basis. Phase 1 delivers billable critical IT on a modular build; three 200 MW phases follow on your roadmap.
+      The envelope is studied at the in-service Phantom Hill 345 kV substation &mdash; to 2 GW under normal conditions &mdash; with site control established across 165 acres. The campus runs TerraFlow's Long-Duration Uninterruptible Power Supply: firm gas feeds IPP-owned turbines, the turbines feed the battery's DC bus, and inverters carry conditioned power to your load, with the grid tie secondary. Generation is funded, owned, and operated by an independent power producer and passed through to you at cost on a triple-net basis. Phase 1 delivers a ~100 MW campus with 74.5 MW of billable critical IT on a modular build; three ~200 MW phases follow on your roadmap.
     </p>
   </div>
 </section>
@@ -216,7 +216,7 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
       <div class="card">
         <div class="card__num">ii.</div>
         <div class="card__title">No Equipment Wait</div>
-        <div class="card__text">Generation vendor selection is open and competitive &mdash; reciprocating and turbine packages are both available in the market at a 0-month queue against 24&ndash;30 month lead times, subject to a reservation deposit. The data center itself is modular and prefabricated: a 6&ndash;12 month build, Phase 1 online mid-2028.</div>
+        <div class="card__text">The generation fleet is specified on aeroderivative gas turbines available from inventory &mdash; securable on a reservation deposit, against the 24&ndash;30 month lead times a factory order carries. The data center itself is modular and prefabricated: a 6&ndash;12 month build, Phase 1 online mid-2028.</div>
       </div>
       <div class="card">
         <div class="card__num">iii.</div>
@@ -231,9 +231,9 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
 <section class="section">
   <div class="wrap">
     <div class="label">Configuration</div>
-    <h2 class="heading">LDUPS &mdash; <em>battery in-series between the grid and your load.</em></h2>
+    <h2 class="heading">LDUPS &mdash; <em>every megawatt to your load passes through the battery.</em></h2>
     <p class="about__text">
-      The campus is configured as a Large-Duty Uninterruptible Power System. Long-duration vanadium flow storage sits in-series between the substation and the data center load; IPP-owned on-site generation feeds the load bus in parallel. From your perspective, the data center sees firm, conditioned power independent of grid state &mdash; the battery and the gas plant carry through grid events, and the substation provides primary supply.
+      The campus is configured as TerraFlow's Long-Duration Uninterruptible Power Supply, a dual-conversion power path. Firm natural gas feeds IPP-owned aeroderivative turbines; the turbines land on a rectifier that feeds the vanadium flow battery's DC bus; inverters carry a fixed-voltage supply to your data center. Because all power passes through the battery, the multi-megawatt swings of AI load are absorbed at the DC bus and never reach the turbines, and harmonic isolation and ride-through are native rather than add-ons. The grid tie is secondary &mdash; supplemental supply once energized. From your perspective the data center sees firm, conditioned power independent of grid state.
     </p>
 
     <div class="ldups" style="margin-top: 28px;">
@@ -248,11 +248,11 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
         </defs>
 
         <rect x="300" y="20" width="180" height="60" rx="4" fill="#fafaf7" stroke="#d5d2cb" stroke-width="1.5"/>
-        <text x="390" y="46" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1c1a16">ON-SITE GAS</text>
-        <text x="390" y="62" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">Sized to anchor load</text>
+        <text x="390" y="46" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1c1a16">ON-SITE GENERATION</text>
+        <text x="390" y="62" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">Gas turbines &middot; IPP-owned</text>
 
         <path d="M390 80 L390 140" stroke="#5c584f" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
-        <text x="400" y="118" font-family="Inter, sans-serif" font-size="9" font-style="italic" fill="#7a766c">gas charging</text>
+        <text x="400" y="118" font-family="Inter, sans-serif" font-size="9" font-style="italic" fill="#7a766c">generation to battery</text>
 
         <rect x="20" y="140" width="160" height="80" rx="4" fill="#fafaf7" stroke="#d5d2cb" stroke-width="1.5"/>
         <text x="100" y="170" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1c1a16">ERCOT WEST</text>
@@ -264,7 +264,7 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
         <rect x="280" y="140" width="220" height="80" rx="4" fill="#1a3d2f" stroke="#1a3d2f" stroke-width="1.5"/>
         <text x="390" y="170" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#ffffff">BATTERY</text>
         <text x="390" y="186" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.75)">TerraFlow vanadium flow</text>
-        <text x="390" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.75)">long-duration, in-series</text>
+        <text x="390" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.75)">dual-conversion DC bus</text>
 
         <path d="M500 180 L600 180" stroke="#22c55e" stroke-width="2" fill="none" marker-end="url(#arr-green)"/>
 
@@ -273,10 +273,10 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
         <text x="690" y="186" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">Data center campus</text>
         <text x="690" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">tenant-grade</text>
 
-        <text x="230" y="252" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-style="italic" fill="#7a766c">discharge to grid</text>
+        <text x="230" y="252" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-style="italic" fill="#7a766c">tri-conversion export</text>
         <text x="550" y="252" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-style="italic" fill="#22c55e" font-weight="600">firm power to load</text>
 
-        <text x="450" y="295" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#7a766c" letter-spacing="1">PHASE 1 + THREE 200 MW PHASES UNDER THE 600 MW ENVELOPE</text>
+        <text x="450" y="295" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#7a766c" letter-spacing="1">GAS &rarr; GENERATION &rarr; LDUPS DUAL CONVERSION &rarr; DATA CENTER &middot; GRID TIE SECONDARY</text>
       </svg>
 
       <div class="ldups__streams">
@@ -324,7 +324,7 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
       <div class="spec">
         <div class="spec__label">Configuration</div>
         <div class="spec__value">LDUPS &mdash; battery in-series
-          <em>Battery + on-site gas together carry the load</em>
+          <em>Dual conversion: generation &rarr; DC bus &rarr; your load; grid tie secondary</em>
         </div>
       </div>
       <div class="spec">
@@ -335,8 +335,14 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
       </div>
       <div class="spec">
         <div class="spec__label">On-Site Generation</div>
-        <div class="spec__value">Natural gas &mdash; IPP-owned &amp; operated
-          <em>Passed through at cost (NNN) &middot; 0-month equipment queue</em>
+        <div class="spec__value">Aeroderivative gas turbines &mdash; IPP-owned &amp; operated
+          <em>Passed through at cost (NNN) &middot; units available from inventory</em>
+        </div>
+      </div>
+      <div class="spec">
+        <div class="spec__label">Fuel</div>
+        <div class="spec__value">Firm natural gas transportation
+          <em>Indicative quote from the pipeline owner-operator &middot; dedicated lateral</em>
         </div>
       </div>
       <div class="spec">
@@ -347,8 +353,8 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
       </div>
       <div class="spec">
         <div class="spec__label">Fiber</div>
-        <div class="spec__value">FiberLight (in process)
-          <em>Tenant-grade redundant connectivity in scoping</em>
+        <div class="spec__value">Tenant-grade redundant fiber
+          <em>Carrier quote received; LOI in process</em>
         </div>
       </div>
       <div class="spec">
@@ -453,15 +459,15 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
         <div class="bio">
           <div class="bio__name">TerraFlow Energy Operating</div>
           <div class="bio__title">Battery &amp; IC Turnkey</div>
-          <div class="bio__body">Turnkey scope across battery, application prep, single line, architecture (via Goree), site design, and IC engineering. Vanadium flow chemistry is non-flammable, low-water, and long-duration &mdash; three design choices that matter when a tenant is physically next door for ten-plus years.</div>
+          <div class="bio__body">Turnkey scope across battery, application prep, single line, architecture, site design, and IC engineering. Vanadium flow chemistry is non-flammable, low-water, and long-duration &mdash; three design choices that matter when a tenant is physically next door for ten-plus years.</div>
         </div>
         <div class="bio">
-          <div class="bio__name">Unified Energy</div>
-          <div class="bio__title">Gas Supply &mdash; In Procurement</div>
-          <div class="bio__body">Engaged to source natural gas for the IPP-owned generation fleet &mdash; the fuel side of the firm-power stack, passed through to you at cost. Supply terms and firm transportation capacity are in negotiation.</div>
+          <div class="bio__name">Pipeline Owner-Operator &middot; Generation IPP</div>
+          <div class="bio__title">Firm Gas &amp; Turbines &mdash; In Procurement</div>
+          <div class="bio__body">Firm natural gas transportation on an indicative quote from the pipeline owner-operator, delivered by a dedicated lateral the pipeline builds, owns, and operates. Aeroderivative turbine units available from inventory; the fleet is IPP-owned and passed through to you at cost. Counterparty names and quotes in the data room.</div>
         </div>
         <div class="bio">
-          <div class="bio__name">FiberLight</div>
+          <div class="bio__name">Fiber Carrier</div>
           <div class="bio__title">Tenant-Grade Fiber</div>
           <div class="bio__body">Redundant fiber sized to tenant standards in scoping. Quote received; LOI in process. The connectivity profile is built to the tenant's diligence checklist, not retrofitted to it.</div>
         </div>

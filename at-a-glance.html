@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>ReDew Anson | At a Glance</title>
-<meta name="description" content="Executive overview of ReDew Anson — a data center and long-duration energy campus at the in-service Phantom Hill 345 kV substation in Jones County, Texas, ERCOT West.">
+<meta name="description" content="Executive overview of ReDew Anson — a firm-power data center campus built behind the meter first: on-site gas turbines, 10-hour vanadium flow storage, and an anchor tenant at the in-service Phantom Hill 345 kV substation, Jones County, Texas.">
 <meta property="og:title" content="ReDew Anson | At a Glance">
-<meta property="og:description" content="Executive overview of ReDew Anson — a data center and long-duration energy campus at the in-service Phantom Hill 345 kV substation in Jones County, Texas, ERCOT West.">
+<meta property="og:description" content="Executive overview of ReDew Anson — a firm-power data center campus built behind the meter first: on-site gas turbines, 10-hour vanadium flow storage, and an anchor tenant at the in-service Phantom Hill 345 kV substation, Jones County, Texas.">
 <link rel="icon" type="image/png" href="/assets/logo-mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -526,8 +526,16 @@ body {
 /* ═══════════════════════════════════════════
    RESPONSIVE
    ═══════════════════════════════════════════ */
+.cta-box { background: var(--forest); color: #fff; padding: 36px 40px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+.cta-box__text { flex: 1; min-width: 280px; }
+.cta-box__title { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: #fff; margin-bottom: 6px; line-height: 1.35; }
+.cta-box__sub { font-size: 0.88rem; color: rgba(255,255,255,0.65); line-height: 1.55; }
+.cta-box__btn { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: var(--warm-900); padding: 14px 26px; border-radius: 4px; font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: transform 0.2s; white-space: nowrap; }
+.cta-box__btn:hover { transform: translateY(-1px); }
+
 @media (max-width: 860px) {
   .wrap { padding: 0 28px; }
+  .cta-box { flex-direction: column; align-items: flex-start; }
   .hero__content { padding: 0 28px 40px; }
   .hero__bar { padding: 20px 28px; }
   .hero__title { font-size: 2rem; }
@@ -541,6 +549,9 @@ body {
   .cards, .cards--two { grid-template-columns: 1fr; }
   .ldups__streams { grid-template-columns: 1fr; }
   .routes { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .timeline { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
 </head>
@@ -568,12 +579,12 @@ body {
     <div class="legend__caption">~19 miles to the Stargate AI campus near Abilene &middot; 2.5+ GW utility-scale solar in Jones County</div>
     <div class="hero__stats" style="margin: 20px 0 24px;">
       <div class="hero__stat">
-        <div class="hero__stat-value">600 MW</div>
-        <div class="hero__stat-label">Studied Envelope</div>
+        <div class="hero__stat-value">~700 MW</div>
+        <div class="hero__stat-label">Campus &middot; 4 Phases</div>
       </div>
       <div class="hero__stat">
-        <div class="hero__stat-value">74.5 MW IT</div>
-        <div class="hero__stat-label">Phase 1 (Modular)</div>
+        <div class="hero__stat-value">On-Site Gas</div>
+        <div class="hero__stat-label">Firm Generation</div>
       </div>
       <div class="hero__stat">
         <div class="hero__stat-value">Mid-2027</div>
@@ -581,11 +592,11 @@ body {
       </div>
       <div class="hero__stat">
         <div class="hero__stat-value">Mid-2028</div>
-        <div class="hero__stat-label">First Block Energized</div>
+        <div class="hero__stat-label">First Power</div>
       </div>
     </div>
     <h1 class="hero__title">ReDew Anson</h1>
-    <p class="hero__sub">Data Center + Battery Storage Campus &middot; Phantom Hill 345 kV &middot; Jones County, Texas &middot; ERCOT West</p>
+    <p class="hero__sub">Firm-Power Data Center Campus &middot; Phantom Hill 345 kV &middot; Jones County, Texas &middot; ERCOT West</p>
   </div>
 </section>
 
@@ -593,19 +604,19 @@ body {
 <section class="section">
   <div class="wrap">
     <div class="label">The Project</div>
-    <h2 class="heading">A 600 MW studied envelope at Phantom Hill &mdash; <em>built out as a data center and battery storage campus, anchored by a long-term data center tenant.</em></h2>
+    <h2 class="heading">A ~700 MW firm-power data center campus &mdash; <em>on-site generation, long-duration storage, and an anchor tenant, built in four phases on 165 acres at Phantom Hill.</em></h2>
     <p class="about__text">
-      The core asset is grid capacity at scale &mdash; studied at an in-service substation, with headroom far beyond the envelope and site control across 165 acres. We're developing it as an AI-grade data center plus long-duration energy campus: 10-hour vanadium flow storage in-series, IPP-owned on-site generation, an anchor data center tenant. And Phase 1 doesn't stand in the 226 GW ERCOT queue &mdash; it runs behind the meter on IPP-owned generation, with the fast small-load tie to Lone Star Transmission proceeding in parallel.
+      The whole campus runs on firm natural gas and on-site generation. Every phase is powered the same way: firm gas feeds IPP-owned aeroderivative turbines, the turbines feed TerraFlow's long-duration uninterruptible power supply, and the LDUPS feeds the data center. That is why none of it waits in the 226 GW ERCOT large-load queue &mdash; first power arrives mid-2028 with no interconnection application required. Phase 1 is a ~100 MW campus carrying 74.5 MW of critical IT; three ~200 MW phases follow on the tenant's roadmap. The grid tie is secondary, proceeding in parallel through Lone Star Transmission for export and supplemental supply.
     </p>
 
     <div class="stat-bar">
       <div class="stat-bar__item">
-        <div class="stat-bar__value">2 GW</div>
-        <div class="stat-bar__label">Studied Limit (N-0)</div>
+        <div class="stat-bar__value">165 Acres</div>
+        <div class="stat-bar__label">Site Control</div>
       </div>
       <div class="stat-bar__item">
-        <div class="stat-bar__value">Phase 1 + 3&times;200</div>
-        <div class="stat-bar__label">Phased Campus</div>
+        <div class="stat-bar__value">10-Hour</div>
+        <div class="stat-bar__label">Vanadium Flow Storage</div>
       </div>
       <div class="stat-bar__item">
         <div class="stat-bar__value">LDUPS</div>
@@ -627,18 +638,18 @@ body {
     <div class="cards">
       <div class="card">
         <div class="card__num">i.</div>
-        <div class="card__title">The asset is the position.</div>
-        <div class="card__text">600 MW of studied injection capacity at a 345 kV node with strong grid metrics commands a reservation premium in the AI compute infrastructure market. The adjacency and the headroom are the moat.</div>
+        <div class="card__title">Power that doesn't wait.</div>
+        <div class="card__text">226 GW of large-load requests sit in the ERCOT queue, and a new interconnection commonly takes five to seven years. Phase 1 never joins that line &mdash; it energizes on IPP-owned generation with the grid tie proceeding in parallel. Speed to firm MW is the moat; the 600 MW studied envelope at a 345 kV bus is the runway behind it.</div>
       </div>
       <div class="card">
         <div class="card__num">ii.</div>
         <div class="card__title">Firm power, not just clean power.</div>
-        <div class="card__text">A battery firms power; it doesn't generate it. On-site natural gas plus grid plus long-duration storage is the firm-power story a sophisticated data center tenant can underwrite.</div>
+        <div class="card__text">A battery firms power; it doesn't generate it. Firm natural gas, on-site turbines, and long-duration storage in series &mdash; with the grid as an additional supply once the tie is energized &mdash; is the firm-power story a sophisticated data center tenant can underwrite.</div>
       </div>
       <div class="card">
         <div class="card__num">iii.</div>
         <div class="card__title">Phased, financeable, fillable.</div>
-        <div class="card__text">Phase 1 &mdash; 74.5 MW critical IT on a modular 6&ndash;12 month build &mdash; then three 200 MW phases under the 600 MW envelope. Each phase is financeable on its own, fillable to a tenant's roadmap, and monetizable from energization.</div>
+        <div class="card__text">Roughly 700 MW across four phases, each powered on-site the same way. Phase 1 &mdash; a ~100 MW campus carrying 74.5 MW of critical IT on a modular 6&ndash;12 month build &mdash; proves the model; three ~200 MW phases follow as the site and the tenant's roadmap allow. Each phase is financeable on its own, fillable to a tenant's roadmap, and monetizable from energization.</div>
       </div>
     </div>
   </div>
@@ -648,9 +659,9 @@ body {
 <section class="section">
   <div class="wrap">
     <div class="label">Configuration</div>
-    <h2 class="heading">LDUPS &mdash; <em>battery in-series between the grid and the load.</em></h2>
+    <h2 class="heading">LDUPS &mdash; <em>every megawatt passes through the battery.</em></h2>
     <p class="about__text">
-      The campus is configured as a Large-Duty Uninterruptible Power System. Storage sits in-series between the substation and the data center load. The same asset captures grid arbitrage, sells ancillary services, and firms the tenant's power &mdash; three revenue streams from one battery position.
+      The campus is configured as TerraFlow's Long-Duration Uninterruptible Power Supply, a dual-conversion power path. On-site generation lands on a rectifier, the rectifier feeds the vanadium flow battery's DC bus, and inverters carry a fixed-voltage supply to the data center. Because all power passes through the battery, volatility smoothing, harmonic isolation, and ride-through are native to the architecture rather than bolted on &mdash; the multi-megawatt swings of AI load never reach the turbines. The grid tie is secondary: supplemental supply in once energized, and a tri-conversion mode that exports to ERCOT West when prices warrant.
     </p>
 
     <div class="ldups" style="margin-top: 28px;">
@@ -666,12 +677,12 @@ body {
 
         <!-- Gas (top, parallel feed) -->
         <rect x="300" y="20" width="180" height="60" rx="4" fill="#fafaf7" stroke="#d5d2cb" stroke-width="1.5"/>
-        <text x="390" y="46" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1c1a16">ON-SITE GAS</text>
-        <text x="390" y="62" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">Sized to anchor load</text>
+        <text x="390" y="46" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1c1a16">ON-SITE GENERATION</text>
+        <text x="390" y="62" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">Gas turbines &middot; IPP-owned</text>
 
         <!-- Gas connector -->
         <path d="M390 80 L390 140" stroke="#5c584f" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
-        <text x="400" y="118" font-family="Inter, sans-serif" font-size="9" font-style="italic" fill="#7a766c">gas charging</text>
+        <text x="400" y="118" font-family="Inter, sans-serif" font-size="9" font-style="italic" fill="#7a766c">generation to battery</text>
 
         <!-- Grid (left) -->
         <rect x="20" y="140" width="160" height="80" rx="4" fill="#fafaf7" stroke="#d5d2cb" stroke-width="1.5"/>
@@ -686,7 +697,7 @@ body {
         <rect x="280" y="140" width="220" height="80" rx="4" fill="#1a3d2f" stroke="#1a3d2f" stroke-width="1.5"/>
         <text x="390" y="170" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#ffffff">BATTERY</text>
         <text x="390" y="186" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.75)">TerraFlow vanadium flow</text>
-        <text x="390" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.75)">long-duration, in-series</text>
+        <text x="390" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.75)">dual-conversion DC bus</text>
 
         <!-- Battery → Load -->
         <path d="M500 180 L600 180" stroke="#22c55e" stroke-width="2" fill="none" marker-end="url(#arr-green)"/>
@@ -698,33 +709,33 @@ body {
         <text x="690" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#7a766c">tenant</text>
 
         <!-- Bottom labels -->
-        <text x="230" y="252" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-style="italic" fill="#7a766c">discharge to grid</text>
+        <text x="230" y="252" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-style="italic" fill="#7a766c">tri-conversion export</text>
         <text x="550" y="252" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-style="italic" fill="#22c55e" font-weight="600">firm power to tenant</text>
 
         <!-- Envelope label -->
-        <text x="450" y="295" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#7a766c" letter-spacing="1">PHASE 1 + THREE 200 MW PHASES UNDER THE 600 MW ENVELOPE</text>
+        <text x="450" y="295" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#7a766c" letter-spacing="1">GAS &rarr; GENERATION &rarr; LDUPS DUAL CONVERSION &rarr; DATA CENTER &middot; GRID TIE SECONDARY</text>
       </svg>
 
       <div class="ldups__streams">
         <div class="ldups__stream">
           <div class="ldups__stream-num">1.</div>
           <div class="ldups__stream-text">
-            <strong>Grid arbitrage</strong>
-            Charge during low-price hours, discharge into West Zone evening peaks and curtailment events.
+            <strong>Firm, conditioned power &mdash; day one</strong>
+            Generation and LDUPS together deliver tenant-grade uptime and power quality from first energization, independent of grid state.
           </div>
         </div>
         <div class="ldups__stream">
           <div class="ldups__stream-num">2.</div>
           <div class="ldups__stream-text">
             <strong>Ancillary services</strong>
-            ERCOT regulation, ECRS, and DRRS &mdash; the new long-duration product &mdash; from the same asset.
+            ERCOT regulation, ECRS, and DRRS &mdash; the new long-duration product &mdash; from the same asset once the grid tie is energized.
           </div>
         </div>
         <div class="ldups__stream">
           <div class="ldups__stream-num">3.</div>
           <div class="ldups__stream-text">
-            <strong>Tenant firming</strong>
-            Battery and on-site gas together deliver tenant-grade uptime independent of grid state.
+            <strong>Export &mdash; tri-conversion</strong>
+            Once the grid tie is energized and prices warrant, LDUPS exports into West Zone peaks through the parallel grid path.
           </div>
         </div>
       </div>
@@ -748,32 +759,32 @@ body {
       </div>
       <div class="tl tl--done">
         <div class="tl__num">02</div>
-        <div class="tl__title">Enhanced Feasibility</div>
-        <div class="tl__status">Complete</div>
+        <div class="tl__title">Feasibility &amp; Environmental</div>
+        <div class="tl__status">600 MW Studied<br>Phase I ESA &amp; CIA Complete</div>
       </div>
-      <div class="tl tl--done">
+      <div class="tl tl--active">
         <div class="tl__num">03</div>
-        <div class="tl__title">Environmental</div>
-        <div class="tl__status">Phase I ESA Complete<br>Desktop CIA Complete</div>
+        <div class="tl__title">Firm Gas &amp; Generation</div>
+        <div class="tl__status">Transportation Quoted<br>Turbine Units Available</div>
       </div>
       <div class="tl tl--active">
         <div class="tl__num">04</div>
-        <div class="tl__title">LST Small-Load Tie (parallel)</div>
-        <div class="tl__status">Preparing to File<br>EPE Engineering</div>
+        <div class="tl__title">Air Permit &amp; Anchor Tenant</div>
+        <div class="tl__status">Permit in Development<br>Tenant Conversations Underway</div>
       </div>
       <div class="tl">
         <div class="tl__num">05</div>
-        <div class="tl__title">NTP &mdash; air permit, equipment, financing</div>
-        <div class="tl__status">H1 2027 &middot; Mid-2027</div>
+        <div class="tl__title">NTP &rarr; Phase 1 First Power</div>
+        <div class="tl__status">NTP Mid-2027<br>~100 MW Mid-2028</div>
       </div>
       <div class="tl">
         <div class="tl__num">06</div>
-        <div class="tl__title">Phase 1 Energized</div>
-        <div class="tl__status">Mid-2028</div>
+        <div class="tl__title">Phases 2&ndash;4</div>
+        <div class="tl__status">~200 MW Each<br>On Tenant Roadmap</div>
       </div>
     </div>
     <div class="pipeline-callout">
-      ReDewable develops, finances, and operates the campus &mdash; Phase 1 first, then three 200 MW phases into the 600 MW envelope. Phase 1 targeted for mid-2028 on the modular build, with the 600 MW Batch application running in parallel.
+      ReDewable develops, finances, and operates the campus. Every phase is powered on-site by firm gas and IPP-owned generation, so NTP is gated by the air permit, generation equipment, and construction financing &mdash; not by a grid queue. The grid tie is secondary and proceeds in parallel: a sub-75 MW small-load tie with Lone Star Transmission, and a 600 MW Batch application for later phases when scale warrants.
     </div>
   </div>
 </section>
@@ -785,78 +796,55 @@ body {
     <h2 class="heading">Project Specifications</h2>
     <div class="specs">
       <div class="spec">
-        <div class="spec__label">Asset</div>
-        <div class="spec__value">Data center + battery storage campus
-          <em>On-site natural gas serves the data center load</em>
-        </div>
-      </div>
-      <div class="spec">
-        <div class="spec__label">Configuration</div>
-        <div class="spec__value">LDUPS &mdash; battery in-series
-          <em>Grid arbitrage, ancillaries, and tenant firming from a single asset</em>
-        </div>
-      </div>
-      <div class="spec">
-        <div class="spec__label">Studied Envelope</div>
-        <div class="spec__value">600 MW at Phantom Hill 345 kV
-          <em>ERCOT Bus 68004 &middot; Lone Star Transmission TSP</em>
-        </div>
-      </div>
-      <div class="spec">
-        <div class="spec__label">Deployment</div>
-        <div class="spec__value">Phase 1 + three 200 MW phases
-          <em>Phase 1: 74.5 MW critical IT, modular &middot; energized mid-2028</em>
-        </div>
-      </div>
-      <div class="spec">
-        <div class="spec__label">Battery Technology</div>
-        <div class="spec__value">TerraFlow vanadium flow
-          <em>Long-duration, non-flammable, domestically sourced</em>
+        <div class="spec__label">Campus</div>
+        <div class="spec__value">~700 MW across four phases
+          <em>Phase 1 ~100 MW (74.5 MW critical IT) mid-2028 &middot; three ~200 MW phases on the tenant's roadmap</em>
         </div>
       </div>
       <div class="spec">
         <div class="spec__label">On-Site Generation</div>
-        <div class="spec__value">Natural gas
-          <em>Sized to anchor tenant load &middot; air permits in development</em>
+        <div class="spec__value">Aeroderivative gas turbines &mdash; IPP-owned &amp; operated
+          <em>40&ndash;50 MW class, N+1 per phase &middot; available from inventory &middot; power at cost (NNN) &middot; air permit held by ReDewable</em>
         </div>
       </div>
       <div class="spec">
-        <div class="spec__label">CDR Zone</div>
-        <div class="spec__value">ERCOT West
-          <em>Highest curtailment zone in ERCOT</em>
+        <div class="spec__label">Fuel</div>
+        <div class="spec__value">Firm natural gas transportation
+          <em>Indicative quote from the pipeline owner-operator &middot; dedicated lateral built, owned, and operated by the pipeline</em>
         </div>
       </div>
       <div class="spec">
-        <div class="spec__label">Grid Strength</div>
-        <div class="spec__value">Studied to 2 GW (N-0)
-          <em>No local thermal constraints at 600 MW</em>
+        <div class="spec__label">Storage</div>
+        <div class="spec__value">TerraFlow vanadium flow &mdash; 10-hour LDUPS
+          <em>Non-flammable, no cycle-driven degradation, domestically sourced</em>
         </div>
       </div>
       <div class="spec">
-        <div class="spec__label">Land</div>
+        <div class="spec__label">Configuration</div>
+        <div class="spec__value">Dual conversion &mdash; generation &rarr; DC bus &rarr; load
+          <em>Every megawatt passes through the battery; power quality and ride-through are native</em>
+        </div>
+      </div>
+      <div class="spec">
+        <div class="spec__label">Grid &mdash; Secondary</div>
+        <div class="spec__value">Phantom Hill 345 kV &mdash; in service, adjacent
+          <em>Sub-75 MW small-load tie in parallel &middot; bus studied to 600 MW charge/discharge and 2 GW transfer (N-0) for export and later phases</em>
+        </div>
+      </div>
+      <div class="spec">
+        <div class="spec__label">Site &amp; Environmental</div>
         <div class="spec__value">165 acres controlled
-          <em>Long-term site control across the development footprint</em>
+          <em>Phase I ESA &amp; CIA complete &middot; single REC (former reserve pit; characterization pre-NTP) &middot; water program in scoping</em>
         </div>
       </div>
       <div class="spec">
-        <div class="spec__label">Fiber</div>
-        <div class="spec__value">FiberLight (in process)
-          <em>Tenant-grade redundant connectivity in scoping</em>
-        </div>
-      </div>
-      <div class="spec">
-        <div class="spec__label">Environmental</div>
-        <div class="spec__value">Phase I ESA &amp; CIA complete
-          <em>Single REC (former 1964 reserve pit; characterization pre-NTP)</em>
-        </div>
-      </div>
-      <div class="spec">
-        <div class="spec__label">Corridor Validation</div>
-        <div class="spec__value">~19 miles to Stargate (Abilene)
-          <em>ENGIE solar + 2.5+ GW queued in Jones County</em>
+        <div class="spec__label">Tenant &amp; Connectivity</div>
+        <div class="spec__value">Brokers engaged; tenant conversations underway
+          <em>No signed position yet &middot; tenant-grade redundant fiber quoted, LOI in process</em>
         </div>
       </div>
     </div>
+    <p class="about__text" style="margin-top: 24px; font-size: 0.75rem; color: var(--warm-400);">Feasibility and transfer-limit studies were commissioned by ReDewable and its partners on publicly available ERCOT SSWG base cases. No interconnection application has been filed to date.</p>
   </div>
 </section>
 
@@ -867,22 +855,17 @@ body {
     <h2 class="heading">Why This <em>Place</em></h2>
     <div class="cards">
       <div class="card">
-        <div class="card__title">Grid Headroom</div>
-        <div class="card__text">600 MW confirmed feasible at Phantom Hill 345 kV with strong SCR and no local thermal constraints. New entrants to this node face a multi-year queue; Phase 1 runs behind the meter and never enters it.</div>
+        <div class="card__title">The Corridor</div>
+        <div class="card__text">The Stargate AI campus near Abilene sits ~19 miles south. ENGIE operates ~420 MW of solar at Phantom Hill with 757 MW of battery in queue. Hyperscalers, AI infrastructure operators, and IPPs are already building here.</div>
       </div>
       <div class="card">
-        <div class="card__title">Storage Deficit</div>
-        <div class="card__text">ERCOT West is the highest-curtailment zone in the system. Jones County hosts 2.5+ GW of utility-scale solar operational or queued &mdash; storage demand at this node is structural.</div>
+        <div class="card__title">Fuel at the Fence</div>
+        <div class="card__text">Firm natural gas transportation from a major pipeline system serving the area, delivered by a dedicated lateral the pipeline builds, owns, and operates. The whole campus runs on it, phase by phase.</div>
       </div>
       <div class="card">
-        <div class="card__title">Corridor Validation</div>
-        <div class="card__text">ENGIE operates ~420 MW solar at Phantom Hill with 757 MW battery in queue. The Stargate AI campus near Abilene sits ~19 miles south. Hyperscalers, AI infrastructure operators, and IPPs are voting with their checkbooks on this corridor.</div>
+        <div class="card__title">Grid Runway</div>
+        <div class="card__text">An in-service 345 kV bus next door, studied to 600 MW of charge and discharge and 2 GW of transfer under normal conditions. Not needed for first power &mdash; there for export and for later phases.</div>
       </div>
-    </div>
-
-    <div class="figure">
-      <img src="/assets/redew-anson-curtailment-map.jpg" loading="lazy" decoding="async" alt="ERCOT West curtailment and Jones County storage gap" onclick="openLB('/assets/redew-anson-curtailment-map.jpg')">
-      <div class="figure__cap">ERCOT West curtailment intensity and Jones County queued solar &mdash; the storage gap.</div>
     </div>
   </div>
 </section>
@@ -899,7 +882,7 @@ body {
         <div class="bio">
           <div class="bio__name">Talor Byington</div>
           <div class="bio__title">Founder &amp; Managing Member</div>
-          <div class="bio__body">Leads the project end-to-end &mdash; interconnection strategy, partner orchestration, capital, and tenant relationships. Deep roots in construction, development, and energy infrastructure. Texas A&amp;M.</div>
+          <div class="bio__body">Leads the project end-to-end &mdash; power stack, partner orchestration, capital, and tenant relationships. Deep roots in construction, development, and energy infrastructure. Texas A&amp;M.</div>
         </div>
         <div class="bio">
           <div class="bio__name">Tim Crockett</div>
@@ -917,19 +900,28 @@ body {
         <div class="bio">
           <div class="bio__name">TerraFlow Energy Operating</div>
           <div class="bio__title">Technology &amp; Turnkey Scope</div>
-          <div class="bio__body">Vanadium flow battery technology on turnkey scope with firm pricing in hand, and the transfer-limit study confirming the POI to 2 GW. Preliminary Tier III engineering package issued (single-line, equipment sizing, load analysis). Campus architecture by Goree; modular data center vendor bench (SLB, Infra Partners, Dell, WWT) via TerraFlow relationships.</div>
+          <div class="bio__body">Vanadium flow battery technology on turnkey scope with firm pricing in hand, and the transfer-limit study confirming the POI to 2 GW. Preliminary Tier III engineering package issued (single-line, equipment sizing, load analysis). Campus architecture in hand; modular data center vendor bench via TerraFlow relationships.</div>
         </div>
         <div class="bio">
-<div class="bio__name">Unified Energy</div>
-          <div class="bio__title">Gas Supply &mdash; In Procurement</div>
-          <div class="bio__body">Engaged to source natural gas supply for the IPP-owned on-site generation fleet &mdash; the fuel side of the firm-power stack. Supply terms and firm transportation capacity are in negotiation.</div>
+<div class="bio__name">Pipeline Owner-Operator &middot; Generation IPP</div>
+          <div class="bio__title">Firm Gas &amp; Turbines &mdash; In Procurement</div>
+          <div class="bio__body">Firm natural gas transportation on an indicative quote from the pipeline owner-operator, delivered by a dedicated lateral the pipeline builds, owns, and operates. Aeroderivative turbine units are available from inventory and securable on reservation; the fleet is IPP-funded, owned, and operated, with power passed through to the tenant at cost.</div>
         </div>
         <div class="bio">
-          <div class="bio__name">FiberLight</div>
-          <div class="bio__title">Fiber Connectivity</div>
-          <div class="bio__body">Tenant-grade fiber connectivity. Quote received; LOI in process.</div>
+          <div class="bio__name">Fiber Carrier</div>
+          <div class="bio__title">Tenant-Grade Connectivity</div>
+          <div class="bio__body">Redundant fiber sized to tenant standards. Quote received; LOI in process.</div>
         </div>
       </div>
+    </div>
+    <p class="about__text" style="margin-top: 24px; font-size: 0.75rem; color: var(--warm-400);">Counterparty names, quotes, and studies are available in the data room under NDA.</p>
+
+    <div class="cta-box" style="margin-top: 36px;">
+      <div class="cta-box__text">
+        <div class="cta-box__title">Reserve capacity.</div>
+        <div class="cta-box__sub">Firm megawatts on-site from mid-2028, phased to your roadmap. Data room, engineering package, and configuration detail on signed NDA.</div>
+      </div>
+      <a href="mailto:power@redewable.com?subject=ReDew%20Anson%20%E2%80%94%20Capacity%20Reservation" class="cta-box__btn">power@redewable.com &rarr;</a>
     </div>
   </div>
 </section>
