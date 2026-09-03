@@ -259,6 +259,8 @@ body {
 .tl--active::before {
   background: linear-gradient(to right, var(--forest) 0%, var(--warm-100) 100%);
 }
+/* Consecutive active steps: only the last one fades out */
+.tl--active:has(+ .tl--active)::before { background: var(--forest); }
 .tl__num {
   font-size: 0.6rem;
   font-weight: 700;
