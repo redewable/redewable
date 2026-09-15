@@ -83,6 +83,15 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
 .stat-bar__item { padding: 24px 24px; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }
 .stat-bar__item:last-child { border-right: none; }
 .stat-bar__value { font-size:1.05rem; font-weight:700; color:#fff; margin-bottom:4px; }
+.pt__wrap { overflow-x:auto; margin-top:12px; border:1px solid var(--warm-100); border-radius:6px; }
+.pt { width:100%; border-collapse:collapse; font-size:0.8rem; }
+.pt th { background: var(--forest); color:#fff; font-size:0.62rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; padding:12px 14px; }
+.pt td { padding:10px 14px; border-bottom:1px solid var(--warm-100); }
+.pt tr:last-child td { border-bottom:none; }
+.pt__l { text-align:left; color: var(--warm-900); }
+.pt__n { text-align:right; font-family: var(--mono, ui-monospace, monospace); white-space:nowrap; color: var(--forest); }
+.pt__t { font-weight:700; background: rgba(26,61,47,0.06); }
+th.pt__t { background: var(--accent); color: var(--warm-900); }
 .stat-bar__label { font-size:0.6rem; font-weight:500; text-transform:uppercase; letter-spacing:0.08em; color: rgba(255,255,255,0.5); }
 
 /* CARDS */
@@ -188,7 +197,7 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
       <div class="hero__stat"><div class="hero__stat-value">Mid-2028</div><div class="hero__stat-label">Phase 1 COD</div></div>
     </div>
     <h1 class="hero__title">ReDew Anson</h1>
-    <p class="hero__sub">Seed capital to a permitted, powered, shovel-ready campus &middot; power and storage as a service &middot; Jones County, Texas</p>
+    <p class="hero__sub">Seed capital to a permitted, powered, shovel-ready campus &middot; firm power as a service, storage owned &middot; Jones County, Texas</p>
   </div>
 </section>
 
@@ -198,7 +207,7 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
     <div class="label">The Asset</div>
     <h2 class="heading">Grid capacity at scale, <em>next door to the largest AI compute build in North America.</em></h2>
     <p class="about__text">
-      ReDew Anson holds the envelope at the in-service Phantom Hill 345 kV substation, with site control established across 165 acres. We're developing it as an AI-grade data center plus long-duration energy campus &mdash; vanadium flow storage in-series between grid and load, on-site generation funded and operated by an independent power producer, with the battery indicated to follow the same as-a-service structure &mdash; anchored by a data center tenant. Phase 1 (74.5 MW of critical IT) leads; three 200 MW phases follow in 2029&ndash;2031 for about 700 MW of campus in all. Phase 1 is powered behind the meter and needs no interconnection application to build or energize &mdash; with a fast sub-75 MW small-load tie to Lone Star Transmission proceeding in parallel: no ERCOT Batch process, no queue.
+      ReDew Anson holds the envelope at the in-service Phantom Hill 345 kV substation, with site control established across 165 acres. We're developing it as an AI-grade data center plus long-duration energy campus &mdash; vanadium flow storage in-series between grid and load, owned by the project and paid inside the rent; on-site generation funded and operated by an independent power producer and passed through at cost; each phase financed at commercial operation with the 40% investment tax credit and an infrastructure term loan &mdash; anchored by a data center tenant. Phase 1 (74.5 MW of critical IT) leads; three 200 MW phases follow in 2029&ndash;2031 for about 700 MW of campus in all. Phase 1 is powered behind the meter and needs no interconnection application to build or energize &mdash; with a fast sub-75 MW small-load tie to Lone Star Transmission proceeding in parallel: no ERCOT Batch process, no queue.
     </p>
     <p class="anchor-line">
       Capacity is the bottleneck. We hold 165 acres at an in-service 345 kV bus studied to 2 GW &mdash; next to the corridor that needs it most.
@@ -271,14 +280,14 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
           <li>The transporter has set out its service structure in writing &mdash; backhaul from the Carthage hub on its existing line for Phase 1 (its best case: late 2027), its planned expansion for Phases 2&ndash;4, a letter agreement flipping to at least 50/50 Waha/Carthage once a cross-haul is built; demand fee indicated; tariff received. Not contracted</li>
           <li>Environmental Phase I &amp; CIA complete; air permitting for on-site generation being scoped</li>
           <li>Site control across 165 acres &mdash; 45 acres held; purchase contracts prepared on the remaining 120.5 at $5,500 per acre, assignable and funded by a callable tranche of this raise if the project is not sold first</li>
-          <li>TerraFlow battery pricing firm and an as-a-service structure indicated; four turbine machines scoped by the equipment channel for the full 700 MW, N+1 by phase &mdash; nothing reserved (LOI + proof of funds); fiber quote in hand</li>
+          <li>TerraFlow battery pricing firm; build-to-own with TerraFlow vendor credit through construction proposed (TerraFlow has indicated an as-a-service alternative); four turbine machines scoped by the equipment channel for the full 700 MW, N+1 by phase &mdash; nothing reserved (LOI + proof of funds); fiber quote in hand</li>
           <li>Tenant brokers engaged; tenant conversations underway; no signed position yet</li>
         </ul>
       </div>
       <div class="ba__col ba__col--after">
         <div class="ba__label">At NTP (mid-2027)</div>
         <ul class="ba__list">
-          <li>Air permit in hand; water program documented; transporter precedent agreement and the power-and-storage-as-a-service term sheet executed; signed grid position with Lone Star Transmission completed in parallel; 600 MW Batch application ready for Phases 2&ndash;4</li>
+          <li>Air permit in hand; water program documented; transporter precedent agreement, the generation-as-a-service term sheet, the storage vendor-credit term sheet and an infrastructure-loan term sheet executed; signed grid position with Lone Star Transmission completed in parallel; 600 MW Batch application ready for Phases 2&ndash;4</li>
           <li>Anchor tenant commitment from a hyperscale or AI-infrastructure operator</li>
           <li>Phase II ESA, BRE, geotech, and ALTA closed</li>
           <li>Air permit held by ReDewable &mdash; the emissions envelope belongs to the site, keeping it vendor-agnostic; civil and BOP scoped</li>
@@ -405,19 +414,41 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
     <div class="label">Phase 1 Economics</div>
     <h2 class="heading">The project the seed unlocks.</h2>
     <div class="stat-bar">
-      <div class="stat-bar__item"><div class="stat-bar__value">~$825M</div><div class="stat-bar__label">Phase 1 TDC &middot; gen + storage as a service</div></div>
+      <div class="stat-bar__item"><div class="stat-bar__value">~$1.40B</div><div class="stat-bar__label">Phase 1 TDC &middot; battery owned; IPP generation</div></div>
       <div class="stat-bar__item"><div class="stat-bar__value">~$131.9M</div><div class="stat-bar__label">Stabilized NOI (BTM, triple-net)</div></div>
-      <div class="stat-bar__item"><div class="stat-bar__value">16.0%</div><div class="stat-bar__label">Yield on Cost (BTM)</div></div>
-      <div class="stat-bar__item"><div class="stat-bar__value">2.00x</div><div class="stat-bar__label">DSCR (1.25x Covenant)</div></div>
+      <div class="stat-bar__item"><div class="stat-bar__value">9.4%</div><div class="stat-bar__label">Yield on Cost (BTM)</div></div>
+      <div class="stat-bar__item"><div class="stat-bar__value">1.30x</div><div class="stat-bar__label">DSCR &middot; infrastructure loan sized to it</div></div>
     </div>
     <div class="label" style="margin-top:28px;">The Campus &middot; Four Phases</div>
     <div class="stat-bar" style="margin-top:12px;">
-      <div class="stat-bar__item"><div class="stat-bar__value">~$6.25B</div><div class="stat-bar__label">Campus TDC to ReDew Anson</div></div>
-      <div class="stat-bar__item"><div class="stat-bar__value">~$1.03B</div><div class="stat-bar__label">Campus Stabilized NOI</div></div>
-      <div class="stat-bar__item"><div class="stat-bar__value">~$17.2B</div><div class="stat-bar__label">Campus Exit Value (6% cap)</div></div>
+      <div class="stat-bar__item"><div class="stat-bar__value">~$10.63B</div><div class="stat-bar__label">Campus TDC to ReDew Anson</div></div>
+      <div class="stat-bar__item"><div class="stat-bar__value">~$1.14B</div><div class="stat-bar__label">Campus Stabilized NOI</div></div>
+      <div class="stat-bar__item"><div class="stat-bar__value">~$19.2B</div><div class="stat-bar__label">Campus Exit Value (6% cap)</div></div>
       <div class="stat-bar__item"><div class="stat-bar__value">2029&ndash;31</div><div class="stat-bar__label">Phases 2&ndash;4 COD (200 MW each)</div></div>
     </div>
-    <p class="uof__note" style="margin-top:20px;">Model outputs (v5.0, September 2026), illustrative and subject to confirmation of open technical inputs. Generation (~$2.6B) and storage (~$3.5B) across the campus are carried by the service providers, not in ReDew Anson TDC; their cost passes through to the tenant at cost &mdash; the indicative Phase 1 power price (~$201/MWh all-in) and the tenant&rsquo;s total cost of occupancy are stated in the Offering Memorandum, not on this page.</p>
+    <div class="label" style="margin-top:28px;">Phase by phase &middot; and the total</div>
+    <div class="pt__wrap">
+      <table class="pt">
+        <thead><tr><th class="pt__l"></th><th class="pt__n">Phase 1</th><th class="pt__n">Phase 2</th><th class="pt__n">Phase 3</th><th class="pt__n">Phase 4</th><th class="pt__n pt__t">Campus</th></tr></thead>
+        <tbody>
+        <tr><td class="pt__l">Target COD</td><td class="pt__n">mid-2028</td><td class="pt__n">2029</td><td class="pt__n">2030</td><td class="pt__n">2031</td><td class="pt__n pt__t">2031</td></tr>
+        <tr><td class="pt__l">Critical IT / campus MW</td><td class="pt__n">74.5 / 93</td><td class="pt__n">160.0 / 200</td><td class="pt__n">160.0 / 200</td><td class="pt__n">160.0 / 200</td><td class="pt__n pt__t">554.5 / 693</td></tr>
+        <tr><td class="pt__l">Design-basis turbines (N+1)</td><td class="pt__n">3</td><td class="pt__n">5</td><td class="pt__n">5</td><td class="pt__n">5</td><td class="pt__n pt__t">18</td></tr>
+        <tr><td class="pt__l">TDC to ReDew Anson</td><td class="pt__n">$1,403M</td><td class="pt__n">$3,076M</td><td class="pt__n">$3,076M</td><td class="pt__n">$3,076M</td><td class="pt__n pt__t">$10.63B</td></tr>
+        <tr><td class="pt__l">&nbsp;&nbsp;of which battery (owned)</td><td class="pt__n">$466M</td><td class="pt__n">$1,000M</td><td class="pt__n">$1,000M</td><td class="pt__n">$1,000M</td><td class="pt__n pt__t">$3.47B</td></tr>
+        <tr><td class="pt__l">Generation capital (IPP, memo)</td><td class="pt__n">$389M</td><td class="pt__n">$649M</td><td class="pt__n">$649M</td><td class="pt__n">$649M</td><td class="pt__n pt__t">$2.34B</td></tr>
+        <tr><td class="pt__l">Stabilized NOI</td><td class="pt__n">$132M</td><td class="pt__n">$335M</td><td class="pt__n">$335M</td><td class="pt__n">$335M</td><td class="pt__n pt__t">$1.14B</td></tr>
+        <tr><td class="pt__l">Yield on cost</td><td class="pt__n">9.4%</td><td class="pt__n">10.9%</td><td class="pt__n">10.9%</td><td class="pt__n">10.9%</td><td class="pt__n pt__t">10.7%</td></tr>
+        <tr><td class="pt__l">Exit value (6.0% cap)</td><td class="pt__n">$2.47B</td><td class="pt__n">$5.58B</td><td class="pt__n">$5.58B</td><td class="pt__n">$5.58B</td><td class="pt__n pt__t">$19.2B</td></tr>
+        <tr><td class="pt__l">Infrastructure term loan</td><td class="pt__n">$996M</td><td class="pt__n">$2,307M</td><td class="pt__n">$2,307M</td><td class="pt__n">$2,307M</td><td class="pt__n pt__t">$7.92B</td></tr>
+        <tr><td class="pt__l">Net ITC cash (40%)</td><td class="pt__n">$170M</td><td class="pt__n">$365M</td><td class="pt__n">$365M</td><td class="pt__n">$365M</td><td class="pt__n pt__t">$1.27B</td></tr>
+        <tr><td class="pt__l">Permanent equity (+ITC)</td><td class="pt__n">$304M</td><td class="pt__n">$545M</td><td class="pt__n">$545M</td><td class="pt__n">$545M</td><td class="pt__n pt__t">$1.94B</td></tr>
+        <tr><td class="pt__l">DSCR</td><td class="pt__n">1.30x</td><td class="pt__n">1.43x</td><td class="pt__n">1.43x</td><td class="pt__n">1.43x</td><td class="pt__n pt__t">1.41x</td></tr>
+        <tr><td class="pt__l">Levered +ITC IRR / multiple</td><td class="pt__n">45% / 5.8x</td><td class="pt__n">56% / 7.5x</td><td class="pt__n">56% / 7.5x</td><td class="pt__n">56% / 7.5x</td><td class="pt__n pt__t">54% / 7.3x</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="uof__note" style="margin-top:20px;">Model outputs (v6.0, September 2026), illustrative and subject to confirmation of open technical inputs. The battery is owned by the project in every phase ($3.47B across the campus, inside TDC); generation (~$2.34B) is carried by the IPP and passes through to the tenant at cost &mdash; the indicative Phase 1 power price (~$124/MWh, generation + fuel) and the tenant&rsquo;s total cost of occupancy (~$260/kW/mo at $175 rent) are stated in the Offering Memorandum. Phase 1&rsquo;s loan is sized by the 1.30x coverage test; Phases 2&ndash;4 by the 75% loan-to-cost cap. No lender has issued terms.</p>
   </div>
 </section>
 
@@ -444,7 +475,7 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
       </div>
     </div>
     <p class="about__text" style="margin-top:28px; font-size:0.92rem;">
-      Construction financing for Phase 1 is architected around C-PACE anchored to closed-market precedent &mdash; the largest C-PACE deal closed to date is $465M &mdash; senior debt, and the ITC on the grid-side works (the battery&rsquo;s credit sits with the storage provider under the as-a-service structure). Construction equity of roughly $324M is repaid at COD; later phases are financed at the phase-company level with a construction-equity partner under a standard developer fee + promote structure.
+      Permanent financing for each phase closes at commercial operation: an infrastructure term loan sized on debt-service coverage, loan-to-cost and loan-to-value (modeled at 8% over 20 years; $996M at Phase 1), the 40% investment tax credit on the project-owned battery and grid-side works ($170M net at Phase 1), and permanent equity of roughly $304M that stays in the phase company. C-PACE, carried in earlier versions of this page, is no longer in the base case: Jones County has not adopted a PACE program, and the Company has been advised that a C-PACE lender active in data centers would more likely offer an infrastructure loan at this size. Through construction the battery is proposed to be carried on TerraFlow vendor credit and paid at COD. Later phases are financed at the phase-company level with a construction-equity partner under a standard developer fee + promote structure. None of it is committed.
     </p>
     <p class="uof__note" style="margin-top:20px;">Reg D Rule 506(b), accredited investors only; $50K minimum commitment. Preferred-return rate, participation, and conversion terms are stated in the Offering Memorandum and are subject to securities-counsel review.</p>
   </div>
@@ -487,9 +518,9 @@ body { font-family: var(--sans); background: var(--white); color: var(--warm-900
           <div class="bio__body">Engineered the small-load interconnection package and carries it through filing and the study cycle, working directly with Lone Star Transmission, the transmission service provider at Phantom Hill. Confirmed the small-load path in writing.</div>
         </div>
         <div class="bio">
-          <div class="bio__name">Generation &amp; Storage &mdash; as a service</div>
+          <div class="bio__name">Generation as a service &middot; Storage owned</div>
           <div class="bio__title">Turbine Fleet &middot; 10-hour LDUPS</div>
-          <div class="bio__body">Generation is IPP-funded, owned, and operated &mdash; capex and fuel risk sit on the IPP's balance sheet, power passes through to the tenant at cost. The equipment channel has scoped four turbine machines for the full four-phase, 700 MW N+1 build-out (design basis: a 62 MW industrial frame, three units for Phase 1); securing any unit requires a letter of intent and proof of funds, and nothing is reserved. The storage provider has indicated it would own the 10-hour battery and pass it through as a service alongside power &mdash; verbal, not documented.</div>
+          <div class="bio__body">Generation is IPP-funded, owned, and operated &mdash; capex and fuel risk sit on the IPP's balance sheet, power passes through to the tenant at cost. The equipment channel has scoped four turbine machines for the full four-phase, 700 MW N+1 build-out (design basis: a 62 MW industrial frame, three units for Phase 1); securing any unit requires a letter of intent and proof of funds, and nothing is reserved. The 10-hour TerraFlow battery is owned by the project (firm $5.0M/MW under an executed LOI), paid inside the rent and financed with the 40% ITC and the infrastructure loan; the Company proposes that TerraFlow carry it on vendor credit through construction. TerraFlow has indicated an as-a-service alternative. Neither structure is documented.</div>
         </div>
         <div class="bio">
           <div class="bio__name">Gas &middot; Fiber &middot; Architecture &middot; Environmental</div>
